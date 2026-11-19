@@ -3,6 +3,7 @@
 // for, so each example is called, with no script, the way a fetch would.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { gzipSync } from 'node:zlib';
 import worker from '../src/index.js';
 import { ADDRESSES, ADDRESS_INDEX, addressHref } from '../src/addresses.js';
 import { SHARE_MAX } from '../src/build.js';
@@ -48,7 +49,9 @@ test('the index names what the worker actually takes', () => {
 
 test('what the index says about Find is what Find does: the answer first, the shelf after it', async () => {
   const page = await (await get('/specimens?q=recipe%5B*%5D')).text();
-  assert.ok(page.length > 200_000 && page.length < 320_000, `about 280 KB (${page.length})`);
+  const gzipped = gzipSync(page, { level: 9 }).length;
+  assert.ok(gzipped < 52_000, `Find stays under 52 KB gzipped (${gzipped} B gzip / ${page.length} B raw)`);
+  assert.ok(page.length > 180_000 && page.length < 310_000, `about 250 KB raw (${page.length})`);
   assert.ok(page.indexOf('id="found"') > 0 && page.indexOf('id="found"') < page.indexOf('id="pressed"'), 'the matches come before the shelf');
 });
 

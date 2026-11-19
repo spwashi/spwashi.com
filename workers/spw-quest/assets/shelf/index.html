@@ -632,6 +632,7 @@
     .kind { margin: 1rem 0 0; border-top: 1px solid var(--line); }
     .kind summary { display: flex; align-items: center; gap: .6rem; min-height: 44px; font-family: var(--manuscript); font-size: 1.12rem; font-weight: 600; cursor: pointer; }
     .kind .count { color: var(--muted); font: 500 .85rem/1 var(--mono); font-variant-numeric: tabular-nums; }
+    .kind-more { margin: .8rem 0 0; color: var(--muted); font-size: .88rem; }
     .compare { margin: 0 0 1.6rem; padding: 1rem 1rem 1.1rem; border: 1px solid var(--accent); border-radius: var(--radius); background: var(--field); }
     .compare h3 { margin: 1.1rem 0 .4rem; }
     .compare .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: .6rem; }
@@ -690,18 +691,18 @@
 <section class="shelf-section" aria-labelledby="ops-title">
   <h2 id="ops-title">operators</h2>
   <ul class="handles">
-      <li><a class="handle" href="/#op-potential" title="Keeps options open. Use it for what is still being explored."><span class="sigil">~</span><span>potential</span></a></li>
-      <li><a class="handle" href="/#op-wonder" title="Asks a question that evidence can settle."><span class="sigil">?</span><span>wonder</span></a></li>
-      <li><a class="handle" href="/#op-action" title="Does something, so you can see what changed."><span class="sigil">!</span><span>action</span></a></li>
-      <li><a class="handle" href="/#op-value" title="Marks what matters most."><span class="sigil">*</span><span>value</span></a></li>
-      <li><a class="handle" href="/#op-ground" title="Names the defaults everyone already assumes."><span class="sigil">.</span><span>ground</span></a></li>
-      <li><a class="handle" href="/#op-ascension" title="Gathers parts into a whole you can inspect."><span class="sigil">^</span><span>ascension</span></a></li>
-      <li><a class="handle" href="/#op-vibration" title="Gives something a name, so it can be found and linked."><span class="sigil">#</span><span>vibration</span></a></li>
-      <li><a class="handle" href="/#op-perspective" title="Says from where you are looking."><span class="sigil">@</span><span>perspective</span></a></li>
-      <li><a class="handle" href="/#op-subject" title="Holds several things to one topic."><span class="sigil">&amp;</span><span>subject</span></a></li>
-      <li><a class="handle" href="/#op-configuration" title="Fixes a setting the rest depends on."><span class="sigil">=</span><span>configuration</span></a></li>
-      <li><a class="handle" href="/#op-measure" title="Measures, so before and after can be compared."><span class="sigil">%</span><span>measure</span></a></li>
-      <li><a class="handle" href="/#op-substrate" title="Names what something runs on: time, money, machines."><span class="sigil">$</span><span>substrate</span></a></li>
+      <li><a class="handle" href="/#op-potential" title="Holds an uncollapsed path across distance without taking it yet; sits opposite @ perspective, which names who is looking down that thread."><span class="sigil">~</span><span>potential</span></a></li>
+      <li><a class="handle" href="/#op-wonder" title="Opens an inquiry or conditional gate without forcing closure; balances ! action, which collapses possibility into an observable move."><span class="sigil">?</span><span>wonder</span></a></li>
+      <li><a class="handle" href="/#op-action" title="Commits a state change so its consequence becomes observable; completes ? wonder by crossing from inquiry into effect."><span class="sigil">!</span><span>action</span></a></li>
+      <li><a class="handle" href="/#op-value" title="Materializes what carries concrete worth or salience here; pairs with $ substrate, which names the physical cost or ground carrying it."><span class="sigil">*</span><span>value</span></a></li>
+      <li><a class="handle" href="/#op-ground" title="Settles attention back to the local default or center of gravity; anchors # vibration, which projects an address outward so others can find it."><span class="sigil">.</span><span>ground</span></a></li>
+      <li><a class="handle" href="/#op-ascension" title="Lifts separate parts onto a higher register as one inspectable whole; complements &amp; subject, which binds parallel streams laterally."><span class="sigil">^</span><span>ascension</span></a></li>
+      <li><a class="handle" href="/#op-vibration" title="Calls a structure by resonant name (#&gt;, #:, #!) so tools and readers can address or echo it across files; balances . ground."><span class="sigil">#</span><span>vibration</span></a></li>
+      <li><a class="handle" href="/#op-perspective" title="Situates the coordinate origin — who or what is looking (Persona@subject, @alias) — giving ~ potential a vantage point to aim from."><span class="sigil">@</span><span>perspective</span></a></li>
+      <li><a class="handle" href="/#op-subject" title="Binds multiple streams or constraints onto one shared focus without flattening them; pairs laterally with ^ ascension's vertical lift."><span class="sigil">&amp;</span><span>subject</span></a></li>
+      <li><a class="handle" href="/#op-configuration" title="Pins a local parameter or invariant that downstream structure depends on; establishes the fixed reference point that % measure scales against."><span class="sigil">=</span><span>configuration</span></a></li>
+      <li><a class="handle" href="/#op-measure" title="Compares, weights, or normalizes before and after across a coordinate axis; reads the tension relative to = configuration."><span class="sigil">%</span><span>measure</span></a></li>
+      <li><a class="handle" href="/#op-substrate" title="Exposes the physical, temporal, or computational medium carrying the work — time, budget, memory, storage, attention; underpins * value."><span class="sigil">$</span><span>substrate</span></a></li>
   </ul>
 </section>
 <section class="shelf-section" aria-labelledby="plan-ops-title">

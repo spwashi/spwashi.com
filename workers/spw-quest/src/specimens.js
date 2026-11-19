@@ -27,6 +27,8 @@ const SLOT_WORDS = Object.freeze({
 
 /** How many matches a search shows; the count says how many more there are. */
 export const FOUND_LIMIT = 60;
+/** How many exemplars each shelf drawer renders inline; search and specimens.json carry every line. */
+export const ROUTE_KIND_LIMIT = 24;
 
 const BY_ID = new Map(SPECIMENS.map((specimen) => [specimen.id, specimen]));
 export const specimenById = (id) => BY_ID.get(String(id || "")) || null;
@@ -192,9 +194,11 @@ function moves(specimen, state) {
     `<a href="${escapeHtml(where.href)}">${escapeHtml(where.label)}</a>`,
     edit ? `<a href="${escapeHtml(edit)}">Edit</a>` : "",
     reading.file ? "" : `<a href="/pivot?s=${escapeHtml(specimen.id)}">Pivot</a>`,
-    // On the shelf only a plan's line opens on factshift.center: a link on every card would carry
-    // every line twice and the shelf past its weight. /build offers it for any single line.
-    specimen.source !== "plans" || String(specimen.line || "").length > FACTSHIFT_LIMIT ? "" : `<a href="/canvas?s=${escapeHtml(specimen.id)}">Open on factshift.center</a>`,
+    // /canvas?s=<id> redirects to factshift.center without repeating the line text in HTML,
+    // so every specimen that fits the canvas limit opens on factshift.center for ~36 bytes.
+    reading.file || String(specimen.line || "").length > FACTSHIFT_LIMIT
+      ? ""
+      : `<a href="/canvas?s=${escapeHtml(specimen.id)}">${specimen.source === "plans" ? "Open on factshift.center" : "Canvas"}</a>`,
     compare,
     origin ? `<a href="${escapeHtml(address({ q: state.q, a: specimen.id, b: origin.id }, "compare"))}">Against ${escapeHtml(origin.name)}, where it departs from</a>` : "",
   ].filter(Boolean).join('<span aria-hidden="true"> · </span>');
@@ -285,22 +289,30 @@ function findSection(state, query) {
 </section>`;
 }
 
-/** The pages' rarer lines, by what makes them rare. A line may sit in more than one. */
+/** The pages' rarer lines, by what makes them rare. Each drawer shows distinct exemplars up to ROUTE_KIND_LIMIT; search reads all. */
 const ROUTE_KINDS = Object.freeze([
-  { id: "charged", title: "With a charge in front", test: ({ shape }) => (shape.charge || []).length > 0 },
-  { id: "joined", title: "Joined to another line", test: ({ right }) => Boolean(right) },
-  { id: "marked", title: "With a mark in front", test: ({ shape }) => /^[~?!@*^#&=%$]/.test(shape.subject || "") },
-  { id: "scened", title: "Held in a scene", test: ({ shape }) => Boolean(shape.scope) },
+  { id: "charged", title: "With a charge in front", q: "boon", test: ({ shape }) => (shape.charge || []).length > 0 },
+  { id: "joined", title: "Joined to another line", q: "*", test: ({ right }) => Boolean(right) },
+  { id: "marked", title: "With a mark in front", q: "~", test: ({ shape }) => /^[~?!@*^#&=%$]/.test(shape.subject || "") },
+  { id: "scened", title: "Held in a scene", q: "(*)", test: ({ shape }) => Boolean(shape.scope) },
 ]);
 
 /** The shelf's rows, sorted once: the herbarium by its blocks, the pages' rarer lines by kind, and the gallery. */
 const SHELF = (() => {
   const herbarium = SPECIMENS.filter((specimen) => specimen.source === "herbarium");
   const pages = SPECIMENS.filter((specimen) => specimen.source === "routes");
+  const seenInKinds = new Set();
+  const kinds = ROUTE_KINDS.map((kind) => {
+    const members = pages.filter((specimen) => kind.test(readingOf(specimen)));
+    const fresh = members.filter((specimen) => !seenInKinds.has(specimen.id));
+    const shown = (fresh.length >= ROUTE_KIND_LIMIT ? fresh : [...fresh, ...members.filter((specimen) => seenInKinds.has(specimen.id))]).slice(0, ROUTE_KIND_LIMIT);
+    for (const specimen of shown) seenInKinds.add(specimen.id);
+    return { ...kind, members, shown };
+  });
   return {
     groups: [...new Set(herbarium.map((specimen) => specimen.group))].map((group) => ({ group, members: herbarium.filter((specimen) => specimen.group === group) })),
     pages: pages.length,
-    kinds: ROUTE_KINDS.map((kind) => ({ ...kind, members: pages.filter((specimen) => kind.test(readingOf(specimen))) })),
+    kinds,
     files: SPECIMENS.filter((specimen) => specimen.source === "gallery"),
     plans: SPECIMENS.filter((specimen) => specimen.source === "plans"),
   };
@@ -316,12 +328,15 @@ function shelf(state) {
     </ol>
   </section>`;
   }).join("\n  ");
-  const kinds = sorted.map(({ members, ...kind }, index) => {
+  const kinds = sorted.map(({ members, shown, ...kind }, index) => {
+    const overflow = members.length > shown.length
+      ? `\n    <p class="kind-more">Showing ${shown.length} of ${members.length} lines — use <a href="#q">Find above</a> to search all ${pages} route expressions or fetch <a href="/specimens.json">specimens.json</a>.</p>`
+      : "";
     return `<details class="kind" id="pages-${kind.id}"${index === 0 ? " open" : ""}>
     <summary>${escapeHtml(kind.title)} <span class="count">${members.length}</span></summary>
     <ol class="shelf">
-      ${members.map((specimen) => card(specimen, state)).join("\n      ")}
-    </ol>
+      ${shown.map((specimen) => card(specimen, state)).join("\n      ")}
+    </ol>${overflow}
   </details>`;
   }).join("\n  ");
   const herbarium = groups.reduce((sum, { members }) => sum + members.length, 0);
@@ -427,6 +442,7 @@ export const SPECIMENS_CSS = `.opening { margin: 0 0 1.2rem; }
     .kind { margin: 1rem 0 0; border-top: 1px solid var(--line); }
     .kind summary { display: flex; align-items: center; gap: .6rem; min-height: 44px; font-family: var(--manuscript); font-size: 1.12rem; font-weight: 600; cursor: pointer; }
     .kind .count { color: var(--muted); font: 500 .85rem/1 var(--mono); font-variant-numeric: tabular-nums; }
+    .kind-more { margin: .8rem 0 0; color: var(--muted); font-size: .88rem; }
     .compare { margin: 0 0 1.6rem; padding: 1rem 1rem 1.1rem; border: 1px solid var(--accent); border-radius: var(--radius); background: var(--field); }
     .compare h3 { margin: 1.1rem 0 .4rem; }
     .compare .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: .6rem; }

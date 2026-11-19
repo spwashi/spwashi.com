@@ -734,11 +734,41 @@
     .sigils .name { display: flex; align-items: baseline; gap: .35rem; font-weight: 700; font-size: .95rem; letter-spacing: -.01em; color: var(--fg); }
     .sigils .name code { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .sigils .reads { margin-top: .1rem; font-size: .88rem; line-height: 1.48; color: var(--fg); }
+    .sigils .op-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .55rem; margin: .15rem 0 .2rem; font: .76rem/1.3 var(--mono); color: var(--muted); }
+    .sigils .op-valence { padding: .08rem .38rem; border-radius: 3px; background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--fg); border: 1px solid color-mix(in srgb, var(--line) 80%, transparent); }
+    .sigils .op-partner { color: var(--accent); text-decoration: none; }
+    .sigils .op-partner:hover, .sigils .op-partner:focus-visible { text-decoration: underline; }
     .sigils .op-line { margin: .25rem 0 0; }
     .sigils .op-line code { font-size: .82rem; overflow-wrap: anywhere; }
+    .expr-row { display: flex; align-items: flex-start; justify-content: space-between; gap: .4rem; }
+    [data-spw-expr] [data-t] { cursor: pointer; border-radius: 2px; transition: background-color 120ms ease; }
+    [data-spw-expr] [data-t]:hover { background: color-mix(in srgb, currentColor 18%, transparent); }
+    [data-spw-match="true"] { border-radius: 4px; background: color-mix(in srgb, var(--accent) 10%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
+    [data-spw-current="true"] { background: color-mix(in srgb, var(--accent) 20%, transparent); box-shadow: 0 0 0 2px var(--accent); }
+    .sigils li[data-spw-active="true"], .braces li[data-spw-active="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), 0 8px 24px -4px color-mix(in srgb, var(--accent) 22%, transparent); }
+    .copy-expr, .op-find { flex: none; padding: .15rem .45rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--surface); color: var(--muted); font: 600 .74rem/1.3 var(--mono); cursor: pointer; }
+    .copy-expr:hover, .copy-expr:focus-visible, .op-find:hover, .op-find:focus-visible, .op-find[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+    html:not(.js) .copy-expr, html:not(.js) .op-find, html:not(.js) .interpret-dock { display: none; }
+    .op-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .55rem; margin-top: .35rem; font-size: .8rem; }
+    .title-spw-wrap { position: relative; width: min(100%, 42rem); }
+    .title-spw-wrap .copy-expr { position: absolute; top: .5rem; right: .55rem; }
     .starter p { font-size: .9rem; }
     .starter strong { margin-right: .3rem; color: var(--fg); }
     .starter .starter-ways { margin-top: .35rem; font-size: .85rem; }
+    .interpret-dock { position: sticky; bottom: .75rem; z-index: 20; max-width: 54rem; margin: 1.4rem auto 0; padding: .7rem .95rem; border: 1px solid var(--accent); border-radius: var(--radius); background: color-mix(in srgb, var(--field) 96%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 10px 28px -6px rgba(0, 0, 0, .2); display: grid; gap: .35rem; }
+    .interpret-dock[hidden] { display: none; }
+    .interpret-dock-head { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .65rem; }
+    .interpret-dock-sigil { display: inline-flex; align-items: center; justify-content: center; min-width: 1.85rem; padding: .15rem .45rem; border-radius: 4px; background: color-mix(in srgb, currentColor 12%, var(--surface)); border: 1px solid currentColor; font: 700 1rem/1.1 var(--mono); }
+    .interpret-dock-meta { color: var(--muted); font: .78rem/1.2 var(--mono); }
+    .interpret-dock-reads { margin: 0; font-size: .88rem; line-height: 1.42; color: var(--fg); }
+    .interpret-dock-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .65rem; font-size: .82rem; }
+    .interpret-dock-actions button { padding: .2rem .55rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--surface); color: var(--fg); font: 600 .78rem/1.2 var(--mono); cursor: pointer; }
+    .interpret-dock-actions button:hover:not(:disabled), .interpret-dock-actions button:focus-visible:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .interpret-dock-actions button:disabled { opacity: .4; cursor: default; }
+    .interpret-dock-count { color: var(--muted); font: .78rem/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+    .interpret-dock-close { margin-left: auto; }
+    #reading .pairs li, #reading .frames li, #reading .entries li, #reading .facts .q { cursor: pointer; border-radius: 3px; }
+    #reading .pairs li:hover, #reading .frames li:hover, #reading .entries li:hover, #reading .facts .q:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
     .sigils .note { margin-top: .35rem; padding-top: .35rem; border-top: 1px dashed color-mix(in srgb, var(--line) 75%, transparent); font-size: .8rem; line-height: 1.42; color: var(--ink-soft); }
     @media (max-width: 40rem) { .sigils { gap: 0; } .sigils li { padding: .75rem 0 .8rem; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; box-shadow: none; } .sigils li:hover, .sigils li:focus-within { transform: none; box-shadow: none; } .sigils li:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: .65rem; } }
     .sigils .in-file { grid-column: 2; font: .78rem/1.2 var(--mono); }
@@ -953,9 +983,14 @@
 <section class="opening" aria-labelledby="title">
   <p class="eyebrow">Spw · readable marks and containers for people, editors, and tools</p>
   <h1 id="title">A notation for readings you can compare.</h1>
-  <pre class="title-spw" aria-label="Two Spw lines showing prefix force, perspective, path, and containment"><code><span data-t="perspective">editor@</span>cut<span data-t="b-direction">{</span>rough <span data-t="stream">~&gt;</span> fine <span data-t="stream">~&gt;</span> locked<span data-t="b-direction">}</span><span data-t="b-scene">(</span>deadline<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>reel<span data-t="b-concept">&gt;</span>
+  <div class="title-spw-wrap">
+    <pre class="title-spw" data-spw-expr="editor@cut{rough ~&gt; fine ~&gt; locked}(deadline)&lt;reel&gt;
+?[&quot;what broke the pacing?&quot;]{ !probe{ &quot;watch scene 3 muted&quot; } }" aria-label="Two Spw lines showing prefix force, perspective, path, and containment"><code><span data-t="perspective">editor@</span>cut<span data-t="b-direction">{</span>rough <span data-t="stream">~&gt;</span> fine <span data-t="stream">~&gt;</span> locked<span data-t="b-direction">}</span><span data-t="b-scene">(</span>deadline<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>reel<span data-t="b-concept">&gt;</span>
 <span data-t="wonder">?</span><span data-t="b-mode">[</span>"what broke the pacing?"<span data-t="b-mode">]</span><span data-t="b-direction">{</span> <span data-t="action">!</span>probe<span data-t="b-direction">{</span> "watch scene 3 muted" <span data-t="b-direction">}</span> <span data-t="b-direction">}</span></code></pre>
-  <p class="lede">A mark says how you stand toward a word. A container bounds what belongs inside — in any order, nested, or alone. Read and compare lines here, or project them onto a spatial canvas at <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
+    <button type="button" class="copy-expr" data-copy-line="editor@cut{rough ~&gt; fine ~&gt; locked}(deadline)&lt;reel&gt;
+?[&quot;what broke the pacing?&quot;]{ !probe{ &quot;watch scene 3 muted&quot; } }" aria-label="Copy opening Spw example">Copy</button>
+  </div>
+  <p class="lede">A mark says how you stand toward a word. A container bounds what belongs inside — in any order, nested, or alone. Click any colored mark or brace to trace it across the page, or project lines onto a spatial canvas at <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
   <div class="doors" aria-label="Choose your path into Spw">
     <article class="door"><h3><a href="/learn">New to Spw</a></h3><p>Seven one-line storyboard panels starting from plain prose — no jargon required.</p></article>
     <article class="door"><h3><a href="/build">Engineer or editor</a></h3><p>Take a line apart, compare <a href="/forms/">forms side by side</a>, or mount <a href="/install#repository">.spw/_workbench</a>.</p></article>
@@ -974,11 +1009,11 @@
 </aside>
 <section id="start" class="band" aria-labelledby="start-title">
   <h2 id="start-title">Start from a line</h2>
-  <p>Each line uses a different Spw shape — a prefix mark, a persona perspective, a scene first, or a transition path. Pick one to ask a question, open a full example file, or pivot any part.</p>
+  <p>Each line uses a different Spw shape — a prefix mark, a persona perspective, a scene first, or a transition path. Click any colored mark or brace to highlight matching expressions and inspect its role, or copy a line straight into your notes.</p>
   <div class="doors">
     <article class="door starter" id="start-marketing">
       <h3>Marketing</h3>
-      <p><code>~launch(soft)[beta]{waitlist, story, proof}&lt;audience&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="~launch(soft)[beta]{waitlist, story, proof}&lt;audience&gt;"></code><button type="button" class="copy-expr" data-copy-line="~launch(soft)[beta]{waitlist, story, proof}&lt;audience&gt;" aria-label="Copy Marketing line">Copy</button></p>
       <p><strong>Ask</strong> Which of the three would you cut first?</p>
       <p><strong>Talk</strong> Change ~ to ! and soft to loud — say what each part has to become.</p>
       <p><strong>Build</strong> One line per launch you have run, so the next one starts from them.</p>
@@ -986,7 +1021,7 @@
     </article>
     <article class="door starter" id="start-editorial">
       <h3>Editorial cut</h3>
-      <p><code>^cut(deadline)[rough]{pacing ~&gt; sound ~&gt; locked}&lt;reel&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="^cut(deadline)[rough]{pacing ~&gt; sound ~&gt; locked}&lt;reel&gt;"></code><button type="button" class="copy-expr" data-copy-line="^cut(deadline)[rough]{pacing ~&gt; sound ~&gt; locked}&lt;reel&gt;" aria-label="Copy Editorial cut line">Copy</button></p>
       <p><strong>Ask</strong> What breaks the pacing between rough and locked?</p>
       <p><strong>Talk</strong> Change rough to fine and add the one cue that holds the cut together.</p>
       <p><strong>Build</strong> A scene sheet keeping cut stage, pacing notes, and sound cues together.</p>
@@ -994,7 +1029,7 @@
     </article>
     <article class="door starter" id="start-growth">
       <h3>Growth</h3>
-      <p><code>%funnel(weekly)[cohort]{visit ~&gt; signup ~&gt; paid}&lt;growth&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="%funnel(weekly)[cohort]{visit ~&gt; signup ~&gt; paid}&lt;growth&gt;"></code><button type="button" class="copy-expr" data-copy-line="%funnel(weekly)[cohort]{visit ~&gt; signup ~&gt; paid}&lt;growth&gt;" aria-label="Copy Growth line">Copy</button></p>
       <p><strong>Ask</strong> Where does this funnel leak most?</p>
       <p><strong>Talk</strong> Add a step between signup and paid, and say what it measures.</p>
       <p><strong>Build</strong> A pipeline that counts each step by cohort, week over week.</p>
@@ -1002,7 +1037,7 @@
     </article>
     <article class="door starter" id="start-frontend">
       <h3>Frontend</h3>
-      <p><code>bane page[slow]{bundle, images, fonts}&lt;phone&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="bane page[slow]{bundle, images, fonts}&lt;phone&gt;"></code><button type="button" class="copy-expr" data-copy-line="bane page[slow]{bundle, images, fonts}&lt;phone&gt;" aria-label="Copy Frontend line">Copy</button></p>
       <p><strong>Ask</strong> Which of these would you measure first?</p>
       <p><strong>Talk</strong> Change bane to boon and slow to crisp — say what made the difference.</p>
       <p><strong>Build</strong> A record of each fix: the metric, the diff, and the test run.</p>
@@ -1010,7 +1045,7 @@
     </article>
     <article class="door starter" id="start-hiring">
       <h3>Finding talent</h3>
-      <p><code>=role(team)[frontend]{react, a11y, design}&lt;hiring&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="=role(team)[frontend]{react, a11y, design}&lt;hiring&gt;"></code><button type="button" class="copy-expr" data-copy-line="=role(team)[frontend]{react, a11y, design}&lt;hiring&gt;" aria-label="Copy Finding talent line">Copy</button></p>
       <p><strong>Ask</strong> Which skill is this role really asking for?</p>
       <p><strong>Talk</strong> Write the same role at junior and at senior, and say which parts move.</p>
       <p><strong>Build</strong> A role card per person, pointing to the snippets they kept.</p>
@@ -1018,7 +1053,7 @@
     </article>
     <article class="door starter" id="start-search">
       <h3>Finding a company</h3>
-      <p><code>.search(senior)[open]{fit, pay, growth}&lt;company&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr=".search(senior)[open]{fit, pay, growth}&lt;company&gt;"></code><button type="button" class="copy-expr" data-copy-line=".search(senior)[open]{fit, pay, growth}&lt;company&gt;" aria-label="Copy Finding a company line">Copy</button></p>
       <p><strong>Ask</strong> Which of the three would you trade first?</p>
       <p><strong>Talk</strong> Add a fourth part, and say what it costs the other three.</p>
       <p><strong>Build</strong> One line per company you talk to, compared two at a time.</p>
@@ -1026,7 +1061,7 @@
     </article>
     <article class="door starter" id="start-incident">
       <h3>Incident triage</h3>
-      <p><code>!outage(p1)[active]{triage ~&gt; isolate ~&gt; verify}&lt;checkout&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="!outage(p1)[active]{triage ~&gt; isolate ~&gt; verify}&lt;checkout&gt;"></code><button type="button" class="copy-expr" data-copy-line="!outage(p1)[active]{triage ~&gt; isolate ~&gt; verify}&lt;checkout&gt;" aria-label="Copy Incident triage line">Copy</button></p>
       <p><strong>Ask</strong> Which signal tells you the blast radius stopped growing?</p>
       <p><strong>Talk</strong> Turn p1 to drill and add the exact smoke check you would automate.</p>
       <p><strong>Build</strong> A blameless postmortem keeping latency bounds, owners, and timeline together.</p>
@@ -1034,7 +1069,7 @@
     </article>
     <article class="door starter" id="start-community">
       <h3>Organizing a gathering</h3>
-      <p><code>*gathering(monthly)[open]{host, access, food}&lt;neighbors&gt;</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="*gathering(monthly)[open]{host, access, food}&lt;neighbors&gt;"></code><button type="button" class="copy-expr" data-copy-line="*gathering(monthly)[open]{host, access, food}&lt;neighbors&gt;" aria-label="Copy Organizing a gathering line">Copy</button></p>
       <p><strong>Ask</strong> Who cannot participate if one default assumption stays unspoken?</p>
       <p><strong>Talk</strong> Change monthly to weekly and trim setup so one host can close in 15 minutes.</p>
       <p><strong>Build</strong> A lightweight charter naming access promises, shared roles, and cleanup steps.</p>
@@ -1449,13 +1484,15 @@ you<span data-t="perspective">@</span>guide
 
 <section id="operators" class="band" aria-labelledby="operators-title">
   <h2 id="operators-title">Marks and braces<a class="self" href="#operators" aria-labelledby="operators-title">#</a></h2>
-  <p>Twelve marks, each with what it does in a sentence and a line it might start. The name is the workbench's. The runtime line is what the reader does with the mark today, and the numbers open the <a href="/learn">Learn</a> panel that uses it.</p>
+  <p>Twelve marks organized as six dimensional symmetry pairs — each with its spatial axis, elemental valence, partner, and a live specimen line you can copy, edit, or open on <code>factshift.center</code>. Click <strong>Find on page</strong> on any card (or click any colored mark inside an expression) to trace where it appears.</p>
   <ul class="sigils">
     <li id="op-potential">
       <span class="sigil" data-t="potential" aria-hidden="true">~</span>
       <p class="name">potential <code>~</code></p>
-      <p class="reads">Keeps options open. Use it for what is still being explored.</p>
-      <p class="op-line"><code>~launch{email, waitlist, beta}</code></p>
+      <p class="op-meta"><span class="op-valence">latent wave</span><span>Field ↔ Vantage</span><a class="op-partner" href="#op-perspective" title="Jump to dimensional symmetry partner">↔ @ perspective</a></p>
+      <p class="reads">Holds an uncollapsed path across distance without taking it yet; sits opposite @ perspective, which names who is looking down that thread.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="~draft(studio){rough ~&gt; paced ~&gt; locked}&lt;reel&gt;"></code><button type="button" class="copy-expr" data-copy-line="~draft(studio){rough ~&gt; paced ~&gt; locked}&lt;reel&gt;" aria-label="Copy potential example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="potential" aria-pressed="false">Find on page</button><a href="/build?script=~draft(studio)%7Brough%20~%3E%20paced%20~%3E%20locked%7D%3Creel%3E#build">Edit</a> · <a href="https://factshift.center/?spw=~draft(studio)%7Brough%20~%3E%20paced%20~%3E%20locked%7D%3Creel%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Defers operand evaluation as a thunk, retaining the unreduced search space until demanded by an observer.</p>
       <p class="edges-in"><a href="/learn#act"><span class="n">2</span> act</a> <a href="/learn#point"><span class="n">5</span> point</a></p>
       <p class="in-file" data-in-file="potential"><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>2</span></span></a></p>
@@ -1463,8 +1500,10 @@ you<span data-t="perspective">@</span>guide
     <li id="op-wonder">
       <span class="sigil" data-t="wonder" aria-hidden="true">?</span>
       <p class="name">wonder <code>?</code></p>
-      <p class="reads">Asks a question that evidence can settle.</p>
-      <p class="op-line"><code>?churn[q3]{pricing, onboarding}</code></p>
+      <p class="op-meta"><span class="op-valence">open aperture</span><span>Aperture ↔ Impulse</span><a class="op-partner" href="#op-action" title="Jump to dimensional symmetry partner">↔ ! action</a></p>
+      <p class="reads">Opens an inquiry or conditional gate without forcing closure; balances ! action, which collapses possibility into an observable move.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="?pacing[scene_3]{watch_muted; check_beat}&lt;cut&gt;"></code><button type="button" class="copy-expr" data-copy-line="?pacing[scene_3]{watch_muted; check_beat}&lt;cut&gt;" aria-label="Copy wonder example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="wonder" aria-pressed="false">Find on page</button><a href="/build?script=%3Fpacing%5Bscene_3%5D%7Bwatch_muted%3B%20check_beat%7D%3Ccut%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%3Fpacing%5Bscene_3%5D%7Bwatch_muted%3B%20check_beat%7D%3Ccut%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Dispatches a conditional predicate, evaluating the contingent branch once the interrogative precondition holds.</p>
       <p class="edges-in"><a href="/learn#act"><span class="n">2</span> act</a> <a href="/learn#ask"><span class="n">6</span> ask</a></p>
       <p class="in-file" data-in-file="wonder" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
@@ -1472,8 +1511,10 @@ you<span data-t="perspective">@</span>guide
     <li id="op-action">
       <span class="sigil" data-t="action" aria-hidden="true">!</span>
       <p class="name">action <code>!</code></p>
-      <p class="reads">Does something, so you can see what changed.</p>
-      <p class="op-line"><code>!ship{pricing_page}</code></p>
+      <p class="op-meta"><span class="op-valence">kinetic impulse</span><span>Aperture ↔ Impulse</span><a class="op-partner" href="#op-wonder" title="Jump to dimensional symmetry partner">↔ ? wonder</a></p>
+      <p class="reads">Commits a state change so its consequence becomes observable; completes ? wonder by crossing from inquiry into effect.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="!render(final)[4k]{picture, mix ~&gt; master}&lt;delivery&gt;"></code><button type="button" class="copy-expr" data-copy-line="!render(final)[4k]{picture, mix ~&gt; master}&lt;delivery&gt;" aria-label="Copy action example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="action" aria-pressed="false">Find on page</button><a href="/build?script=!render(final)%5B4k%5D%7Bpicture%2C%20mix%20~%3E%20master%7D%3Cdelivery%3E#build">Edit</a> · <a href="https://factshift.center/?spw=!render(final)%5B4k%5D%7Bpicture%2C%20mix%20~%3E%20master%7D%3Cdelivery%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Forces eager evaluation of its operand, committing the state transformation and returning the actualized value.</p>
       <p class="edges-in"><a href="/learn#act"><span class="n">2</span> act</a> <a href="/learn#ask"><span class="n">6</span> ask</a></p>
       <p class="in-file" data-in-file="action" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
@@ -1481,32 +1522,40 @@ you<span data-t="perspective">@</span>guide
     <li id="op-value">
       <span class="sigil" data-t="value" aria-hidden="true">*</span>
       <p class="name">value <code>*</code></p>
-      <p class="reads">Marks what matters most.</p>
-      <p class="op-line"><code>*metric{activation}</code></p>
+      <p class="op-meta"><span class="op-valence">precipitated mass</span><span>Worth ↔ Carrier</span><a class="op-partner" href="#op-substrate" title="Jump to dimensional symmetry partner">↔ $ substrate</a></p>
+      <p class="reads">Materializes what carries concrete worth or salience here; pairs with $ substrate, which names the physical cost or ground carrying it.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="*proof(print)[laminated]{front, back, colophon}&lt;folio&gt;"></code><button type="button" class="copy-expr" data-copy-line="*proof(print)[laminated]{front, back, colophon}&lt;folio&gt;" aria-label="Copy value example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="value" aria-pressed="false">Find on page</button><a href="/build?script=*proof(print)%5Blaminated%5D%7Bfront%2C%20back%2C%20colophon%7D%3Cfolio%3E#build">Edit</a> · <a href="https://factshift.center/?spw=*proof(print)%5Blaminated%5D%7Bfront%2C%20back%2C%20colophon%7D%3Cfolio%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Evaluates the operand to canonical normal form, recording the stabilized invariant into an addressable register.</p>
       <p class="in-file" data-in-file="value" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
     </li>
     <li id="op-ground">
       <span class="sigil" data-t="ground" aria-hidden="true">.</span>
       <p class="name">ground <code>.</code></p>
-      <p class="reads">Names the defaults everyone already assumes.</p>
-      <p class="op-line"><code>.brand{voice, colors}</code></p>
+      <p class="op-meta"><span class="op-valence">noble baseline</span><span>Resonance ↔ Ground</span><a class="op-partner" href="#op-vibration" title="Jump to dimensional symmetry partner">↔ # vibration</a></p>
+      <p class="reads">Settles attention back to the local default or center of gravity; anchors # vibration, which projects an address outward so others can find it.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr=".palette(neutral_paper)[daylight]{ink, ground, edge}&lt;surface&gt;"></code><button type="button" class="copy-expr" data-copy-line=".palette(neutral_paper)[daylight]{ink, ground, edge}&lt;surface&gt;" aria-label="Copy ground example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="ground" aria-pressed="false">Find on page</button><a href="/build?script=.palette(neutral_paper)%5Bdaylight%5D%7Bink%2C%20ground%2C%20edge%7D%3Csurface%3E#build">Edit</a> · <a href="https://factshift.center/?spw=.palette(neutral_paper)%5Bdaylight%5D%7Bink%2C%20ground%2C%20edge%7D%3Csurface%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Traverses a qualified property path or dereferences the scoped baseline context from the active lexical environment.</p>
       <p class="in-file" data-in-file="ground" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
     </li>
     <li id="op-ascension">
       <span class="sigil" data-t="integration" aria-hidden="true">^</span>
       <p class="name">ascension <code>^</code></p>
-      <p class="reads">Gathers parts into a whole you can inspect.</p>
-      <p class="op-line"><code>^funnel{visit, signup, paid}</code></p>
+      <p class="op-meta"><span class="op-valence">vertical synthesis</span><span>Lift ↔ Confluence</span><a class="op-partner" href="#op-subject" title="Jump to dimensional symmetry partner">↔ &amp; subject</a></p>
+      <p class="reads">Lifts separate parts onto a higher register as one inspectable whole; complements &amp; subject, which binds parallel streams laterally.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="^sequence(episode_04){cold_open; turn; close}&lt;arc&gt;"></code><button type="button" class="copy-expr" data-copy-line="^sequence(episode_04){cold_open; turn; close}&lt;arc&gt;" aria-label="Copy ascension example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="integration" aria-pressed="false">Find on page</button><a href="/build?script=%5Esequence(episode_04)%7Bcold_open%3B%20turn%3B%20close%7D%3Carc%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%5Esequence(episode_04)%7Bcold_open%3B%20turn%3B%20close%7D%3Carc%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Encapsulates operands into an integrated compound record bounded by unified relational type constraints.</p>
       <p class="in-file" data-in-file="ascension"><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>1</span></span></a></p>
     </li>
     <li id="op-vibration">
       <span class="sigil" data-t="vibration" aria-hidden="true">#</span>
       <p class="name">vibration <code>#</code></p>
-      <p class="reads">Gives something a name, so it can be found and linked.</p>
-      <p class="op-line"><code>#&gt;q3_launch</code></p>
+      <p class="op-meta"><span class="op-valence">harmonic address</span><span>Resonance ↔ Ground</span><a class="op-partner" href="#op-ground" title="Jump to dimensional symmetry partner">↔ . ground</a></p>
+      <p class="reads">Calls a structure by resonant name (#&gt;, #:, #!) so tools and readers can address or echo it across files; balances . ground.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="#&gt;scene_beat[audio]{room_tone, dialogue}"></code><button type="button" class="copy-expr" data-copy-line="#&gt;scene_beat[audio]{room_tone, dialogue}" aria-label="Copy vibration example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="vibration" aria-pressed="false">Find on page</button><a href="/build?script=%23%3Escene_beat%5Baudio%5D%7Broom_tone%2C%20dialogue%7D#build">Edit</a> · <a href="https://factshift.center/?spw=%23%3Escene_beat%5Baudio%5D%7Broom_tone%2C%20dialogue%7D" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Reduces the structural payload into an addressable register entry registered within the global symbol table.</p>
       <p class="edges-in"><a href="/learn#name"><span class="n">4</span> name</a></p>
       <p class="in-file" data-in-file="vibration"><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>4</span></span></a></p>
@@ -1514,8 +1563,10 @@ you<span data-t="perspective">@</span>guide
     <li id="op-perspective">
       <span class="sigil" data-t="perspective" aria-hidden="true">@</span>
       <p class="name">perspective <code>@</code></p>
-      <p class="reads">Says from where you are looking.</p>
-      <p class="op-line"><code>recruiter@role[frontend]{react}</code></p>
+      <p class="op-meta"><span class="op-valence">observer origin</span><span>Field ↔ Vantage</span><a class="op-partner" href="#op-potential" title="Jump to dimensional symmetry partner">↔ ~ potential</a></p>
+      <p class="reads">Situates the coordinate origin — who or what is looking (Persona@subject, @alias) — giving ~ potential a vantage point to aim from.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="editor@timeline[rough]{pacing, breath}(late_night)&lt;cut&gt;"></code><button type="button" class="copy-expr" data-copy-line="editor@timeline[rough]{pacing, breath}(late_night)&lt;cut&gt;" aria-label="Copy perspective example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="perspective" aria-pressed="false">Find on page</button><a href="/build?script=editor%40timeline%5Brough%5D%7Bpacing%2C%20breath%7D(late_night)%3Ccut%3E#build">Edit</a> · <a href="https://factshift.center/?spw=editor%40timeline%5Brough%5D%7Bpacing%2C%20breath%7D(late_night)%3Ccut%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Projects the operand through a situated observer lens, evaluating expressions relative to that vantage frame.</p>
       <p class="edges-in"><a href="/learn#point"><span class="n">5</span> point</a></p>
       <p class="in-file" data-in-file="perspective"><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>2</span></span></a></p>
@@ -1523,16 +1574,20 @@ you<span data-t="perspective">@</span>guide
     <li id="op-subject">
       <span class="sigil" data-t="subject" aria-hidden="true">&amp;</span>
       <p class="name">subject <code>&amp;</code></p>
-      <p class="reads">Holds several things to one topic.</p>
-      <p class="op-line"><code>&amp;hiring{role, budget, timeline}</code></p>
+      <p class="op-meta"><span class="op-valence">covalent bond</span><span>Lift ↔ Confluence</span><a class="op-partner" href="#op-ascension" title="Jump to dimensional symmetry partner">↔ ^ ascension</a></p>
+      <p class="reads">Binds multiple streams or constraints onto one shared focus without flattening them; pairs laterally with ^ ascension's vertical lift.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="&amp;production{sound, lighting, schedule}&lt;shoot&gt;"></code><button type="button" class="copy-expr" data-copy-line="&amp;production{sound, lighting, schedule}&lt;shoot&gt;" aria-label="Copy subject example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="subject" aria-pressed="false">Find on page</button><a href="/build?script=%26production%7Bsound%2C%20lighting%2C%20schedule%7D%3Cshoot%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%26production%7Bsound%2C%20lighting%2C%20schedule%7D%3Cshoot%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Performs associative unification across arguments, merging congruent predicates into the primary subject register.</p>
       <p class="in-file" data-in-file="subject" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
     </li>
     <li id="op-configuration">
       <span class="sigil" data-t="binding" aria-hidden="true">=</span>
       <p class="name">configuration <code>=</code></p>
-      <p class="reads">Fixes a setting the rest depends on.</p>
-      <p class="op-line"><code>=stack{react, vite}</code></p>
+      <p class="op-meta"><span class="op-valence">fixed coordinate</span><span>Pin ↔ Scale</span><a class="op-partner" href="#op-measure" title="Jump to dimensional symmetry partner">↔ % measure</a></p>
+      <p class="reads">Pins a local parameter or invariant that downstream structure depends on; establishes the fixed reference point that % measure scales against.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="=clock(local)[24fps]{timecode, frame_rate}&lt;spec&gt;"></code><button type="button" class="copy-expr" data-copy-line="=clock(local)[24fps]{timecode, frame_rate}&lt;spec&gt;" aria-label="Copy configuration example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="binding" aria-pressed="false">Find on page</button><a href="/build?script=%3Dclock(local)%5B24fps%5D%7Btimecode%2C%20frame_rate%7D%3Cspec%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%3Dclock(local)%5B24fps%5D%7Btimecode%2C%20frame_rate%7D%3Cspec%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Binds an identifier to an evaluated value within the active register bank, governing downstream parameterization.</p>
       <p class="edges-in"><a href="/learn#name"><span class="n">4</span> name</a></p>
       <p class="in-file" data-in-file="configuration" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
@@ -1540,16 +1595,20 @@ you<span data-t="perspective">@</span>guide
     <li id="op-measure">
       <span class="sigil" data-t="normalize" aria-hidden="true">%</span>
       <p class="name">measure <code>%</code></p>
-      <p class="reads">Measures, so before and after can be compared.</p>
-      <p class="op-line"><code>%conversion{before ~&gt; after}</code></p>
+      <p class="op-meta"><span class="op-valence">scalar gradient</span><span>Pin ↔ Scale</span><a class="op-partner" href="#op-configuration" title="Jump to dimensional symmetry partner">↔ = configuration</a></p>
+      <p class="reads">Compares, weights, or normalizes before and after across a coordinate axis; reads the tension relative to = configuration.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="%contrast(phone)[low_light]{before ~&gt; after}&lt;check&gt;"></code><button type="button" class="copy-expr" data-copy-line="%contrast(phone)[low_light]{before ~&gt; after}&lt;check&gt;" aria-label="Copy measure example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="normalize" aria-pressed="false">Find on page</button><a href="/build?script=%25contrast(phone)%5Blow_light%5D%7Bbefore%20~%3E%20after%7D%3Ccheck%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%25contrast(phone)%5Blow_light%5D%7Bbefore%20~%3E%20after%7D%3Ccheck%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Applies a metric evaluation function across focused registers, computing scalar distance, ratio, or cardinality.</p>
       <p class="in-file" data-in-file="measure" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
     </li>
     <li id="op-substrate">
       <span class="sigil" data-t="substrate" aria-hidden="true">$</span>
       <p class="name">substrate <code>$</code></p>
-      <p class="reads">Names what something runs on: time, money, machines.</p>
-      <p class="op-line"><code>$runway{months, team}</code></p>
+      <p class="op-meta"><span class="op-valence">carrier medium</span><span>Worth ↔ Carrier</span><a class="op-partner" href="#op-value" title="Jump to dimensional symmetry partner">↔ * value</a></p>
+      <p class="reads">Exposes the physical, temporal, or computational medium carrying the work — time, budget, memory, storage, attention; underpins * value.</p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="$budget(sprint)[3_days]{render_time, storage, crew}&lt;runway&gt;"></code><button type="button" class="copy-expr" data-copy-line="$budget(sprint)[3_days]{render_time, storage, crew}&lt;runway&gt;" aria-label="Copy substrate example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="substrate" aria-pressed="false">Find on page</button><a href="/build?script=%24budget(sprint)%5B3_days%5D%7Brender_time%2C%20storage%2C%20crew%7D%3Crunway%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%24budget(sprint)%5B3_days%5D%7Brender_time%2C%20storage%2C%20crew%7D%3Crunway%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Materializes underlying runtime metadata, exposing memory layout, latency bounds, and platform resource footprints.</p>
       <p class="in-file" data-in-file="substrate" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
     </li>
@@ -1557,26 +1616,44 @@ you<span data-t="perspective">@</span>guide
   <ul class="braces" id="braces" aria-label="Brace pairs">
     <li id="brace-concept">
       <code class="pair" data-t="b-concept"><span>&lt;</span><span>&gt;</span></code>
-      <span class="brace-reads"><strong>concept</strong> Names the kind of thing, outward channel, or domain boundary — can wrap a concept on its own or sit beside other containers.</span>
+      <span class="brace-reads"><strong>concept</strong> <em>(Domain / channel)</em> Names the kind of thing, outward channel, or domain boundary — can wrap a concept on its own or project outward beside other containers. <button type="button" class="op-find" data-highlight-token="b-concept" aria-pressed="false">Find on page</button></span>
     </li>
     <li id="brace-scene">
       <code class="pair" data-t="b-scene"><span>(</span><span>)</span></code>
-      <span class="brace-reads"><strong>scene</strong> Sets where or when the line happens — before a word, after a body, or alone as a witnessed moment.</span>
+      <span class="brace-reads"><strong>scene</strong> <em>(Space-time witness)</em> Stages where or when the line happens — before a word, after a body, or alone as an observable midprocess moment. <button type="button" class="op-find" data-highlight-token="b-scene" aria-pressed="false">Find on page</button></span>
     </li>
     <li id="brace-mode">
       <code class="pair" data-t="b-mode"><span>[</span><span>]</span></code>
-      <span class="brace-reads"><strong>mode</strong> Selects a stance, lens, or schema key while leaving sibling options visible.</span>
+      <span class="brace-reads"><strong>mode</strong> <em>(Lens / schema key)</em> Selects a stance, variant, or schema coordinate while leaving sibling options visible. <button type="button" class="op-find" data-highlight-token="b-mode" aria-pressed="false">Find on page</button></span>
       <span class="edges-in"><a href="/learn#hold"><span class="n">3</span> hold</a> <a href="/learn#ask"><span class="n">6</span> ask</a></span>
     </li>
     <li id="brace-definition">
       <code class="pair" data-t="b-direction"><span>{</span><span>}</span></code>
-      <span class="brace-reads"><strong>definition</strong> Holds what lives inside: commas for company, semicolons for sequence, ~&gt; for a path, or nested containers governed by this boundary.</span>
+      <span class="brace-reads"><strong>definition</strong> <em>(Interior topology)</em> Bounds what lives inside (opening { leans objective, closing } leans subjective): commas hold company, semicolons order stages, ~&gt; relays a path, or nested containers sit inside. <button type="button" class="op-find" data-highlight-token="b-direction" aria-pressed="false">Find on page</button></span>
       <span class="edges-in"><a href="/learn#hold"><span class="n">3</span> hold</a> <a href="/learn#ask"><span class="n">6</span> ask</a></span>
     </li>
   </ul>
   <p class="note"><a href="/forms/">Forms, side by side</a>: each brace, join and mark against its neighbors. Marks and braces compose: <code><span data-t="vibration">#</span><span data-t="b-mode">[</span>…<span data-t="b-mode">]</span></code> is a set, <code><span data-t="ground">.</span><span data-t="b-direction">{</span>…<span data-t="b-direction">}</span></code> a property sheet.</p>
 </section>
 </div>
+<aside class="interpret-dock" data-interpret-dock role="region" aria-label="Selected Spw mark" hidden>
+  <div class="interpret-dock-head">
+    <span class="interpret-dock-sigil" data-dock-sigil></span>
+    <strong data-dock-name></strong>
+    <span class="interpret-dock-meta" data-dock-meta></span>
+    <button type="button" class="copy-expr interpret-dock-close" data-dock-close aria-label="Clear highlight">×</button>
+  </div>
+  <p class="interpret-dock-reads" data-dock-reads></p>
+  <div class="interpret-dock-actions">
+    <button type="button" data-dock-prev aria-label="Previous match">↑ Prev</button>
+    <button type="button" data-dock-next aria-label="Next match">↓ Next</button>
+    <span class="interpret-dock-count" data-dock-count></span>
+    <button type="button" data-dock-copy>Copy line</button>
+    <a data-dock-def href="#operators">Definition</a>
+    <a data-dock-partner href="#operators" hidden></a>
+    <a data-dock-canvas href="https://factshift.center" target="_blank" rel="noopener" hidden>Canvas ↗</a>
+  </div>
+</aside>
 
 <section id="ways" class="band" aria-labelledby="ways-title">
   <h2 id="ways-title">Tools<a class="self" href="#ways" aria-labelledby="ways-title">#</a></h2>
@@ -2838,6 +2915,173 @@ document.documentElement.dataset.panels = "write act hold name point ask grow";
     say(`Downloaded ${downloadName}.`);
   });
 })();
+(function interactiveInterpretations(catalog) {
+  const byToken = new Map(catalog.map((item) => [item.token, item]));
+  const dock = document.querySelector("[data-interpret-dock]");
+  const exprs = [...document.querySelectorAll("[data-spw-expr]")];
+  const cards = [...document.querySelectorAll("#operators li[id], #braces li[id]")];
+  let activeToken = "";
+  let matches = [];
+  let cursor = 0;
+
+  const clear = () => {
+    activeToken = "";
+    matches = [];
+    cursor = 0;
+    for (const el of exprs) {
+      delete el.dataset.spwMatch;
+      delete el.dataset.spwCurrent;
+    }
+    for (const card of cards) delete card.dataset.spwActive;
+    for (const btn of document.querySelectorAll("[data-highlight-token]")) btn.setAttribute("aria-pressed", "false");
+    if (dock) dock.hidden = true;
+  };
+
+  const renderDock = (item, line) => {
+    if (!dock || !item) return;
+    const set = (sel, text) => { const n = dock.querySelector(sel); if (n) n.textContent = text; };
+    const sigil = dock.querySelector("[data-dock-sigil]");
+    if (sigil) {
+      sigil.textContent = item.sigil;
+      sigil.dataset.t = item.token;
+    }
+    set("[data-dock-name]", item.name);
+    set("[data-dock-meta]", item.meta);
+    set("[data-dock-reads]", item.reads);
+    set("[data-dock-count]", matches.length ? `${cursor + 1} / ${matches.length} on page` : "0 matches");
+    const defLink = dock.querySelector("[data-dock-def]");
+    if (defLink) defLink.href = `#${item.id}`;
+    const partnerLink = dock.querySelector("[data-dock-partner]");
+    if (partnerLink) {
+      if (item.partnerId) {
+        partnerLink.hidden = false;
+        partnerLink.href = `#${item.partnerId}`;
+        partnerLink.textContent = `↔ ${item.partnerLabel}`;
+      } else {
+        partnerLink.hidden = true;
+      }
+    }
+    const copyBtn = dock.querySelector("[data-dock-copy]");
+    const activeLine = line || matches[cursor]?.dataset.spwExpr || item.line || "";
+    if (copyBtn) {
+      copyBtn.dataset.copyLine = activeLine;
+      copyBtn.hidden = !activeLine;
+      copyBtn.textContent = "Copy line";
+    }
+    const canvasLink = dock.querySelector("[data-dock-canvas]");
+    if (canvasLink) {
+      if (activeLine && !activeLine.includes("\n")) {
+        canvasLink.hidden = false;
+        canvasLink.href = `https://factshift.center/?spw=${encodeURIComponent(activeLine)}`;
+      } else {
+        canvasLink.hidden = true;
+      }
+    }
+    const prevBtn = dock.querySelector("[data-dock-prev]");
+    const nextBtn = dock.querySelector("[data-dock-next]");
+    if (prevBtn) prevBtn.disabled = matches.length < 2;
+    if (nextBtn) nextBtn.disabled = matches.length < 2;
+    dock.hidden = false;
+  };
+
+  const focusMatch = (index, scroll = true) => {
+    if (!matches.length) return;
+    cursor = ((index % matches.length) + matches.length) % matches.length;
+    matches.forEach((el, i) => {
+      if (i === cursor) el.dataset.spwCurrent = "true";
+      else delete el.dataset.spwCurrent;
+    });
+    const el = matches[cursor];
+    if (scroll && el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    renderDock(byToken.get(activeToken), el?.dataset.spwExpr || "");
+  };
+
+  const activate = (token, { sourceExpr = null, scroll = false } = {}) => {
+    const item = byToken.get(token);
+    if (!item) return;
+    if (activeToken === token && !sourceExpr) {
+      clear();
+      return;
+    }
+    activeToken = token;
+    matches = exprs.filter((el) => el.querySelector(`[data-t="${CSS.escape(token)}"]`));
+    for (const el of exprs) {
+      if (matches.includes(el)) el.dataset.spwMatch = "true";
+      else delete el.dataset.spwMatch;
+      delete el.dataset.spwCurrent;
+    }
+    for (const card of cards) {
+      if (card.id === item.id) card.dataset.spwActive = "true";
+      else delete card.dataset.spwActive;
+    }
+    for (const btn of document.querySelectorAll("[data-highlight-token]")) {
+      btn.setAttribute("aria-pressed", String(btn.dataset.highlightToken === token));
+    }
+    const idx = sourceExpr ? Math.max(0, matches.indexOf(sourceExpr)) : 0;
+    cursor = idx;
+    if (matches[cursor]) matches[cursor].dataset.spwCurrent = "true";
+    renderDock(item, sourceExpr?.dataset.spwExpr || matches[cursor]?.dataset.spwExpr || item.line || "");
+    if (scroll && matches[cursor]) matches[cursor].scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const copyText = async (button, text) => {
+    if (!text) return;
+    const prev = button.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      button.textContent = "Copied";
+      setTimeout(() => { button.textContent = prev; }, 1400);
+    } catch {
+      button.textContent = "Select to copy";
+      setTimeout(() => { button.textContent = prev; }, 1400);
+    }
+  };
+
+  document.addEventListener("click", (event) => {
+    const copyBtn = event.target.closest("[data-copy-line]");
+    if (copyBtn) {
+      event.preventDefault();
+      copyText(copyBtn, copyBtn.dataset.copyLine);
+      return;
+    }
+    const hlBtn = event.target.closest("[data-highlight-token]");
+    if (hlBtn) {
+      event.preventDefault();
+      activate(hlBtn.dataset.highlightToken, { scroll: true });
+      return;
+    }
+    if (event.target.closest("[data-dock-close]")) { clear(); return; }
+    if (event.target.closest("[data-dock-prev]")) { focusMatch(cursor - 1, true); return; }
+    if (event.target.closest("[data-dock-next]")) { focusMatch(cursor + 1, true); return; }
+    const tokenEl = event.target.closest("[data-spw-expr] [data-t]");
+    if (tokenEl && byToken.has(tokenEl.dataset.t)) {
+      event.preventDefault();
+      activate(tokenEl.dataset.t, { sourceExpr: tokenEl.closest("[data-spw-expr]"), scroll: false });
+      return;
+    }
+    const readingRow = event.target.closest("#reading .pairs li, #reading .frames li, #reading .entries li, #reading .facts .q");
+    if (readingRow && !event.target.closest("a")) {
+      const needle = (readingRow.querySelector(".key")?.textContent || readingRow.querySelector(".what")?.textContent || readingRow.textContent || "").replace(/^\[|\]$/g, "").trim();
+      const field = document.getElementById("script");
+      if (needle && field) {
+        const at = field.value.indexOf(needle);
+        if (at >= 0) {
+          const lineStart = field.value.lastIndexOf("\n", at) + 1;
+          const nextNl = field.value.indexOf("\n", at);
+          const lineEnd = nextNl < 0 ? field.value.length : nextNl;
+          field.focus();
+          field.setSelectionRange(lineStart, lineEnd);
+          field.dispatchEvent(new Event("keyup", { bubbles: true }));
+          document.getElementById("try")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && activeToken) clear();
+  });
+})([{"token":"potential","id":"op-potential","sigil":"~","name":"potential","meta":"latent wave · Field ↔ Vantage","reads":"Holds an uncollapsed path across distance without taking it yet; sits opposite @ perspective, which names who is looking down that thread.","line":"~draft(studio){rough ~> paced ~> locked}\u003creel>","partnerId":"op-perspective","partnerLabel":"@ perspective"},{"token":"wonder","id":"op-wonder","sigil":"?","name":"wonder","meta":"open aperture · Aperture ↔ Impulse","reads":"Opens an inquiry or conditional gate without forcing closure; balances ! action, which collapses possibility into an observable move.","line":"?pacing[scene_3]{watch_muted; check_beat}\u003ccut>","partnerId":"op-action","partnerLabel":"! action"},{"token":"action","id":"op-action","sigil":"!","name":"action","meta":"kinetic impulse · Aperture ↔ Impulse","reads":"Commits a state change so its consequence becomes observable; completes ? wonder by crossing from inquiry into effect.","line":"!render(final)[4k]{picture, mix ~> master}\u003cdelivery>","partnerId":"op-wonder","partnerLabel":"? wonder"},{"token":"value","id":"op-value","sigil":"*","name":"value","meta":"precipitated mass · Worth ↔ Carrier","reads":"Materializes what carries concrete worth or salience here; pairs with $ substrate, which names the physical cost or ground carrying it.","line":"*proof(print)[laminated]{front, back, colophon}\u003cfolio>","partnerId":"op-substrate","partnerLabel":"$ substrate"},{"token":"ground","id":"op-ground","sigil":".","name":"ground","meta":"noble baseline · Resonance ↔ Ground","reads":"Settles attention back to the local default or center of gravity; anchors # vibration, which projects an address outward so others can find it.","line":".palette(neutral_paper)[daylight]{ink, ground, edge}\u003csurface>","partnerId":"op-vibration","partnerLabel":"# vibration"},{"token":"integration","id":"op-ascension","sigil":"^","name":"ascension","meta":"vertical synthesis · Lift ↔ Confluence","reads":"Lifts separate parts onto a higher register as one inspectable whole; complements & subject, which binds parallel streams laterally.","line":"^sequence(episode_04){cold_open; turn; close}\u003carc>","partnerId":"op-subject","partnerLabel":"& subject"},{"token":"vibration","id":"op-vibration","sigil":"#","name":"vibration","meta":"harmonic address · Resonance ↔ Ground","reads":"Calls a structure by resonant name (#>, #:, #!) so tools and readers can address or echo it across files; balances . ground.","line":"#>scene_beat[audio]{room_tone, dialogue}","partnerId":"op-ground","partnerLabel":". ground"},{"token":"perspective","id":"op-perspective","sigil":"@","name":"perspective","meta":"observer origin · Field ↔ Vantage","reads":"Situates the coordinate origin — who or what is looking (Persona@subject, @alias) — giving ~ potential a vantage point to aim from.","line":"editor@timeline[rough]{pacing, breath}(late_night)\u003ccut>","partnerId":"op-potential","partnerLabel":"~ potential"},{"token":"subject","id":"op-subject","sigil":"&","name":"subject","meta":"covalent bond · Lift ↔ Confluence","reads":"Binds multiple streams or constraints onto one shared focus without flattening them; pairs laterally with ^ ascension's vertical lift.","line":"&production{sound, lighting, schedule}\u003cshoot>","partnerId":"op-ascension","partnerLabel":"^ ascension"},{"token":"binding","id":"op-configuration","sigil":"=","name":"configuration","meta":"fixed coordinate · Pin ↔ Scale","reads":"Pins a local parameter or invariant that downstream structure depends on; establishes the fixed reference point that % measure scales against.","line":"=clock(local)[24fps]{timecode, frame_rate}\u003cspec>","partnerId":"op-measure","partnerLabel":"% measure"},{"token":"normalize","id":"op-measure","sigil":"%","name":"measure","meta":"scalar gradient · Pin ↔ Scale","reads":"Compares, weights, or normalizes before and after across a coordinate axis; reads the tension relative to = configuration.","line":"%contrast(phone)[low_light]{before ~> after}\u003ccheck>","partnerId":"op-configuration","partnerLabel":"= configuration"},{"token":"substrate","id":"op-substrate","sigil":"$","name":"substrate","meta":"carrier medium · Worth ↔ Carrier","reads":"Exposes the physical, temporal, or computational medium carrying the work — time, budget, memory, storage, attention; underpins * value.","line":"$budget(sprint)[3_days]{render_time, storage, crew}\u003crunway>","partnerId":"op-value","partnerLabel":"* value"},{"token":"b-concept","id":"brace-concept","sigil":"\u003c>","name":"concept","meta":"Domain / channel · objective open → subjective close","reads":"Names the kind of thing, outward channel, or domain boundary — can wrap a concept on its own or project outward beside other containers.","line":"","partnerId":"","partnerLabel":""},{"token":"b-scene","id":"brace-scene","sigil":"()","name":"scene","meta":"Space-time witness · objective open → subjective close","reads":"Stages where or when the line happens — before a word, after a body, or alone as an observable midprocess moment.","line":"","partnerId":"","partnerLabel":""},{"token":"b-mode","id":"brace-mode","sigil":"[]","name":"mode","meta":"Lens / schema key · objective open → subjective close","reads":"Selects a stance, variant, or schema coordinate while leaving sibling options visible.","line":"","partnerId":"","partnerLabel":""},{"token":"b-direction","id":"brace-definition","sigil":"{}","name":"definition","meta":"Interior topology · objective open → subjective close","reads":"Bounds what lives inside (opening { leans objective, closing } leans subjective): commas hold company, semicolons order stages, ~> relays a path, or nested containers sit inside.","line":"","partnerId":"","partnerLabel":""}]);
 (function releaseNotice(pinned, newest) {
   const line = document.querySelector("[data-release-notice]");
   if (!line || new URLSearchParams(location.search).has("parser")) return;
