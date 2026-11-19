@@ -22092,7 +22092,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 /* Variant flavors for different calls (wonder vs action vs operator-forward) */
-:where([data-spw-kind="hook"][data-spw-hook-variant="wonder"], [data-spw-component-kind="hook"][data-spw-hook-variant="wonder"]) {
+:where([data-spw-kind="hook"][data-spw-hook-variant="wonder"]) {
   background: color-mix(
     in srgb,
     var(--component-surface) 91%,
@@ -22100,7 +22100,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   );
 }
 
-:where([data-spw-kind="hook"][data-spw-hook-variant="action"], [data-spw-component-kind="hook"][data-spw-hook-variant="action"]) {
+:where([data-spw-kind="hook"][data-spw-hook-variant="action"]) {
   background: color-mix(
     in srgb,
     var(--component-surface) 92%,
@@ -22109,12 +22109,12 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 /* Gesture-ready state (pairs with brace-gestures armed/charging) */
-:where([data-spw-kind="hook"][data-spw-gesture="armed"], [data-spw-component-kind="hook"][data-spw-gesture="armed"]) {
+:where([data-spw-kind="hook"][data-spw-gesture="armed"]) {
   border-style: dashed;
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 55%, transparent);
 }
 
-:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) :where(.spw-playable-hook, [data-spw-semantic-expression]) {
+:where([data-spw-kind="hook"]) :where(.spw-playable-hook, [data-spw-semantic-expression]) {
   /* Hooks often contain or are the memorable playable line.
      Slightly tighter than base playable-hook for call-to-action density, but respects parent grid constraints. */
   font-weight: 600;
