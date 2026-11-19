@@ -29,9 +29,10 @@ function resolveMode(params = {}, tier = '') {
   return '';
 }
 
+let appliedCaptureMode = false;
+
 export function applyPrecipitationRequest(root = document, search = root.defaultView?.location?.search || '') {
   const html = root.documentElement;
-  const body = root.body;
   if (!html) return null;
 
   const { params } = parseModularQuery(search);
@@ -53,12 +54,18 @@ export function applyPrecipitationRequest(root = document, search = root.default
     reason: 'query-precipitation',
   });
 
+  // Delegate capture-mode updates to kernel/hydration.js (via hydration-passes)
+  // so idle precipitation checks never clobber an explicit clean/study mode.
   if (printReady) {
-    html.setAttribute('data-spw-capture-mode', 'screenshot');
-    body?.setAttribute('data-spw-capture-mode', 'screenshot');
-  } else {
-    html.removeAttribute('data-spw-capture-mode');
-    body?.removeAttribute('data-spw-capture-mode');
+    appliedCaptureMode = true;
+    root.dispatchEvent?.(new CustomEvent('spw:capture-mode-request', {
+      detail: { mode: 'screenshot', source: 'precipitation-request' },
+    }));
+  } else if (appliedCaptureMode) {
+    appliedCaptureMode = false;
+    root.dispatchEvent?.(new CustomEvent('spw:capture-mode-request', {
+      detail: { mode: 'default', source: 'precipitation-request' },
+    }));
   }
 
   return { tier, mode, printReady, params };

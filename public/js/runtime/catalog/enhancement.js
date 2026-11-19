@@ -1573,7 +1573,6 @@ export const ENHANCEMENT_DEFS = [
       'html:structural:data-spw-navigation-locomotion',
       'html:structural:data-spw-navigation-transition',
       'html:structural:data-spw-navigation-section',
-      'html:flourish:data-spw-spell-momentum',
     ],
     evaluates: ['routing'],
     timingArc: 'enhance-navigation',

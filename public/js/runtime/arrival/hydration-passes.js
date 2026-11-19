@@ -11,6 +11,7 @@ import {
   HYDRATION_STATES,
   SPW_HYDRATION_CONTRACT,
   getCurrentHydrationState,
+  setCaptureMode,
 } from '/public/js/kernel/hydration.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 
@@ -67,10 +68,19 @@ export function initHydrationPasses(ctx) {
     syncHydrationPassSurface(event?.detail || {});
   };
 
+  const onCaptureModeRequest = (event) => {
+    const mode = event?.detail?.mode;
+    if (typeof mode === 'string' && mode) {
+      setCaptureMode(mode);
+    }
+  };
+
   document.addEventListener(SPW_HYDRATION_CONTRACT.events.pass, onPass);
+  document.addEventListener('spw:capture-mode-request', onCaptureModeRequest);
 
   return () => {
     document.removeEventListener(SPW_HYDRATION_CONTRACT.events.pass, onPass);
+    document.removeEventListener('spw:capture-mode-request', onCaptureModeRequest);
     if (momentumTimer) window.clearTimeout(momentumTimer);
     momentumTimer = 0;
     const html = document.documentElement;

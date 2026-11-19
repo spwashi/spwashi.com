@@ -256,11 +256,11 @@ function collectPaymentCardHosts(ctx, root) {
 
 export function initPaymentCards(ctx, root) {
     collectPaymentCardHosts(ctx, root).forEach((card) => {
-        const body = card.querySelector('[data-spw-slot="body"]');
-        if (!body) return;
+        const cardBody = card.querySelector('[data-spw-slot="body"]');
+        if (!cardBody) return;
 
-        body.setAttribute('data-spw-region-flow', 'stack');
-        const render = (ids) => renderLinks(body, ids);
+        cardBody.setAttribute('data-spw-region-flow', 'stack');
+        const render = (ids) => renderLinks(cardBody, ids);
         render(getPaymentEnabled());
         attachHoldBehavior(card);
 

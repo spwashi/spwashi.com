@@ -41,7 +41,6 @@ function pulseMomentum(html, phase = 'tuning') {
   writeDatasetValue(html, 'spwSettingsMomentum', 'pulse');
   writeDatasetValue(html, 'spwSpellMomentum', 'tuning');
   writeDatasetValue(html, 'spwSettingsTuningPhase', phase);
-  writeDatasetValue(html, 'spwFreshnessPulse', 'settings-tuning');
 
   if (momentumTimer) window.clearTimeout(momentumTimer);
   const momentumMs = readMomentumMs(html);
@@ -49,7 +48,6 @@ function pulseMomentum(html, phase = 'tuning') {
     delete html.dataset.spwSettingsMomentum;
     delete html.dataset.spwSpellMomentum;
     delete html.dataset.spwSettingsTuningPhase;
-    delete html.dataset.spwFreshnessPulse;
   }, momentumMs);
 }
 

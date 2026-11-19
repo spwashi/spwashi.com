@@ -74,19 +74,30 @@ function initThemeSwatches(root) {
     });
   }
 
-  function onClick(e) {
-    const btn = e.target.closest('[data-theme-set]');
-    if (!btn) return;
-
-    const theme = btn.dataset.themeSet;
+  function applyTheme(theme) {
+    if (!theme) return;
     document.body.dataset.theme = theme;
     syncPressed(theme);
   }
 
+  function onClick(e) {
+    const btn = e.target.closest('[data-theme-set]');
+    if (!btn) return;
+    applyTheme(btn.dataset.themeSet);
+  }
+
+  function onThemeSetEvent(e) {
+    applyTheme(e?.detail?.theme);
+  }
+
   root.addEventListener('click', onClick);
+  document.addEventListener('spw:blog-theme-set', onThemeSetEvent);
   syncPressed();
 
-  return () => root.removeEventListener('click', onClick);
+  return () => {
+    root.removeEventListener('click', onClick);
+    document.removeEventListener('spw:blog-theme-set', onThemeSetEvent);
+  };
 }
 
 /* ==========================================================================

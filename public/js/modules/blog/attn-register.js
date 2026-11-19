@@ -440,11 +440,9 @@ export function initAttnRegister(ctx, root, options = {}) {
 
     const current = body.dataset.theme || 'atelier-light';
     const next = current === 'atelier-light' ? 'atelier-dark' : 'atelier-light';
-    body.dataset.theme = next;
-
-    document.querySelectorAll('[data-theme-set]').forEach((button) => {
-      button.setAttribute('aria-pressed', String(button.dataset.themeSet === next));
-    });
+    document.dispatchEvent(new CustomEvent('spw:blog-theme-set', {
+      detail: { theme: next, source: 'attn-register' },
+    }));
   }
 
   function maybeRefreshFromMutations(mutations) {
