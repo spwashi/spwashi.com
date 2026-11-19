@@ -72,7 +72,7 @@
                 data-spw-promptability="visible"
                 data-spw-collectability="high"
                 data-spw-seed="page_tools_spw_parser__hero"
-                data-spw-semantic-expression="proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>"
+                data-spw-semantic-expression="^parser(browser){ source ~&gt; tokens ~&gt; ast }&lt;exact&gt;"
                 data-spw-region-purpose="public-spine"
                 data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <h1 id="parser-title">Literal Spw Parser</h1>
-                <p id="parser-lede" data-spw-textual-role="lede" data-spw-copy-unit="parser.hook.lede" data-spw-semantic-expression="proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>">This is the parser, running in your browser. Edit Spw on the left and inspect its live outline, tokens, AST, diagnostics, and exact reconstruction right beside it.</p>
+                <p id="parser-lede" data-spw-textual-role="lede" data-spw-copy-unit="parser.hook.lede" data-spw-semantic-expression="!parse{ source; tokens; ast; reconstruction }">This is the parser, running in your browser. Edit Spw on the left and inspect its live outline, tokens, AST, diagnostics, and exact reconstruction right beside it.</p>
                 <p class="literal-parser-intro-note">Runs the pinned <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> reader shared with <a href="https://spw.quest/parser/">spw.quest</a>. Pick a starter scene, click a specimen from across the site, or open any local <code>.spw</code> file.</p>
                 <nav class="frame-operators" aria-label="Parser proof routes">
                     <a class="spw-chip" data-spw-handle="true" href="#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@parse_source</a>

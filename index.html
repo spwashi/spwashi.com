@@ -96,7 +96,7 @@
         aria-labelledby="home-title"
         aria-describedby="home-frame-note"
         data-spw-region="hook"
-        data-spw-semantic-expression="home[hook]{orient}<atlas>"
+        data-spw-semantic-expression="#&gt;home_frame{ software, art, spw }&lt;atlas&gt;"
         data-spw-region-purpose="public-spine"
         data-spw-region-role="entry-spine"
         data-spw-form="brace"
@@ -143,17 +143,17 @@
                     </span>
                 </a>
 
-                <p id="home-frame-note" data-spw-textual-role="lede" data-spw-copy-unit="home.hook.lede" data-spw-semantic-expression="home[hook]{software.art.practice}(atlas)<person>">
+                <p id="home-frame-note" data-spw-textual-role="lede" data-spw-copy-unit="home.hook.lede" data-spw-semantic-expression="spwashi@home{ software, art, print } ~&gt; &lt;tradition&gt;">
                     <span id="home-lede-atlas" data-spw-copy-unit="home.hook.lede.atlas">Software architecture, laminated printwork, and plain-text notation turning loose ideas into runnable handles.</span>
-                    <span class="spw-interactive-expression" data-spw-interactive-expression="true" data-spw-expression-key="home-seed-expression" title="Click to inspect boundary geometry or edit">home[hook]{software.art.practice}(atlas)&lt;person&gt;</span>
+                    <span class="spw-interactive-expression" data-spw-interactive-expression="true" data-spw-expression-key="home-seed-expression" title="Click to inspect or edit">spwashi@home{ software, art, print } ~&gt; &lt;tradition&gt;</span>
                     <span id="home-lede-traditions" data-spw-copy-unit="home.hook.lede.traditions">Repeated patterns become a <a href="/topics/fields/culture/">tradition</a>.</span>
                     <span id="home-lede-rooms" data-spw-copy-unit="home.hook.lede.rooms">Visit <a href="/about/">About</a>, <a href="/now/">Now</a>, <a href="/topics/">Topics</a>, <a href="/play/">Play</a>, or <a href="/services/">Services</a>.</span>
                 </p>
                 <form class="spw-paste" id="home-paste" action="/tools/spw-parser/" method="get" data-paste-open="page" aria-labelledby="home-paste-label" data-spw-bare-spw="enhance">
                     <label class="spw-paste__title" id="home-paste-label" for="home-paste-source"><strong>Live seed · edit any line:</strong> This page, written in Spw. Tweak a line, inspect it in the split-pane parser, or open it as a visual canvas.</label>
                     <textarea class="spw-paste__field" id="home-paste-source" name="spw_source" rows="5" spellcheck="false" autocomplete="off" autocapitalize="off">#&gt;home_frame
-home[hook]{software.art.practice}(atlas)&lt;person&gt;
-home[live]{season.close}(production)&lt;now&gt;
+spwashi@home{ software, art, print } ~&gt; &lt;tradition&gt;
+(production)season{ oct; nov; close }&lt;now&gt;
 .about @now &lt;topics&gt; ~play @services
 ^"note"{ stayed = ?["what stayed"] }</textarea>
                     <input type="hidden" name="spw_source_name" value="pasted.spw">
@@ -167,11 +167,11 @@ home[live]{season.close}(production)&lt;now&gt;
                     </div>
                     <div class="spw-paste__out" data-paste-out aria-live="polite"></div>
                 </form>
-                <p class="home-hero-note" id="home-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.note" data-spw-semantic-expression="prompt[seed]{inspect.prime.rehearse}<workbench>">
+                <p class="home-hero-note" id="home-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.note" data-spw-semantic-expression="~prompt{ inspect; prime; rehearse }&lt;workbench&gt;">
                     <span id="home-note-terms" data-spw-copy-unit="home.hook.note.terms">Underlined terms are <a href="#living-concepts" class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true">living concepts</a> — tap to inspect, press-and-hold to carry between rooms.</span>
                     <span id="home-note-atlas" data-spw-copy-unit="home.hook.note.atlas"><a href="#living-concepts">Jump to the atlas</a>.</span>
                 </p>
-                <p class="home-live-note home-production-note" id="home-live-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.live" data-spw-semantic-expression="home[live]{season.close}(production)<now>">
+                <p class="home-live-note home-production-note" id="home-live-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.live" data-spw-semantic-expression="(production)season{ oct; nov; close }&lt;now&gt;">
                     <span id="home-live-season" data-spw-copy-unit="home.hook.live.season"><span class="spw-living-term" data-spw-living-term data-spw-concept="release-cycle" data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron" title="Production season runs from October 1 to the New Year; closes land on the 13th and the 26th.">Production season</span> (<time datetime="2026-10-01">Oct 1</time>–New Year, closing every 13th &amp; 26th):</span>
                     <span id="home-live-octvember" data-spw-copy-unit="home.hook.live.octvember">October seeded <a href="/holidays/costuming/">costume sheets</a>, <a href="/play/rpg-wednesday/#inktober-31">Inktober scans</a>, and <a href="/topics/fields/culture/">culture motifs</a>;</span>
                     <span id="home-live-book" data-spw-copy-unit="home.hook.live.book">November unfolds Book Two for <a href="/about/domains/lore.land/">lore.land</a> (opened Nov 5).</span>
@@ -214,7 +214,7 @@ home[live]{season.close}(production)&lt;now&gt;
                     </div>
                     <div class="mode-panels" data-spw-feature="home-perspective-panels" data-spw-pack-region="body" aria-live="polite">
                         <section class="mode-panel" id="home-lens-reading" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
-                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.reading" data-spw-semantic-expression="home[reading]{craft}&lt;entry&gt;">
+                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.reading" data-spw-semantic-expression="(reading)craft{ notes, essays, kitchen }">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="reading">.reading</span>: Field notes, essays, and studio traditions built to be revisited — centering <a href="#card-entry-components">component architecture</a> and <a href="#card-entry-recipes">the test kitchen</a>.
                             </p>
                             <p class="hook-sub">
@@ -224,7 +224,7 @@ home[live]{season.close}(production)&lt;now&gt;
                             <p class="home-seat-line" data-spw-operator="ground" aria-label="This seat as one Spw line: the seat, what it holds, where it leads"><code><span class="home-seat-line__subject">home</span><span class="home-seat-line__mode" title="the seat you chose">[reading]</span><span class="home-seat-line__body" title="what this seat holds; words you hold on other pages join it here">{<span class="home-seat-line__held">craft</span>}</span><a class="home-seat-line__next" href="/topics/craft/" title="where this seat leads">&lt;entry&gt;</a></code></p>
                         </section>
                         <section class="mode-panel" id="home-lens-systems" data-mode-group="home-lens" data-mode-panel="systems" data-spw-role="schema" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.systems" data-spw-semantic-expression="home[systems]{parser}&lt;inspect&gt;">
+                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.systems" data-spw-semantic-expression="^systems{ grammar, parsers, components }&lt;inspect&gt;">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="systems">^systems</span>: Plain-text Spw grammar, zero-framework engines, and browser-native parsers — spotlighting <a href="#card-entry-components">the component stack</a>.
                             </p>
                             <p class="hook-sub">
@@ -234,7 +234,7 @@ home[live]{season.close}(production)&lt;now&gt;
                             <p class="home-seat-line" data-spw-operator="integration" aria-label="This seat as one Spw line: the seat, what it holds, where it leads"><code><span class="home-seat-line__subject">home</span><span class="home-seat-line__mode" title="the seat you chose">[systems]</span><span class="home-seat-line__body" title="what this seat holds; words you hold on other pages join it here">{<span class="home-seat-line__held">parser</span>}</span><a class="home-seat-line__next" href="/topics/software/spw/" title="where this seat leads">&lt;inspect&gt;</a></code></p>
                         </section>
                         <section class="mode-panel" id="home-lens-play" data-mode-group="home-lens" data-mode-panel="play" data-spw-role="scenario" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.play" data-spw-semantic-expression="home[play]{table}&lt;session&gt;">
+                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.play" data-spw-semantic-expression="~play(wednesday){ table; canon; lore }">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="play">~play</span>: RPG Wednesday campaigns, character sheets, and shared world lore — spotlighting <a href="#card-entry-rpgw">the table</a>, <a href="#town-library-gateway">the Town Library</a>, and <a href="#wonder-rewards">skill thanks</a>.
                             </p>
                             <p class="hook-sub">
@@ -244,7 +244,7 @@ home[live]{season.close}(production)&lt;now&gt;
                             <p class="home-seat-line" data-spw-operator="potential" aria-label="This seat as one Spw line: the seat, what it holds, where it leads"><code><span class="home-seat-line__subject">home</span><span class="home-seat-line__mode" title="the seat you chose">[play]</span><span class="home-seat-line__body" title="what this seat holds; words you hold on other pages join it here">{<span class="home-seat-line__held">table</span>}</span><a class="home-seat-line__next" href="/play/rpg-wednesday/" title="where this seat leads">&lt;session&gt;</a></code></p>
                         </section>
                         <section class="mode-panel" id="home-lens-studio" data-mode-group="home-lens" data-mode-panel="studio" data-spw-role="projection" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.studio" data-spw-semantic-expression="home[studio]{commission}&lt;offer&gt;">
+                            <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.studio" data-spw-semantic-expression="@studio{ briefs, prints, editions }">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="studio">@studio</span>: Commissions, prototypes, and tactile print editions — spotlighting <a href="#card-entry-recipes">the kitchen</a>, <a href="#card-entry-texture">texture surfaces</a>, <a href="#home-folios">studio scans</a>, and <a href="#local-record-thesis">local records</a>.
                             </p>
                             <p class="hook-sub">
