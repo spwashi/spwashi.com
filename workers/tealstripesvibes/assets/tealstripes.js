@@ -8,6 +8,7 @@ import { FACETS, LOCK, facetChips, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf,
 import { hasSetRing, mountSetRing, nearestLight, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
 import { mountTextScale } from "/text-scale.js";
+import { mountCleanStill } from "/clean-still.js";
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
@@ -470,6 +471,7 @@ let sleepTimer = 0;
 const setUi = (state) => { root.dataset.ui = state; };
 function wake() {
   if (root.dataset.ui === "held") return;
+  if (root.dataset.still === "plate") { clearTimeout(sleepTimer); setUi("awake"); return; }
   setUi("awake");
   clearTimeout(sleepTimer);
   sleepTimer = setTimeout(() => {
@@ -705,3 +707,12 @@ addEventListener("appinstalled", () => { keepButton.hidden = true; });
 
 // spwashi.com's pinch on the card's words sizes them; the stripes keep their own pinch (text-scale.js).
 mountTextScale(document.getElementById("card"));
+mountCleanStill({
+  key: "p",
+  idleMs: 4500,
+  onChange: (mode) => {
+    if (mode === "pure") { clearTimeout(sleepTimer); setUi("held"); }
+    else if (mode === "plate") { clearTimeout(sleepTimer); setUi("awake"); }
+    else { setUi("awake"); wake(); }
+  },
+});

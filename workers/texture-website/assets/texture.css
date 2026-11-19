@@ -232,6 +232,24 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
 .swatch { display: inline-flex; align-items: center; gap: 0.45rem; text-decoration: none; padding: 0.15rem 0.4rem 0.15rem 0.15rem; border: 1px solid var(--faint); font-size: 0.88rem; }
 .swatch:hover { border-color: var(--rule); }
 .swatch img { width: 32px; height: 32px; display: block; outline: 1px solid var(--faint); }
+.still-context { display: none; margin: 0.75rem auto 0; max-width: 48rem; }
+.still-prompt { margin: 0 0 0.3rem; font: 1.05rem/1.4 Georgia, "Iowan Old Style", serif; color: var(--ink); }
+.still-spw { display: block; font: 0.82rem/1.4 var(--mono); color: var(--muted); }
+
+/* Clean still capture (clean-still.js): show only the active texture stage and chosen context, hiding all unselected options. */
+:root[data-still] .views,
+:root[data-still] .tile-toggle,
+:root[data-still] .caption,
+:root[data-still] .layer-bar,
+:root[data-still] .ladders,
+:root[data-still] .pivots,
+:root[data-still] .card,
+:root[data-still] .catalog { display: none; }
+:root[data-still] main { max-width: 56rem; padding-top: 16px; }
+:root[data-still="plate"] .still-context { display: block; }
+:root[data-still="pure"] .slide-head,
+:root[data-still="pure"] .still-context { display: none; }
+:root[data-still="pure"] .slide { border-top: 0; }
 @media (pointer: coarse) {
   .rungs button, .rungs a, .views a, .ext, .pivot button, .pivot-link, .tools button, .spw-persona-btn, .spw-slot, .tile-toggle, .layer-input, .layer-add, .layer-reset, .rel-select, .catalog-filters button { min-height: 44px; }
 }

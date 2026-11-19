@@ -98,6 +98,7 @@ const PAGE = `<!doctype html>
   <title>texture.website</title>
   <meta name="description" content="A studio for building material prompts: words in the address become materials, ladders of words tune scale, light, wear, process, scene and format.">
   <link rel="stylesheet" href="/texture.css">
+  <link rel="stylesheet" href="/clean-still.css">
   <script type="module" src="/texture.js"></script>
 </head>
 <body>
@@ -107,6 +108,7 @@ const PAGE = `<!doctype html>
       <nav class="views" aria-label="Views"><a href="/">texture.website</a>${Object.entries(VIEWS).map(([key, v]) => `<a href="/${key}@/">${escapeHtml(v.name)}</a>`).join("")}</nav>
       <header class="slide-head"><span class="fig">Fig.</span> <span class="title">texture.website</span> <span class="when"></span> <button type="button" class="tile-toggle" aria-pressed="false" title="Inspect 2×2 tile repeat and seam lines">2×2 tile</button></header>
       <div class="stage" aria-label="A sketch of the prompt"><div class="layers"></div><div class="seam-grid" aria-hidden="true"></div><p class="bubble" hidden></p></div>
+      <div class="still-context" aria-label="Active composition context"></div>
       <figcaption class="caption">A studio for building material prompts. Each word in the address is a material; each ladder is a word in the sentence.</figcaption>
       <div class="layer-bar" aria-label="Material layers" hidden></div>
     </figure>
@@ -144,8 +146,10 @@ function headersFile() {
 
 export async function carried() {
   const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
+  const shared = await Promise.all(["clean-still.js", "clean-still.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
     ...MATERIALS.flatMap((m) => [[`${m.slug}.txt`, starter(m)], [`${m.slug}.spw`, line(m)]]),
+    ...shared,
     ["vocabulary.json", `${JSON.stringify(vocabulary, null, 2)}\n`],
     ["index.html", PAGE],
     ["llms.txt", LLMS],

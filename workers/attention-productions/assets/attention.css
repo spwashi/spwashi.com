@@ -187,3 +187,23 @@ footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 /* The viewfinder keeps its light's easing as it takes the set's pinch (pinch.css). */
 .viewfinder.pinchable { touch-action: pan-x pan-y; transition: --key 0.9s ease, --fill 0.9s ease, --second 0.9s ease, scale 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
 .viewfinder.pinchable[data-pinching] { transition: --key 0.9s ease, --fill 0.9s ease, --second 0.9s ease; }
+
+/* Clean still capture (clean-still.js): strip unselected options and drag chrome for prompt-ready screenshots. */
+:root[data-still] .head,
+:root[data-still] .label,
+:root[data-still] .note,
+:root[data-still] .subject-bar,
+:root[data-still] .slip-actions,
+:root[data-still] .more,
+:root[data-still] .takes,
+:root[data-still] .ladders,
+:root[data-still] .held,
+:root[data-still] footer,
+:root[data-still] .viewfinder .ring,
+:root[data-still] .viewfinder .lamp,
+:root[data-still] .viewfinder .bar,
+:root[data-still] .viewfinder .beat,
+:root[data-still] .viewfinder .hand { display: none; }
+:root[data-still] main { max-width: 56rem; padding-top: 1.25rem; }
+:root[data-still] .shot { grid-template-columns: 1fr; margin-bottom: 0; }
+:root[data-still="pure"] .take { display: none; }

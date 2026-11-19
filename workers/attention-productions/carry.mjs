@@ -127,6 +127,7 @@ async function page(c, v) {
   <link rel="stylesheet" href="/set-ring.css">
   <link rel="stylesheet" href="/pinch.css">
   <link rel="stylesheet" href="/text-scale.css">
+  <link rel="stylesheet" href="/clean-still.css">
   <script src="/text-scale-head.js"></script>
   <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
   <script type="module" src="/attention.js"></script>
@@ -222,7 +223,7 @@ export async function carried() {
   const vocabulary = { site: "attention.productions", note: "a draft vocabulary; Midjourney parameters change between versions, so each source says where to check", ladders: v.LADDERS, phrases: v.PHRASES, ratios: v.RATIOS, subject: v.DEFAULT_SUBJECT, materials: "https://texture.website/vocabulary.json", sources: v.SOURCES };
   const shared = await Promise.all(SHARED.map(async (file) => [file, await readFile(path.join(HERE, "src", file), "utf8")]));
   // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
-  for (const file of ["set-ring.js", "set-ring.css", "pinch.js", "pinch.css", "text-scale.js", "text-scale.css", "text-scale-head.js"]) shared.push([file, await readFile(path.join(HERE, "../lib", file), "utf8")]);
+  for (const file of ["set-ring.js", "set-ring.css", "pinch.js", "pinch.css", "text-scale.js", "text-scale.css", "text-scale-head.js", "clean-still.js", "clean-still.css"]) shared.push([file, await readFile(path.join(HERE, "../lib", file), "utf8")]);
   return [
     ...shared,
     ["index.html", await page(helpers, v)],

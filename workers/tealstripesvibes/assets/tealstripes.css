@@ -94,3 +94,15 @@ details p { margin: 6px 0 0; color: var(--muted); font: 11.5px/1.5 ui-monospace,
 /* The card is built in px, so the set's text size (text-scale.css) zooms it, never wider than the screen; the root keeps its size, so nothing in rem is scaled twice. */
 :root[data-text-scale] { font-size: 100%; }
 .card { zoom: var(--text-scale, 1); max-width: calc((100vw - 32px) / var(--text-scale, 1)); }
+
+/* Clean still capture (clean-still.js): in plate mode strip unselected facets, buttons, and menus so only the active vibe context sits over the stripes; in pure mode hide the card completely. */
+:root[data-still="plate"] .card dl,
+:root[data-still="plate"] .card nav,
+:root[data-still="plate"] .card #grammar,
+:root[data-still="plate"] .card #held,
+:root[data-still="plate"] .card #tune,
+:root[data-still="plate"] .card #share,
+:root[data-still="plate"] .card .status,
+:root[data-still="plate"] .card .keep { display: none; }
+:root[data-still="plate"] .card { width: min(19rem, calc(100vw - 32px)); padding: 12px 14px; }
+:root[data-still="pure"] .card { opacity: 0; pointer-events: none; }
