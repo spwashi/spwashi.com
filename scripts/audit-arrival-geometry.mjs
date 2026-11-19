@@ -30,7 +30,7 @@ export const PASSIVE_MOUNT_PHASES = Object.freeze(new Set([
 
 export const LAYOUT_MUTATING_PROPERTY_RE = /^(container-type|container|display|position|width|height|inline-size|block-size|min-width|max-width|min-height|max-height|min-inline-size|max-inline-size|min-block-size|max-block-size|padding|padding-|margin|margin-|gap|row-gap|column-gap|grid-template|grid-column|grid-row|flex|flex-direction|flex-wrap|align-self|justify-self|font-size|line-height|content)$/;
 
-export const INTERACTION_OR_DEBUG_GATE_RE = /(:hover|:focus|:active|data-spw-gesture|data-spw-debug|data-spw-legible|data-spw-inspect|data-state~="active"|data-spw-region-mark|data-spw-region-charge|data-spw-state-inspector|data-spw-cauldron-open|data-spw-open|aria-expanded="true"|aria-pressed="true")/;
+export const INTERACTION_OR_DEBUG_GATE_RE = /(:hover|:focus|:active|data-spw-gesture|data-spw-debug|data-spw-legible|data-spw-inspect|data-spw-module-visuals="on"|data-spw-capture-mode|data-spw-cognitive-handles="on"|data-spw-show-semantic-metadata="on"|data-spw-feature-learning="on"|data-spw-display-layer="(?:inspect|editor)"|data-state~="active"|data-spw-region-mark|data-spw-region-charge|data-spw-state-inspector|data-spw-cauldron-open|data-spw-open|aria-expanded="true"|aria-pressed="true")/;
 
 export function collectPassiveRuntimeAttrs(catalog = MODULE_DEFS) {
   const attrOwners = new Map();
@@ -53,6 +53,12 @@ export function analyzeCssSource(cssText, attrOwners, fileLabel = '<inline>') {
   const ruleRe = /([^{}@;]+)\{([^{}]+)\}/g;
   let match;
 
+  const attrMatchers = [...attrOwners.entries()].map(([attr, owners]) => [
+    attr,
+    owners,
+    new RegExp(`\\[${attr}(?=[\\]=~|^$*\\s])`),
+  ]);
+
   while ((match = ruleRe.exec(cleaned))) {
     const selector = match[1].trim().replace(/\s+/g, ' ');
     const body = match[2];
@@ -67,8 +73,8 @@ export function analyzeCssSource(cssText, attrOwners, fileLabel = '<inline>') {
     }
     if (!props.length) continue;
 
-    for (const [attr, owners] of attrOwners) {
-      if (!selector.includes(`[${attr}`)) continue;
+    for (const [attr, owners, attrRe] of attrMatchers) {
+      if (!attrRe.test(selector)) continue;
       const key = `${attr} :: ${fileLabel}`;
       if (!hits.has(key)) {
         hits.set(key, {
@@ -117,7 +123,7 @@ export function scanArrivalGeometry({ rootDir = ROOT_DIR, catalog = MODULE_DEFS 
 
   for (const absFile of cssFiles) {
     const rel = path.relative(rootDir, absFile).split(path.sep).join('/');
-    if (rel === 'public/css/effects/debug.css') continue;
+    if (rel === 'public/css/effects/debug.css' || rel === 'public/css/modes/capture.css') continue;
     const cssText = fs.readFileSync(absFile, 'utf8');
     findings.push(...analyzeCssSource(cssText, attrOwners, rel));
   }

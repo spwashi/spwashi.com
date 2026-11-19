@@ -56,6 +56,24 @@ test('flags added and grown couplings against baseline while tracking resolved e
   assert.deepEqual(diff.resolved, ['data-spw-old :: old.css']);
 });
 
+test('matches exact attribute boundaries and ignores inspect/capture/editor gates', () => {
+  const owners = collectPassiveRuntimeAttrs([
+    { id: 'short-prefix', when: 'immediate', updates: ['structural:data-spw-op', 'structural:data-spw-module'] },
+  ]);
+  const css = `
+    [data-spw-operator="frame"] { padding: 0.5rem; }
+    [data-spw-module-visuals="on"] .panel { display: grid; }
+    body[data-spw-display-layer="inspect"] [data-spw-op]::before { content: "#"; display: inline-flex; }
+    html[data-spw-capture-mode="study"] [data-spw-module] { padding: 1rem; }
+    [data-spw-op="probe"] { gap: 0.4rem; }
+  `;
+  const findings = analyzeCssSource(css, owners, 'public/css/test.css');
+  assert.equal(findings.length, 1);
+  assert.equal(findings[0].attr, 'data-spw-op');
+  assert.equal(findings[0].count, 1);
+  assert.deepEqual(findings[0].props, ['gap']);
+});
+
 test('foundation.css and frames.css have zero passive layout rules on [data-spw-component-kind]', () => {
   const scan = scanArrivalGeometry();
   const forbidden = scan.findings.filter(
