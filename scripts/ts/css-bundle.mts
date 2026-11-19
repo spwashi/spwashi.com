@@ -2,7 +2,9 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { gzipSync } from 'node:zlib';
 
+import { cssForDelivery } from './css-delivery.mjs';
 import {
   absoluteFromRootHref,
   BEHAVIOR_SCOPE_MODULE_HREF,
@@ -149,9 +151,15 @@ export type CssBundleBuildResult = {
   href: string;
   kind: 'core' | 'route' | 'behavior';
   scope: string;
+  /** Committed bundle bytes (includes literate banners and indentation). */
   bytes: number;
+  /** Delivered bundle bytes (after cssForDelivery strips prose comments & indentation). */
+  deliveredBytes: number;
+  /** Wire bytes (gzip level 9 over delivered CSS). */
+  deliveredGzipBytes: number;
   written: boolean;
   ms: number;
+  /** Soft budget in delivered bytes. */
   budgetBytes: number | null;
   overBudget: boolean;
 };
@@ -252,14 +260,19 @@ async function buildOneBundle(
   }
 
   const bytes = Buffer.byteLength(output, 'utf8');
+  const delivered = cssForDelivery(output);
+  const deliveredBytes = Buffer.byteLength(delivered, 'utf8');
+  const deliveredGzipBytes = gzipSync(delivered, { level: 9 }).length;
   const budgetBytes = budgetForKind(target.kind);
-  const overBudget = budgetBytes != null && bytes > budgetBytes;
+  const overBudget = budgetBytes != null && deliveredBytes > budgetBytes;
 
   return {
     href: target.href,
     kind: target.kind,
     scope: target.scope,
     bytes,
+    deliveredBytes,
+    deliveredGzipBytes,
     written: !options.check && !isFresh,
     ms: Math.round(performance.now() - started),
     budgetBytes,
@@ -425,9 +438,13 @@ Options:
     const suffix = options.check ? '' : result.written ? ' updated' : ' fresh';
     const label = result.href === CORE_BUNDLE_HREF ? 'core' : `${result.kind}:${result.scope}`;
     const budgetNote = result.overBudget
-      ? ` ⚠ over soft budget ${((result.budgetBytes || 0) / 1024).toFixed(0)} KiB`
+      ? ` ⚠ over soft budget ${((result.budgetBytes || 0) / 1024).toFixed(0)} KiB delivered`
       : '';
-    log(`  ${label}: ${(result.bytes / 1024).toFixed(1)} KiB ${result.ms}ms${suffix}${budgetNote}`);
+    log(
+      `  ${label}: ${(result.deliveredBytes / 1024).toFixed(1)} KiB delivered`
+      + ` (${(result.deliveredGzipBytes / 1024).toFixed(1)} KiB gz, ${(result.bytes / 1024).toFixed(1)} KiB src)`
+      + ` ${result.ms}ms${suffix}${budgetNote}`,
+    );
   }
   log(`  runtime: ${behaviorScopeResult.href} (${(behaviorScopeResult.bytes / 1024).toFixed(1)} KiB)${options.check ? '' : behaviorScopeResult.written ? ' updated' : ' fresh'}`);
 

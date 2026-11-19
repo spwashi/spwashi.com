@@ -18,7 +18,7 @@ import {
   routeBundleHref,
   targetsForSourcePaths,
 } from '../typed/css-manifest.mjs';
-import { stripManifestAndImports } from '../typed/css-bundle.mjs';
+import { buildCssBundles, stripManifestAndImports } from '../typed/css-bundle.mjs';
 
 describe('css-manifest incremental filters', () => {
   it('bundle flattening strips layer declarations without consuming layer blocks', () => {
@@ -218,6 +218,20 @@ describe('css-manifest incremental filters', () => {
 
     for (const file of extras) {
       assert.ok(scoped.has(file), `${file} is imported by style.css but has no route/behavior scope`);
+    }
+  });
+
+  it('soft budgets evaluate delivered bytes (comments stripped) rather than committed source bytes', async () => {
+    const results = await buildCssBundles({
+      check: true,
+      only: ['route:website', 'behavior:console'],
+    });
+    assert.equal(results.length, 2);
+    for (const result of results) {
+      assert.ok(result.deliveredBytes > 0 && result.deliveredBytes < result.bytes, `${result.scope} strips prose for delivery`);
+      assert.ok(result.deliveredGzipBytes > 0 && result.deliveredGzipBytes < result.deliveredBytes, `${result.scope} reports wire gzip bytes`);
+      assert.equal(result.overBudget, result.deliveredBytes > result.budgetBytes, `${result.scope} compares budget against deliveredBytes`);
+      assert.equal(result.overBudget, false, `${result.scope} stays under delivered soft budget`);
     }
   });
 });
