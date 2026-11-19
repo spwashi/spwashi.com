@@ -1,0 +1,177 @@
+# Factshift navigation, scrub grains, and operator physics (2026-11-19) — cache
+#
+# Architectural cache for factshift.center: three input arrivals (domain/URL,
+# document, hand-typed Spw), eight directional navigation moves on four spatial
+# axes plus meta inspection, separating canvas vs. frame touches, explicit
+# scrub-layer grain identity (tree, graph/cloud, lines, parts, characters),
+# elemental operator-to-physics mapping, and ecosystem readiness.
+# This file holds design contracts and probes; it does not implement into the app.
+
+#>factshift_navigation_and_physics_2026_11
+#:cache #!factshift #!navigation #!physics #!scrub #!operators
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@paste_grounding: ~"./factshift-paste-grounding-2026-11.spw"
+@substrate_frames: ~"./factshift-substrate-frames-2026-11.spw"
+@motion: ~"./motion-and-marks-2026-11.spw"
+@example_leads: ~"./example-leads-2026-11.spw"
+@expression_variety: ~"./expression-stagnation-and-variety-2026-11.spw"
+@workbench_report: ~"../workbench-report.spw"
+@quest_guide: ~"../../workers/spw-quest/src/guide.js"
+@quest_specimens: ~"../../workers/spw-quest/src/specimens.js"
+@cluster: ~"../../workers/cluster.json"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-19; creator inquiry on domain/document/Spw input support, eight-way navigation, accidental canvas-vs-frame taps, scrub-grain ambiguity (tree vs. cloud vs. lines vs. parts/characters), and operator-to-physics mapping on factshift.center"
+boundary = `Do not implement into workers/factshift-center from this file. Do not add a new data-spw-* family or deploy from this cache. Keep the canvas app's resting layout calm and undoable.`
+
+expression = ~canvas(factshift)[arrivals, grains, physics]{recognize; navigate; settle}<ecosystem>
+
+summary = #[
+  `Recognize input kind before parsing — domain/URL portal, multi-line document topography, or hand-typed Spw expression — and emit a quiet undoable one-line receipt.`,
+  `Map all eight directional moves (into/out of, forward/back, up/down, across, about) onto four spatial axes plus reflexive inspection so visitors never memorize hidden commands.`,
+  `Eliminate accidental canvas-vs-frame taps by making empty canvas taps settle-only and lighting a 2px perimeter seam (with frozen simulation alpha) while the hand holds the frame rim.`,
+  `Eliminate scrub ambiguity by keeping vertical edge rails on one declared collection grain (TREE, NODE, LINE) with an ephemeral thumb-clear badge, while horizontal scrubbing along the held-line bar walks parts/nodes inside one expression and drops to characters on intentional edit.`,
+  `Map the six elemental operator symmetry pairs from @quest_guide onto dual canvas forces, and prepare factshift.center for bcf0da18+ readers, free container order, and symmetric cross-host transport.`,
+][reg=set]
+
+contents = #[
+  ~"./factshift-navigation-and-physics-2026-11.spw#three_arrivals",
+  ~"./factshift-navigation-and-physics-2026-11.spw#directional_navigation",
+  ~"./factshift-navigation-and-physics-2026-11.spw#canvas_vs_frame_seam",
+  ~"./factshift-navigation-and-physics-2026-11.spw#scrub_grains",
+  ~"./factshift-navigation-and-physics-2026-11.spw#operator_physics",
+  ~"./factshift-navigation-and-physics-2026-11.spw#ecosystem_readiness",
+  ~"./factshift-navigation-and-physics-2026-11.spw#wonders",
+  ~"./factshift-navigation-and-physics-2026-11.spw#stream",
+][reg=set]
+
+^"three_arrivals"{
+  id = "fnp-arrivals"
+  rule = `Before running the Spw parser on title or input text, classify what arrived and print a quiet undoable receipt: "read as <kind> · replaced <previous> · ← to go back".`
+
+  domain_or_url: .{
+    input = `spwashi.com, texture.website/sea-glass, spw.quest, https://example.org`
+    problem = `Default lexer slices // as COMMENT and turns bare URLs into single broken nodes.`
+    cluster_peer = `Recognize hosts in @cluster: render a Domain Root Node orbited by known entry doors (manifest, llms.txt, specimens.json, or .spw routes); stepping into a satellite loads its Spw line onto the canvas, and <passage> opens the live site.`
+    external_url = `Create a grounded ~"https://..." reference node that the user can surround with ?probe, @perspective, or {notes} without misparsing.`
+  }[reg=facet]
+
+  pasted_document: .{
+    input = `multi-line .spw file, Markdown, prose notes, image prompt (--ar, ::), or canvas JSON`
+    spw_doc = `Do not explode every line into one hairball. Show a Document Topography view of top-level ^"blocks" / #>frames / headings with a grain badge (Document · 6 frames · 24 lines); stepping into one frame unwraps only that frame while siblings fold to compact rim chips.`
+    non_spw = `Keep prompts and plain prose as one prose node with a clear receipt rather than partial parse fragments.`
+  }[reg=facet]
+
+  hand_typed_spw: .{
+    input = `~draft(studio){rough ~> locked}<reel>`
+    text_face = `Preserve exact monospace columns, syntax paint, and ghost closing braces ([mode], {body}, (scene), <concept>) as rooms open (@substrate_frames).`
+    canvas_face = `Debounce physics preview beside the text so typing never jitters nodes; offer gentle local completions (@perspectives already present, local handles) and live separator micro-topology (, ; ~> .).`
+  }[reg=facet]
+}[reg=facet]
+
+^"directional_navigation"{
+  id = "fnp-directions"
+  claim = `All eight natural prepositions collapse cleanly onto four spatial axes plus reflexive meta inspection.`
+
+  into_out_of: .{
+    axis = `Depth (Grain)`
+    moves = `Document <-> Frame <-> Line <-> Container <-> Part <-> Character`
+    room_rule = `{ } enter room, ( ) gather scene, [ ] peek lens without moving focus, < > pass through to target/host (@paste_grounding#rooms)`
+    gesture = `Enter / Esc, pinch in/out, double-tap node`
+  }[reg=facet]
+
+  forward_back: .{
+    axis = `Time (Thread / Causal Path)`
+    moves = `Held-line history, paste undo, or next/prev step along ~> / ; / >>[date]`
+    gesture = `Left / Right arrows or thread breadcrumb trail`
+  }[reg=facet]
+
+  up_down: .{
+    axis = `Altitude (Hierarchy / Siblings)`
+    moves = `Sibling frames or parts, or climbing toward ^ integration and settling toward . ground`
+    gesture = `Up / Down arrows or vertical left edge rail (one declared grain per rail)`
+  }[reg=facet]
+
+  across: .{
+    axis = `Lateral (Pivot / Symmetry / Peer)`
+    moves = `Same stem in another [mode], operator symmetry partner (~ <-> @, ? <-> !), or same line on a peer host (spw.quest <-> factshift.center <-> spwashi.com)`
+    gesture = `Tab, right edge rail, or pivot ring`
+  }[reg=facet]
+
+  about: .{
+    axis = `Meta (Reflexive Inspection)`
+    moves = `Step beside the current line to read AST/tokens, parse receipt, operator physics, or $substrate cost without losing your seat`
+    gesture = `Space / ? or ephemeral rim hold (releases cleanly on lift)`
+  }[reg=facet]
+}[reg=facet]
+
+^"canvas_vs_frame_seam"{
+  id = "fnp-seam"
+  claim = `Accidental taps happen when blank canvas space and perimeter frame chrome share the same bare-tap behavior.`
+  rules = #[
+    `Empty canvas tap = settle only: deselect the current node or close an ephemeral drawer, never create a node, fire a move, or toggle a tool.`,
+    `Direct node tap selects; drag repositions; double-tap or Enter steps into a { } room or ( ) scene.`,
+    `Touching the Frame rim (title/held-line bar or side scrub rails) lights a crisp 2px perimeter seam and temporarily freezes simulation alpha until finger lift, so the canvas visibly rests while the hand steers the frame.`,
+    `Maintain a 12-16 px dead-zone buffer between active rim scrub zones and outer canvas hitboxes.`,
+  ][reg=set]
+}[reg=facet]
+
+^"scrub_grains"{
+  id = "fnp-grains"
+  claim = `A scrub rail must never silently change which layer it walks. Separate vertical collection scrubbing from horizontal intra-expression scrubbing, and display a thumb-clear ephemeral grain badge while scrubbing.`
+
+  vertical_rail_grains: .{
+    tree = `TREE · 3/14 — directories and .spw files; indented path ticks on the rail`
+    node = `NODE · 2/7 — spatial bodies on the 2D canvas; orbital dots on the rail; spotlight reticle hops node-to-node without jostling layout`
+    line = `LINE · 4/12 — lines inside an open document or thread; ruled horizontal ticks; held line slides with neighbor lines faintly peeking above/below`
+    switch_rule = `Vertical rail stays on one declared grain until the user explicitly steps into/out of (Enter/Esc, pinch, or tapping the grain pill at the rail top).`
+  }[reg=facet]
+
+  horizontal_line_grains: .{
+    part = `PART · [mode] — horizontal scrub along the held-line bar walks tokens/containers (~, (), [], {}, <>), lighting the exact text span and pulsing its matching canvas node simultaneously`
+    char = `CHAR · col 18 — tapping inside the monospace text face (or pausing during fine horizontal scrub) drops to the native browser character caret with canvas physics paused`
+  }[reg=facet]
+}[reg=facet]
+
+^"operator_physics"{
+  id = "fnp-physics"
+  claim = `Each of the six elemental operator symmetry pairs from @quest_guide maps onto a dual physical behavior on the canvas rather than decorative color.`
+
+  field_vantage = `~ potential: elastic dashed tether keeping distance visible without collapsing | @ perspective: focal origin and lens bias foregrounding what that observer sees`
+  aperture_impulse = `? wonder: repulsive clearing halo exposing translucent candidate ghosts | ! action: directional kinetic impulse committing a ghost to solid mass with a set-down ring`
+  resonance_ground = `# vibration: harmonic pulse across matching tags without moving their seats | . ground: high damping and pinning gravity anchoring local defaults`
+  lift_confluence = `^ ascension: foldable parent hull lifting child bodies under one handle | & subject: lateral covalent spring coupling equal-altitude peers`
+  worth_carrier = `* value: elevated salience and inertial mass resisting casual drift | $ substrate: perimeter/bed meter showing cost, time, memory, or byte weight underneath`
+  pin_scale = `= configuration: locked coordinate/parameter invariant | % measure: live differential gradient gauge between poles (before ~> after)`
+
+  interior_separators: .{
+    comma = `equal-radius orbital ring (company, no arrow)`
+    semicolon = `ordered horizontal spine with subtle ordinal ticks (schedule)`
+    relay = `directional flow vector with asymmetric source -> target attraction (~>)`
+    dot = `fused rigid molecule moving as one body (single identifier)`
+  }[reg=facet]
+}[reg=facet]
+
+^"ecosystem_readiness"{
+  id = "fnp-ecosystem"
+  steps = #[
+    `Upgrade bundled reader from 3f53adf2 (2026.11.07-pre.1) to bcf0da18+ with eventPolicy: 'none', tokenSpans(), and spw.pivots/1 (pivotsOf).`,
+    `Support standalone containers (?["question"], (scene), {a, b}), free container order, nested containers, and Persona@subject as first-class spatial assemblies as spw-seed P0 lands (@workbench_report#expression_variety_ast_asymmetry_2026_11_19).`,
+    `Keep symmetric cross-host transport: inbound ?spw= (<=400 chars), #spw64= (full scripts in fragment), spw.quest/canvas?s=<id> redirects (@quest_specimens), plus peer URL ingestion; outbound dual-clipboard (canonical Spw text/plain first + canvas JSON sidecar) and one-click round-trip to spw.quest /pivot and /build.`,
+    `Enforce far cutoffs on forceManyBody and gravityWellForce (@example_leads#tune_rest, #tune_reach) so local edits never scramble distant landmarks, and keep stage chrome clear of the held line for clean phone stills.`,
+  ][reg=set]
+}[reg=facet]
+
+^"wonders"{
+  id = "fnp-wonders"
+  w1 = `?["Does separating vertical collection scrub (TREE/NODE/LINE) from horizontal held-line scrub (PART/CHAR) eliminate grain confusion on a phone within three gestures?"]{ ~#expect: "first-time testers name which grain they are moving without opening a legend" !probe{ "prototype the ephemeral grain pill and horizontal held-line part scrubber on one phone capture and inspect whether the thumb stays clear of the badge" } }`
+  w2 = `?["When a peer URL like spwashi.com/projects/spw-workbench/ is typed into the title bar, should the canvas fetch live metadata via CORS or resolve from a carried cluster index first?"]{ ~#expect: "carried cluster index answers instantaneously offline with 0ms latency, with live fetch strictly opt-in" !probe{ "measure offline arrival for cluster peer URLs against workers/cluster.json and spw.quest/specimens.json" } }`
+}[reg=facet]
+
+^"stream"{
+  >>[2026-11-19 07:22] cache — Recorded factshift.center three-arrival input recognition, eight-way navigation axes, canvas-vs-frame touch seam, five-grain scrub architecture, six-pair operator physics, and ecosystem readiness contract.
+}[reg=facet]
