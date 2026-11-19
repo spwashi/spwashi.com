@@ -15826,11 +15826,12 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 }
 
 :where([data-spw-selection="selected"].spw-delimiter) {
-  padding: 0 3px;
   border-radius: 3px;
   background: color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 18%, transparent);
   color: var(--ink-strong) !important;
-  box-shadow: 0 0 6px color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 32%, transparent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 18%, transparent),
+    0 0 6px color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 32%, transparent);
 }
 
 :where(.spw-delimiter[data-spw-pivot]) {
@@ -16834,7 +16835,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   display: none;
 }
 
-:where(.spw-semantic-seam[data-spw-generated="semantic-chrome"]) {
+:where(.spw-semantic-seam) {
   display: none;
 }
 
@@ -41375,11 +41376,13 @@ a.spw-chip:visited {
   .header-annotation
 )[data-spw-grounded="true"]:not([aria-current="page"])::before {
   content: "";
+  position: absolute;
+  inset-block-start: 0.2rem;
+  inset-inline-end: 0.2rem;
   inline-size: 0.36rem;
   block-size: 0.36rem;
   border-radius: 999px;
-  flex: 0 0 auto;
-  margin-inline-end: 0.14rem;
+  pointer-events: none;
   background:
     radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), transparent 38%),
     color-mix(in oklab, var(--active-op-color, var(--teal)) 72%, transparent);
@@ -45636,7 +45639,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 }
 
 @media (min-width: 68rem) {
-  :where(html[data-spw-page-region-rail="on"]) :where(.spw-page-region-rail) {
+  :where(.spw-page-region-rail:not([hidden])) {
     position: fixed;
     inset-block: calc(var(--header-height, 4rem) + 1rem) max(1rem, env(safe-area-inset-bottom));
     inset-inline-end: max(0.65rem, env(safe-area-inset-right));

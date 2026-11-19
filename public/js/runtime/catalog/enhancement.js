@@ -540,7 +540,6 @@ export const ENHANCEMENT_DEFS = [
     updates: [
       'structural:data-logo-state',
       'structural:data-logo-scroll',
-      'structural:data-spw-kind',
       'flourish:data-spw-touch',
       'flourish:--logo-charge',
     ],

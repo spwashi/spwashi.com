@@ -9,7 +9,7 @@
 }
 
 @media (min-width: 68rem) {
-  :where(html[data-spw-page-region-rail="on"]) :where(.spw-page-region-rail) {
+  :where(.spw-page-region-rail:not([hidden])) {
     position: fixed;
     inset-block: calc(var(--header-height, 4rem) + 1rem) max(1rem, env(safe-area-inset-bottom));
     inset-inline-end: max(0.65rem, env(safe-area-inset-right));

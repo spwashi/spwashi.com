@@ -681,11 +681,13 @@ a.spw-chip:visited {
   .header-annotation
 )[data-spw-grounded="true"]:not([aria-current="page"])::before {
   content: "";
+  position: absolute;
+  inset-block-start: 0.2rem;
+  inset-inline-end: 0.2rem;
   inline-size: 0.36rem;
   block-size: 0.36rem;
   border-radius: 999px;
-  flex: 0 0 auto;
-  margin-inline-end: 0.14rem;
+  pointer-events: none;
   background:
     radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), transparent 38%),
     color-mix(in oklab, var(--active-op-color, var(--teal)) 72%, transparent);
