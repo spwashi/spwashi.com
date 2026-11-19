@@ -1064,6 +1064,12 @@
       "says": "the figure becomes the ground"
     },
     {
+      "id": "tile",
+      "label": "tile",
+      "technique": "tile",
+      "says": "edges meet so the surface repeats"
+    },
+    {
       "id": "permute",
       "label": "permute",
       "technique": "permute",
@@ -1074,6 +1080,12 @@
       "label": "weigh",
       "technique": "weigh",
       "says": "the first material counts twice"
+    },
+    {
+      "id": "exclude",
+      "label": "exclude",
+      "technique": "exclude",
+      "says": "drop one quality with --no (-0.5 weight)"
     },
     {
       "id": "chaos",

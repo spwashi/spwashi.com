@@ -71,6 +71,7 @@ function stateOf(url, vocab) {
     params: { chaos: num("chaos", 0, 100), weird: num("weird", 0, 3000), stylize: num("stylize", 0, 1000), seed: num("seed", 0, 4294967295), raw: q.has("raw"), sref: q.get("sref") === "random" },
     perm: q.get("perm") in vocab.ladders ? q.get("perm") : null,
     weigh: q.has("weigh"),
+    exclude: (q.get("exclude") ?? "").replace(/[^a-z0-9 -]+/gi, "").trim().slice(0, 40),
     layers: read.length ? read : daily(vocab, dayNumber(day)),
     byDay: read.length === 0,
     say: (q.get("say") ?? "").slice(0, 140), as: q.get("as") ?? ".",
@@ -122,7 +123,8 @@ function anatomy(vocab, state) {
 /** The parameters a prompt ends with: the format's, then each pivot that is set. */
 function parameters(vocab, state) {
   const { chaos, weird, stylize, seed, raw, sref } = state.params;
-  return [vocab.formats[state.ladders.format].params, NO,
+  const no = state.exclude ? `${NO}, ${state.exclude}` : NO;
+  return [vocab.formats[state.ladders.format].params, no,
     chaos ? `--chaos ${chaos}` : "", weird ? `--weird ${weird}` : "", stylize !== null && stylize !== 100 ? `--stylize ${stylize}` : "",
     raw ? "--raw" : "", sref ? "--sref random" : "", seed !== null ? `--seed ${seed}` : ""].filter(Boolean).join(" ");
 }
@@ -144,7 +146,7 @@ const spwLine = (state) => {
   const inner = rest.reduceRight((acc, { material, mark }) => `${mark}${material.slug}${acc ? `{${acc}}` : ""}`, "");
   const mode = [state.ladders.light, state.ladders.wear, state.ladders.process].map(slug).join(", ");
   const view = state.view && state.view !== "studio" ? `${state.view}@ ` : "";
-  return `${view}${first.mark}${first.material.slug}[${mode}]${inner ? `{${inner}}` : ""}`;
+  return `${view}${first.mark}${first.material.slug}[${mode}]${inner ? `{${inner}}` : ""}(${slug(state.ladders.scene)})<${slug(state.ladders.format)}>`;
 };
 
 function spwLayersNode(layers) {
@@ -191,9 +193,9 @@ function spwSlotButton(vocab, state, key, onStep) {
       const dx = ev.clientX - lastX;
       lastX = ev.clientX;
       acc += dx;
-      while (Math.abs(acc) >= 26) {
+      while (Math.abs(acc) >= 28) {
         const dir = acc > 0 ? 1 : -1;
-        acc -= dir * 26;
+        acc -= dir * 28;
         moved = true;
         onStep(key, dir, true);
       }
@@ -255,6 +257,14 @@ function spwLineNode(vocab, state, onStep, onCycleView) {
       node("span", { class: "spw-br", "data-op": "direction" }, ["}"]),
     );
   }
+  parts.push(
+    node("span", { class: "spw-br", "data-op": "scene" }, ["("]),
+    spwSlotButton(vocab, state, "scene", onStep),
+    node("span", { class: "spw-br", "data-op": "scene" }, [")"]),
+    node("span", { class: "spw-br", "data-op": "concept" }, ["<"]),
+    spwSlotButton(vocab, state, "format", onStep),
+    node("span", { class: "spw-br", "data-op": "concept" }, [">"]),
+  );
   return node("code", { class: "spw-expr" }, parts);
 }
 
@@ -318,8 +328,10 @@ ${PROCESS[state.ladders.process]}`;
 }
 
 function drawStage(vocab, state) {
-  const p = PERIOD[state.ladders.scale];
-  $(".stage").style.aspectRatio = ASPECT[state.ladders.format];
+  const stage = $(".stage");
+  const tiled = stage.classList.contains("tiled");
+  const p = tiled ? Math.max(6, Math.round(PERIOD[state.ladders.scale] / 2)) : PERIOD[state.ladders.scale];
+  stage.style.aspectRatio = tiled ? "1 / 1" : ASPECT[state.ladders.format];
   $(".layers").replaceChildren(...state.layers.map(({ material, mark }, i) => {
     const pairs = base(material, p);
     const layer = node("div", { class: `layer${vocab.relations[mark]?.drift ? " drift" : ""}` });
@@ -360,6 +372,75 @@ function swapHref(state, index, other) {
   const path = state.layers.map(({ material, mark }, i) => `${mark === "?" ? "%3F" : mark}${i === index ? other.slug : material.slug}`).join("/");
   const view = decodeURIComponent(location.pathname.split("/").filter(Boolean)[0] ?? "").endsWith("@") ? `/${location.pathname.split("/").filter(Boolean)[0]}` : "";
   return `${view}/${path}${location.search}`;
+}
+
+/** Write an updated layers array back into url.pathname while preserving any view prefix. */
+function writeLayersPath(url, state, nextLayers) {
+  const view = state.view ? `/${state.view}@` : "";
+  if (!nextLayers.length) { url.pathname = view ? `${view}/` : "/"; return; }
+  const segments = nextLayers.map(({ material, mark }, i) => {
+    const m = i === 0 ? "" : (mark === "?" ? "%3F" : mark);
+    return `${m}${material.slug}`;
+  });
+  url.pathname = `${view}/${segments.join("/")}`;
+}
+
+/** Inline Material Layer Composer: inspect, reorder relations, remove, or stack new materials without editing the URL bar. */
+function drawLayerBar(vocab, state, url, onUpdate) {
+  const bar = $(".layer-bar");
+  if (!bar) return;
+  bar.hidden = false;
+  const chips = state.layers.map(({ material, mark }, i) => {
+    const items = [];
+    if (i > 0) {
+      const sel = node("select", { class: "rel-select", "aria-label": `Relation before ${material.word}` },
+        Object.entries(vocab.relations).map(([sym, info]) => {
+          const opt = node("option", { value: sym }, [`${sym || "·"} ${info.says}`]);
+          if (sym === mark) opt.selected = true;
+          return opt;
+        }));
+      sel.addEventListener("change", () => {
+        const next = state.layers.map((l, idx) => (idx === i ? { ...l, mark: sel.value } : l));
+        writeLayersPath(url, state, next);
+        onUpdate();
+      });
+      items.push(sel);
+    }
+    items.push(node("span", { class: "layer-word" }, [material.word]));
+    if (state.layers.length > 1) {
+      const rm = node("button", { type: "button", class: "layer-remove", "aria-label": `Remove ${material.word}` }, ["×"]);
+      rm.addEventListener("click", () => {
+        const next = state.layers.filter((_, idx) => idx !== i);
+        writeLayersPath(url, state, next);
+        onUpdate();
+      });
+      items.push(rm);
+    }
+    return node("span", { class: "layer-chip" }, items);
+  });
+  const input = node("input", { type: "text", class: "layer-input", list: "material-list", placeholder: "Add material…", "aria-label": "Add material layer" });
+  const addBtn = node("button", { type: "submit", class: "layer-add" }, ["+ add"]);
+  const form = node("form", { class: "layer-form" }, [input, addBtn]);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const key = slug(input.value);
+    if (!key) return;
+    const found = vocab.materials.find((m) => m.slug === key) ?? { word: input.value.trim(), slug: key, cls: null };
+    const next = [...state.layers, { mark: state.layers.length ? "~" : "", material: found }];
+    writeLayersPath(url, state, next);
+    input.value = "";
+    onUpdate();
+  });
+  const extras = [form];
+  if (!state.byDay) {
+    const reset = node("button", { type: "button", class: "layer-reset" }, ["today"]);
+    reset.addEventListener("click", () => {
+      writeLayersPath(url, state, []);
+      onUpdate();
+    });
+    extras.push(reset);
+  }
+  bar.replaceChildren(node("span", { class: "key" }, ["layers"]), ...chips, ...extras);
 }
 
 /* ── configuration: ladders in three bands ────────────────────── */
@@ -429,6 +510,7 @@ function forget() { try { localStorage.removeItem(LEARNED); } catch { /* nothing
 function pivotValue(state, id) {
   return { chaos: state.params.chaos, weird: state.params.weird, stylize: state.params.stylize, seed: state.params.seed,
     raw: state.params.raw ? "on" : null, sref: state.params.sref ? "on" : null, permute: state.perm, weigh: state.weigh ? "on" : null,
+    tile: state.ladders.format === "tile" ? "on" : null, exclude: state.exclude || null,
     lens: state.ladders.lens !== "none" ? state.ladders.lens : null }[id] ?? null;
 }
 
@@ -468,6 +550,13 @@ function applyPivot(vocab, state, url, p) {
     const marks = state.layers.map(({ mark }) => (mark === "?" ? "%3F" : mark));
     const view = state.view ? `/${state.view}@` : "";
     url.pathname = `${view}/${state.layers.map(({ material }) => material.slug).reverse().map((word, i) => `${marks[i]}${word}`).join("/")}`;
+  } else if (p.id === "tile") {
+    q.set("format", state.ladders.format === "tile" ? "plate" : "tile");
+  } else if (p.id === "exclude") {
+    const first = state.layers[0]?.material;
+    const pool = first?.cls ? vocab.classes[first.cls].qualities : ["glare", "grain", "blur"];
+    const next = pool[pool.indexOf(state.exclude) + 1];
+    if (next) q.set("exclude", next); else q.delete("exclude");
   } else if (p.id === "permute") {
     const keys = ["light", "scale", "process", "scene", "lens"];
     const next = keys[(keys.indexOf(state.perm) + 1)];
@@ -571,6 +660,13 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
   const json = JSON.stringify({ address, layers: state.layers.map(({ material, mark }) => ({ word: material.word, class: material.cls, mark })), ladders: state.ladders, prompts: { midjourney, plain }, spw: line }, null, 2);
   const md = `## ${state.layers.map(({ material }) => material.word).join(" · ")}\n\n${plain}\n\n\`\`\`\n${midjourney}\n\`\`\`\n\n\`${line}\`\n\n${address}\n`;
   const spwFile = `#>texture_card\n#:texture #!${state.ladders.format}\n\n${line}\n\nprompt: "${plain.replaceAll('"', "'")}"\naddress: "${address}"\n`;
+  const primaryListed = state.layers.find(({ material }) => material.cls)?.material ?? null;
+  const cssSnippet = primaryListed
+    ? `background-image: url("${imageOf(primaryListed)}");\nbackground-size: ${PERIOD[state.ladders.scale] * 8}px ${PERIOD[state.ladders.scale] * 8}px;\nbackground-repeat: repeat;`
+    : "";
+  const shotHref = primaryListed ? `https://attention.productions/?material=${primaryListed.slug}` : "https://attention.productions/";
+  const canvasHref = `https://factshift.center/?spw=${encodeURIComponent(line)}`;
+  const questHref = `https://spw.quest/build?script=${encodeURIComponent(line)}`;
   const thumb = node("div", { class: "thumb", "aria-hidden": "true" }, [$(".layers").cloneNode(true)]);
   thumb.style.aspectRatio = $(".stage").style.aspectRatio;
   $(".card").replaceChildren(
@@ -588,7 +684,15 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
     node("div", { class: "card-actions" }, [
       copyButton("midjourney", midjourney),
       ...(images.length ? [copyButton("midjourney + images", `${midjourney} --sref ${images.join(" ")} --sw 250`)] : []),
-      copyButton("prompt", plain), copyButton("spw", line), copyButton("link", address),
+      copyButton("prompt", plain), copyButton("spw", line),
+      ...(cssSnippet ? [copyButton("css", cssSnippet)] : []),
+      copyButton("link", address),
+    ]),
+    node("div", { class: "card-doors" }, [
+      node("span", { class: "key" }, ["open in"]),
+      node("a", { href: shotHref }, ["attention.productions (frame shot) ↗"]),
+      node("a", { href: canvasHref }, ["factshift.center (canvas) ↗"]),
+      node("a", { href: questHref }, ["spw.quest (pivot) ↗"]),
     ]),
     images.length ? node("div", { class: "images" }, [node("span", { class: "key" }, ["images"]), ...state.layers.filter(({ material }) => material.cls).map(({ material }) =>
       node("span", { class: "image-link" }, [node("img", { src: `/${material.slug}.png`, alt: "", width: 40, height: 40 }), node("a", { href: `/${material.slug}.png` }, [material.word]), copyButton("copy image link", imageOf(material))]))]) : "",
@@ -617,6 +721,10 @@ async function main() {
     }
     drawStage(vocab, state);
     drawSlide(vocab, state);
+    drawLayerBar(vocab, state, url, () => {
+      history.replaceState(null, "", url);
+      render();
+    });
     drawPivots(vocab, state, (p) => {
       if (p) applyPivot(vocab, state, url, p);
       history.replaceState(null, "", url);
@@ -668,6 +776,21 @@ async function main() {
       document.querySelector(`.rungs[aria-label="${focusKey}"] [aria-checked="true"]`)?.focus();
     }
   };
+  const tileToggle = $(".tile-toggle");
+  tileToggle?.addEventListener("click", () => {
+    const next = !$(".stage").classList.toggle("tiled");
+    tileToggle.setAttribute("aria-pressed", String(!next));
+    render();
+  });
+  document.querySelector(".catalog-filters")?.addEventListener("click", (e) => {
+    const btn = e.target.closest?.("button[data-class]");
+    if (!btn) return;
+    const chosen = btn.dataset.class;
+    for (const b of document.querySelectorAll(".catalog-filters button")) b.setAttribute("aria-pressed", String(b === btn));
+    for (const article of document.querySelectorAll(".catalog .class[data-class]")) {
+      article.hidden = chosen !== "all" && article.dataset.class !== chosen;
+    }
+  });
   render();
 }
 

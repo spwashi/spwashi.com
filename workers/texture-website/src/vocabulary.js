@@ -148,8 +148,10 @@ export const TECHNIQUES = Object.freeze({
 /** Pivots: one move each that turns a prompt into a neighbouring one, and the technique it teaches. */
 export const PIVOTS = Object.freeze([
   { id: "invert", label: "invert", technique: "describe", says: "the figure becomes the ground" },
+  { id: "tile", label: "tile", technique: "tile", says: "edges meet so the surface repeats" },
   { id: "permute", label: "permute", technique: "permute", says: "one ladder becomes four jobs" },
   { id: "weigh", label: "weigh", technique: "weigh", says: "the first material counts twice" },
+  { id: "exclude", label: "exclude", technique: "exclude", says: "drop one quality with --no (-0.5 weight)" },
   { id: "chaos", label: "chaos", technique: "chaos", says: "results spread apart", steps: [0, 25, 50, 100] },
   { id: "weird", label: "weird", technique: "weird", says: "results turn strange", steps: [0, 250, 1000] },
   { id: "stylize", label: "stylize", technique: "stylize", says: "Midjourney's own taste, more or less", steps: [100, 250, 750, 0] },

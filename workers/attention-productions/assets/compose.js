@@ -188,6 +188,23 @@ export const canvasTextOf = (shot) => `${spwOf(shot)}\nprompt = \`${promptOf(sho
 /** The shot on factshift.center: the fragment never reaches a server. */
 export const canvasHrefOf = (shot) => `https://factshift.center/#spw64=${base64url(canvasTextOf(shot))}`;
 
+/** A three-shot sequence locking the same subject, light, lens, ratio, and surface across establishing -> medium -> close-up. */
+export function beatScriptOf(shot) {
+  const frames = ["establishing", "medium", "close-up"].map((framing) => {
+    const step = { ...shot, shot: framing };
+    return `!shot[${under(step.shot)}]{${step.subject}}(${under(step.light)})<${under(step.lens)}>`;
+  });
+  return [
+    ...frames,
+    `^frame{ =ratio[${shot.ratio}] =focus[${under(shot.focus)}] =light_from[${shot.from}] ~move[${under(shot.move)}] %tempo[${shot.tempo}] }`,
+    ...(shot.material ? [`@material: ~"texture.website/${shot.material.slug}.spw"`] : []),
+    `prompt = \`${promptOf(shot).midjourney}\``,
+  ].join("\n");
+}
+
+/** The three-shot beat opened on factshift.center as a multi-line storyboard script. */
+export const beatHrefOf = (shot) => `https://factshift.center/#spw64=${base64url(beatScriptOf(shot))}`;
+
 /** The viewfinder's canvas, in its own units. */
 export const VIEW = Object.freeze({ w: 1200, h: 800, margin: 56 });
 
