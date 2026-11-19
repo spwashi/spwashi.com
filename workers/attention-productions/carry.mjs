@@ -193,18 +193,22 @@ function llms(v) {
 
 ${BLURB}
 
-The path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
+The path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date; tempo=0.5..2 scales motion speed (rest 1).
 
 ${Object.entries(v.LADDERS).map(([key, words]) => `- ${key}: ${words.join(", ")}`).join("\n")}
-- material: any of texture.website's listed material words (its /vocabulary.json); the prompt then carries --sref with that material's image from texture.website and ${v.STYLE_WEIGHT}.
+- tempo: ${v.TEMPO.min} to ${v.TEMPO.max} in steps of ${v.TEMPO.step} (default ${v.TEMPO.rest}; drawn on the viewfinder bar and written as %tempo[n] in Spw)
+- material: any of texture.website's ${TEXTURE_MATERIALS.length} listed material words (its /vocabulary.json); the prompt then carries --sref with that material's image from texture.website and ${v.STYLE_WEIGHT}.
+
+The page supports inline subject editing, draggable viewfinder handles (focus ring, lamp, tempo bar), horizontal bracket scrubbing across the Spw expression, a six-take A/B comparison strip, and a three-shot storyboard beat (establishing, medium, close-up) that opens directly on factshift.center via #spw64=.
 
 The page writes a Midjourney prompt (--ar in whole numbers, so scope is 239:100; ${v.SOURCES.aspect}), a plain prompt for any model, and Spw lines:
   !shot[close-up]{a laminated folio}(lamplight)<85mm>
-  ^frame{ =ratio[scope] =focus[left_third] ~move[still] }
+  ^frame{ =ratio[scope] =focus[left_third] =light_from[right] ~move[still] %tempo[1] }
+  @material: ~"texture.website/vellum.spw"
 
-Example: ${ORIGIN}/a-laminated-folio?shot=close-up&lens=85mm&light=lamplight&move=dolly-in&ratio=scope&focus=left-third&material=vellum
+Example: ${ORIGIN}/a-laminated-folio?shot=close-up&lens=85mm&light=lamplight&from=right&move=dolly-in&ratio=scope&focus=left-third&material=vellum
 
-Readings: /vocabulary.json (ladders, phrases, ratios), /ecosystem.json (the set).
+Readings: /vocabulary.json (ladders, phrases, ratios), /ecosystem.json (the set), https://texture.website/llms.txt (materials), https://factshift.center/ (spatial canvas), https://spw.quest/llms.txt (Spw grammar).
 `;
 }
 
