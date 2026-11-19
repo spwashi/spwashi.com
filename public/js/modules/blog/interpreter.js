@@ -277,16 +277,16 @@ const BLOG_STATE_TO_BEAT = Object.freeze({
     interpreted: 'commit',
 });
 
-const setInterpreterState = (root, input, output, state, result = EMPTY_RESULT) => {
-    root.dataset.blogState = state;
-    root.dataset.blogLens = result.lens;
-    root.dataset.blogTone = result.tone;
+const setInterpreterState = (hostEl, input, output, state, result = EMPTY_RESULT) => {
+    hostEl.dataset.blogState = state;
+    hostEl.dataset.blogLens = result.lens;
+    hostEl.dataset.blogTone = result.tone;
     const beat = BLOG_STATE_TO_BEAT[state] || 'rest';
-    root.dataset.spwLifecycleBeat = beat;
-    root.dataset.spwLifecycleBeatResolved = beat;
+    hostEl.dataset.spwLifecycleBeat = beat;
+    hostEl.dataset.spwLifecycleBeatResolved = beat;
     input.setAttribute('aria-invalid', state === 'needs-input' ? 'true' : 'false');
     output.setAttribute('aria-busy', state === 'interpreting' ? 'true' : 'false');
-    root.dispatchEvent(new CustomEvent('spw:component-lifecycle', {
+    hostEl.dispatchEvent(new CustomEvent('spw:component-lifecycle', {
         detail: { beat, state, source: 'blog-interpreter' },
         bubbles: true,
     }));

@@ -70,9 +70,9 @@ function relevantToggleKeyForFamily(family = '') {
   return '';
 }
 
-function writeSatchelState(root, entries, reason) {
-  if (!(root instanceof HTMLElement)) return;
-  writeRuntimeDatasetValues(root, entries, {
+function writeSatchelState(satchelEl, entries, reason) {
+  if (!(satchelEl instanceof HTMLElement)) return;
+  writeRuntimeDatasetValues(satchelEl, entries, {
     source: 'state-inspector',
     reason,
   });
@@ -209,17 +209,17 @@ function isMobileSatchelViewport() {
   return isMobileBottomLane();
 }
 
-function clearSatchelInlinePosition(root) {
-  if (!(root instanceof HTMLElement)) return;
-  root.style.position = '';
-  root.style.left = '';
-  root.style.top = '';
-  root.style.right = '';
-  root.style.bottom = '';
-  root.style.transform = '';
-  root.style.inlineSize = '';
-  root.style.maxBlockSize = '';
-  delete root.dataset.spwSatchelRail;
+function clearSatchelInlinePosition(satchelEl) {
+  if (!(satchelEl instanceof HTMLElement)) return;
+  satchelEl.style.position = '';
+  satchelEl.style.left = '';
+  satchelEl.style.top = '';
+  satchelEl.style.right = '';
+  satchelEl.style.bottom = '';
+  satchelEl.style.transform = '';
+  satchelEl.style.inlineSize = '';
+  satchelEl.style.maxBlockSize = '';
+  delete satchelEl.dataset.spwSatchelRail;
 }
 
 function syncInspectorBottomLane(reason = 'state-inspector') {
@@ -293,19 +293,19 @@ function formatPageStateLabel() {
   return bits.join(' · ');
 }
 
-function syncSatchelRoom(root) {
-  if (!(root instanceof HTMLElement)) return;
+function syncSatchelRoom(satchelEl) {
+  if (!(satchelEl instanceof HTMLElement)) return;
 
-  const room = readRoom(root);
-  if (room.family) root.dataset.spwRoomFamily = room.family;
-  else delete root.dataset.spwRoomFamily;
-  if (room.region) root.dataset.spwRoomRegion = room.region;
-  else delete root.dataset.spwRoomRegion;
-  if (room.accent) root.style.setProperty('--spw-room-accent', room.accent);
-  else root.style.removeProperty('--spw-room-accent');
+  const room = readRoom(satchelEl);
+  if (room.family) satchelEl.dataset.spwRoomFamily = room.family;
+  else delete satchelEl.dataset.spwRoomFamily;
+  if (room.region) satchelEl.dataset.spwRoomRegion = room.region;
+  else delete satchelEl.dataset.spwRoomRegion;
+  if (room.accent) satchelEl.style.setProperty('--spw-room-accent', room.accent);
+  else satchelEl.style.removeProperty('--spw-room-accent');
 
   const relevantKey = relevantToggleKeyForFamily(room.family);
-  root.querySelectorAll('[data-spw-state-toggle]').forEach((node) => {
+  satchelEl.querySelectorAll('[data-spw-state-toggle]').forEach((node) => {
     const key = node.getAttribute('data-spw-state-toggle');
     node.dataset.spwRoomRelevant = key && key === relevantKey ? 'true' : 'false';
   });
@@ -316,23 +316,23 @@ function syncSatchelRoom(root) {
   // repeating identical chrome on every route. Attributes only — the panel
   // stays inspectable and CSS can spend them; no generated copy.
   const expr = room.expression;
-  if (expr?.subject) root.dataset.spwRoomSubject = expr.subject;
-  else delete root.dataset.spwRoomSubject;
-  if (expr?.register) root.dataset.spwRoomRegister = expr.register;
-  else delete root.dataset.spwRoomRegister;
-  if (expr?.payload?.length) root.dataset.spwRoomAffords = expr.payload.join(' ');
-  else delete root.dataset.spwRoomAffords;
-  if (expr?.geometry?.formSignature) root.dataset.spwRoomForm = expr.geometry.formSignature;
-  else delete root.dataset.spwRoomForm;
+  if (expr?.subject) satchelEl.dataset.spwRoomSubject = expr.subject;
+  else delete satchelEl.dataset.spwRoomSubject;
+  if (expr?.register) satchelEl.dataset.spwRoomRegister = expr.register;
+  else delete satchelEl.dataset.spwRoomRegister;
+  if (expr?.payload?.length) satchelEl.dataset.spwRoomAffords = expr.payload.join(' ');
+  else delete satchelEl.dataset.spwRoomAffords;
+  if (expr?.geometry?.formSignature) satchelEl.dataset.spwRoomForm = expr.geometry.formSignature;
+  else delete satchelEl.dataset.spwRoomForm;
 }
 
-function syncPageStateAwareness(root) {
-  if (!(root instanceof HTMLElement)) return;
-  const launch = root.querySelector('.spw-state-inspector__launch');
-  const status = root.querySelector('[data-spw-state-inspector-status]');
+function syncPageStateAwareness(satchelEl) {
+  if (!(satchelEl instanceof HTMLElement)) return;
+  const launch = satchelEl.querySelector('.spw-state-inspector__launch');
+  const status = satchelEl.querySelector('[data-spw-state-inspector-status]');
   const label = formatPageStateLabel();
-  root.dataset.spwPageStateMirror = label;
-  syncSatchelRoom(root);
+  satchelEl.dataset.spwPageStateMirror = label;
+  syncSatchelRoom(satchelEl);
   if (launch instanceof HTMLElement) {
     launch.dataset.spwPageStateMirror = label;
     launch.setAttribute(
@@ -340,7 +340,7 @@ function syncPageStateAwareness(root) {
       `Page state ${label}. Drag to reposition on coarse pointers; double-tap area near edges to snap.`
     );
   }
-  if (status instanceof HTMLElement && root.dataset.spwStateInspector !== 'open') {
+  if (status instanceof HTMLElement && satchelEl.dataset.spwStateInspector !== 'open') {
     status.textContent = label;
   }
 }
@@ -350,8 +350,8 @@ function snapSatchelPosition(launch, left, top) {
     return { left, top };
   }
 
-  const root = launch.closest?.(`[${ROOT_ATTR}]`);
-  if (!(root instanceof HTMLElement)) {
+  const satchelEl = launch.closest?.(`[${ROOT_ATTR}]`);
+  if (!(satchelEl instanceof HTMLElement)) {
     return { left, top };
   }
 
@@ -391,7 +391,7 @@ function snapSatchelPosition(launch, left, top) {
     }
   });
 
-  root.dataset.spwSatchelSnap = nearest.edge;
+  satchelEl.dataset.spwSatchelSnap = nearest.edge;
   return { left: nearest.left, top: nearest.top };
 }
 
@@ -441,16 +441,16 @@ function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewp
 
 function applyPositionToLaunch(launch, left, top, fallback = false) {
   if (!launch) return;
-  const root = launch.closest?.(`[${ROOT_ATTR}]`);
-  if (!(root instanceof HTMLElement)) return;
+  const satchelEl = launch.closest?.(`[${ROOT_ATTR}]`);
+  if (!(satchelEl instanceof HTMLElement)) return;
 
-  if (root.dataset.spwSatchelAnchor === 'chrome-rail' || root.dataset.spwStateInspector === 'open') {
+  if (satchelEl.dataset.spwSatchelAnchor === 'chrome-rail' || satchelEl.dataset.spwStateInspector === 'open') {
     if (isMobileSatchelViewport()) return;
   }
 
   const { width: vw, height: vh } = getViewportBox();
   const rect = launch.getBoundingClientRect();
-  const rootRect = root.getBoundingClientRect();
+  const rootRect = satchelEl.getBoundingClientRect();
   const w = rect.width || 120;
   const h = rect.height || 36;
   // The root can never be narrower than the control it holds.
@@ -484,14 +484,14 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
     ? clampedLeft
     : Math.max(margin, Math.min(clampedLeft + w - rootW, vw - rootW - margin));
 
-  root.style.position = 'fixed';
-  root.style.left = `${rootLeft}px`;
-  root.style.top = `${clampedTop}px`;
-  root.style.right = 'auto';
-  root.style.bottom = 'auto';
-  root.style.transform = 'none';
-  root.style.inlineSize = '';
-  root.dataset.spwSatchelRail = rail;
+  satchelEl.style.position = 'fixed';
+  satchelEl.style.left = `${rootLeft}px`;
+  satchelEl.style.top = `${clampedTop}px`;
+  satchelEl.style.right = 'auto';
+  satchelEl.style.bottom = 'auto';
+  satchelEl.style.transform = 'none';
+  satchelEl.style.inlineSize = '';
+  satchelEl.dataset.spwSatchelRail = rail;
 
   launch.style.position = '';
   launch.style.left = '';
@@ -502,35 +502,35 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
 
   if (fallback) {
     // Mark that we're using a user-dragged or restored position
-    root.dataset.spwSatchelPositioned = 'user';
+    satchelEl.dataset.spwSatchelPositioned = 'user';
     launch.dataset.spwSatchelPositioned = 'user';
   }
 }
 
-function snapLaunchToEdge(root, edge = 'bottom-right') {
-  const launch = root?.querySelector?.('.spw-state-inspector__launch');
-  if (!(root instanceof HTMLElement) || !(launch instanceof HTMLElement)) return;
+function snapLaunchToEdge(satchelEl, edge = 'bottom-right') {
+  const launch = satchelEl?.querySelector?.('.spw-state-inspector__launch');
+  if (!(satchelEl instanceof HTMLElement) || !(launch instanceof HTMLElement)) return;
 
-  delete root.dataset.spwSatchelAnchor;
-  root.dataset.spwSatchelRail = edge.includes('left') ? 'left' : 'right';
+  delete satchelEl.dataset.spwSatchelAnchor;
+  satchelEl.dataset.spwSatchelRail = edge.includes('left') ? 'left' : 'right';
   const position = getSatchelSnapPosition(launch, edge);
   applyPositionToLaunch(launch, position.left, position.top, true);
   const settled = launch.getBoundingClientRect();
   savePosition(settled.left, settled.top);
-  root.dataset.spwSatchelSnap = edge;
-  root.dataset.spwSatchelPositioned = 'user';
+  satchelEl.dataset.spwSatchelSnap = edge;
+  satchelEl.dataset.spwSatchelPositioned = 'user';
   launch.dataset.spwSatchelPositioned = 'user';
 }
 
 function resetLaunchToDefault(launch) {
   if (!launch) return;
-  const root = launch.closest?.(`[${ROOT_ATTR}]`);
-  if (root instanceof HTMLElement) {
-    clearSatchelInlinePosition(root);
-    delete root.dataset.spwSatchelPositioned;
-    delete root.dataset.spwSatchelSnap;
-    delete root.dataset.spwSatchelAnchor;
-    delete root.dataset.spwSatchelRail;
+  const satchelEl = launch.closest?.(`[${ROOT_ATTR}]`);
+  if (satchelEl instanceof HTMLElement) {
+    clearSatchelInlinePosition(satchelEl);
+    delete satchelEl.dataset.spwSatchelPositioned;
+    delete satchelEl.dataset.spwSatchelSnap;
+    delete satchelEl.dataset.spwSatchelAnchor;
+    delete satchelEl.dataset.spwSatchelRail;
   }
   launch.style.position = '';
   launch.style.left = '';
@@ -542,15 +542,15 @@ function resetLaunchToDefault(launch) {
   clearSavedPosition();
 }
 
-function restoreSavedLaunchPosition(root) {
-  if (!(root instanceof HTMLElement)) return false;
-  if (root.dataset.spwSatchelPositioned !== 'user') return false;
+function restoreSavedLaunchPosition(satchelEl) {
+  if (!(satchelEl instanceof HTMLElement)) return false;
+  if (satchelEl.dataset.spwSatchelPositioned !== 'user') return false;
 
-  const launch = root.querySelector('.spw-state-inspector__launch');
+  const launch = satchelEl.querySelector('.spw-state-inspector__launch');
   const saved = loadSavedPosition();
   if (!(launch instanceof HTMLElement) || !saved) return false;
 
-  delete root.dataset.spwSatchelAnchor;
+  delete satchelEl.dataset.spwSatchelAnchor;
   applyPositionToLaunch(launch, saved.left, saved.top, true);
   return true;
 }
@@ -719,7 +719,7 @@ function createToggleButton(config) {
 }
 
 function createInspector() {
-  const root = document.createElement('aside');
+  const satchelEl = document.createElement('aside');
   const launch = document.createElement('button');
   const panel = document.createElement('div');
   const title = document.createElement('h2');
@@ -736,12 +736,12 @@ function createInspector() {
   const status = document.createElement('p');
   const close = document.createElement('button');
 
-  root.className = 'spw-state-inspector';
-  root.setAttribute(ROOT_ATTR, '');
-  root.dataset.spwStateInspector = 'closed';
-  root.dataset.spwStateSerialization = 'route runtime accessibility layering interaction';
-  root.dataset.spwDismissible = 'panel';
-  annotateFloatingChromeElement(root, {
+  satchelEl.className = 'spw-state-inspector';
+  satchelEl.setAttribute(ROOT_ATTR, '');
+  satchelEl.dataset.spwStateInspector = 'closed';
+  satchelEl.dataset.spwStateSerialization = 'route runtime accessibility layering interaction';
+  satchelEl.dataset.spwDismissible = 'panel';
+  annotateFloatingChromeElement(satchelEl, {
     role: 'state-inspector',
     island: 'state-satchel',
     tier: 'drawer',
@@ -749,10 +749,10 @@ function createInspector() {
     reason: 'state-inspection-controls',
     stylingAxis: 'state-inspector',
   });
-  root.dataset.spwSnap = 'corners';
-  root.dataset.spwChromeFluid = 'springy';
+  satchelEl.dataset.spwSnap = 'corners';
+  satchelEl.dataset.spwChromeFluid = 'springy';
 
-  syncSatchelMaterial(root, launch, panel);
+  syncSatchelMaterial(satchelEl, launch, panel);
 
   launch.type = 'button';
   launch.className = 'spw-state-inspector__launch';
@@ -855,8 +855,8 @@ function createInspector() {
   shareHost.append(shareKicker, shareNote);
 
   panel.append(title, summary, spwRow, actions, shareHost, positionActions, copy, close, status);
-  root.append(launch, panel);
-  return root;
+  satchelEl.append(launch, panel);
+  return satchelEl;
 }
 
 function ensureSatchelQueryComposer(root) {
@@ -873,20 +873,20 @@ function ensureSatchelQueryComposer(root) {
     });
 }
 
-function setOpen(root, open) {
-  const launch = root.querySelector('.spw-state-inspector__launch');
-  const panel = root.querySelector('.spw-state-inspector__panel');
+function setOpen(satchelEl, open) {
+  const launch = satchelEl.querySelector('.spw-state-inspector__launch');
+  const panel = satchelEl.querySelector('.spw-state-inspector__panel');
   if (!(launch instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
-  root.dataset.spwStateInspector = open ? 'open' : 'closed';
+  satchelEl.dataset.spwStateInspector = open ? 'open' : 'closed';
   launch.setAttribute('aria-expanded', open ? 'true' : 'false');
   panel.hidden = !open;
-  updateStatus(root, open ? 'Satchel opened.' : formatPageStateLabel());
+  updateStatus(satchelEl, open ? 'Satchel opened.' : formatPageStateLabel());
   if (open) {
-    syncPageLine(root);
-    anchorSatchelToChromeRail(root, { open: true });
-    syncControls(root);
-    syncPageStateAwareness(root);
-    ensureSatchelQueryComposer(root);
+    syncPageLine(satchelEl);
+    anchorSatchelToChromeRail(satchelEl, { open: true });
+    syncControls(satchelEl);
+    syncPageStateAwareness(satchelEl);
+    ensureSatchelQueryComposer(satchelEl);
     panel.focus({ preventScroll: true });
     syncInspectorBottomLane('inspector-open');
     return;
@@ -894,26 +894,26 @@ function setOpen(root, open) {
 
   if (isMobileSatchelViewport()) {
     requestAnimationFrame(() => {
-      if (restoreSavedLaunchPosition(root)) {
-        syncPageStateAwareness(root);
+      if (restoreSavedLaunchPosition(satchelEl)) {
+        syncPageStateAwareness(satchelEl);
         syncInspectorBottomLane('inspector-closed-saved');
         return;
       }
-      anchorSatchelToChromeRail(root, { open: false });
-      syncPageStateAwareness(root);
+      anchorSatchelToChromeRail(satchelEl, { open: false });
+      syncPageStateAwareness(satchelEl);
       syncInspectorBottomLane('inspector-closed-mobile');
     });
     return;
   }
 
-  if (restoreSavedLaunchPosition(root)) {
-    syncPageStateAwareness(root);
+  if (restoreSavedLaunchPosition(satchelEl)) {
+    syncPageStateAwareness(satchelEl);
     syncInspectorBottomLane('inspector-closed-saved');
     return;
   }
 
-  delete root.dataset.spwSatchelAnchor;
-  syncPageStateAwareness(root);
+  delete satchelEl.dataset.spwSatchelAnchor;
+  syncPageStateAwareness(satchelEl);
   syncInspectorBottomLane('inspector-closed');
 }
 
@@ -1066,8 +1066,8 @@ const SATCHEL_DRAG_SLOP_PX = 6;
 const SATCHEL_FLING_PROJECTION_MS = 120;
 const SATCHEL_FLING_MAX_PROJECTION_PX = 320;
 
-function bindSatchelDrag(root) {
-  const launch = root.querySelector('.spw-state-inspector__launch');
+function bindSatchelDrag(satchelEl) {
+  const launch = satchelEl.querySelector('.spw-state-inspector__launch');
   if (!launch) return () => {};
 
   let pressed = false;
@@ -1087,7 +1087,7 @@ function bindSatchelDrag(root) {
     dragging = true;
     launch.dataset.spwDragState = 'dragging';
     launch.dataset.spwDragging = 'true'; // the click handler reads this to swallow the post-drag click
-    root.dataset.spwDragState = 'dragging'; // explicit state on container for broader styling
+    satchelEl.dataset.spwDragState = 'dragging'; // explicit state on container for broader styling
     // Mind attentional physics during drag (tap/hold/drag are gestures in the field model; drag here is
     // repositioning the satchel "mass" within the attention field). Use data attrs so CSS/inspect
     // (wonder, ornament) can respond; this makes satchel a first-class participant in cognitive physics.
@@ -1097,7 +1097,7 @@ function bindSatchelDrag(root) {
 
   const onPointerDown = (e) => {
     if (!e.isPrimary || e.button !== 0) return;
-    if (root.dataset.spwStateInspector === 'open') return;
+    if (satchelEl.dataset.spwStateInspector === 'open') return;
 
     pressed = true;
     activePointerId = e.pointerId;
@@ -1164,7 +1164,7 @@ function bindSatchelDrag(root) {
 
     dragging = false;
     launch.dataset.spwDragState = 'idle';
-    delete root.dataset.spwDragState;
+    delete satchelEl.dataset.spwDragState;
     // Clear attentional/gesture markers on release (field model decay; satchel no longer "charged" by the drag gesture).
     delete launch.dataset.spwGesture;
     delete launch.dataset.spwAttention;
