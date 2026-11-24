@@ -147,7 +147,7 @@ async function main() {
     ['workers/mutex-buzz/carry.mjs', '--check'],
     // tealstripesvibes.com's shell, seeds, app files and icons, against src/vibe.js.
     ['workers/tealstripesvibes/carry.mjs', '--check'],
-    // Each held name's door, as the file worker that answers it once its route moves.
+    // Each held name's door, as the file worker that answers its apex.
     ['workers/site-hub-next/carry-doors.mjs', '--check'],
   ];
   for (const args of carried) run(args);

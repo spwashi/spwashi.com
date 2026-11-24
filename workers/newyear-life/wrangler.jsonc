@@ -4,9 +4,9 @@
   "compatibility_date": "2026-11-23",
   "workers_dev": false,
   "preview_urls": false,
-  // Files only. Move this host's route here from site-hub-next in the dashboard.
-  // Until then site-hub-next still renders the door, and that request counts
-  // toward the account's daily Worker limit (error 1027).
+  // Files only. The apex route points here since 2026-11-24.
+  // www.* still points at site-hub-next, which redirects to the apex.
+  // That www request still counts toward the daily Worker limit (error 1027).
   "assets": {
     "directory": "./assets"
   }

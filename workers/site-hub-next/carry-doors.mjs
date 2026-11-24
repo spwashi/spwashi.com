@@ -2,8 +2,9 @@
 // A file cannot see the host, so each origin is its own unit
 // (workers/<host-with-hyphens>/). The account's daily Worker requests are
 // shared (Cloudflare error 1027, HTTP 429 once they are spent). A file is
-// answered at the edge and does not count; this script does. Until a host's
-// route moves in the dashboard, site-hub-next still answers it.
+// answered at the edge and does not count; this script does. Apex routes for
+// the zoned doors point at these units since 2026-11-24. www.* stays on
+// site-hub-next and still redirects to the apex. spwashi.ink has no zone here.
 // --check fails when a carried file differs from what this script answers.
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -31,9 +32,9 @@ export function wranglerFor(id) {
   "compatibility_date": "2026-11-23",
   "workers_dev": false,
   "preview_urls": false,
-  // Files only. Move this host's route here from site-hub-next in the dashboard.
-  // Until then site-hub-next still renders the door, and that request counts
-  // toward the account's daily Worker limit (error 1027).
+  // Files only. The apex route points here since 2026-11-24.
+  // www.* still points at site-hub-next, which redirects to the apex.
+  // That www request still counts toward the daily Worker limit (error 1027).
   "assets": {
     "directory": "./assets"
   }

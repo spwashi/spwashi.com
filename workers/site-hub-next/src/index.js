@@ -3,8 +3,9 @@
  *
  * attention.productions is the pictures. texture.website left for its own
  * files-only unit, workers/texture-website, on 2026-11-11. Each door left for
- * its own files-only unit on 2026-11-23 (carry-doors.mjs); this script still
- * renders one when a route has not moved, and that request counts.
+ * its own files-only unit on 2026-11-23 (carry-doors.mjs). Apex routes for the
+ * zoned doors point at those units since 2026-11-24. This script still renders
+ * a door when a route has not moved, and it still redirects www.* to the apex.
  * A door is one sentence, one place the work already lives, and two neighbors.
  * Does not serve spwashi.com.
  * Do not attach this script to spwashi.com/*.
