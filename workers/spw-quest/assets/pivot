@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en" data-spw-climate="garden">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>spw.quest — pivot a line</title>
+  <meta name="description" content="One line of Spw and the lines one change away from it, each shown before you go, with the way back kept.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://spw.quest/pivot">
+  <link rel="preload" href="/fonts/newsreader-latin.01817351be.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono-latin.2c32b9b3ee.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/quest-192.png">
+  <link rel="apple-touch-icon" href="/icons/quest-180.png">
+  <meta name="apple-mobile-web-app-title" content="spw.quest">
+  <script>(function applyStoredDisplay(key, choices, defaults) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(key) || "{}") || {};
+    for (const [name, values] of Object.entries(choices)) {
+      const value = stored[name];
+      if (values.includes(value) && value !== defaults[name]) document.documentElement.setAttribute(`data-display-${name}`, value);
+    }
+  } catch {
+    // Storage refused or unreadable: the page opens at the defaults.
+  }
+})("spw.quest.display/1", {"size":["70","80","90","100","110","120"],"wrap":["on","off"],"colors":["marks","plain"],"spacing":["compact","regular","roomy"]}, {"size":"100","wrap":"on","colors":"marks","spacing":"regular"});</script>
+  <script>(function recordWalk(key, limit, stepOf) {
+  try {
+    const step = stepOf(location.href);
+    if (!step) return;
+    const kept = JSON.parse(localStorage.getItem(key) || "[]");
+    const steps = Array.isArray(kept) ? kept : [];
+    const last = steps[steps.length - 1];
+    if (last && last.room === step.room && (last.detail || "") === (step.detail || "")) return;
+    steps.push({ ...step, day: new Date().toISOString().slice(0, 10) });
+    localStorage.setItem(key, JSON.stringify(steps.slice(-limit)));
+  } catch {
+    // Storage refused: the walk is simply not kept.
+  }
+})("spw.quest.walk/1", 40, function walkStep(href) {
+  const url = new URL(href, "https://spw.quest");
+  const path = url.pathname;
+  // [room, the parameter that names its word, what kind of word it is]
+  const rooms = {
+    "/": ["guide", "example", "about"],
+    "/learn": ["learn"],
+    "/read": ["learn", "step", "scene"],
+    "/build": ["build", "word", "made"],
+    "/specimens": ["shelf", "q", "asked"],
+    "/pivot": ["pivot", "line", "made"],
+    "/physics": ["physics", "line", "made"],
+    "/constructs": ["constructs"],
+    "/forms/": ["forms"],
+    "/install": ["install"],
+  };
+  let room = rooms[path];
+  if (!room && path.startsWith("/shelf/")) room = ["shelf"];
+  if (!room && path.startsWith("/parser/")) room = ["parser"];
+  if (!room) return null;
+  let raw = room[1] ? url.searchParams.get(room[1]) : "";
+  if (!raw && path === "/build") raw = url.searchParams.get("script");
+  const detail = (String(raw || "").toLowerCase().match(/[a-z][a-z0-9_]*/) || [""])[0].slice(0, 24);
+  return detail ? { room: room[0], detail, kind: room[2] } : { room: room[0] };
+});</script>
+  <script>
+    // esbuild names serialized functions with __name; define it before any inline script in the body runs.
+    var __defProp = (target, prop, desc) => Object.defineProperty(target, prop, desc);
+    var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+  </script>
+  <style>
+    :root { color-scheme: dark; --bg:#0a1012; --fg:#e8eef1; --muted:#8aa0a8; --line:rgba(94,234,212,.2); --accent:#5eead4; --warn:#e7c27a; --storm:#ff8a7a; --surface:#10181b; --field:#0d1416; --radius:1rem; --pill:999px; --font:ui-sans-serif, system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--fg);
+      font: 1rem/1.5 var(--font);
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+    main { width: min(40rem, calc(100% - 1.5rem)); margin: 0 auto; padding: 1.4rem 0 3rem; }
+    body.embed { background: transparent; }
+    body.embed main { width: 100%; max-width: none; padding: .75rem .85rem 1rem; }
+    body.embed h1 { font-size: 1.15rem; margin: 0 0 .3rem; }
+    body.embed article { margin: .3rem 0; padding: .8rem; }
+    body.embed footer, body.embed .kicker { display: none; }
+    h1 { font-size: clamp(1.7rem, 5vw, 2.5rem); letter-spacing: -.04em; line-height: 1.05; margin: .15rem 0 .7rem; }
+    h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+    a { color: var(--accent); }
+    .kicker, footer, .note { color: var(--muted); font-size: .9rem; }
+    .weather { font-size: clamp(2.4rem, 8vw, 4rem); letter-spacing: -.05em; line-height: .95; margin: .2rem 0 .4rem; }
+    .weather[data-weather="haze"] { color: var(--warn); }
+    .weather[data-weather="storm"] { color: var(--storm); }
+    .score { list-style: none; padding: 0; margin: 1rem 0 0; }
+    .score li { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding: .55rem 0; font-variant-numeric: tabular-nums; }
+    .chip { display: inline-block; margin: .15rem .35rem .15rem 0; padding: .35rem .7rem; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; min-height: 44px; line-height: 1.7; }
+    article { border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.15rem; background: var(--surface); margin: 1.2rem 0; }
+    code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: .86em; overflow-wrap: anywhere; }
+    label { display: block; color: var(--muted); font-size: .88rem; margin: 0 0 .35rem; }
+    textarea.prompt, textarea.note, select, input:not(.hp):not([type="radio"]):not([type="checkbox"]) {
+      width: 100%;
+      max-width: 100%;
+      min-height: 44px;
+      padding: .75rem .8rem;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) * .8);
+      background: var(--field);
+      color: var(--fg);
+      font: 1rem/1.45 var(--font);
+    }
+    fieldset { border: 1px solid var(--line); border-radius: 1rem; margin: 0 0 1rem; padding: .8rem 1rem 1rem; }
+    fieldset legend { color: var(--muted); padding: 0 .3rem; }
+    fieldset label { display: flex; align-items: center; gap: .6rem; min-height: 44px; margin: 0; color: var(--fg); }
+    .codeblock { margin: 1rem 0 1.2rem; border: 1px solid var(--line); border-radius: calc(var(--radius) * .9); background: var(--field); overflow: hidden; }
+    .actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .actions button { flex: 1 1 9rem; margin-top: .6rem; }
+    .codeblock figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; min-height: 44px; padding: .25rem .4rem .25rem .85rem; border-bottom: 1px solid var(--line); color: var(--muted); font: .82rem/1.3 ui-monospace, SFMono-Regular, monospace; }
+    .codeblock figcaption a { color: var(--muted); }
+    .codeblock pre { margin: 0; padding: .85rem 1rem 1rem; overflow-x: auto; white-space: pre; font: .84rem/1.6 ui-monospace, SFMono-Regular, monospace; }
+    .codeblock button { margin: 0; min-height: 44px; padding: .35rem .85rem; }
+    textarea.prompt {
+      min-height: 14rem;
+      font: .82rem/1.45 ui-monospace, SFMono-Regular, monospace;
+      resize: vertical;
+    }
+    textarea.note { min-height: 8rem; resize: vertical; }
+    .hp { position: absolute; left: -9999px; }
+    button {
+      appearance: none; margin-top: 1rem; min-height: 44px; padding: .55rem 1.1rem;
+      border-radius: var(--pill); border: 1px solid var(--accent); background: transparent; color: var(--accent);
+      font: inherit; cursor: pointer;
+    }
+    .command { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin: 0; }
+    .command code { font-size: 1rem; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--field); }
+    button.quiet { margin-top: 0; }
+    ol { padding-left: 1.2rem; }
+    ol li { margin: .35rem 0; }
+    button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex="-1"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    [hidden] { display: none !important; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .skip { position: absolute; left: .75rem; top: -4rem; z-index: 2; padding: .6rem 1rem; border-radius: var(--pill); background: var(--bg); border: 1px solid var(--accent); }
+    .skip:focus { top: calc(.75rem + env(safe-area-inset-top)); }
+    main:focus { outline: none; }
+    .js .no-js-only { display: none; }
+    .panel { margin: 1.2rem 0; padding: 1rem 1.1rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .panel > label:not(:first-child), .panel > .hint + label { margin-top: 1rem; }
+    .hint { margin: -.15rem 0 .5rem; color: var(--muted); font-size: .88rem; }
+    .error { margin: 0 0 .5rem; color: var(--storm); font-size: .92rem; font-weight: 600; }
+    [aria-invalid="true"] { border-color: var(--storm) !important; }
+    .error-summary { margin: 1rem 0; padding: .8rem 1rem; border: 2px solid var(--storm); border-radius: var(--radius); }
+    .error-summary p { margin: 0 0 .3rem; font-weight: 600; }
+    .error-summary ul { margin: 0; padding-left: 1.2rem; }
+    .error-summary a { color: var(--fg); }
+    .count { margin: .35rem 0 0; color: var(--muted); font-size: .85rem; font-variant-numeric: tabular-nums; }
+    .count[data-state="short"], .count[data-state="long"] { color: var(--warn); }
+    .choices, fieldset:has(> .choice) { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+    fieldset:has(> .choice) legend { grid-column: 1 / -1; }
+    fieldset label.choice { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: .6rem; min-height: 44px; margin: 0; padding: .6rem .75rem; border: 1px solid var(--line); border-radius: calc(var(--radius) * .8); background: var(--field); cursor: pointer; }
+    label.choice input { margin: .2rem 0 0; width: 1.1rem; height: 1.1rem; accent-color: var(--accent); }
+    label.choice > span { display: grid; gap: .1rem; }
+    label.choice strong { color: var(--fg); font-weight: 600; }
+    label.choice span span { color: var(--muted); font-size: .86rem; line-height: 1.35; }
+    label.choice:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+    label.choice:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+    label.choice.compact span span { display: none; }
+    button.secondary { border-color: var(--line); color: var(--fg); }
+    button[aria-busy="true"] { opacity: .7; cursor: progress; }
+    .preview { padding: 1rem; border: 1px dashed var(--line); border-radius: var(--radius); }
+    .preview iframe { display: block; }
+    .problems { margin: .5rem 0 0; padding-left: 1.2rem; color: var(--warn); }
+    .card-from { color: var(--muted); margin: -.4rem 0 1rem; }
+    .tabs { margin: 1.2rem 0; }
+    .tablist { display: none; }
+    .tabs-ready .tablist { display: flex; flex-wrap: wrap; gap: .25rem; border-bottom: 1px solid var(--line); }
+    .tablist [role="tab"] { margin: 0 0 -1px; min-height: 44px; padding: .5rem 1rem; border: 1px solid transparent; border-bottom: 0; border-radius: calc(var(--radius) * .7) calc(var(--radius) * .7) 0 0; background: transparent; color: var(--muted); }
+    .tablist [role="tab"]:hover { color: var(--fg); }
+    .tablist [role="tab"][aria-selected="true"] { border-color: var(--line); background: var(--bg); color: var(--fg); font-weight: 600; box-shadow: inset 0 2px 0 var(--accent); }
+    .tabpanel { padding: .9rem 0 0; }
+    .tabpanel + .tabpanel { margin-top: 1.4rem; }
+    .tabs-ready .tabpanel + .tabpanel { margin-top: 0; }
+    .tabpanel:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .tabpanel .note { margin: 0 0 .6rem; }
+    label.check { display: flex; align-items: center; gap: .55rem; min-height: 44px; margin: 0; color: var(--fg); font-size: .95rem; cursor: pointer; }
+    label.check input { width: 1.1rem; height: 1.1rem; accent-color: var(--accent); }
+    .send-to { margin: 1.6rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .send-to h2 { margin: 0 0 .4rem; }
+    .send-to .actions .door { margin-top: .6rem; }
+    details { margin: .8rem 0; }
+    summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; color: var(--accent); }
+    .fields { display: grid; grid-template-columns: minmax(7rem, max-content) 1fr; gap: .5rem 1rem; margin: .6rem 0 0; }
+    .fields dt { margin: 0; }
+    .fields dd { margin: 0; color: var(--muted); }
+    @media (max-width: 40rem) { .fields { grid-template-columns: 1fr; } .fields dd { margin-bottom: .4rem; } }
+    .lede { font-size: 1.12rem; line-height: 1.45; margin: 0 0 1rem; }
+    .visit { margin: .15rem 0 .8rem; }
+    .visit a { display: inline-flex; align-items: center; min-height: 44px; }
+    .steps { list-style: none; counter-reset: step; padding: 0; margin: 1.4rem 0 .8rem; display: grid; gap: .7rem; }
+    .steps li { counter-increment: step; display: grid; grid-template-columns: 2rem 1fr; gap: .2rem .6rem; margin: 0; }
+    .steps li::before { content: counter(step); grid-row: span 2; display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--line); border-radius: 50%; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .steps strong { display: block; }
+    .doors { list-style: none; padding: 0; margin: .8rem 0 0; display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+    .doors li { margin: 0; }
+    .door { display: flex; flex-direction: column; justify-content: center; gap: .1rem; min-height: 44px; height: 100%; padding: .6rem .9rem; border: 1px solid var(--line); border-radius: .9rem; text-decoration: none; color: var(--fg); background: var(--field); }
+    .door strong { color: var(--accent); font-weight: 600; }
+    .door span { color: var(--muted); font-size: .9rem; }
+    .door:hover { border-color: var(--accent); }
+    .door[aria-current="page"] { border-color: var(--accent); background: rgba(94,234,212,.08); }
+    .actions .door { flex: 1 1 9rem; margin-top: .6rem; }
+    .card { position: relative; margin: 1.2rem 0; padding: 1.6rem 1.5rem 1.3rem; border: 1px solid var(--accent); border-radius: calc(var(--radius) * 1.2); background: radial-gradient(circle at 90% 5%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 48%), linear-gradient(160deg, var(--surface), var(--field) 60%); box-shadow: 0 16px 45px color-mix(in srgb, var(--accent) 12%, transparent); overflow: hidden; }
+    .card.sample { transform: rotate(-1deg); }
+    @media (prefers-reduced-motion: reduce) { .card.sample { transform: none; } }
+    .card header { display: grid; gap: .45rem; padding-right: 7rem; }
+    .card footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .4rem 1rem; }
+    .card-kind { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
+    .card-site { font-size: clamp(1.3rem, 4.5vw, 1.8rem); font-weight: 650; letter-spacing: -.03em; overflow-wrap: anywhere; }
+    .card-count { margin: 1rem 0 1.1rem; color: var(--fg); line-height: 1.45; }
+    .card-prompt { color: var(--muted); font-style: italic; margin: .5rem 0 0; }
+    .card-note { margin: 1rem 0 1.1rem; padding: 0 0 0 1rem; border-left: 2px solid var(--accent); font-size: 1.12rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .card footer { padding-top: .8rem; border-top: 1px solid var(--line); color: var(--muted); font: .82rem/1.3 ui-monospace, SFMono-Regular, monospace; }
+    .card-address { color: var(--fg); }
+    .card-expression { color: var(--muted); font: .78rem/1.3 ui-monospace, SFMono-Regular, monospace; overflow-wrap: anywhere; }
+    .card-expression:empty, .card-expression[hidden] { display: none; }
+    .card-stamp:empty { display: none; }
+    /* The write form: the type first. Choosing it reveals what will be kept. */
+    fieldset.chips { border: 0; margin: 1rem 0 0; padding: 0; }
+    fieldset.chips legend { padding: 0; margin: 0 0 .4rem; font-size: .88rem; }
+    .chips .row { display: flex; flex-wrap: wrap; gap: .45rem; }
+    label.chip { position: relative; display: inline-flex; align-items: center; min-height: 44px; margin: 0; padding: .4rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: var(--field); color: var(--fg); font-size: .95rem; cursor: pointer; }
+    label.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+    label.chip:has(input:checked) { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+    label.chip:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .page { margin: 1rem 0 0; }
+    .page summary, .page-known { color: var(--muted); font-size: .9rem; }
+    .page-known { margin: 0; }
+    .page-known strong { color: var(--fg); font-weight: 600; }
+    .page details { margin: 0; }
+    .page fieldset { margin-top: .6rem; }
+    .write .threads, .write .asks, .write .stance { display: none; }
+    /* "What is it": one group, captioned rows. */
+    fieldset.what { margin: 0; }
+    .write .what-row { margin: 0 0 .9rem; }
+    .write .row-caption { margin: 0 0 .4rem; color: var(--muted); font-size: .88rem; }
+    .write .clear-row { margin: -.3rem 0 0; }
+    .write .clear-what { min-height: 36px; margin: 0; padding: .2rem .7rem; border-color: transparent; color: var(--muted); font-size: .86rem; }
+    .write .clear-what:hover { color: var(--fg); border-color: var(--line); }
+    .write fieldset.chips legend .hint, .write label .hint, .write summary .hint { margin: 0 0 0 .4rem; font-size: .82rem; }
+    /* The form is the card: the question above it, the note written on it, the header following the choices. */
+    .write .question { display: block; margin: 1.3rem 0 .4rem; color: var(--fg); font-size: 1.05rem; font-weight: 600; }
+    .card.live { margin: 0 0 .4rem; border-style: dashed; box-shadow: none; transition: border-color 180ms ease, box-shadow 220ms ease, transform 220ms ease; }
+    .card.live[data-filled="true"],
+    .write:has(input[name="what"]:checked) .card.live,
+    .card.live:has(.card-write:not(:placeholder-shown)) { border-style: solid; box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent); }
+    .card.live:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent); }
+    .card.live header { padding-right: 0; }
+    .card.live [data-live][data-settle] { animation: af-settle 240ms ease-out; }
+    @keyframes af-settle { from { opacity: .35; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+    .write .card.live textarea.card-write { display: block; width: 100%; min-height: 5.5rem; margin: 1rem 0 .9rem; padding: .1rem 0 .1rem 1rem; border: 0; border-left: 2px solid var(--accent); border-radius: 0; background: transparent; color: var(--fg); font: 1.12rem/1.5 var(--font); resize: vertical; }
+    .write .card.live textarea.card-write:focus { outline: none; }
+    .write .card.live textarea.card-write::placeholder { color: color-mix(in srgb, var(--muted) 80%, transparent); font-style: italic; }
+    .write .card-from-line { margin: -.3rem 0 .9rem; color: var(--muted); }
+    .write .card-from-line input[type="text"] { width: min(100%, 16rem); min-height: 40px; padding: .2rem .15rem; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; color: var(--fg); font: inherit; }
+    .write .card-from-line input[type="text"]:focus { outline: none; border-bottom: 1px solid var(--accent); }
+    .write .send { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1.3rem 0 0; }
+    .write .send button { margin: 0; min-width: 12rem; background: var(--accent); color: var(--bg); font-weight: 650; }
+    .write .courtesy { color: var(--muted); font-size: .88rem; }
+    .write .send button.secondary { margin: 0; }
+    /* Send is always within reach: the row rides the bottom of the screen while the form scrolls. */
+    body.quiet .write .send { position: sticky; bottom: 0; z-index: 3; margin: 1.3rem -.75rem 0; padding: .7rem .75rem calc(.7rem + env(safe-area-inset-bottom)); border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent); background: color-mix(in srgb, var(--bg) 84%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    /* The write page's top gets out of the way: a smaller title, the site link on the kicker line, the subject on one line. */
+    body.quiet .write-title { font-size: clamp(1.45rem, 4.2vw, 2rem); margin-bottom: .4rem; }
+    .write .about-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .5rem; }
+    .write .about-line details[open] { flex-basis: 100%; }
+    .write .about-line summary { display: inline-flex; min-height: 36px; }
+
+    /* ─── autonomous.feedback finish: a quiet room with one lit object in it ─── */
+    body.quiet { background:
+      radial-gradient(52rem 34rem at 88% -12%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 62%),
+      radial-gradient(44rem 30rem at -12% 108%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 62%),
+      var(--bg); background-attachment: fixed; }
+    body.quiet::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    /* Inside someone's page the frame stays transparent: their room, not ours. */
+    body.quiet.embed { background: transparent; }
+    body.quiet.embed::before { display: none; }
+    body.quiet h1 { letter-spacing: -.045em; }
+    /* The card as an object: paper with depth, a kind worn as a small seal, a sheet stack once it has something to say. */
+    body.quiet .card { background:
+      radial-gradient(28rem 18rem at var(--mx, 85%) var(--my, 0%), color-mix(in srgb, #fff 7%, transparent), transparent 60%),
+      linear-gradient(165deg, color-mix(in srgb, var(--surface) 92%, #fff 8%), var(--field) 70%);
+      box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent), 0 24px 48px -28px color-mix(in srgb, var(--accent) 45%, transparent); }
+    body.quiet .card-kind { justify-self: start; padding: .18rem .6rem; border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--accent) 9%, transparent); font-size: .72rem; }
+    /* Tilt only while the pointer is on it, so text at rest stays crisp (a standing 3D layer softens it). */
+    body.quiet .card.live { transition: border-color 180ms ease, box-shadow 220ms ease, transform 260ms cubic-bezier(.2, .8, .3, 1); }
+    body.quiet .card.live[data-tilt] { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+    body.quiet .card.live[data-filled="true"],
+    body.quiet .write:has(input[name="what"]:checked) .card.live,
+    body.quiet .card.live:has(.card-write:not(:placeholder-shown)) {
+      box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent),
+        7px 7px 0 -1px var(--bg), 7px 7px 0 0 color-mix(in srgb, var(--accent) 30%, transparent),
+        14px 14px 0 -1px var(--bg), 14px 14px 0 0 color-mix(in srgb, var(--accent) 16%, transparent),
+        0 30px 60px -30px color-mix(in srgb, var(--accent) 55%, transparent); }
+    body.quiet .card.live:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 30px 60px -30px color-mix(in srgb, var(--accent) 55%, transparent); }
+    /* Chips press like keys. */
+    body.quiet label.chip { transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease, transform 120ms ease; }
+    body.quiet label.chip:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); transform: translateY(-1px); }
+    body.quiet label.chip:active { transform: translateY(0) scale(.97); }
+    body.quiet label.chip:has(input:checked) { background: color-mix(in srgb, var(--accent) 14%, var(--field)); }
+    body.quiet label.chip:has(input:checked) span::before { content: "✓ " / ""; }
+    /* One lit action. */
+    body.quiet .write .send button { position: relative; overflow: hidden; padding-inline: 1.4rem; border: 0;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, var(--fg))); box-shadow: 0 10px 24px -12px var(--accent);
+      transition: transform 140ms ease, box-shadow 200ms ease; }
+    body.quiet .write .send button::after { content: " →"; }
+    body.quiet .write .send button.secondary { border: 1px solid var(--line); background: transparent; color: var(--fg); font-weight: 500; box-shadow: none; }
+    body.quiet .write .send button.secondary::after { content: none; }
+    .write #subjects { margin-bottom: .9rem; }
+    body.quiet .write .send button:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -12px var(--accent); }
+    body.quiet .write .send button:active { transform: translateY(0) scale(.98); }
+    /* A stance reads as a reply. */
+    body.quiet .write .stance { position: relative; margin-top: .9rem; border-left: 0; border-radius: calc(var(--radius) * .7); background: color-mix(in srgb, var(--accent) 8%, var(--field)); }
+    body.quiet .write .stance::before { content: ""; position: absolute; top: -7px; left: 1.4rem; width: 14px; height: 14px; background: inherit; transform: rotate(45deg); }
+    /* For owners: the whole setup is one line. */
+    .snippet-line { margin: .8rem 0; }
+    .snippet-line pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+    @media (prefers-reduced-motion: reduce) {
+      body.quiet .card.live { transform: none; }
+      body.quiet label.chip, body.quiet .write .send button { transition: none; }
+    }
+    /* The homepage's first card: type the site right where its name goes. */
+    .begin .card.live header { gap: .3rem; }
+    .write .card-site-input { width: 100%; min-height: 48px; margin: 0; padding: 0; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; color: var(--fg); font-size: clamp(1.3rem, 4.5vw, 1.8rem); font-weight: 650; letter-spacing: -.03em; }
+    .write input.card-site-input:not(.hp) { padding: 0; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; font-size: clamp(1.3rem, 4.5vw, 1.8rem); }
+    .write input.card-site-input:focus { outline: none; border-bottom-color: var(--accent); }
+    .card-body-hint { margin: 1rem 0 1.1rem; padding-left: 1rem; border-left: 2px solid var(--accent); color: var(--muted); font-size: 1.12rem; font-style: italic; }
+    .try { margin: .8rem 0 2.2rem; color: var(--muted); }
+    .owners { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+    @media (prefers-reduced-motion: reduce) { .card.live, .card.live [data-live][data-settle] { transition: none; animation: none; } }
+    .about-line { margin: 0 0 1rem; }
+    .about-line p { margin: 0; color: var(--muted); }
+    .about-line p strong { color: var(--fg); font-weight: 600; }
+    .about-line details { margin: 0; }
+    .about-line summary { min-height: 36px; font-size: .9rem; }
+    .write .stance { margin: .6rem 0 0; padding: .7rem .9rem; border-left: 2px solid var(--accent); background: var(--field); border-radius: 0 calc(var(--radius) * .6) calc(var(--radius) * .6) 0; font-size: .95rem; }
+    .write .stance .hint { margin: .3rem 0 0; }
+    .write details.asks { margin: 1rem 0 0; }
+    .write details.asks summary { color: var(--accent); }
+    .write details.asks label { margin-top: .7rem; }
+    .write textarea.ask { min-height: 4.5rem; }
+    .card-subject { color: var(--muted); font-size: .92rem; }
+    .card-asks { margin: -.4rem 0 1rem; padding-left: 1rem; border-left: 2px solid var(--line); }
+    .card-asks dt { color: var(--muted); font-size: .88rem; margin-top: .6rem; }
+    .card-asks dd { margin: .15rem 0 0; white-space: pre-wrap; }
+    .owner-thanks { margin: .2rem 0 .8rem; padding: .7rem .9rem; border-left: 2px solid var(--accent); background: var(--surface); border-radius: 0 calc(var(--radius) * .6) calc(var(--radius) * .6) 0; }
+    .stance-reply { margin: 1.2rem 0; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .stance-reply blockquote { margin: .6rem 0; padding-left: 1rem; border-left: 2px solid var(--accent); }
+    .inbox { list-style: none; margin: 0; padding: 0; }
+    .inbox .fresh-mark { margin: 0 0 -.6rem; color: var(--accent); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+    .digest { list-style: none; margin: .4rem 0 .8rem; padding: 0; }
+    .digest li { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .5rem; padding: .45rem 0; border-bottom: 1px solid var(--line); }
+    .digest .n { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 600; }
+    .digest .hint { flex-basis: 100%; margin: 0; }
+    .map-hint { margin: .3rem 0; }
+    .panel.due { border-color: var(--warn); }
+    .inbox > li { margin: 0 0 1.4rem; }
+    .inbox .card { margin-bottom: .5rem; }
+    .inbox .card.sample { transform: none; }
+    .inbox .hint { margin: 0 0 .3rem; }
+    .table-scroll { overflow-x: auto; margin: .6rem 0 1.2rem; }
+    .tally { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .tally th, .tally td { padding: .45rem .6rem; border-bottom: 1px solid var(--line); text-align: left; }
+    .tally th { color: var(--muted); font-weight: 600; }
+    .tally .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .card-stamp { position: absolute; top: 1rem; right: 1rem; margin: 0; padding: .2rem .6rem; border: 2px solid var(--warn); border-radius: .4rem; color: var(--warn); font: 700 .78rem/1.3 ui-monospace, SFMono-Regular, monospace; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-7deg); opacity: 0; }
+    .card[data-sent="true"] .card-stamp { opacity: 1; }
+    /* A note that reached its inbox lands stamped. */
+    .card[data-kept="true"] .card-stamp { opacity: 1; border-color: var(--accent); color: var(--accent); }
+    @media (prefers-reduced-motion: no-preference) {
+      .card[data-kept="true"] .card-stamp { animation: af-stamp 420ms cubic-bezier(.2, .9, .3, 1.25) 260ms both; }
+      @keyframes af-stamp { from { opacity: 0; transform: rotate(-7deg) scale(1.9); } to { opacity: 1; transform: rotate(-7deg) scale(1); } }
+    }
+    .door strong { overflow-wrap: anywhere; }
+    @media (prefers-reduced-motion: no-preference) { .card-stamp { transition: opacity .25s ease-out; } }
+    .share { align-items: stretch; }
+    .share .door, .actions .door { height: auto; }
+    button.door { flex: 1 1 9rem; align-items: flex-start; margin-top: .6rem; font: inherit; text-align: left; cursor: pointer; }
+    footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    @media (max-width: 40rem) {
+      main { padding-inline: max(.85rem, env(safe-area-inset-left)); padding-right: max(.85rem, env(safe-area-inset-right)); }
+      h1 { font-size: 1.55rem; }
+      .weather { font-size: 2.2rem; }
+      .codeblock pre { font-size: .78rem; }
+      fieldset { padding: .6rem .7rem .7rem; }
+      .actions { display: grid; grid-template-columns: 1fr; }
+      .actions > *, .actions button, .actions a { width: 100%; min-height: 44px; }
+      .score li { flex-wrap: wrap; }
+    }
+    @media (pointer: coarse) {
+      button, .door, summary, input[type="submit"] { min-height: 44px; }
+    }
+    @media (min-width: 60rem) {
+      main { padding-top: 2.4rem; }
+    }
+</style>
+  <style>@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("/fonts/newsreader-latin.01817351be.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/jetbrains-mono-latin.2c32b9b3ee.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    :root {
+  color-scheme: light dark;
+  --font-family-sans: Inter, "Segoe UI", system-ui, sans-serif;
+  --font-family-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-manuscript: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --site-editorial-font: "Newsreader", var(--font-family-manuscript), Georgia, serif;
+  --charcoal-rgb: 14, 18, 20;
+  --bg: hsl(42 32% 90%);
+  --bg-deep: hsl(42 26% 82%);
+  --bg-field: hsl(44 34% 95%);
+  --surface-matte: rgba(250, 248, 243, 0.96);
+  --surface-matte-strong: rgba(255, 253, 248, 0.99);
+  --ink-strong: rgba(var(--charcoal-rgb), 0.96);
+  --ink: rgba(var(--charcoal-rgb), 0.92);
+  --ink-soft: rgba(var(--charcoal-rgb), 0.8);
+  --ink-mid: rgba(var(--charcoal-rgb), 0.68);
+  --ink-muted: rgba(var(--charcoal-rgb), 0.58);
+  --ink-faint: rgba(var(--charcoal-rgb), 0.42);
+  --line: rgba(var(--charcoal-rgb), 0.14);
+  --line-strong: rgba(0, 128, 128, 0.34);
+  --line-matte: rgba(var(--charcoal-rgb), 0.09);
+  --teal: hsl(180 72% 30%);
+  --teal-deep: hsl(180 70% 18%);
+  --op-frame-color: hsl(180 74% 28%);
+  --op-layer-color: var(--ink-soft);
+  --op-vibration-color: var(--op-frame-color);
+  --op-probe-color: hsl(268 54% 44%);
+  --op-wonder-color: var(--op-probe-color);
+  --op-ref-color: hsl(214 66% 40%);
+  --op-potential-color: var(--op-ref-color);
+  --op-object-color: hsl(36 82% 38%);
+  --op-integration-color: var(--op-object-color);
+  --op-merge-color: hsl(188 42% 34%);
+  --op-subject-color: var(--op-merge-color);
+  --op-binding-color: hsl(24 48% 34%);
+  --op-action-color: hsl(176 74% 24%);
+  --op-perspective-color: var(--op-action-color);
+  --op-topic-color: hsl(168 62% 30%);
+  --op-concept-color: var(--op-topic-color);
+  --op-surface-color: hsl(180 52% 30%);
+  --op-concept-edge-color: var(--op-surface-color);
+  --op-scene-color: var(--op-surface-color);
+  --op-mode-color: var(--op-probe-color);
+  --op-direction-color: var(--op-frame-color);
+  --op-meta-color: hsl(220 34% 36%);
+  --op-substrate-color: var(--op-meta-color);
+  --op-stream-color: hsl(160 44% 32%);
+  --op-value-color: var(--op-stream-color);
+  --op-baseline-color: hsl(42 18% 30%);
+  --op-ground-color: var(--op-baseline-color);
+  --op-normalize-color: hsl(95 28% 34%);
+  --fg: var(--ink);
+  --muted: var(--ink-mid);
+  --edge: var(--ink-faint);
+  --surface: var(--surface-matte);
+  --field: var(--surface-matte-strong);
+  --accent: color-mix(in oklab, var(--teal) 68%, var(--ink) 32%);
+  --accent-soft: color-mix(in srgb, var(--accent) 9%, transparent);
+  --warn: var(--op-binding-color);
+  --font: var(--font-family-sans);
+  --mono: var(--font-family-mono);
+  --manuscript: var(--site-editorial-font);
+}
+@media (prefers-color-scheme: dark) {
+:root {
+  --bg: hsl(218 20% 8.5%);
+  --bg-deep: hsl(220 24% 6%);
+  --bg-field: hsl(216 16% 12%);
+  --surface-matte: rgba(26, 33, 39, 0.97);
+  --surface-matte-strong: rgba(33, 41, 48, 0.99);
+  --ink-strong: rgba(236, 241, 238, 0.96);
+  --ink: rgba(228, 235, 232, 0.92);
+  --ink-soft: rgba(214, 224, 220, 0.90);
+  --ink-mid: rgba(214, 224, 220, 0.80);
+  --ink-muted: rgba(202, 214, 210, 0.72);
+  --ink-faint: rgba(202, 214, 210, 0.62);
+  --line: rgba(228, 235, 232, 0.14);
+  --line-strong: rgba(96, 210, 210, 0.34);
+  --line-matte: rgba(228, 235, 232, 0.09);
+  --teal: hsl(180 58% 58%);
+  --teal-deep: hsl(180 52% 42%);
+  --op-frame-color: hsl(180 62% 62%);
+  --op-layer-color: var(--ink-soft);
+  --op-probe-color: hsl(268 48% 72%);
+  --op-ref-color: hsl(214 58% 68%);
+  --op-object-color: hsl(36 70% 64%);
+  --op-merge-color: hsl(188 42% 64%);
+  --op-binding-color: hsl(24 48% 66%);
+  --op-action-color: hsl(176 58% 58%);
+  --op-topic-color: hsl(168 52% 62%);
+  --op-surface-color: hsl(180 48% 62%);
+  --op-meta-color: hsl(220 38% 72%);
+  --op-stream-color: hsl(160 42% 62%);
+  --op-baseline-color: hsl(42 24% 68%);
+  --op-normalize-color: hsl(95 30% 66%);
+}
+}
+    :root { --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px -12px rgba(0, 0, 0, .12); --radius: .5rem; --pill: 999px; --storm: hsl(342 48% 46%); }
+    @media (prefers-color-scheme: dark) { :root { --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px -12px rgba(0, 0, 0, .5); --storm: hsl(342 48% 68%); } }
+    body { background: var(--bg) linear-gradient(180deg, var(--bg-field), var(--bg) 46rem) no-repeat; color: var(--fg); font-family: var(--font); line-height: 1.6; }
+    h1, h2, h3 { font-family: var(--manuscript); font-weight: 600; letter-spacing: -.012em; text-wrap: balance; }
+    h1 { font-size: clamp(2rem, 6.4vw, 3rem); line-height: 1.06; }
+    h2 { font-size: clamp(1.35rem, 3.4vw, 1.7rem); line-height: 1.15; margin: 0 0 .5rem; }
+    h3 { font-size: 1.12rem; line-height: 1.25; margin: 0 0 .3rem; }
+    p, li, dd { text-wrap: pretty; }
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+    a:hover { text-decoration-thickness: 2px; }
+    code, kbd, pre, .codeblock pre, .codeblock figcaption { font-family: var(--mono); }
+    .chip { color: var(--accent); background: var(--field); border-color: var(--edge); }
+    .codeblock, article, .panel { background: var(--field); box-shadow: var(--shadow); }
+    textarea.prompt, textarea.note, select, input:not(.hp):not([type="radio"]):not([type="checkbox"]) { border-color: var(--edge); background: var(--field); }
+    .tablist [role="tab"][aria-selected="true"] { background: var(--surface); }
+    .skip { background: var(--surface); }
+    [data-t="frame"] { color: var(--op-frame-color); }
+    [data-t="layer"] { color: var(--op-layer-color); }
+    [data-t="action"] { color: var(--op-action-color); }
+    [data-t="vibration"] { color: var(--op-vibration-color); }
+    [data-t="ground"] { color: var(--op-ground-color); }
+    [data-t="integration"] { color: var(--op-integration-color); }
+    [data-t="potential"] { color: var(--op-potential-color); }
+    [data-t="wonder"] { color: var(--op-wonder-color); }
+    [data-t="perspective"] { color: var(--op-perspective-color); }
+    [data-t="value"] { color: var(--op-value-color); }
+    [data-t="subject"] { color: var(--op-subject-color); }
+    [data-t="binding"] { color: var(--op-binding-color); }
+    [data-t="substrate"] { color: var(--op-substrate-color); }
+    [data-t="normalize"] { color: var(--op-normalize-color); }
+    [data-t="concept-edge"] { color: var(--op-concept-edge-color); }
+    [data-t="concept"] { color: var(--op-concept-color); }
+    [data-t="scene"] { color: var(--op-scene-color); }
+    [data-t="mode"] { color: var(--op-mode-color); }
+    [data-t="direction"] { color: var(--op-direction-color); }
+    [data-t="b-concept"] { color: var(--op-concept-color); }
+    [data-t="b-scene"] { color: var(--op-scene-color); }
+    [data-t="b-mode"] { color: var(--op-mode-color); }
+    [data-t="b-direction"] { color: var(--op-direction-color); }
+    [data-t="s"] { color: var(--ink-mid); }
+    [data-t="a"], [data-t="stream"] { color: var(--op-stream-color); }
+    [data-t="c"] { color: var(--ink-faint); font-style: italic; }
+    main { width: min(72rem, calc(100% - 2rem)); padding-top: 1rem; }
+    .masthead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1.2rem; margin: 0 0 1.6rem; padding: 0 0 .7rem; border-bottom: 1px solid var(--line); }
+    .masthead .brand { color: var(--fg); font: 600 1.05rem/1 var(--mono); letter-spacing: -.01em; text-decoration: none; }
+    .masthead .top { display: flex; flex-wrap: wrap; gap: .1rem; margin-right: -.6rem; }
+    .masthead .top a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .6rem; color: var(--muted); font-size: .95rem; text-decoration: none; }
+    .masthead a:hover, .masthead a:focus-visible, .masthead a[aria-current="page"] { color: var(--accent); }
+    .masthead .top a[aria-current="page"] { box-shadow: inset 0 -2px 0 var(--accent); }
+    .masthead .shelf-rooms { display: flex; flex-wrap: wrap; flex-basis: 100%; gap: .1rem; margin: 0 0 0 -.6rem; }
+    .masthead .shelf-rooms a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .6rem; color: var(--muted); font-size: .88rem; text-decoration: none; }
+    .masthead .shelf-rooms a[aria-current="page"] { color: var(--fg); font-weight: 600; }
+    .measure { max-width: 46rem; }
+    .file-actions a { display: inline-flex; align-items: center; text-decoration: none; }
+    .quiet-button, .file-actions button, .file-actions a { min-height: 36px; margin: 0; padding: .2rem .75rem; border: 1px solid transparent; border-radius: var(--pill); background: transparent; color: var(--accent); font: 500 .88rem/1 var(--font); cursor: pointer; }
+    .quiet-button:hover, .file-actions button:hover, .file-actions a:hover, .quiet-button:focus-visible, .file-actions button:focus-visible, .file-actions a:focus-visible { border-color: var(--line); background: var(--accent-soft); }
+    @media (pointer: coarse) { .quiet-button, .file-actions button, .file-actions a { min-height: 44px; } }
+    .shell-line { position: fixed; inset-inline: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: 5; margin: 0; padding: .55rem .9rem; border: 1px solid var(--edge, var(--line)); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); color: var(--fg); font-size: .92rem; }
+    html:not(.js) [data-tool="copy"] { display: none; }
+    .also { margin: 2.5rem 0 0; color: var(--muted); font-size: .9rem; }
+    footer { margin-top: 2rem; }
+    html[data-display-size="70"] { font-size: 70%; }
+    html[data-display-size="80"] { font-size: 80%; }
+    html[data-display-size="90"] { font-size: 90%; }
+    html[data-display-size="110"] { font-size: 110%; }
+    html[data-display-size="120"] { font-size: 120%; }
+    html[data-display-wrap="off"] .editor { overflow-x: auto; grid-template-columns: minmax(max-content, 1fr); }
+    html[data-display-wrap="off"] .editor > :is(.paint, textarea) { width: auto; min-width: 100%; white-space: pre; overflow-wrap: normal; }
+    html[data-display-colors="plain"] .editor .paint [data-t] { color: inherit; }
+    html[data-display-spacing="compact"] .editor > :is(.paint, textarea) { line-height: 1.4; }
+    html[data-display-spacing="roomy"] .editor > :is(.paint, textarea) { line-height: 1.95; }
+    .display-handle { cursor: pointer; }
+    .display-menu { display: grid; gap: .35rem; padding: .6rem 1rem .7rem; border-bottom: 1px solid var(--line); background: var(--surface); font-size: .88rem; }
+    .display-row { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; }
+    .display-label { min-width: 4.6rem; color: var(--muted); font: 600 .72rem/1.2 var(--font); letter-spacing: .06em; text-transform: uppercase; }
+    .display-row button { min-height: 36px; margin: 0; padding: .15rem .65rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--field); color: var(--fg); font: 500 .85rem/1 var(--font); cursor: pointer; }
+    .display-row button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+    .display-row button:disabled { opacity: .45; cursor: default; }
+    .display-row output { min-width: 3.4rem; color: var(--fg); font: 600 .85rem/1 var(--mono); font-variant-numeric: tabular-nums; text-align: center; }
+    @media (pointer: coarse) { .display-row button { min-height: 44px; } }
+    .display-hint { margin: .1rem 0 0; color: var(--muted); font-size: .82rem; }
+    .display-badge { position: fixed; inset-block-end: max(1rem, env(safe-area-inset-bottom)); inset-inline-start: 50%; z-index: 10; margin: 0; padding: .35rem .8rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--field); box-shadow: var(--shadow); color: var(--fg); font: 600 .85rem/1.2 var(--mono); transform: translateX(-50%); pointer-events: none; }
+    .qc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: .6rem; margin: .8rem 0 0; padding: 0; list-style: none; }
+    .qc { display: grid; align-content: start; gap: .45rem; min-width: 0; margin: 0; padding: .75rem .85rem .7rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .qc:target { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .qc p { margin: 0; }
+    .qc-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: .15rem .6rem; }
+    .qc-glyph { grid-column: 1 / -1; font: 600 1.02rem/1.4 var(--mono); overflow-wrap: anywhere; }
+    .qc-name { margin: 0; font: 600 1rem/1.25 var(--font); }
+    .qc-badges { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .2rem; margin: 0; padding: 0; list-style: none; }
+    .qc-badges li { padding: .1rem .45rem; border: 1px solid var(--line); border-radius: var(--pill); color: var(--muted); font: 500 .72rem/1.3 var(--mono); }
+    .qc-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .2rem .7rem; margin: 0; font-size: .88rem; line-height: 1.45; }
+    .qc-facts div { display: contents; }
+    .qc-facts dt { color: var(--muted); font: .76rem/1.75 var(--mono); }
+    .qc-facts dd { margin: 0; overflow-wrap: anywhere; }
+    .qc-facts code { font-size: .92em; }
+    .qc-chips { display: flex; flex-wrap: wrap; gap: .15rem .55rem; }
+    .qc-chips a { display: inline-flex; align-items: center; min-height: 28px; }
+    .qc-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 .2rem; font-size: .86rem; }
+    .qc-links a { display: inline-flex; align-items: center; min-height: 32px; }
+    @media (pointer: coarse) { .qc-links a, .qc-chips a { min-height: 44px; } }
+    .opening { margin: 0 0 1.2rem; }
+    .opening h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 5vw, 2.4rem); }
+    .opening .lede { max-width: 44rem; margin: 0 0 .8rem; color: var(--ink-soft); }
+    [id] { scroll-margin-top: 1.25rem; }
+    section.band { margin: 2.2rem 0 0; padding: 1.5rem 0 0; border-top: 1px solid var(--line); }
+    .find { display: grid; gap: .4rem; max-width: 46rem; }
+    .find label { font-weight: 650; }
+    .find-row { display: flex; gap: .5rem; }
+    .find input { flex: 1; min-width: 0; min-height: 44px; padding: .35rem .7rem; border: 1px solid var(--edge); border-radius: var(--radius); color: var(--fg); font: 1rem/1.3 var(--mono); }
+    .find button { min-height: 44px; margin: 0; padding: 0 1rem; border: 1px solid var(--edge); border-radius: var(--pill); background: var(--surface); color: var(--accent); font: 600 .95rem/1 var(--font); cursor: pointer; }
+    .find button:hover, .find button:focus-visible { background: var(--accent-soft); }
+    .note { color: var(--muted); font-size: .9rem; }
+    .here .qc { max-width: 46rem; border-color: var(--accent); }
+    .back { margin: .8rem 0 0; }
+    .back a { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; }
+    .starts, .families-list { display: grid; gap: .2rem; margin: .5rem 0 0; padding: 0; list-style: none; }
+    .starts a, .families-list a { display: inline-flex; align-items: center; min-height: 36px; overflow-wrap: anywhere; }
+    .starts .base-form { padding-bottom: .35rem; border-bottom: 1px solid var(--line); }
+    .starts .base-form .says { color: var(--muted); font: .8rem/1.4 var(--mono); }
+    .families-list li { color: var(--muted); font-size: .9rem; }
+    .slot-group { margin: 1.4rem 0 0; }
+    .slot-group h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; margin: 0; }
+    .slot-group .says { color: var(--muted); font: 400 .82rem/1 var(--mono); }
+    .trail ol { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .45rem; margin: .3rem 0 .8rem; padding: 0; list-style: none; font: .85rem/1.4 var(--mono); font-variant-ligatures: none; }
+    .trail a { display: inline-flex; align-items: center; min-height: 36px; }
+    .trail .sep { color: var(--muted); }
+    .slot-handles ul { display: flex; flex-wrap: wrap; gap: .35rem; margin: .7rem 0 0; padding: 0; list-style: none; }
+    /* The page still scrolls through the parts; a sideways swipe and a pinch on them are the instrument's. */
+    .slot-handles { touch-action: pan-y; }
+    .instrument-hint { margin: .45rem 0 0; }
+    .instrument-out { display: grid; gap: .25rem; margin: .5rem 0 0; padding: .55rem .75rem; border: 1px dashed var(--accent); border-radius: var(--radius); }
+    .instrument-out .says { color: var(--muted); font: .78rem/1.35 var(--mono); }
+    .instrument-out code { font: 600 1rem/1.5 var(--mono); font-variant-ligatures: none; overflow-wrap: anywhere; }
+    .op-field { display: grid; gap: .35rem; margin: .6rem 0 0; }
+    .op-field input[type="range"] { width: 100%; min-height: 44px; margin: 0; accent-color: var(--accent); cursor: ew-resize; }
+    .op-ticks { display: grid; grid-template-columns: repeat(var(--ticks), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; text-align: center; font: 700 .95rem/1 var(--mono); }
+    .op-ticks a { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 36px; border-radius: .35rem; color: var(--muted); text-decoration: none; }
+    .op-ticks a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .op-ticks a[aria-current] { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+    @media (pointer: coarse) { .op-ticks a { min-height: 44px; } }
+    @media (max-width: 30rem) {
+      .op-ticks { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .2rem; }
+      .op-ticks a { min-height: 44px; }
+      .find-row { flex-direction: column; }
+      .find-row button { width: 100%; min-height: 44px; }
+    }
+    .op-field button { justify-self: start; min-height: 44px; }
+    /* Between lines the card moves rather than blinks; reduced motion keeps every state and drops the travel. */
+    @view-transition { navigation: auto; }
+    .here .qc { view-transition-name: pivot-line; }
+    @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+    .slot-handles a, .slot-handles span:not(.says) { display: inline-grid; gap: .1rem; min-height: 44px; box-sizing: border-box; padding: .35rem .6rem; border: 1px solid var(--line); border-radius: var(--radius); color: inherit; text-decoration: none; }
+    .slot-handles code { font: 600 .9rem/1.3 var(--mono); font-variant-ligatures: none; }
+    .slot-handles .says { color: var(--muted); font: .74rem/1.2 var(--mono); }
+    .operators { margin: 1.1rem 0 0; }
+    .operators h3 { margin: 0; }
+    .primed .sigil { color: var(--accent); font-weight: 700; }
+    .slot-handles a:hover, .slot-handles a:focus-visible { border-color: var(--accent); }
+    /* Precise monospace: ~> and the rest show as typed, never as a ligature. */
+    .here code, .add-part code, .slot-group code { font-variant-ligatures: none; }
+    .primed { margin: .7rem 0 0; padding: .7rem .85rem; border: 1px dashed var(--accent); border-radius: var(--radius); }
+    .primed p { margin: 0 0 .35rem; }
+    .primed-line code { font: 600 1rem/1.5 var(--mono); font-variant-ligatures: none; overflow-wrap: anywhere; }
+    .primed-acts a { display: inline-flex; align-items: center; min-height: 44px; }
+    .add-part fieldset { margin: 1.1rem 0 0; padding: .6rem .85rem .8rem; border: 1px solid var(--line); border-radius: var(--radius); }
+    .add-part legend { padding: 0 .3rem; font-weight: 650; }
+    .join-choices { display: grid; gap: .1rem; margin: .5rem 0 0; }
+    .join-choice { display: flex; align-items: center; gap: .55rem; min-height: 44px; }
+    .join-choice code { min-width: 2.5ch; font: 700 1rem/1 var(--mono); font-variant-ligatures: none; color: var(--accent); }
+    @media (pointer: coarse) { .starts a, .families-list a { min-height: 44px; } }
+    .lens-bar { display: grid; gap: .45rem; margin: 1.15rem 0 .35rem; padding: .65rem .85rem; border: 1px solid color-mix(in oklab, var(--accent) 24%, var(--line)); border-radius: var(--radius); background: color-mix(in oklab, var(--accent) 5%, var(--surface)); }
+    :is(html[data-domain-lens], .lens-scope[data-domain-lens]) .lens-bar { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    .lens-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .35rem .75rem; }
+    .lens-status { margin: 0; font-size: .88rem; color: var(--fg); line-height: 1.4; }
+    .lens-from { font: 600 .8rem/1 var(--mono); color: var(--accent); padding: .1rem .35rem; border-radius: 4px; background: color-mix(in oklab, var(--accent) 12%, transparent); }
+    .lens-says { color: var(--muted); }
+    .lens-controls { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .35rem; }
+    .lens-clear { display: inline-flex; align-items: center; min-height: 36px; padding: 0 .45rem; font-size: .85rem; }
+    .lens-chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+    .lens-chips a { display: inline-flex; align-items: center; min-height: 32px; padding: .15rem .65rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--surface); color: var(--muted); font: 500 .8rem/1 var(--mono); text-decoration: none; transition: border-color 140ms ease, color 140ms ease, background-color 140ms ease; }
+    .lens-chips a:hover, .lens-chips a:focus-visible { color: var(--fg); border-color: var(--accent); }
+    .lens-chips a[aria-current="true"] { background: var(--accent); color: var(--field); border-color: var(--accent); }
+    @media (pointer: coarse) { .lens-chips a, .lens-clear { min-height: 44px; } }
+    /* Noise reduction when a domain lens focuses the field */
+    :is(html[data-domain-lens][data-lens-quiet="true"], .lens-scope[data-domain-lens][data-lens-quiet="true"]) .door.starter { opacity: .48; transition: opacity 160ms ease, border-color 160ms ease; }
+    :is(html[data-domain-lens][data-lens-quiet="true"], .lens-scope[data-domain-lens][data-lens-quiet="true"]) .door.starter:hover,
+    :is(html[data-domain-lens][data-lens-quiet="true"], .lens-scope[data-domain-lens][data-lens-quiet="true"]) .door.starter:focus-within { opacity: 1; }
+    :is(html[data-domain-lens][data-lens-quiet="true"], .lens-scope[data-domain-lens][data-lens-quiet="true"]) .examples a { opacity: .52; }
+    :is(html[data-domain-lens][data-lens-quiet="true"], .lens-scope[data-domain-lens][data-lens-quiet="true"]) .examples a[aria-current],
+    :is(html[data-domain-lens][data-lens-quiet="true"], .lens-scope[data-domain-lens][data-lens-quiet="true"]) .examples a:hover { opacity: 1; }
+    :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) #start-frontend, :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) #start-marketing { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="perform"], :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="vocabulary"], :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="record"], :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="question"], :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="notebook"], :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="syntax"], :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="perspectives"], :is(html[data-domain-lens="creator"], .lens-scope[data-domain-lens="creator"]) .examples a[data-example="surfaces"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="creator"][data-lens-quiet="true"], .lens-scope[data-domain-lens="creator"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="perform"], [data-example="vocabulary"], [data-example="record"], [data-example="question"], [data-example="notebook"], [data-example="syntax"], [data-example="perspectives"], [data-example="surfaces"])) { display: none; }
+    :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) #start-marketing, :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) #start-community { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) .examples a[data-example="cinema"], :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) .examples a[data-example="perspectives"], :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) .examples a[data-example="persona"], :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) .examples a[data-example="perform"], :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) .examples a[data-example="debate"], :is(html[data-domain-lens="scene"], .lens-scope[data-domain-lens="scene"]) .examples a[data-example="critique"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="scene"][data-lens-quiet="true"], .lens-scope[data-domain-lens="scene"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="cinema"], [data-example="perspectives"], [data-example="persona"], [data-example="perform"], [data-example="debate"], [data-example="critique"])) { display: none; }
+    :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) #start-frontend, :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) #start-marketing { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) .examples a[data-example="vocabulary"], :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) .examples a[data-example="record"], :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) .examples a[data-example="surfaces"], :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) .examples a[data-example="pantry"], :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) .examples a[data-example="perform"], :is(html[data-domain-lens="material"], .lens-scope[data-domain-lens="material"]) .examples a[data-example="question"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="material"][data-lens-quiet="true"], .lens-scope[data-domain-lens="material"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="vocabulary"], [data-example="record"], [data-example="surfaces"], [data-example="pantry"], [data-example="perform"], [data-example="question"])) { display: none; }
+    :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) #start-growth, :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) #start-frontend { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) .examples a[data-example="calibration"], :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) .examples a[data-example="gradient"], :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) .examples a[data-example="numbers"], :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) .examples a[data-example="laws"], :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) .examples a[data-example="perform"], :is(html[data-domain-lens="rhythm"], .lens-scope[data-domain-lens="rhythm"]) .examples a[data-example="cinema"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="rhythm"][data-lens-quiet="true"], .lens-scope[data-domain-lens="rhythm"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="calibration"], [data-example="gradient"], [data-example="numbers"], [data-example="laws"], [data-example="perform"], [data-example="cinema"])) { display: none; }
+    :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) #start-incident, :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) #start-growth { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) .examples a[data-example="pipeline"], :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) .examples a[data-example="loops"], :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) .examples a[data-example="incident"], :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) .examples a[data-example="records"], :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) .examples a[data-example="algorithms"], :is(html[data-domain-lens="concurrency"], .lens-scope[data-domain-lens="concurrency"]) .examples a[data-example="numbers"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="concurrency"][data-lens-quiet="true"], .lens-scope[data-domain-lens="concurrency"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="pipeline"], [data-example="loops"], [data-example="incident"], [data-example="records"], [data-example="algorithms"], [data-example="numbers"])) { display: none; }
+    :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) #start-community, :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) #start-hiring { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) .examples a[data-example="critique"], :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) .examples a[data-example="debate"], :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) .examples a[data-example="revision"], :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) .examples a[data-example="persona"], :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) .examples a[data-example="headings"], :is(html[data-domain-lens="editorial"], .lens-scope[data-domain-lens="editorial"]) .examples a[data-example="negotiation"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="editorial"][data-lens-quiet="true"], .lens-scope[data-domain-lens="editorial"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="critique"], [data-example="debate"], [data-example="revision"], [data-example="persona"], [data-example="headings"], [data-example="negotiation"])) { display: none; }
+    :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) #start-frontend, :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) #start-incident { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) .examples a[data-example="laws"], :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) .examples a[data-example="outline"], :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) .examples a[data-example="recurrence"], :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) .examples a[data-example="pantry"], :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) .examples a[data-example="perspectives"], :is(html[data-domain-lens="spatial"], .lens-scope[data-domain-lens="spatial"]) .examples a[data-example="cinema"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="spatial"][data-lens-quiet="true"], .lens-scope[data-domain-lens="spatial"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="laws"], [data-example="outline"], [data-example="recurrence"], [data-example="pantry"], [data-example="perspectives"], [data-example="cinema"])) { display: none; }
+    :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) #start-community, :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) #start-search { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) .examples a[data-example="question"], :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) .examples a[data-example="checkin"], :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) .examples a[data-example="decision"], :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) .examples a[data-example="gathering"], :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) .examples a[data-example="charter"], :is(html[data-domain-lens="field"], .lens-scope[data-domain-lens="field"]) .examples a[data-example="synthesis"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="field"][data-lens-quiet="true"], .lens-scope[data-domain-lens="field"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="question"], [data-example="checkin"], [data-example="decision"], [data-example="gathering"], [data-example="charter"], [data-example="synthesis"])) { display: none; }
+    :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) #start-frontend, :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) #start-hiring, :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) #start-search, :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) #start-incident { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) .examples a[data-example="role"], :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) .examples a[data-example="levels"], :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) .examples a[data-example="onboarding"], :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) .examples a[data-example="incident"], :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) .examples a[data-example="records"], :is(html[data-domain-lens="career"], .lens-scope[data-domain-lens="career"]) .examples a[data-example="pipeline"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="career"][data-lens-quiet="true"], .lens-scope[data-domain-lens="career"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="role"], [data-example="levels"], [data-example="onboarding"], [data-example="incident"], [data-example="records"], [data-example="pipeline"])) { display: none; }
+    :is(html[data-domain-lens="study"], .lens-scope[data-domain-lens="study"]) #start-growth { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="study"], .lens-scope[data-domain-lens="study"]) .examples a[data-example="calibration"], :is(html[data-domain-lens="study"], .lens-scope[data-domain-lens="study"]) .examples a[data-example="perspectives"], :is(html[data-domain-lens="study"], .lens-scope[data-domain-lens="study"]) .examples a[data-example="question"], :is(html[data-domain-lens="study"], .lens-scope[data-domain-lens="study"]) .examples a[data-example="headings"], :is(html[data-domain-lens="study"], .lens-scope[data-domain-lens="study"]) .examples a[data-example="syntax"], :is(html[data-domain-lens="study"], .lens-scope[data-domain-lens="study"]) .examples a[data-example="synthesis"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="study"][data-lens-quiet="true"], .lens-scope[data-domain-lens="study"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="calibration"], [data-example="perspectives"], [data-example="question"], [data-example="headings"], [data-example="syntax"], [data-example="synthesis"])) { display: none; }
+    :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) #start-marketing, :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) #start-community { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) .examples a[data-example="debate"], :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) .examples a[data-example="critique"], :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) .examples a[data-example="negotiation"], :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) .examples a[data-example="revision"], :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) .examples a[data-example="persona"], :is(html[data-domain-lens="rhetoric"], .lens-scope[data-domain-lens="rhetoric"]) .examples a[data-example="gradient"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="rhetoric"][data-lens-quiet="true"], .lens-scope[data-domain-lens="rhetoric"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="debate"], [data-example="critique"], [data-example="negotiation"], [data-example="revision"], [data-example="persona"], [data-example="gradient"])) { display: none; }
+    :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) #start-marketing, :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) #start-frontend, :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) #start-community { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); box-shadow: 0 2px 10px -2px color-mix(in oklab, var(--accent) 16%, transparent); }
+    :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) .examples a[data-example="perform"], :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) .examples a[data-example="cinema"], :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) .examples a[data-example="loops"], :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) .examples a[data-example="charter"], :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) .examples a[data-example="vocabulary"], :is(html[data-domain-lens="prompting"], .lens-scope[data-domain-lens="prompting"]) .examples a[data-example="pantry"] { border-color: color-mix(in oklab, var(--accent) 48%, var(--line)); background: color-mix(in oklab, var(--accent) 9%, var(--surface)); }
+    :is(html[data-domain-lens="prompting"][data-lens-quiet="true"], .lens-scope[data-domain-lens="prompting"][data-lens-quiet="true"]) .examples-row:not(:has([data-example="perform"], [data-example="cinema"], [data-example="loops"], [data-example="charter"], [data-example="vocabulary"], [data-example="pantry"])) { display: none; }
+    /* Accentuated expression maneuverability handles */
+    :is(html[data-domain-lens], .lens-scope[data-domain-lens]) .hand-parts li :is(button, a, .chip) { opacity: .68; transition: opacity 140ms ease, border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease; }
+    :is(html[data-domain-lens], .lens-scope[data-domain-lens]) .hand-parts li :is(button, a, .chip):hover,
+    :is(html[data-domain-lens], .lens-scope[data-domain-lens]) .hand-parts li :is(button, a, .chip)[aria-pressed="true"] { opacity: 1; }
+    :is(html[data-lens-ops~="frame"], .lens-scope[data-lens-ops~="frame"]) .hand-parts li:has([data-t="frame"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="frame"], .lens-scope[data-lens-ops~="frame"]) #operators .sigils li:has([data-t="frame"]),
+    :is(html[data-lens-ops~="layer"], .lens-scope[data-lens-ops~="layer"]) .hand-parts li:has([data-t="layer"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="layer"], .lens-scope[data-lens-ops~="layer"]) #operators .sigils li:has([data-t="layer"]),
+    :is(html[data-lens-ops~="action"], .lens-scope[data-lens-ops~="action"]) .hand-parts li:has([data-t="action"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="action"], .lens-scope[data-lens-ops~="action"]) #operators .sigils li:has([data-t="action"]),
+    :is(html[data-lens-ops~="vibration"], .lens-scope[data-lens-ops~="vibration"]) .hand-parts li:has([data-t="vibration"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="vibration"], .lens-scope[data-lens-ops~="vibration"]) #operators .sigils li:has([data-t="vibration"]),
+    :is(html[data-lens-ops~="ground"], .lens-scope[data-lens-ops~="ground"]) .hand-parts li:has([data-t="ground"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="ground"], .lens-scope[data-lens-ops~="ground"]) #operators .sigils li:has([data-t="ground"]),
+    :is(html[data-lens-ops~="integration"], .lens-scope[data-lens-ops~="integration"]) .hand-parts li:has([data-t="integration"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="integration"], .lens-scope[data-lens-ops~="integration"]) #operators .sigils li:has([data-t="integration"]),
+    :is(html[data-lens-ops~="potential"], .lens-scope[data-lens-ops~="potential"]) .hand-parts li:has([data-t="potential"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="potential"], .lens-scope[data-lens-ops~="potential"]) #operators .sigils li:has([data-t="potential"]),
+    :is(html[data-lens-ops~="wonder"], .lens-scope[data-lens-ops~="wonder"]) .hand-parts li:has([data-t="wonder"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="wonder"], .lens-scope[data-lens-ops~="wonder"]) #operators .sigils li:has([data-t="wonder"]),
+    :is(html[data-lens-ops~="perspective"], .lens-scope[data-lens-ops~="perspective"]) .hand-parts li:has([data-t="perspective"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="perspective"], .lens-scope[data-lens-ops~="perspective"]) #operators .sigils li:has([data-t="perspective"]),
+    :is(html[data-lens-ops~="value"], .lens-scope[data-lens-ops~="value"]) .hand-parts li:has([data-t="value"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="value"], .lens-scope[data-lens-ops~="value"]) #operators .sigils li:has([data-t="value"]),
+    :is(html[data-lens-ops~="subject"], .lens-scope[data-lens-ops~="subject"]) .hand-parts li:has([data-t="subject"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="subject"], .lens-scope[data-lens-ops~="subject"]) #operators .sigils li:has([data-t="subject"]),
+    :is(html[data-lens-ops~="binding"], .lens-scope[data-lens-ops~="binding"]) .hand-parts li:has([data-t="binding"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="binding"], .lens-scope[data-lens-ops~="binding"]) #operators .sigils li:has([data-t="binding"]),
+    :is(html[data-lens-ops~="substrate"], .lens-scope[data-lens-ops~="substrate"]) .hand-parts li:has([data-t="substrate"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="substrate"], .lens-scope[data-lens-ops~="substrate"]) #operators .sigils li:has([data-t="substrate"]),
+    :is(html[data-lens-ops~="normalize"], .lens-scope[data-lens-ops~="normalize"]) .hand-parts li:has([data-t="normalize"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="normalize"], .lens-scope[data-lens-ops~="normalize"]) #operators .sigils li:has([data-t="normalize"]),
+    :is(html[data-lens-ops~="concept-edge"], .lens-scope[data-lens-ops~="concept-edge"]) .hand-parts li:has([data-t="concept-edge"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="concept-edge"], .lens-scope[data-lens-ops~="concept-edge"]) #operators .sigils li:has([data-t="concept-edge"]),
+    :is(html[data-lens-ops~="concept"], .lens-scope[data-lens-ops~="concept"]) .hand-parts li:has([data-t="concept"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="concept"], .lens-scope[data-lens-ops~="concept"]) #operators .sigils li:has([data-t="concept"]),
+    :is(html[data-lens-ops~="scene"], .lens-scope[data-lens-ops~="scene"]) .hand-parts li:has([data-t="scene"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="scene"], .lens-scope[data-lens-ops~="scene"]) #operators .sigils li:has([data-t="scene"]),
+    :is(html[data-lens-ops~="mode"], .lens-scope[data-lens-ops~="mode"]) .hand-parts li:has([data-t="mode"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="mode"], .lens-scope[data-lens-ops~="mode"]) #operators .sigils li:has([data-t="mode"]),
+    :is(html[data-lens-ops~="direction"], .lens-scope[data-lens-ops~="direction"]) .hand-parts li:has([data-t="direction"]) :is(button, a, .chip),
+    :is(html[data-lens-ops~="direction"], .lens-scope[data-lens-ops~="direction"]) #operators .sigils li:has([data-t="direction"]) {
+      opacity: 1;
+      border-color: color-mix(in oklab, var(--accent) 52%, var(--line));
+      background: color-mix(in oklab, var(--accent) 10%, var(--surface));
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 22%, transparent);
+    }
+    :is(html[data-lens-handles~="b-concept"], .lens-scope[data-lens-handles~="b-concept"]) .hand-parts li:has([data-t="b-concept"]) :is(button, a, .chip),
+    :is(html[data-lens-handles~="b-concept"], .lens-scope[data-lens-handles~="b-concept"]) #operators .braces li:has([data-t="b-concept"]),
+    :is(html[data-lens-handles~="b-scene"], .lens-scope[data-lens-handles~="b-scene"]) .hand-parts li:has([data-t="b-scene"]) :is(button, a, .chip),
+    :is(html[data-lens-handles~="b-scene"], .lens-scope[data-lens-handles~="b-scene"]) #operators .braces li:has([data-t="b-scene"]),
+    :is(html[data-lens-handles~="b-mode"], .lens-scope[data-lens-handles~="b-mode"]) .hand-parts li:has([data-t="b-mode"]) :is(button, a, .chip),
+    :is(html[data-lens-handles~="b-mode"], .lens-scope[data-lens-handles~="b-mode"]) #operators .braces li:has([data-t="b-mode"]),
+    :is(html[data-lens-handles~="b-direction"], .lens-scope[data-lens-handles~="b-direction"]) .hand-parts li:has([data-t="b-direction"]) :is(button, a, .chip),
+    :is(html[data-lens-handles~="b-direction"], .lens-scope[data-lens-handles~="b-direction"]) #operators .braces li:has([data-t="b-direction"]) {
+      opacity: 1;
+      border-color: color-mix(in oklab, var(--accent) 48%, var(--line));
+      background: color-mix(in oklab, var(--accent) 8%, var(--surface));
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 18%, transparent);
+    }
+    :is(html[data-lens-slots~="concept"], .lens-scope[data-lens-slots~="concept"]) .pivot[data-slot="concept"],
+    :is(html[data-lens-slots~="concept"], .lens-scope[data-lens-slots~="concept"]) .slot-handles [data-slot="concept"],
+    :is(html[data-lens-slots~="scene"], .lens-scope[data-lens-slots~="scene"]) .pivot[data-slot="scene"],
+    :is(html[data-lens-slots~="scene"], .lens-scope[data-lens-slots~="scene"]) .slot-handles [data-slot="scene"],
+    :is(html[data-lens-slots~="mode"], .lens-scope[data-lens-slots~="mode"]) .pivot[data-slot="mode"],
+    :is(html[data-lens-slots~="mode"], .lens-scope[data-lens-slots~="mode"]) .slot-handles [data-slot="mode"],
+    :is(html[data-lens-slots~="definition"], .lens-scope[data-lens-slots~="definition"]) .pivot[data-slot="definition"],
+    :is(html[data-lens-slots~="definition"], .lens-scope[data-lens-slots~="definition"]) .slot-handles [data-slot="definition"],
+    :is(html[data-lens-slots~="projection"], .lens-scope[data-lens-slots~="projection"]) .pivot[data-slot="projection"],
+    :is(html[data-lens-slots~="projection"], .lens-scope[data-lens-slots~="projection"]) .slot-handles [data-slot="projection"],
+    :is(html[data-lens-slots~="scope"], .lens-scope[data-lens-slots~="scope"]) .pivot[data-slot="scope"],
+    :is(html[data-lens-slots~="scope"], .lens-scope[data-lens-slots~="scope"]) .slot-handles [data-slot="scope"],
+    :is(html[data-lens-slots~="body"], .lens-scope[data-lens-slots~="body"]) .pivot[data-slot="body"],
+    :is(html[data-lens-slots~="body"], .lens-scope[data-lens-slots~="body"]) .slot-handles [data-slot="body"] {
+      border-color: color-mix(in oklab, var(--accent) 52%, var(--line));
+      background: color-mix(in oklab, var(--accent) 8%, var(--surface));
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+    .op-ticks a[data-lens-accent="true"] {
+      color: var(--fg);
+      background: color-mix(in oklab, var(--accent) 14%, transparent);
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }</style>
+</head>
+<body class="" data-spw-climate="garden" data-weather="clear">
+  <a class="skip" href="#main">Skip to content</a>
+  <main id="main" tabindex="-1"><header class="masthead">
+  <a class="brand" href="/">spw.quest</a>
+  <nav class="top" aria-label="spw.quest"><a href="/learn">Learn</a><a href="/build">Build</a><a href="/specimens" aria-current="page">Shelf</a><a href="/parser/">Parser</a><a href="/install">Install</a></nav>
+  <nav class="shelf-rooms" aria-label="The shelf"><a href="/specimens">Specimens</a><a href="/constructs">Constructs</a><a href="/pivot" aria-current="page">Pivot</a><a href="/physics">Physics</a><a href="/forms/">Forms</a><a href="/arcs/">Arcs</a><a href="/bench/">Bench</a></nav>
+</header>
+<div class="lens-scope">
+<aside id="domain-lenses" class="lens-bar" aria-label="Domain lenses">
+  <div class="lens-head">
+    <p class="lens-status" data-lens-status><span class="lens-says">Pick a domain lens to filter examples and spotlight matching Spw handles across the page.</span></p>
+    <div class="lens-controls" data-lens-controls hidden>
+      <button type="button" class="quiet-button" data-lens-toggle-quiet aria-pressed="false">Focus lens</button>
+      <a class="lens-clear" href="/" data-lens-clear>Clear</a>
+    </div>
+  </div>
+  <nav class="lens-chips" aria-label="Choose a lens"><a href="/?lens=career#try" data-lens-pick="career">Career</a><a href="/?lens=study#try" data-lens-pick="study">Academic</a><a href="/?lens=rhetoric#try" data-lens-pick="rhetoric">Rhetoric</a><a href="/?lens=prompting#try" data-lens-pick="prompting">Prompting</a><a href="/?lens=scene#try" data-lens-pick="scene">Scene</a><a href="/?lens=material#try" data-lens-pick="material">Material</a><a href="/?lens=concurrency#try" data-lens-pick="concurrency">Pipeline</a><a href="/?lens=editorial#try" data-lens-pick="editorial">Editorial</a></nav>
+</aside>
+<section class="opening" aria-labelledby="pivot-title">
+  <h1 id="pivot-title">Pivot a line</h1>
+  <p class="lede">Change one slot, keep the rest, and see the line before you go. <a href="/forms/">Forms, side by side</a> shows what each slot does.</p>
+  <form class="find" method="get" action="/pivot">
+    <label for="line">A line to pivot</label>
+    <div class="find-row"><input id="line" name="line" type="text" value="" maxlength="200" autocomplete="off" spellcheck="false" placeholder="home[hook]{software.art.practice}&lt;person&gt;"><button type="submit">Pivot</button></div>
+  </form>
+</section>
+<section class="band" aria-labelledby="starts-title">
+  <h2 id="starts-title">Start from one of these</h2>
+  <ul class="starts">
+    <li class="base-form"><a href="/pivot?line=%3C%26%3E"><code><span data-t="b-concept">&lt;</span><span data-t="subject">&amp;</span><span data-t="b-concept">&gt;</span></code></a> <span class="says">the base form: one pair of walls around &amp;, the subject. Tap the walls to turn them.</span></li>
+    <li><a href="/pivot?s=h-capsule"><code>host<span data-t="b-mode">[</span>mode<span data-t="b-mode">]</span><span data-t="b-direction">{</span>one.two.three<span data-t="b-direction">}</span></code></a></li>
+    <li><a href="/pivot?s=h-induct_join"><code>a<span data-t="b-mode">[</span>x<span data-t="b-mode">]</span><span data-t="b-direction">{</span>p<span data-t="b-direction">}</span> <span data-t="potential">~</span> b<span data-t="b-mode">[</span>y<span data-t="b-mode">]</span><span data-t="b-direction">{</span>q<span data-t="b-direction">}</span></code></a></li>
+    <li><a href="/pivot?s=r-e9dc9b1e"><code>bane<span data-t="b-mode">[</span>bone<span data-t="b-mode">]</span><span data-t="b-direction">{</span>limit<span data-t="b-direction">}</span></code></a></li>
+    <li><a href="/pivot?s=h-probe"><code><span data-t="wonder">?</span>atlas<span data-t="b-mode">[</span>open<span data-t="b-mode">]</span><span data-t="b-direction">{</span>aperture.edge<span data-t="b-direction">}</span></code></a></li>
+    <li><a href="/pivot?s=r-755c824b"><code><span data-t="b-scene">(</span>look<span data-t="b-scene">)</span><span data-t="b-direction">{</span>stage<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>learn<span data-t="b-concept">&gt;</span></code></a></li>
+  </ul>
+</section>
+</div>
+<p class="also"><a href="/constructs">Constructs</a> · <a href="/specimens">Specimens</a> · <a href="/build">Take one line apart</a> · <a href="/learn">Learn it a mark at a time</a></p>
+    <footer>
+      <p>Made by Spwashi. <a href="https://spwashi.com/">spwashi.com</a></p>
+    </footer>
+  </main>
+  <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  <script>
+    document.documentElement.classList.add("js");
+    const announce = (message) => {
+      const status = document.getElementById("status");
+      if (!status) return;
+      status.textContent = "";
+      setTimeout(() => { status.textContent = message; }, 50);
+    };
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const node = document.getElementById(button.getAttribute("data-copy"));
+        const text = node ? node.innerText : "";
+        const idle = button.innerHTML;
+        try {
+          await navigator.clipboard.writeText(text.trim());
+          button.textContent = "Copied";
+          announce("Copied to the clipboard.");
+        } catch {
+          button.textContent = "Copy failed";
+          announce("Could not copy. Select the text and copy it yourself.");
+        }
+        setTimeout(() => { button.innerHTML = idle; }, 1600);
+      });
+    });
+  </script>
+  <script>(function clientLensInit(payload) {
+  const STORAGE_KEY = "spw.quest.lens/1";
+  const QUIET_KEY = "spw.quest.lens-quiet/1";
+  const root = document.documentElement;
+  const hostOf = (raw) => {
+    try { return raw ? new URL(raw).hostname.replace(/^www\./, "").toLowerCase() : ""; } catch { return ""; }
+  };
+  const params = new URLSearchParams(location.search);
+  const pickFromParams = () => {
+    const id = String(params.get("lens") || "").toLowerCase();
+    const fromHost = String(params.get("from") || "").replace(/^www\./, "").toLowerCase();
+    if (id && payload.lenses[id]) return { id, from: fromHost };
+    if (fromHost && payload.hosts[fromHost]) return { id: payload.hosts[fromHost], from: fromHost };
+    const refHost = hostOf(document.referrer);
+    if (refHost && refHost !== "spw.quest" && payload.hosts[refHost]) return { id: payload.hosts[refHost], from: refHost };
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "null");
+      if (saved && payload.lenses[saved.id]) return saved;
+    } catch {}
+    return null;
+  };
+
+  let quiet = true;
+  try { quiet = sessionStorage.getItem(QUIET_KEY) !== "false"; } catch {}
+
+  const apply = (chosen, openExampleTab = false) => {
+    const scopeEl = document.querySelector(".lens-scope");
+    const bar = document.getElementById("domain-lenses");
+    const status = bar?.querySelector("[data-lens-status]");
+    const controls = bar?.querySelector("[data-lens-controls]");
+    const toggleBtn = bar?.querySelector("[data-lens-toggle-quiet]");
+    const targets = [root, ...(scopeEl ? [scopeEl] : [])];
+    if (!chosen || !payload.lenses[chosen.id]) {
+      for (const el of targets) {
+        delete el.dataset.domainLens;
+        delete el.dataset.lensQuiet;
+        delete el.dataset.lensFrom;
+        delete el.dataset.lensOps;
+        delete el.dataset.lensHandles;
+        delete el.dataset.lensSlots;
+      }
+      try { sessionStorage.removeItem(STORAGE_KEY); } catch {}
+      document.querySelectorAll(".lens-chips a").forEach((a) => a.removeAttribute("aria-current"));
+      document.querySelectorAll(".op-ticks a").forEach((a) => a.removeAttribute("data-lens-accent"));
+      if (status) status.innerHTML = '<span class="lens-says">Pick a domain lens to filter examples and spotlight matching Spw handles across the page.</span>';
+      if (controls) controls.hidden = true;
+      return;
+    }
+    const lens = payload.lenses[chosen.id];
+    for (const el of targets) {
+      el.dataset.domainLens = lens.id;
+      if (quiet) el.dataset.lensQuiet = "true";
+      else delete el.dataset.lensQuiet;
+      if (chosen.from) el.dataset.lensFrom = chosen.from;
+      else delete el.dataset.lensFrom;
+      el.dataset.lensOps = lens.ops.join(" ");
+      el.dataset.lensHandles = lens.handles.join(" ");
+      el.dataset.lensSlots = lens.slots.join(" ");
+    }
+    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ id: lens.id, from: chosen.from || "" })); } catch {}
+
+    document.querySelectorAll(".lens-chips a").forEach((a) => {
+      if (a.dataset.lensPick === lens.id) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    });
+    document.querySelectorAll(".op-ticks a").forEach((a) => {
+      const sig = a.textContent?.trim();
+      if (lens.sigils.includes(sig)) a.setAttribute("data-lens-accent", "true");
+      else a.removeAttribute("data-lens-accent");
+    });
+    if (status) {
+      status.replaceChildren();
+      const strong = document.createElement("strong");
+      strong.textContent = lens.label;
+      status.append(strong);
+      if (chosen.from) {
+        status.append(" ", Object.assign(document.createElement("span"), { className: "lens-from", textContent: `from ${chosen.from}` }));
+      }
+      status.append(" ", Object.assign(document.createElement("span"), { className: "lens-says", textContent: lens.says }));
+    }
+    if (controls) controls.hidden = false;
+    if (toggleBtn) {
+      toggleBtn.setAttribute("aria-pressed", String(quiet));
+      toggleBtn.textContent = quiet ? `Show all ${payload.totalExamples} files` : "Focus lens";
+    }
+    if (openExampleTab && !params.has("example") && lens.examples[0]) {
+      const targetTab = document.querySelector(`.examples a[data-example="${lens.examples[0]}"]`);
+      targetTab?.click();
+    }
+  };
+
+  const initial = pickFromParams();
+  if (initial) {
+    apply(initial, !params.has("example") && !document.querySelector(".lens-scope[data-server-lens]"));
+  }
+
+  document.getElementById("domain-lenses")?.addEventListener("click", (event) => {
+    const pick = event.target.closest("a[data-lens-pick]");
+    if (pick && !event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) {
+      event.preventDefault();
+      quiet = true;
+      try { sessionStorage.setItem(QUIET_KEY, "true"); } catch {}
+      apply({ id: pick.dataset.lensPick, from: "" }, true);
+      const u = new URL(location.href);
+      u.searchParams.set("lens", pick.dataset.lensPick);
+      u.searchParams.delete("from");
+      history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+      return;
+    }
+    const toggle = event.target.closest("[data-lens-toggle-quiet]");
+    if (toggle) {
+      quiet = !quiet;
+      try { sessionStorage.setItem(QUIET_KEY, String(quiet)); } catch {}
+      apply(pickFromParams() || (root.dataset.domainLens ? { id: root.dataset.domainLens, from: root.dataset.lensFrom || "" } : null), false);
+      return;
+    }
+    const clear = event.target.closest("[data-lens-clear]");
+    if (clear) {
+      event.preventDefault();
+      quiet = true;
+      apply(null, false);
+      const u = new URL(location.href);
+      u.searchParams.delete("lens");
+      u.searchParams.delete("from");
+      history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+    }
+  });
+})({"lenses":{"creator":{"id":"creator","label":"Creator & craft","says":"Accentuates components, themes, frame anchors (#>), and perspective (@) handles.","examples":["perform","vocabulary","record","question","notebook","syntax","perspectives","surfaces"],"starters":["frontend","marketing"],"ops":["vibration","integration","perspective","ground","action"],"handles":["b-mode","b-direction","b-concept"],"slots":["mode","definition","body","concept","projection"],"sigils":["#","^","@",".","!"]},"scene":{"id":"scene","label":"Cinema & scene","says":"Accentuates staging ( ), observer vantage (@), and modal framing [ ] over generic reference.","examples":["cinema","perspectives","persona","perform","debate","critique"],"starters":["marketing","community"],"ops":["action","perspective","integration","potential","normalize"],"handles":["b-scene","b-mode","b-concept"],"slots":["scene","scope","mode","concept","projection"],"sigils":["!","@","^","~","%"]},"material":{"id":"material","label":"Materials & texture","says":"Accentuates material defaults (.), potential (~), quality (*), and mode/body slots.","examples":["vocabulary","record","surfaces","pantry","perform","question"],"starters":["frontend","marketing"],"ops":["potential","value","ground","perspective","wonder"],"handles":["b-mode","b-direction"],"slots":["mode","definition","body"],"sigils":["~","*",".","@","?"]},"rhythm":{"id":"rhythm","label":"Rhythm & intervals","says":"Accentuates composition (^), parameter bindings (=), measures (%), and ordered ranges.","examples":["calibration","gradient","numbers","laws","perform","cinema"],"starters":["growth","frontend"],"ops":["integration","binding","normalize","potential","value"],"handles":["b-mode","b-concept","b-direction"],"slots":["mode","concept","projection","definition","body"],"sigils":["^","=","%","~","*"]},"concurrency":{"id":"concurrency","label":"Concurrency & pipeline","says":"Accentuates addressable locks (#), substrate costs ($), state turns (!), and ordered pipelines.","examples":["pipeline","loops","incident","records","algorithms","numbers"],"starters":["incident","growth"],"ops":["vibration","substrate","action","normalize","subject"],"handles":["b-mode","b-scene","b-direction"],"slots":["mode","scene","scope","definition","body"],"sigils":["#","$","!","%","&"]},"editorial":{"id":"editorial","label":"Editorial & voice","says":"Accentuates tone shift [ ], scene setting ( ), wonder (?), and persona (@) voice handles.","examples":["critique","debate","revision","persona","headings","negotiation"],"starters":["community","hiring"],"ops":["wonder","perspective","potential","action","value"],"handles":["b-scene","b-mode","b-direction"],"slots":["scene","scope","mode","definition","body"],"sigils":["?","@","~","!","*"]},"spatial":{"id":"spatial","label":"Spatial manifold","says":"Accentuates topological boundaries < >, structural joins (&), and compound integration (^).","examples":["laws","outline","recurrence","pantry","perspectives","cinema"],"starters":["frontend","incident"],"ops":["potential","integration","subject","binding"],"handles":["b-concept","b-scene","b-direction"],"slots":["concept","projection","scene","scope","definition","body"],"sigils":["~","^","&","="]},"field":{"id":"field","label":"Field & feedback","says":"Accentuates open inquiries (?), verifiable probes (!), and named destinations (#).","examples":["question","checkin","decision","gathering","charter","synthesis"],"starters":["community","search"],"ops":["wonder","action","perspective","potential","vibration"],"handles":["b-scene","b-concept","b-mode"],"slots":["scene","scope","concept","projection","mode"],"sigils":["?","!","@","~","#"]},"career":{"id":"career","label":"Career utilities","says":"Highlights workflows, role cards, triage pipelines, and crisp handoff contracts.","examples":["role","levels","onboarding","incident","records","pipeline"],"starters":["frontend","hiring","search","incident"],"ops":["vibration","perspective","action","normalize","substrate"],"handles":["b-mode","b-direction"],"slots":["mode","definition","body"],"sigils":["#","@","!","%","$"]},"study":{"id":"study","label":"Academic study","says":"Highlights hypothesis testing (?), citation trails (~), multiple perspectives (@), and definitions.","examples":["calibration","perspectives","question","headings","syntax","synthesis"],"starters":["growth"],"ops":["wonder","perspective","ground","integration"],"handles":["b-concept","b-scene"],"slots":["concept","projection","scene","scope"],"sigils":["?","@",".","^"]},"rhetoric":{"id":"rhetoric","label":"Rhetoric & critique","says":"Highlights hedging (~), commitment (!), stance gradients (@), and scene context ( ).","examples":["debate","critique","negotiation","revision","persona","gradient"],"starters":["marketing","community"],"ops":["potential","wonder","action","perspective","value"],"handles":["b-scene","b-mode","b-direction"],"slots":["scene","scope","mode","definition","body"],"sigils":["~","?","!","@","*"]},"prompting":{"id":"prompting","label":"Prompting scenes","says":"Highlights modal constraints [ ], scene grounding ( ), persona framing (@), and reusable packs.","examples":["perform","cinema","loops","charter","vocabulary","pantry"],"starters":["marketing","frontend","community"],"ops":["integration","perspective","potential","binding","action"],"handles":["b-mode","b-direction","b-scene"],"slots":["mode","definition","body","scene","scope"],"sigils":["^","@","~","=","!"]}},"hosts":{"spwashi.com":"creator","attention.productions":"scene","texture.website":"material","tealstripesvibes.com":"rhythm","mutex.buzz":"concurrency","wap.mom":"editorial","smut.today":"editorial","factshift.center":"spatial","autonomous.feedback":"field","lore.land":"field"},"totalExamples":38});</script>
+</body>
+</html>

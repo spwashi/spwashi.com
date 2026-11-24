@@ -198,7 +198,9 @@ function maskStep(mask, direction) {
 // and shown on the stripes before anything is written, and keep writes it into
 // the address while let go puts it back. Its choices are borrowed from the
 // other seeds, then its own family (a palette's hue turns, Euclidean rhythms,
-// a number's steps). (held is declared with trying, above, since the first paint reads it.)
+// a number's steps). held is declared with trying, above, since the first paint
+// reads it. choices, valueNow and same are functions for the same reason: the
+// first paint calls them, and a const below that call is still uninitialized.
 
 /** The expression, its tuple's parts as handles. */
 function writeExpression(v) {
@@ -255,9 +257,15 @@ function writeExpression(v) {
   tok("br", "concept", ">");
 }
 
-const choices = (slot) => (slot === "seed" ? Object.keys(SEEDS) : choicesFor(slot, tune(vibe(place.seed, place.mask, place.filters), place.tuning)));
-const valueNow = (slot) => (slot === "seed" ? shown().seed : valueOf(slot, current()));
-const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+function choices(slot) {
+  return slot === "seed" ? Object.keys(SEEDS) : choicesFor(slot, tune(vibe(place.seed, place.mask, place.filters), place.tuning));
+}
+function valueNow(slot) {
+  return slot === "seed" ? shown().seed : valueOf(slot, current());
+}
+function same(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
 
 /** Try a choice for the held slot: the stripes show it; the address does not change until it is kept. */
 function tryChoice(slot, value) {

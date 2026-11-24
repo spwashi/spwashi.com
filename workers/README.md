@@ -17,7 +17,7 @@ Inventory is `cluster.json`. Each unit is `workers/<id>/` with `wrangler.jsonc` 
 | `factshift-center` | `factshift.center` — snapshot of app.factshift.com `0.0.2-alpha`. Local source checkout: `workers/factshift-center/app` (gitignored) |
 | `wap-mom` | `wap.mom` |
 
-Each held name (`boon.land`, `bane.land`, `bone.land`, `rpgwednesday.shop`, `trope.wiki`, `spwashi.ink`, `newyear.life`, `brainstorm.monster`, `spw.rest`, `spwashi.biz`, `spwashi.click`) is its own files-only worker, `workers/<host-with-hyphens>/`, carried by `workers/site-hub-next/carry-doors.mjs`. A file does not count toward the account's daily Worker requests (error 1027). On 2026-11-24 the apex route for each of those hosts that has a zone points at its file worker. `www.*` still points at `site-hub-next` and redirects to the apex, and that redirect counts. `spwashi.ink`'s worker is uploaded; this account has no zone for it, and the name does not resolve.
+Each held name (`boon.land`, `bane.land`, `bone.land`, `rpgwednesday.shop`, `trope.wiki`, `newyear.life`, `brainstorm.monster`, `spw.rest`, `spwashi.biz`, `spwashi.click`) is its own files-only worker, `workers/<host-with-hyphens>/`, carried by `workers/site-hub-next/carry-doors.mjs`. A file does not count toward the account's daily Worker requests (error 1027). On 2026-11-24 the apex route for each of those hosts points at its file worker. `www.*` still points at `site-hub-next` and redirects to the apex, and that redirect counts.
 
 `wap.mom` is Wondering About Pi: a periodical of record about π and pie, with
 The e Supplement bound in, and the straight man of the WAP clown lore. It plays

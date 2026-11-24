@@ -19,7 +19,12 @@
 //   says "noindex, nofollow". A crawler that keeps robots.txt never fetches
 //   a derived view, which is stronger than rel="nofollow" on each link, and
 //   one that ignores it ignores both; the account's WAF rule stays the
-//   backstop. People and their links work as before.
+//   backstop. Since 2026-11-23 the bare rooms /pivot, /specimens, /physics
+//   and /constructs are files (carry-rooms.mjs). A negative pattern matches
+//   the path, so a query on those rooms opens the same file. /build stays
+//   on the worker: Read and Format post to it, and the assets layer answers
+//   a non-GET on an existing file with 405. /learn, /install, /canvas and a
+//   line as a path stay on the worker.
 // - The corpus is one file for a crawler: /specimens.json, every specimen's
 //   line and note, carried like the other constant answers.
 // assets/robots.txt and assets/sitemap.xml are these strings, and a test holds
@@ -80,6 +85,10 @@ export const STATIC_PATTERNS = Object.freeze([
   "/parser.js",
   // The guide's front page, carried as the worker renders it with no query (carry-guide.mjs).
   "/",
+  // Rooms that answer one page with no query (carry-rooms.mjs). A query on
+  // these paths opens the same file. /build stays off this list: Read and
+  // Format post to it, and an existing asset answers POST with 405.
+  "/pivot", "/specimens", "/physics", "/constructs",
   // The shelf's pages, carried as the worker serves them (shelf.js shelfPages, carry-arcs.mjs).
   "/shelf/", "/shelf/plans/", "/forms/", "/arcs/", "/bench/",
 ]);

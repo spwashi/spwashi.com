@@ -136,6 +136,8 @@ async function main() {
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-answers.mjs', '--check'],
     // The guide's front page, against what the worker renders for / with no query.
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-guide.mjs', '--check'],
+    // /pivot, /specimens, /physics and /constructs, against the no-query page.
+    ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-rooms.mjs', '--check'],
     ['workers/factshift-center/carry-shell.mjs', '--check'],
     // wap.mom's printed pages, against what its worker prints.
     ['workers/wap-mom/carry-pages.mjs', '--check'],

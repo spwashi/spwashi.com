@@ -170,12 +170,15 @@ function face(specimen) {
     ? `<p class="name">${escapeHtml(specimen.route)}${specimen.also ? ` <span class="also-on">and ${specimen.also} more</span>` : ""}</p>`
     : `<p class="name">${escapeHtml(specimen.name)}</p>`;
   const line = reading.file ? `<pre class="line"><code>${reading.paint}</code></pre>` : `<p class="line"><code>${reading.paint}</code></p>`;
+  // An empty interpolation on its own indented line is trailing whitespace, which the carried file cannot keep.
+  const below = [
+    reading.file ? "" : slotList(reading.slots),
+    reading.part ? `<p class="part">The slot reader takes part of this line; what it leaves out is not compared.</p>` : "",
+    specimen.note ? `<p class="note">${escapeHtml(specimen.note)}</p>` : "",
+  ].filter(Boolean);
   const html = `
       ${title}
-      ${line}
-      ${reading.file ? "" : slotList(reading.slots)}${reading.part ? `
-      <p class="part">The slot reader takes part of this line; what it leaves out is not compared.</p>` : ""}${specimen.note ? `
-      <p class="note">${escapeHtml(specimen.note)}</p>` : ""}`;
+      ${line}${below.length ? `\n      ${below.join("\n      ")}` : ""}`;
   FACES.set(specimen.id, html);
   return html;
 }
@@ -267,10 +270,13 @@ const offeredExamples = () => (offered ||= QUERY_EXAMPLES.filter(([q]) => findSp
 function findSection(state, query) {
   const examples = offeredExamples()
     .map(([q, says]) => `<li><a href="${escapeHtml(address({ q, a: state.a, b: state.b }, "found"))}"><code>${escapeHtml(q)}</code></a> ${escapeHtml(says)}</li>`).join("\n      ");
+  const hidden = [
+    state.a ? `<input type="hidden" name="a" value="${escapeHtml(state.a)}">` : "",
+    state.b ? `<input type="hidden" name="b" value="${escapeHtml(state.b)}">` : "",
+  ].filter(Boolean).join("");
   const form = `<form class="find" method="get" action="/specimens#found" role="search">
     <label for="q">Find a line by its slots</label>
-    <div class="find-row"><input id="q" name="q" type="search" value="${escapeHtml(state.q)}" maxlength="120" autocomplete="off" spellcheck="false" placeholder="medium[*]" aria-describedby="find-says"><button type="submit">Find</button></div>
-    ${state.a ? `<input type="hidden" name="a" value="${escapeHtml(state.a)}">` : ""}${state.b ? `<input type="hidden" name="b" value="${escapeHtml(state.b)}">` : ""}
+    <div class="find-row"><input id="q" name="q" type="search" value="${escapeHtml(state.q)}" maxlength="120" autocomplete="off" spellcheck="false" placeholder="medium[*]" aria-describedby="find-says"><button type="submit">Find</button></div>${hidden ? `\n    ${hidden}` : ""}
     <p id="find-says" class="note">Write the slots you know and leave the rest out. <code>*</code> asks only that a slot be there; a word with no braces may sit in any slot.</p>
     <ul class="examples">
       ${examples}

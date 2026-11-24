@@ -4,7 +4,7 @@
 // shared (Cloudflare error 1027, HTTP 429 once they are spent). A file is
 // answered at the edge and does not count; this script does. Apex routes for
 // the zoned doors point at these units since 2026-11-24. www.* stays on
-// site-hub-next and still redirects to the apex. spwashi.ink has no zone here.
+// site-hub-next and still redirects to the apex.
 // --check fails when a carried file differs from what this script answers.
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

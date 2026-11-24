@@ -51,7 +51,8 @@ test('wrangler sends the static patterns to the assets layer, and each names fil
   // A folder address is answered by its index.html.
   for (const pattern of STATIC_PATTERNS) assert.ok(FILES.some((file) => glob(pattern.endsWith('/') ? `${pattern}index.html` : pattern).test(file)), pattern);
   // The worker keeps everything that is a page, and the parser's pages and redirects.
-  for (const page of ['/learn', '/install', '/parser/', '/parser/2026.10.13/', '/parser/latest.js', '/manifest.webmanifest', '/offline']) {
+  // /build stays: Read and Format post to it, and an existing asset answers POST with 405.
+  for (const page of ['/learn', '/install', '/build', '/parser/', '/parser/2026.10.13/', '/parser/latest.js', '/manifest.webmanifest', '/offline']) {
     assert.ok(!STATIC_PATTERNS.some((pattern) => glob(pattern).test(page)), page);
   }
 });
@@ -69,6 +70,7 @@ test('assets/_headers restates what the worker sends for each static file', asyn
     '/parser/2026.10.13/reader.debug.js.map',
     ...CONSTANT_ANSWERS,
     '/',
+    '/pivot', '/specimens', '/physics', '/constructs',
     '/shelf/', '/shelf/plans/', '/forms/', '/arcs/', '/bench/',
   ];
   for (const sample of samples) {
@@ -96,6 +98,14 @@ test("the guide's front page is a file that says exactly what the worker renders
   const response = await get('/');
   assert.equal(response.status, 200);
   assert.equal(readFileSync(path.join(assetsDir, 'index.html'), 'utf8'), await response.text(), '/: run carry-guide.mjs');
+});
+
+test('pivot, specimens, physics and constructs are files of the page the worker renders with no query', async () => {
+  for (const room of ['/pivot', '/specimens', '/physics', '/constructs']) {
+    const response = await get(room);
+    assert.equal(response.status, 200, room);
+    assert.equal(readFileSync(path.join(assetsDir, room.slice(1)), 'utf8'), await response.text(), `${room}: run carry-rooms.mjs`);
+  }
 });
 
 test('robots keeps crawlers to the rooms and names the sitemap; the sitemap names rooms that open', async () => {

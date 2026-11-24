@@ -51,13 +51,6 @@ export const DOORS = {
     cta: "Read the long form",
     neighbors: ["story", "work"],
   },
-  "spwashi.ink": {
-    title: "spwashi.ink",
-    job: "The press name. The editions you can see now are the folios.",
-    href: "https://spwashi.com/design/folios/",
-    cta: "See the folios",
-    neighbors: ["work", "story"],
-  },
   "newyear.life": {
     title: "newyear.life",
     job: "The year as a threshold you can write on.",
