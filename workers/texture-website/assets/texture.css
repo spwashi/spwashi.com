@@ -259,13 +259,15 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
 
 /* The phone is one panel: the picture, the day's sentence, and six steppers.
    The lecture (every rung, the pivots, the catalog, the card) opens as the studio. */
-.tune, .day-prompt, .panel-actions { display: none; }
+.tune, .day-prompt, .panel-actions, .panel-line { display: none; }
 .stepper { display: grid; grid-template-columns: 4.6rem auto 1fr; gap: 0.2rem; align-items: center; }
 .stepper .key { padding: 0; }
 .stepper button { min-height: 44px; min-width: 44px; padding: 0.2rem 0.45rem; }
 .stepper .step-word { text-transform: none; letter-spacing: 0; font: 0.92rem var(--sans); text-align: left; }
 .day-step { min-width: 44px; padding: 0; border-color: transparent; font-size: 1.1rem; }
 .day-prompt { margin: 0.35rem 0 0; font: 0.95rem/1.3 Georgia, "Iowan Old Style", serif; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+body.composed .panel-line:not([hidden]) { display: block; margin: 0.35rem 0 0; font: 0.82rem/1.35 var(--mono); overflow-wrap: anywhere; }
+.panel-line .spw-slot { min-height: 44px; padding: 0.15em 0.3em; }
 .panel-actions { gap: 0.35rem; margin-top: 0.35rem; }
 .panel-actions .action, .panel-actions .studio-toggle { flex: 1; min-height: 44px; }
 
@@ -286,6 +288,7 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
   body.composed:not(.studio-open) .slide-head,
   body.composed:not(.studio-open) .layer-bar,
   body.composed:not(.studio-open) .day-prompt,
+  body.composed:not(.studio-open) .panel-line,
   body.composed:not(.studio-open) .tune,
   body.composed:not(.studio-open) .panel-actions { flex: 0 0 auto; min-width: 0; max-width: 100%; }
   body.composed:not(.studio-open) .views {
@@ -314,8 +317,9 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
      Adding a layer is studio work, and the bar was a second row the phone could not hold. */
   body.composed:not(.studio-open) .layer-bar { display: none; }
   body.composed:not(.studio-open) .day-prompt:not([hidden]) {
-    display: -webkit-box; -webkit-line-clamp: 5; margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.25;
+    display: -webkit-box; -webkit-line-clamp: 2; margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.25;
   }
+  body.composed:not(.studio-open) .panel-line:not([hidden]) { margin: 0.15rem 0 0; font-size: 0.78rem; }
   body.composed:not(.studio-open) .tune:not([hidden]) {
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.1rem 0.35rem; margin-top: 0.2rem;
   }

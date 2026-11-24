@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { carried } from '../carry.mjs';
+import { carriedShell, iconPng } from '../carry.mjs';
 import { CLASSES, FORMATS, LADDERS, MATERIALS, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS, slug } from '../src/vocabulary.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 
@@ -18,7 +18,7 @@ test('the unit is files only: no script, and every unknown path falls back to th
 });
 
 test('each carried file is what carry.mjs writes', async () => {
-  for (const [file, body] of await carried()) assert.equal(readFileSync(path.join(assets, file), 'utf8'), body, `assets/${file}: run node workers/texture-website/carry.mjs`);
+  for (const [file, body] of await carriedShell()) assert.equal(readFileSync(path.join(assets, file), 'utf8'), body, `assets/${file}: run node workers/texture-website/carry.mjs`);
 });
 
 test('every material has a class, a unique slug and its readings; every ladder word has its phrase', () => {
@@ -47,13 +47,15 @@ test('the page carries scripts-off pivot links, visual catalog swatches, layer c
   assert.ok(page.includes('class="layer-bar"'), 'inline layer bar');
   assert.ok(page.includes('class="tune"'), 'phone steppers');
   assert.ok(page.includes('class="day-prompt"'), "the day's sentence");
+  assert.ok(page.includes('class="panel-line"'), 'the line beside the picture');
+  assert.ok(page.includes('rel="manifest"'), 'installable');
   assert.ok(page.includes('class="panel-actions"'), 'copy and studio');
   assert.ok(page.includes('id="material-list"'), 'material datalist');
   assert.ok(page.includes('class="catalog-filters"'), 'class filter bar');
   assert.ok(page.includes('class="pivot-link"'), 'scripts-off pivot links');
   assert.ok(page.includes('loading="lazy"'), 'lazy swatch thumbnails');
   assert.doesNotMatch(page, /\sstyle=|<style|<script>|\son[a-z]+=/i, 'no inline style, script or handler');
-  const line = '~terrazzo[lamplight, worn, riso]{~sea-glass}(wall)<tile>';
+  const line = '~terrazzo[close, lamplight, worn, riso]{~sea-glass}(wall)<tile>';
   const res = parse(line, { eventPolicy: 'none' });
   assert.ok(res.success && !res.completeness?.proseFallback && res.errors.length === 0, line);
 });
@@ -67,4 +69,19 @@ test('every material has an image Midjourney can fetch: a small PNG whose hash i
     assert.ok(manifest.files[m.slug], `${m.slug} is in the manifest`);
   }
   assert.match(readFileSync(path.join(assets, '_headers'), 'utf8'), /^\/\*\.png\n  Cache-Control: public, max-age=86400\n  Cross-Origin-Resource-Policy: cross-origin$/m);
+});
+
+test('the page installs: a manifest, a home-screen mark, and a shell that keeps the vocabulary', () => {
+  const manifest = JSON.parse(readFileSync(path.join(assets, 'manifest.webmanifest'), 'utf8'));
+  assert.equal(manifest.display, 'standalone');
+  assert.equal(manifest.start_url, '/');
+  assert.ok(manifest.icons.some((icon) => icon.src === '/icon-192.png'));
+  const icon = readFileSync(path.join(assets, 'icon-192.png'));
+  assert.deepEqual([...icon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.ok(icon.equals(iconPng()));
+  const sw = readFileSync(path.join(assets, 'sw.js'), 'utf8');
+  assert.match(sw, /const CACHE = "texture-[0-9a-f]{12}";/);
+  assert.ok(sw.includes('"/vocabulary.json"') && sw.includes('"/daily.js"') && sw.includes('"/texture.js"'));
+  assert.match(readFileSync(path.join(assets, 'texture.js'), 'utf8'), /serviceWorker\.register\("\/sw\.js"\)/);
+  assert.match(readFileSync(path.join(assets, '_headers'), 'utf8'), /^\/sw\.js\n  Cache-Control: no-cache$/m);
 });

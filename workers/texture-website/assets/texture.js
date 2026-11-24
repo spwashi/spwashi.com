@@ -1,6 +1,6 @@
 // texture.website: a studio for building material prompts. The address is the
 import { mountCleanStill } from "/clean-still.js";
-import { DAY_KEYS, daily, dayNumber, isoOf, laddersFor, mix, slug } from "/daily.js";
+import { DAY_KEYS, MODE_KEYS, daily, dayNumber, isoOf, laddersFor, lineOf, mix, slug } from "/daily.js";
 // prompt. Each word in the path is a material, bottom first; a mark before a word
 // is how it meets the one before (~ drifting through, * heavy with). Each ladder
 // (scale, light, wear, process, scene, format) is a row of words written into the
@@ -8,7 +8,8 @@ import { DAY_KEYS, daily, dayNumber, isoOf, laddersFor, mix, slug } from "/daily
 // and the look both come from the date. The stage sketches the words: each
 // material's class gives a drawn base and its word gives the hue, and an SVG
 // filter built from the ladders lights it, wears it and prints it. On a phone the
-// picture, the sentence and six steppers are the whole panel. Nothing here runs
+// picture, the sentence, the line and six steppers are the whole panel. The line
+// is the same one factshift.center and spw.quest open. Nothing here runs
 // on a server.
 
 const MARKS = ".^*~=@?!%";
@@ -137,20 +138,9 @@ function prompts(vocab, state) {
   return { midjourney: `${parts.join(", ")} ${parameters(vocab, state)}`, plain: `${parts.join(", ").replace(/::\d/g, "").replace(/[{}]/g, "")}.` };
 }
 
-/**
- * The composition as one line in Spw's slot order, word[mode]{body}: the ladders
- * sit in the first material's mode and the rest nest in its body, so the line
- * pastes onto factshift.center (2026-11-11: written mode-after-body, it held nothing).
- */
+/** The line daily.js builds. Scale is in the mode, so the look survives the trip. */
+const spwLine = lineOf;
 const OP_KIND = { "~": "potential", "?": "wonder", "*": "value", ".": "ground", "^": "integration", "@": "perspective", "!": "action", "&": "measure", "%": "measure", "=": "configuration", "#": "frame" };
-
-const spwLine = (state) => {
-  const [first, ...rest] = state.layers;
-  const inner = rest.reduceRight((acc, { material, mark }) => `${mark}${material.slug}${acc ? `{${acc}}` : ""}`, "");
-  const mode = [state.ladders.light, state.ladders.wear, state.ladders.process].map(slug).join(", ");
-  const view = state.view && state.view !== "studio" ? `${state.view}@ ` : "";
-  return `${view}${first.mark}${first.material.slug}[${mode}]${inner ? `{${inner}}` : ""}(${slug(state.ladders.scene)})<${slug(state.ladders.format)}>`;
-};
 
 function spwLayersNode(layers) {
   if (!layers.length) return [];
@@ -183,16 +173,18 @@ function spwSlotButton(vocab, state, key, onStep) {
     "aria-valuemax": String(Math.max(0, words.length - 1)),
     "aria-valuenow": String(idx),
     "aria-valuetext": current,
-    title: `${key}: drag horizontally or click to step`,
+    title: `${key}: drag sideways, or click to step`,
   }, [slug(current)]);
   let moved = false;
   btn.addEventListener("pointerdown", (e) => {
     if (e.button && e.button !== 0) return;
-    e.preventDefault();
+    if (e.pointerType === "mouse") e.preventDefault();
     let lastX = e.clientX;
     let acc = 0;
     moved = false;
+    try { btn.setPointerCapture(e.pointerId); } catch { /* a pointer the button cannot hold still steps on click */ }
     const onMove = (ev) => {
+      if (ev.pointerId !== e.pointerId) return;
       const dx = ev.clientX - lastX;
       lastX = ev.clientX;
       acc += dx;
@@ -203,18 +195,24 @@ function spwSlotButton(vocab, state, key, onStep) {
         onStep(key, dir, true);
       }
     };
-    const onUp = () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-      window.removeEventListener("pointercancel", onUp);
+    const onUp = (ev) => {
+      if (ev.pointerId !== e.pointerId) return;
+      btn.removeEventListener("pointermove", onMove);
+      btn.removeEventListener("pointerup", onUp);
+      btn.removeEventListener("pointercancel", onUp);
       if (moved) {
+        const swallow = (click) => {
+          click.preventDefault();
+          click.stopPropagation();
+          window.removeEventListener("click", swallow, true);
+        };
+        window.addEventListener("click", swallow, true);
         onStep(key, 0, false);
-        setTimeout(() => { moved = false; }, 0);
       }
     };
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-    window.addEventListener("pointercancel", onUp);
+    btn.addEventListener("pointermove", onMove);
+    btn.addEventListener("pointerup", onUp);
+    btn.addEventListener("pointercancel", onUp);
   });
   btn.addEventListener("click", (e) => {
     if (moved) { moved = false; return; }
@@ -246,11 +244,7 @@ function spwLineNode(vocab, state, onStep, onCycleView) {
     node("span", { class: "spw-op", "data-op": OP_KIND[first.mark] || "potential" }, [first.mark]),
     node("span", { class: "spw-word" }, [first.material.slug]),
     node("span", { class: "spw-br", "data-op": "mode" }, ["["]),
-    spwSlotButton(vocab, state, "light", onStep),
-    node("span", { class: "spw-sep" }, [", "]),
-    spwSlotButton(vocab, state, "wear", onStep),
-    node("span", { class: "spw-sep" }, [", "]),
-    spwSlotButton(vocab, state, "process", onStep),
+    ...MODE_KEYS.flatMap((key, i) => [i ? node("span", { class: "spw-sep" }, [", "]) : "", spwSlotButton(vocab, state, key, onStep)]),
     node("span", { class: "spw-br", "data-op": "mode" }, ["]"]),
   );
   if (rest.length) {
@@ -480,20 +474,51 @@ function drawTune(vocab, state, set) {
     return node("div", { class: "stepper" }, [
       node("span", { class: "key" }, [key]),
       node("button", { type: "button", "aria-label": `previous ${key}`, onclick: () => go(-1) }, ["‹"]),
-      node("button", { type: "button", class: "step-word", "aria-label": `${key}, ${state.ladders[key]}`, onclick: () => go(1) }, [state.ladders[key]]),
+      node("button", { type: "button", class: "step-word", "data-step-word": key, "aria-label": `${key}, ${state.ladders[key]}`, onclick: () => go(1) }, [state.ladders[key]]),
     ]);
   };
   tune.replaceChildren(...DAY_KEYS.map(stepper));
 }
 
-/** The phone panel's sentence and its two actions. The studio holds the rest. */
-function drawPanel(vocab, state) {
+/**
+ * While a finger is still on a slot, move the word, the sentence and the picture
+ * without building the page again. Building it again would replace the slot the
+ * finger is holding.
+ */
+function paintLive(vocab, state, slotKey) {
+  const words = vocab.ladders[slotKey] || [];
+  const current = state.ladders[slotKey];
+  const idx = Math.max(0, words.indexOf(current));
+  for (const btn of document.querySelectorAll(`.spw-slot[data-key="${slotKey}"]`)) {
+    btn.textContent = slug(current);
+    btn.setAttribute("aria-valuenow", String(idx));
+    btn.setAttribute("aria-valuetext", current);
+    btn.classList.add("scrubbing");
+  }
+  for (const word of document.querySelectorAll(`[data-step-word="${slotKey}"]`)) {
+    word.textContent = current;
+    word.setAttribute("aria-label", `${slotKey}, ${current}`);
+  }
+  const prompt = $(".day-prompt");
+  if (prompt) prompt.textContent = prompts(vocab, state).plain;
+  const still = $(".still-spw");
+  if (still) still.textContent = spwLine(state);
+  drawStage(vocab, state);
+}
+
+/** The phone panel's sentence, its line, and its two actions. The studio holds the rest. */
+function drawPanel(vocab, state, onStep, onCycleView) {
   const prompt = $(".day-prompt");
   const actions = $(".panel-actions");
+  const lineHost = $(".panel-line");
   if (!prompt || !actions) return;
   const { midjourney, plain } = prompts(vocab, state);
   prompt.hidden = false;
   prompt.textContent = plain;
+  if (lineHost && onStep) {
+    lineHost.hidden = false;
+    lineHost.replaceChildren(spwLineNode(vocab, state, onStep, onCycleView));
+  }
   const studio = node("button", {
     type: "button",
     class: "studio-toggle",
@@ -727,7 +752,9 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
   const cssSnippet = primaryListed
     ? `background-image: url("${imageOf(primaryListed)}");\nbackground-size: ${PERIOD[state.ladders.scale] * 8}px ${PERIOD[state.ladders.scale] * 8}px;\nbackground-repeat: repeat;`
     : "";
-  const shotHref = primaryListed ? `https://attention.productions/?material=${primaryListed.slug}` : "https://attention.productions/";
+  const shotHref = primaryListed
+    ? `https://attention.productions/${primaryListed.slug}?material=${primaryListed.slug}&light=${slug(state.ladders.light)}`
+    : `https://attention.productions/?light=${slug(state.ladders.light)}`;
   const canvasHref = `https://factshift.center/?spw=${encodeURIComponent(line)}`;
   const questHref = `https://spw.quest/build?script=${encodeURIComponent(line)}`;
   const thumb = node("div", { class: "thumb", "aria-hidden": "true" }, [$(".layers").cloneNode(true)]);
@@ -755,7 +782,7 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
       node("span", { class: "key" }, ["open in"]),
       node("a", { href: shotHref }, ["attention.productions (frame shot) ↗"]),
       node("a", { href: canvasHref }, ["factshift.center (canvas) ↗"]),
-      node("a", { href: questHref }, ["spw.quest (pivot) ↗"]),
+      node("a", { href: questHref }, ["spw.quest (build) ↗"]),
     ]),
     images.length ? node("div", { class: "images" }, [node("span", { class: "key" }, ["images"]), ...state.layers.filter(({ material }) => material.cls).map(({ material }) =>
       node("span", { class: "image-link" }, [node("img", { src: `/${material.slug}.png`, alt: "", width: 40, height: 40 }), node("a", { href: `/${material.slug}.png` }, [material.word]), copyButton("copy image link", imageOf(material))]))]) : "",
@@ -788,6 +815,28 @@ async function main() {
       history.replaceState(null, "", url);
       render();
     };
+    const onSlot = (slotKey, delta, scrubbing) => {
+      if (delta) {
+        const live = stateOf(url, vocab);
+        const words = vocab.ladders[slotKey] || [];
+        const idx = Math.max(0, words.indexOf(live.ladders[slotKey]));
+        const next = words[(idx + delta + words.length) % words.length];
+        if (next) url.searchParams.set(slotKey, slug(next));
+        history.replaceState(null, "", url);
+      }
+      if (scrubbing && delta) {
+        paintLive(vocab, stateOf(url, vocab), slotKey);
+        return;
+      }
+      render(`slot:${slotKey}`);
+    };
+    const onCycleView = () => {
+      const viewKeys = ["", ...Object.keys(vocab.views)];
+      const nextKey = viewKeys[(viewKeys.indexOf(state.view) + 1) % viewKeys.length];
+      url.pathname = `${nextKey ? `/${nextKey}@` : ""}${words ? `/${words}` : "/"}`;
+      history.replaceState(null, "", url);
+      render("persona");
+    };
     drawStage(vocab, state);
     drawSlide(vocab, state, onDay);
     drawTune(vocab, state, (change, key) => {
@@ -795,7 +844,7 @@ async function main() {
       history.replaceState(null, "", url);
       render(key);
     });
-    drawPanel(vocab, state);
+    drawPanel(vocab, state, onSlot, onCycleView);
     drawLayerBar(vocab, state, url, () => {
       history.replaceState(null, "", url);
       render();
@@ -823,30 +872,14 @@ async function main() {
       history.replaceState(null, "", url);
       render(key);
     });
-    drawCard(vocab, state, url.href, (slotKey, delta, scrubbing) => {
-      if (delta) {
-        const live = stateOf(url, vocab);
-        const words = vocab.ladders[slotKey] || [];
-        const idx = Math.max(0, words.indexOf(live.ladders[slotKey]));
-        const next = words[(idx + delta + words.length) % words.length];
-        if (next) url.searchParams.set(slotKey, slug(next));
-        history.replaceState(null, "", url);
-      }
-      render(scrubbing ? undefined : `slot:${slotKey}`);
-      if (scrubbing) {
-        document.querySelector(`.card-line .spw-slot[data-key="${slotKey}"]`)?.classList.add("scrubbing");
-      }
-    }, () => {
-      const viewKeys = ["", ...Object.keys(vocab.views)];
-      const nextKey = viewKeys[(viewKeys.indexOf(state.view) + 1) % viewKeys.length];
-      url.pathname = `${nextKey ? `/${nextKey}@` : ""}${words ? `/${words}` : "/"}`;
-      history.replaceState(null, "", url);
-      render("persona");
-    });
+    drawCard(vocab, state, url.href, onSlot, onCycleView);
     if (focusKey === "persona") {
-      document.querySelector(".card-line .spw-persona-btn")?.focus();
+      const personas = [...document.querySelectorAll(".spw-persona-btn")];
+      (personas.find((el) => el.offsetParent) ?? personas[0])?.focus();
     } else if (focusKey && focusKey.startsWith("slot:")) {
-      document.querySelector(`.card-line .spw-slot[data-key="${focusKey.slice(5)}"]`)?.focus();
+      const key = focusKey.slice(5);
+      const slots = [...document.querySelectorAll(`.spw-slot[data-key="${key}"]`)];
+      (slots.find((el) => el.offsetParent) ?? slots[0])?.focus();
     } else if (focusKey) {
       document.querySelector(`.rungs[aria-label="${focusKey}"] [aria-checked="true"]`)?.focus();
     }
@@ -868,6 +901,7 @@ async function main() {
   });
   render();
   mountCleanStill({ key: "p", idleMs: 4500 });
+  if ("serviceWorker" in navigator && window.top === window) navigator.serviceWorker.register("/sw.js").catch(() => {});
 }
 
 main().catch(() => document.body.classList.remove("composed"));
