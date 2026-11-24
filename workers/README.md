@@ -10,12 +10,14 @@ Inventory is `cluster.json`. Each unit is `workers/<id>/` with `wrangler.jsonc` 
 
 | Unit | Hosts |
 |------|--------|
-| `site-hub-next` | `texture.website` grain lab, `attention.productions` season page, one door per held name |
+| `site-hub-next` | fallback script until a route moves: a door, `mutex.buzz`, `tealstripesvibes.com`, `www` |
 | `smut-today` | `smut.today` |
 | `autonomous-feedback` | `autonomous.feedback` |
 | `spw-quest` | `spw.quest` |
 | `factshift-center` | `factshift.center` — snapshot of app.factshift.com `0.0.2-alpha`. Local source checkout: `workers/factshift-center/app` (gitignored) |
 | `wap-mom` | `wap.mom` |
+
+Each held name (`boon.land`, `bane.land`, `bone.land`, `rpgwednesday.shop`, `trope.wiki`, `spwashi.ink`, `newyear.life`, `brainstorm.monster`, `spw.rest`, `spwashi.biz`, `spwashi.click`) is its own files-only worker, `workers/<host-with-hyphens>/`, carried by `workers/site-hub-next/carry-doors.mjs`. A file does not count toward the account's daily Worker requests. The route still has to move in the dashboard; until it does, `site-hub-next` answers that host and the request counts (error 1027).
 
 `wap.mom` is Wondering About Pi: a periodical of record about π and pie, with
 The e Supplement bound in, and the straight man of the WAP clown lore. It plays

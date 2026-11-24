@@ -1,29 +1,41 @@
 // texture.website: a studio for building material prompts. The address is the
 import { mountCleanStill } from "/clean-still.js";
+import { DAY_KEYS, daily, dayNumber, isoOf, laddersFor, mix, slug } from "/daily.js";
 // prompt. Each word in the path is a material, bottom first; a mark before a word
 // is how it meets the one before (~ drifting through, * heavy with). Each ladder
 // (scale, light, wear, process, scene, format) is a row of words written into the
-// sentence as they stand. The stage sketches the words: each material's class
-// gives a drawn base and its word gives the hue, and an SVG filter built from the
-// ladders lights it, wears it and prints it. Nothing here runs on a server.
+// sentence as they stand. An empty path is the day's picture (daily.js): the pair
+// and the look both come from the date. The stage sketches the words: each
+// material's class gives a drawn base and its word gives the hue, and an SVG
+// filter built from the ladders lights it, wears it and prints it. On a phone the
+// picture, the sentence and six steppers are the whole panel. Nothing here runs
+// on a server.
 
 const MARKS = ".^*~=@?!%";
 const NO = "--no text, letters, logo, watermark";
-const DEFAULTS = { scale: "close", light: "overcast", wear: "handled", process: "as found", scene: "wall", format: "tile", lens: "none", beat: "none", trace: "none", face: "title", tone: "paper" };
 const LEARNED = "texture.learned";
 const $ = (selector) => document.querySelector(selector);
-const slug = (word) => word.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+/** True when the property has a setter. `list` on an input is a getter only; assigning it throws and used to drop the whole studio. */
+function writable(obj, key) {
+  for (let at = obj; at; at = Object.getPrototypeOf(at)) {
+    const desc = Object.getOwnPropertyDescriptor(at, key);
+    if (desc) return Boolean(desc.set || desc.writable);
+  }
+  return false;
+}
 
 function node(tag, props = {}, children = []) {
   const n = document.createElement(tag);
-  for (const [k, v] of Object.entries(props)) if (k === "class") n.className = v; else if (k in n) n[k] = v; else n.setAttribute(k, v);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === "class") n.className = v;
+    else if (writable(n, k)) n[k] = v;
+    else n.setAttribute(k, v);
+  }
   for (const c of children.flat()) if (c !== "" && c != null) n.append(c);
   return n;
 }
 
-const dayNumber = (iso) => Math.floor(Date.parse(`${iso}T00:00:00Z`) / 86400000);
-const isoOf = (n) => new Date(n * 86400000).toISOString().slice(0, 10);
-const mix = (n) => { let x = Math.imul((n ^ (n >>> 16)) >>> 0, 0x45d9f3b); x = Math.imul((x ^ (x >>> 16)) >>> 0, 0x45d9f3b); return (x ^ (x >>> 16)) >>> 0; };
 const hash = (text) => [...text].reduce((h, c) => (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0, 7);
 
 /* ── reading the address ─────────────────────────────────────── */
@@ -45,28 +57,18 @@ function readPath(vocab, pathname) {
   }).filter(({ material }) => material.slug);
 }
 
-/** A day's pair: two materials from different classes, met by a mark, all from the date. */
-function daily(vocab, day) {
-  const all = vocab.materials;
-  const first = all[day % all.length];
-  const others = all.filter((m) => m.cls !== first.cls);
-  return [{ mark: "", material: first }, { mark: MARKS[mix(day + 3) % MARKS.length], material: others[mix(day) % others.length] }];
-}
-
 function stateOf(url, vocab) {
   const q = url.searchParams;
-  const today = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const today = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   const day = /^\d{4}-\d{2}-\d{2}$/.test(q.get("day") ?? "") ? q.get("day") : isoOf(dayNumber(today) + (Number.parseInt(q.get("d") ?? "0", 10) || 0));
   const roll = Number.parseInt(q.get("r") ?? "", 10);
-  const ladders = {};
-  Object.entries(vocab.ladders).forEach(([key, words], i) => {
-    const asked = words.find((word) => slug(word) === slug(q.get(key) ?? ""));
-    ladders[key] = asked ?? (Number.isFinite(roll) ? words[mix(roll + i * 97) % words.length] : DEFAULTS[key]);
-  });
   const view = viewOf(vocab, url.pathname, q);
+  const read = readPath(vocab, url.pathname);
+  const byDay = read.length === 0;
+  const ladders = laddersFor(vocab, { day, roll, query: q, byDay });
   if (view === "story-designer" && !q.get("format")) ladders.format = "plate";
   const num = (key, lo, hi) => { const n = Number.parseInt(q.get(key) ?? "", 10); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : null; };
-  const read = readPath(vocab, url.pathname);
   return {
     day, ladders, view,
     params: { chaos: num("chaos", 0, 100), weird: num("weird", 0, 3000), stylize: num("stylize", 0, 1000), seed: num("seed", 0, 4294967295), raw: q.has("raw"), sref: q.get("sref") === "random" },
@@ -74,7 +76,7 @@ function stateOf(url, vocab) {
     weigh: q.has("weigh"),
     exclude: (q.get("exclude") ?? "").replace(/[^a-z0-9 -]+/gi, "").trim().slice(0, 40),
     layers: read.length ? read : daily(vocab, dayNumber(day)),
-    byDay: read.length === 0,
+    byDay,
     say: (q.get("say") ?? "").slice(0, 140), as: q.get("as") ?? ".",
     gatheredFor: (q.get("for") ?? "").slice(0, 80),
   };
@@ -332,7 +334,8 @@ function drawStage(vocab, state) {
   const stage = $(".stage");
   const tiled = stage.classList.contains("tiled");
   const p = tiled ? Math.max(6, Math.round(PERIOD[state.ladders.scale] / 2)) : PERIOD[state.ladders.scale];
-  stage.style.aspectRatio = tiled ? "1 / 1" : ASPECT[state.ladders.format];
+  const phone = window.matchMedia("(max-width: 40rem)").matches && !document.body.classList.contains("studio-open");
+  stage.style.aspectRatio = phone ? "auto" : (tiled ? "1 / 1" : ASPECT[state.ladders.format]);
   $(".layers").replaceChildren(...state.layers.map(({ material, mark }, i) => {
     const pairs = base(material, p);
     const layer = node("div", { class: `layer${vocab.relations[mark]?.drift ? " drift" : ""}` });
@@ -353,10 +356,16 @@ function drawStage(vocab, state) {
 
 const figureOf = (iso) => dayNumber(iso) - dayNumber(`${iso.slice(0, 4)}-01-01`) + 1;
 
-function drawSlide(vocab, state) {
+function drawSlide(vocab, state, onDay) {
   $(".slide .fig").textContent = `Fig. ${figureOf(state.day)}`;
   $(".slide .title").textContent = state.layers.map(({ material }) => material.word).join(" · ");
-  $(".slide .when").textContent = state.byDay ? state.day : "";
+  const when = $(".slide .when");
+  if (state.byDay && onDay) {
+    const step = (delta, label) => node("button", { type: "button", class: "day-step", "aria-label": label, onclick: () => onDay(delta) }, [delta < 0 ? "‹" : "›"]);
+    when.replaceChildren(step(-1, "Previous day"), document.createTextNode(` ${state.day} `), step(1, "Next day"));
+  } else {
+    when.textContent = state.byDay ? state.day : "";
+  }
   const first = state.layers[0].material;
   $(".caption").textContent = [first.cls ? vocab.classes[first.cls].science : `${first.word}: a material of no listed class; the prompt takes the word as it is.`, state.gatheredFor ? `Gathered for ${state.gatheredFor}.` : ""].filter(Boolean).join(" ");
   const stillCtx = $(".still-context");
@@ -385,6 +394,9 @@ function swapHref(state, index, other) {
 
 /** Write an updated layers array back into url.pathname while preserving any view prefix. */
 function writeLayersPath(url, state, nextLayers) {
+  // Leaving the day writes its look into the query, so the picture the reader
+  // had stays when the path starts naming materials.
+  if (state.byDay) for (const key of DAY_KEYS) if (!url.searchParams.has(key)) url.searchParams.set(key, slug(state.ladders[key]));
   const view = state.view ? `/${state.view}@` : "";
   if (!nextLayers.length) { url.pathname = view ? `${view}/` : "/"; return; }
   const segments = nextLayers.map(({ material, mark }, i) => {
@@ -455,6 +467,48 @@ function drawLayerBar(vocab, state, url, onUpdate) {
 /* ── configuration: ladders in three bands ────────────────────── */
 
 const BANDS = [["look", ["scale", "light", "wear"]], ["make", ["process", "format", "lens"]], ["use", ["scene"]], ["story", ["beat", "trace"]], ["card", ["face", "tone"]]];
+
+/** Six steppers, one per look. Tap the word to step forward, the mark to step back. */
+function drawTune(vocab, state, set) {
+  const tune = $(".tune");
+  if (!tune) return;
+  tune.hidden = false;
+  const stepper = (key) => {
+    const words = vocab.ladders[key];
+    const at = Math.max(0, words.indexOf(state.ladders[key]));
+    const go = (dir) => set({ [key]: slug(words[(at + dir + words.length) % words.length]) }, key);
+    return node("div", { class: "stepper" }, [
+      node("span", { class: "key" }, [key]),
+      node("button", { type: "button", "aria-label": `previous ${key}`, onclick: () => go(-1) }, ["‹"]),
+      node("button", { type: "button", class: "step-word", "aria-label": `${key}, ${state.ladders[key]}`, onclick: () => go(1) }, [state.ladders[key]]),
+    ]);
+  };
+  tune.replaceChildren(...DAY_KEYS.map(stepper));
+}
+
+/** The phone panel's sentence and its two actions. The studio holds the rest. */
+function drawPanel(vocab, state) {
+  const prompt = $(".day-prompt");
+  const actions = $(".panel-actions");
+  if (!prompt || !actions) return;
+  const { midjourney, plain } = prompts(vocab, state);
+  prompt.hidden = false;
+  prompt.textContent = plain;
+  const studio = node("button", {
+    type: "button",
+    class: "studio-toggle",
+    "aria-pressed": String(document.body.classList.contains("studio-open")),
+    onclick: () => {
+      const open = document.body.classList.toggle("studio-open");
+      if (!open) window.scrollTo(0, 0);
+      drawStage(vocab, state);
+      studio.setAttribute("aria-pressed", String(open));
+      studio.textContent = open ? "picture" : "studio";
+    },
+  }, [document.body.classList.contains("studio-open") ? "picture" : "studio"]);
+  actions.hidden = false;
+  actions.replaceChildren(copyButton("copy prompt", midjourney), studio);
+}
 
 /** What a ladder's current word adds to the sentence, said beside it. */
 function phraseOf(vocab, key, word) {
@@ -728,8 +782,20 @@ async function main() {
       link.href = `${key ? `/${key}@` : ""}/${words}${url.search}`;
       if (key === state.view) link.setAttribute("aria-current", "page"); else link.removeAttribute("aria-current");
     }
+    const onDay = (delta) => {
+      url.searchParams.set("day", isoOf(dayNumber(state.day) + delta));
+      url.searchParams.delete("d");
+      history.replaceState(null, "", url);
+      render();
+    };
     drawStage(vocab, state);
-    drawSlide(vocab, state);
+    drawSlide(vocab, state, onDay);
+    drawTune(vocab, state, (change, key) => {
+      for (const [k, value] of Object.entries(change)) url.searchParams.set(k, value);
+      history.replaceState(null, "", url);
+      render(key);
+    });
+    drawPanel(vocab, state);
     drawLayerBar(vocab, state, url, () => {
       history.replaceState(null, "", url);
       render();

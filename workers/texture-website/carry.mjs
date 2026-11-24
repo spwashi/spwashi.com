@@ -59,13 +59,13 @@ A studio for building material prompts. The address is the prompt: each word in 
 
 Ladders, as query keys whose values are words (hyphens for spaces):
 ${Object.entries(LADDERS).map(([key, words]) => `- ${key}: ${words.join(", ")}`).join("\n")}
-With no material in the path, the day composes a pair: day=2026-12-01 fixes a date, d=2 moves from today by days. r rolls every ladder from a seed; say and as put words in a speech bubble.
+With no material in the path, the day composes a pair and a look (scale, light, wear, process, scene, format), so each morning is a different picture. day=2026-12-01 fixes a date, d=2 moves from today by days. A ladder in the query keeps its word. r rolls every ladder from a seed; say and as put words in a speech bubble. On a phone the picture, that sentence and six steppers are the whole panel; studio opens the rungs, pivots and catalog.
 
 Views: a first path word ending in @ is whose eyes the page is seen through: ${Object.entries(VIEWS).map(([key, v]) => `/${key}@/ (${v.name}, ${v.says})`).join("; ")}.
 
 Pivots, as query keys, each teaching one of ${Object.keys(TECHNIQUES).length} documented techniques: tile (format=tile seamless repeat), exclude (drop one quality via --no at -0.5 weight), perm (a ladder written as a permutation), weigh (materials as weighted multi-prompts), chaos, weird, stylize (numbers), raw, sref (random), seed (a number), invert (reverse the layers by reversing the path), and lens (aesthetic genre). Techniques with their sources are in /vocabulary.json.
 
-The page includes an inline material-layer composer, a 2×2 seamless tile preview, visual catalog swatches with class filters, and horizontal bracket scrubbing across its four-slot Spw line:
+The page includes an inline material-layer composer, a 2×2 seamless tile preview, visual catalog swatches with class filters, steppers for the six look ladders (tap the word to step), and bracket slots on its four-slot Spw line (tap to step; drag still scrubs):
   ~terrazzo[lamplight, worn, riso]{~sea-glass}(wall)<tile>
 
 It writes a Midjourney prompt (with --tile or an aspect ratio by format), the same prompt with its materials' images in front (--sref), a plain prompt for any model, a CSS background snippet, a Spw line, and direct links to frame the surface on attention.productions (?material=), arrange it on factshift.center (?spw=), or dissect it on spw.quest (/build?script=). Its card takes the composition as .txt, .spw, .json, .md, or a square .svg that marks the day.
@@ -94,7 +94,7 @@ const PAGE = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>texture.website</title>
   <meta name="description" content="A studio for building material prompts: words in the address become materials, ladders of words tune scale, light, wear, process, scene and format.">
   <link rel="stylesheet" href="/texture.css">
@@ -111,6 +111,9 @@ const PAGE = `<!doctype html>
       <div class="still-context" aria-label="Active composition context"></div>
       <figcaption class="caption">A studio for building material prompts. Each word in the address is a material; each ladder is a word in the sentence.</figcaption>
       <div class="layer-bar" aria-label="Material layers" hidden></div>
+      <p class="day-prompt" hidden></p>
+      <div class="tune" aria-label="Tune" hidden></div>
+      <div class="panel-actions" hidden></div>
     </figure>
     <datalist id="material-list">${MATERIALS.map((m) => `<option value="${escapeHtml(m.word)}"></option>`).join("")}</datalist>
     <section class="ladders" aria-label="Ladders" hidden></section>

@@ -45,6 +45,9 @@ test('the page carries scripts-off pivot links, visual catalog swatches, layer c
   const page = readFileSync(path.join(assets, 'index.html'), 'utf8');
   assert.ok(page.includes('class="tile-toggle"'), '2x2 tile toggle');
   assert.ok(page.includes('class="layer-bar"'), 'inline layer bar');
+  assert.ok(page.includes('class="tune"'), 'phone steppers');
+  assert.ok(page.includes('class="day-prompt"'), "the day's sentence");
+  assert.ok(page.includes('class="panel-actions"'), 'copy and studio');
   assert.ok(page.includes('id="material-list"'), 'material datalist');
   assert.ok(page.includes('class="catalog-filters"'), 'class filter bar');
   assert.ok(page.includes('class="pivot-link"'), 'scripts-off pivot links');

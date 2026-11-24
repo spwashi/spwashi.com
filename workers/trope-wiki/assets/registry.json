@@ -1,0 +1,200 @@
+{
+  "schema": "ecosystem.v1",
+  "products": [
+    {
+      "id": "work",
+      "host": "spwashi.com",
+      "title": "Spwashi",
+      "job": "Software and art. The place the other names prove themselves.",
+      "href": "https://spwashi.com/"
+    },
+    {
+      "id": "pictures",
+      "host": "attention.productions",
+      "title": "Attention Productions",
+      "job": "The pictures. A feature in 2027, and a season of daily promo from October 1 through New Year.",
+      "href": "https://attention.productions/"
+    },
+    {
+      "id": "grain",
+      "host": "texture.website",
+      "title": "Texture",
+      "job": "Grain you can try under your own words, take as one rule and one tile, or commission.",
+      "href": "https://texture.website/"
+    },
+    {
+      "id": "path",
+      "host": "spw.quest",
+      "title": "spw.quest",
+      "job": "A path into Spw. Copy one setup, for yourself or for an agent, and stop before any commit.",
+      "href": "https://spw.quest/"
+    },
+    {
+      "id": "note",
+      "host": "autonomous.feedback",
+      "title": "autonomous.feedback",
+      "job": "A note any website can take. A desk is kept only when the site asks for one.",
+      "href": "https://autonomous.feedback/"
+    },
+    {
+      "id": "story",
+      "host": "lore.land",
+      "title": "lore.land",
+      "job": "A show that is also a book.",
+      "href": "https://lore.land/"
+    },
+    {
+      "id": "frame",
+      "host": "factshift.center",
+      "title": "Factshift",
+      "job": "One concept on a neutral frame. A query on the URL is the physics.",
+      "href": "https://factshift.center/"
+    },
+    {
+      "id": "record",
+      "host": "wap.mom",
+      "title": "wap.mom",
+      "job": "A periodical of record about π and pie.",
+      "href": "https://wap.mom/"
+    },
+    {
+      "id": "resume",
+      "host": "resume.spwashi.com",
+      "title": "Resume",
+      "job": "A hand-authored SVG resume.",
+      "href": "https://resume.spwashi.com/resume.svg"
+    }
+  ],
+  "doors": [
+    {
+      "host": "boon.land",
+      "title": "boon.land",
+      "job": "A neutral frame pulled toward arrival. A concept stays words until a viewport is sponsored to show a picture.",
+      "href": "https://spwashi.com/about/domains/boon.land/",
+      "neighbors": [
+        "frame",
+        "pictures"
+      ]
+    },
+    {
+      "host": "bane.land",
+      "title": "bane.land",
+      "job": "The same frame, pulled toward departure. A concept stays words until a viewport is sponsored to show a picture.",
+      "href": "https://spwashi.com/about/domains/bane.land/",
+      "neighbors": [
+        "frame",
+        "pictures"
+      ]
+    },
+    {
+      "host": "bone.land",
+      "title": "bone.land",
+      "job": "The same frame, held still. A concept stays words until a viewport is sponsored to show a picture.",
+      "href": "https://spwashi.com/about/domains/bone.land/",
+      "neighbors": [
+        "frame",
+        "pictures"
+      ]
+    },
+    {
+      "host": "tealstripesvibes.com",
+      "title": "Teal Stripes Vibes",
+      "job": "Designer seeds under masks, painted as stripes: every address is a picture, and a screenshot carries its own receipt.",
+      "href": "https://tealstripesvibes.com/harbor",
+      "neighbors": [
+        "grain",
+        "pictures"
+      ]
+    },
+    {
+      "host": "rpgwednesday.shop",
+      "title": "RPG Wednesday",
+      "job": "The play table. The public night is on spwashi.com.",
+      "href": "https://spwashi.com/play/rpg-wednesday/",
+      "neighbors": [
+        "story",
+        "work"
+      ]
+    },
+    {
+      "host": "trope.wiki",
+      "title": "trope.wiki",
+      "job": "A name for story moves. The long form you can read now is lore.land.",
+      "href": "https://lore.land/",
+      "neighbors": [
+        "story",
+        "work"
+      ]
+    },
+    {
+      "host": "spwashi.ink",
+      "title": "spwashi.ink",
+      "job": "The press name. The editions you can see now are the folios.",
+      "href": "https://spwashi.com/design/folios/",
+      "neighbors": [
+        "work",
+        "story"
+      ]
+    },
+    {
+      "host": "newyear.life",
+      "title": "newyear.life",
+      "job": "The year as a threshold you can write on.",
+      "href": "https://spwashi.com/newyear/",
+      "neighbors": [
+        "work",
+        "pictures"
+      ]
+    },
+    {
+      "host": "brainstorm.monster",
+      "title": "brainstorm.monster",
+      "job": "A name for thinking together. It is quiet. The work is on spwashi.com.",
+      "href": "https://spwashi.com/",
+      "neighbors": [
+        "work",
+        "path"
+      ]
+    },
+    {
+      "host": "mutex.buzz",
+      "title": "mutex.buzz",
+      "job": "The lock: one concept in the frame at a time. Each hold releases at a close, and a laminated folio holds it the rest of the time.",
+      "href": "https://mutex.buzz/now/",
+      "neighbors": [
+        "pictures",
+        "work"
+      ]
+    },
+    {
+      "host": "spw.rest",
+      "title": "spw.rest",
+      "job": "A resting name. The live path into the language is spw.quest.",
+      "href": "https://spw.quest/",
+      "neighbors": [
+        "path",
+        "work"
+      ]
+    },
+    {
+      "host": "spwashi.biz",
+      "title": "spwashi.biz",
+      "job": "A held name. Commissions are on the services ladder.",
+      "href": "https://spwashi.com/services/",
+      "neighbors": [
+        "work",
+        "pictures"
+      ]
+    },
+    {
+      "host": "spwashi.click",
+      "title": "spwashi.click",
+      "job": "A held name. The site is spwashi.com.",
+      "href": "https://spwashi.com/",
+      "neighbors": [
+        "work",
+        "grain"
+      ]
+    }
+  ]
+}

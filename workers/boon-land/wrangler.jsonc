@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/wrangler.json",
+  "name": "boon-land",
+  "compatibility_date": "2026-11-23",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Files only. Move this host's route here from site-hub-next in the dashboard.
+  // Until then site-hub-next still renders the door, and that request counts
+  // toward the account's daily Worker limit (error 1027).
+  "assets": {
+    "directory": "./assets"
+  }
+}
