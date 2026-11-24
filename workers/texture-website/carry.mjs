@@ -100,7 +100,7 @@ const PAGE = `<!doctype html>
   <meta name="description" content="A studio for building material prompts: words in the address become materials, ladders of words tune scale, light, wear, process, scene and format.">
   <meta name="theme-color" content="#1d1d1b">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-512.png">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/texture.css">
   <link rel="stylesheet" href="/clean-still.css">
@@ -171,11 +171,12 @@ const MANIFEST = `${JSON.stringify({
   icons: [
     { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
     { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+    { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
   ],
 }, null, 2)}\n`;
 
 /** The shell the service worker keeps. Pictures are cached when a reader opens them, not all at once. */
-const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/clean-still.js", "/clean-still.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png"];
+const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/clean-still.js", "/clean-still.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
 
 function serviceWorker(version) {
   return `// Written by workers/texture-website/carry.mjs. The day's picture is chosen in the page, so this shell opens it with no network.
@@ -268,7 +269,7 @@ export async function carriedShell() {
   const files = await carried();
   const hash = createHash("sha256");
   for (const [name, body] of files) hash.update(name).update(typeof body === "string" ? body : body);
-  hash.update(iconPng());
+  for (const size of [192, 512]) hash.update(iconPng(size));
   for (const name of ["texture.css", "texture.js", "daily.js"]) hash.update(await readFile(path.join(ASSETS, name)));
   return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12))]];
 }
@@ -309,15 +310,17 @@ async function images(check) {
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const icon = iconPng();
-  const iconFile = path.join(ASSETS, "icon-192.png");
+  const icons = [192, 512].map((size) => [size, iconPng(size)]);
   let drift = await writeOrCheck(ASSETS, await carriedShell(), { check, label: "texture-carry", hint: "run node workers/texture-website/carry.mjs" });
-  if (check) {
-    const current = await readFile(iconFile).catch(() => Buffer.alloc(0));
-    if (!current.equals(icon)) { drift += 1; console.error("[texture-carry] assets/icon-192.png differs; run node workers/texture-website/carry.mjs"); }
-  } else {
-    await mkdir(ASSETS, { recursive: true });
-    await writeFile(iconFile, icon);
+  for (const [size, icon] of icons) {
+    const iconFile = path.join(ASSETS, `icon-${size}.png`);
+    if (check) {
+      const current = await readFile(iconFile).catch(() => Buffer.alloc(0));
+      if (!current.equals(icon)) { drift += 1; console.error(`[texture-carry] assets/icon-${size}.png differs; run node workers/texture-website/carry.mjs`); }
+    } else {
+      await mkdir(ASSETS, { recursive: true });
+      await writeFile(iconFile, icon);
+    }
   }
   drift += await images(check);
   if (check && drift) process.exit(1);

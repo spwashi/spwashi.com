@@ -118,7 +118,7 @@ test('a hand\'s tuning is held to its ranges, carried in the address, and read b
   assert.deepEqual(t, { angle: TUNING.angle.max, drift: 1.2, turn: 1, beats: 5, steps: 5 });
   const place = readAddress('/lantern/pr/moire', '?angle=40&drift=1.2&beats=3&steps=8&turn=1&say=%3Cb%3Ehello%3C%2Fb%3E%20there', new Date(NOW));
   assert.equal(place.say, 'bhello/b there', 'a caption keeps no markup');
-  assert.equal(place.href, 'https://tealstripesvibes.com/lantern/pr/moire?angle=40&drift=1.2&turn=1&beats=3&steps=8&say=bhello%2Fb%20there');
+  assert.equal(place.href, 'https://tealstripesvibes.com/lantern/palette,rhythm/moire?v=7sy0kehdf&say=bhello%2Fb%20there');
   const again = readAddress(...new URL(place.href).pathname.split('?'), new URL(place.href).search, new Date(NOW));
   assert.deepEqual([again.tuning, again.say], [place.tuning, place.say], 'the address reads back as itself');
   const v = tune(vibe(place.seed, place.mask, place.filters), place.tuning);
@@ -148,7 +148,7 @@ test('a held slot scans its choices: the others seeds\' values first, then its o
   // A kept palette and rhythm read back from the address; bad ones are not read.
   const t = readTuning(new URLSearchParams('palette=062a2b-0f766e-a7f3d0&rhythm=3-5-8&angle=45'));
   assert.deepEqual(t, { palette: ['#062a2b', '#0f766e', '#a7f3d0'], rhythm: [3, 5, 8], angle: 45 });
-  assert.equal(tuningQuery(t), 'palette=062a2b-0f766e-a7f3d0&rhythm=3-5-8&angle=45');
+  assert.equal(tuningQuery(t), 'v=4g1&palette=062a2b-0f766e-a7f3d0&rhythm=3-5-8');
   assert.deepEqual(readTuning(new URLSearchParams('palette=zzz&rhythm=0-99')), {});
   // A kept rhythm stands over a Euclidean tuning.
   const kept = tune(v, { beats: 3, steps: 8, ...tuningFor('rhythm', [4, 4, 9]) });
@@ -187,16 +187,16 @@ test('the mask is six chips a hand can switch, each a link to the address with i
   const { facetChips } = await import('../src/vibe.js');
   const chips = facetChips('lantern', 'pramgs', []);
   assert.deepEqual(chips.map((c) => [c.name, c.on, c.href]), [
-    ['palette', true, '/lantern/ramgs'], ['rhythm', true, '/lantern/pamgs'], ['angle', true, '/lantern/prmgs'],
-    ['motion', true, '/lantern/prags'], ['grain', true, '/lantern/prams'], ['plate', true, '/lantern/pramg'],
+    ['palette', true, '/lantern/rhythm,angle,motion,grain,plate'], ['rhythm', true, '/lantern/palette,angle,motion,grain,plate'], ['angle', true, '/lantern/palette,rhythm,motion,grain,plate'],
+    ['motion', true, '/lantern/palette,rhythm,angle,grain,plate'], ['grain', true, '/lantern/palette,rhythm,angle,motion,plate'], ['plate', true, '/lantern/palette,rhythm,angle,motion,grain'],
   ]);
-  assert.equal(facetChips('lantern', '', [])[0].href, '/lantern/p', 'from the ground, a chip brings its facet through');
+  assert.equal(facetChips('lantern', '', [])[0].href, '/lantern/palette', 'from the ground, a chip brings its facet through');
   assert.equal(facetChips('harbor', 'p', ['moire'])[0].href, '/harbor/-/moire', 'the filters stay');
   assert.match(facetChips('lantern', 'p', [])[0].title, /palette from lantern; tap for the teal ground's/);
   const page = readFileSync(path.join(assets, 'lantern.html'), 'utf8');
   assert.ok(page.includes('<dt id="mask-from">from lantern</dt>'));
   assert.equal((page.match(/<a class="facet on" href=/g) ?? []).length, 6, 'a seed\'s own page lets every facet through');
-  assert.ok(page.includes('<a class="facet on" href="/lantern/ramgs" data-mask="ramgs"'));
+  assert.ok(page.includes('<a class="facet on" href="/lantern/rhythm,angle,motion,grain,plate" data-mask="ramgs"'));
 });
 
 test('an address Cloudflare escaped (/@ sent on to /%40) reads as it was written', async () => {

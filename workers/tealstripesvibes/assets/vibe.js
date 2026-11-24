@@ -86,13 +86,30 @@ export const FILTERS = Object.freeze({
 /* ── grammar ─────────────────────────────────────────────── */
 
 const SIGIL_TO_LETTER = Object.fromEntries(FACETS.map((f) => [f.sigil, f.letter]));
+const NAME_TO_LETTER = Object.fromEntries(FACETS.map((f) => [f.name, f.letter]));
 
-/** "*#", "%23*", "pr", "-" → canonical letters in facet order ("" means brand only). null when invalid. */
+/**
+ * "*#", "pr", "palette+rhythm", "pramgs", "-" → letters in facet order
+ * ("" means the teal ground only). null when a word is not a facet.
+ * `pramgs` remains the old full mask, so a link already written still opens.
+ */
 export function parseMask(raw) {
   if (raw == null || raw === "") return ALL;
   let text;
   try { text = decodeURIComponent(String(raw)); } catch { return null; }
-  if (text === "-") return "";
+  if (text === "-" || text === "ground") return "";
+  if (text === ALL || text === "all" || text === "open") return ALL;
+  if (NAME_TO_LETTER[text]) return NAME_TO_LETTER[text];
+  if (/[,+]/.test(text)) {
+    const parts = text.split(/[,+]/).filter(Boolean);
+    const seen = new Set();
+    for (const part of parts) {
+      const letter = NAME_TO_LETTER[part] || SIGIL_TO_LETTER[part] || (part.length === 1 && ALL.includes(part) ? part : null);
+      if (!letter) return null;
+      seen.add(letter);
+    }
+    return FACETS.map((f) => f.letter).filter((l) => seen.has(l)).join("");
+  }
   const seen = new Set();
   for (const ch of text) {
     const letter = SIGIL_TO_LETTER[ch] || (ALL.includes(ch) ? ch : null);
@@ -111,7 +128,8 @@ export function parseFilters(raw) {
   return words.every((w) => Object.hasOwn(FILTERS, w)) ? words : null;
 }
 
-export const maskLabel = (mask) => (mask === "" ? "-" : mask);
+/** A partial mask as a path: palette,rhythm. The full mask is the word `all`. */
+export const maskLabel = (mask) => (mask === "" ? "-" : mask === ALL ? "all" : FACETS.filter((f) => mask.includes(f.letter)).map((f) => f.name).join(","));
 export const filterLabel = (filters) => (filters.length ? filters.join(",") : "-");
 
 /**
@@ -136,7 +154,7 @@ export function facetChips(seed, mask, filters) {
 
 export function canonicalPath({ seed, mask, filters }) {
   let path = `/${seed}`;
-  if (mask !== ALL || filters.length) path += `/${maskLabel(mask)}`;
+  if (mask !== ALL) path += `/${maskLabel(mask)}`;
   if (filters.length) path += `/${filters.join(",")}`;
   return path;
 }
@@ -262,7 +280,7 @@ export function readList(key, raw) {
 
 /** The tuning an address carries: only the keys it names that read as numbers, and a palette or rhythm that reads whole. */
 export function readTuning(params) {
-  const out = {};
+  const out = params.has("v") ? readStamp(params.get("v")) : {};
   for (const key of ["palette", "rhythm"]) {
     const list = params.has(key) ? readList(key, params.get(key)) : null;
     if (list) out[key] = list;
@@ -276,12 +294,49 @@ export function readTuning(params) {
   return out;
 }
 
-/** A tuning as the query that reads back as it. */
-export const tuningQuery = (tuning) => [
-  ...(tuning.palette ? [`palette=${tuning.palette.map((c) => c.slice(1)).join("-")}`] : []),
-  ...(tuning.rhythm ? [`rhythm=${tuning.rhythm.join("-")}`] : []),
-  ...Object.keys(TUNING).filter((key) => tuning[key] !== undefined).map((key) => `${key}=${tuning[key]}`),
-].join("&");
+const STAMP_KEYS = ["angle", "drift", "breath", "grain", "turn", "beats", "steps"];
+
+/** The knobs as one token. Empty when the hand has not moved them. The same token reads back. */
+export function stampOf(tuning) {
+  const on = STAMP_KEYS.filter((key) => tuning[key] !== undefined);
+  if (!on.length) return "";
+  const mask = on.reduce((bits, key) => bits | (1 << STAMP_KEYS.indexOf(key)), 0);
+  let n = 0n;
+  for (const key of on) {
+    const { min, step } = TUNING[key];
+    n = (n << 8n) + BigInt(Math.max(0, Math.round((tuning[key] - min) / step)));
+  }
+  n = (n << 7n) + BigInt(mask);
+  return n.toString(36);
+}
+
+/** The knobs a stamp names. A token that is not one of ours is no knobs. */
+export function readStamp(stamp) {
+  if (!stamp || !/^[0-9a-z]+$/i.test(stamp)) return {};
+  let n = [...stamp.toLowerCase()].reduce((acc, ch) => acc * 36n + BigInt(Number.parseInt(ch, 36)), 0n);
+  const mask = Number(n & 127n);
+  n >>= 7n;
+  const keys = STAMP_KEYS.filter((_, i) => mask & (1 << i));
+  const out = {};
+  for (let i = keys.length - 1; i >= 0; i -= 1) {
+    const key = keys[i];
+    const steps = Number(n & 255n);
+    n >>= 8n;
+    const { min, step } = TUNING[key];
+    out[key] = held(key, min + steps * step);
+  }
+  return out;
+}
+
+/** A tuning as the query that reads back as it. The knobs are one stamp; a kept palette or rhythm stays in its own word. */
+export const tuningQuery = (tuning) => {
+  const stamp = stampOf(tuning);
+  return [
+    ...(stamp ? [`v=${stamp}`] : []),
+    ...(tuning.palette ? [`palette=${tuning.palette.map((c) => c.slice(1)).join("-")}`] : []),
+    ...(tuning.rhythm ? [`rhythm=${tuning.rhythm.join("-")}`] : []),
+  ].join("&");
+};
 
 /** A caption, as the address may carry one: plain characters, no more than sixty. */
 export const captionOf = (raw) => String(raw ?? "").replace(/[\u0000-\u001f\u007f<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 60);
@@ -361,10 +416,24 @@ export function tupleOf(v) {
   return [v.palette, v.rhythm, v.angle, v.motion.drift, v.motion.breath, v.grain.amount, v.grain.kind, v.plate];
 }
 
-export function expressionOf(seed, mask, filters, v) {
-  const inner = [maskLabel(mask), ...filters].join(",");
-  const t = [v.palette.join(" "), v.rhythm.join(" "), v.angle, `${v.motion.drift} ${v.motion.breath}`, `${v.grain.amount} ${v.grain.kind}`, v.plate || "-"];
-  return `^vibe[${seed}]{${inner}}<${t.join("|")}>`;
+/** One word for a seed, the concept a line can say without listing its colours. */
+export const MOOD = Object.freeze({ harbor: "dusk", ledger: "ink", lantern: "lamp" });
+export const moodOf = (seed) => MOOD[seed] || seed;
+
+/**
+ * The line. The body names what a reader chose (a partial mask, then the filters),
+ * or `all` when the seed comes through whole. The concept is the mood, and the
+ * stamp of a hand's knobs when they have moved one.
+ * ^vibe[harbor]{golden}<dusk>
+ * ^vibe[harbor]{golden}<dusk 3k>
+ */
+export function expressionOf(seed, mask, filters, v, stamp = "") {
+  const chosen = [
+    ...(mask !== ALL ? FACETS.filter((f) => mask.includes(f.letter)).map((f) => f.name) : []),
+    ...filters,
+  ];
+  const concept = stamp ? `${moodOf(seed)} ${stamp}` : moodOf(seed);
+  return `^vibe[${seed}]{${chosen.length ? chosen.join(", ") : "all"}}<${concept}>`;
 }
 
 /* ── time ────────────────────────────────────────────────── */
@@ -499,7 +568,10 @@ export function readAddress(pathname, search, now) {
   else {
     const segs = path.split("/").filter(Boolean);
     if (!segs.length || segs.length > 3) return { kind: "unknown" };
-    parts = { seed: segs[0], mask: parseMask(segs[1]), filters: parseFilters(segs[2]) };
+    const namedFilter = segs.length === 2 ? parseFilters(segs[1]) : null;
+    parts = namedFilter
+      ? { seed: segs[0], mask: ALL, filters: namedFilter }
+      : { seed: segs[0], mask: parseMask(segs[1]), filters: parseFilters(segs[2]) };
   }
   if (!Object.hasOwn(SEEDS, parts.seed) || parts.mask === null || parts.filters === null) return { kind: "unknown" };
   return { kind: "vibe", ...parts, hour: hourOf(now), ...tuned(params), href: `https://${HOST}${canonicalPath(parts)}${queryOf(params)}` };

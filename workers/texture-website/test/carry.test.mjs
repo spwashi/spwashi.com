@@ -75,10 +75,13 @@ test('the page installs: a manifest, a home-screen mark, and a shell that keeps 
   const manifest = JSON.parse(readFileSync(path.join(assets, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.display, 'standalone');
   assert.equal(manifest.start_url, '/');
-  assert.ok(manifest.icons.some((icon) => icon.src === '/icon-192.png'));
-  const icon = readFileSync(path.join(assets, 'icon-192.png'));
-  assert.deepEqual([...icon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-  assert.ok(icon.equals(iconPng()));
+  assert.ok(manifest.icons.some((icon) => icon.src === '/icon-192.png' && icon.sizes === '192x192'));
+  assert.ok(manifest.icons.some((icon) => icon.src === '/icon-512.png' && icon.sizes === '512x512'));
+  for (const size of [192, 512]) {
+    const icon = readFileSync(path.join(assets, `icon-${size}.png`));
+    assert.deepEqual([...icon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+    assert.ok(icon.equals(iconPng(size)));
+  }
   const sw = readFileSync(path.join(assets, 'sw.js'), 'utf8');
   assert.match(sw, /const CACHE = "texture-[0-9a-f]{12}";/);
   assert.ok(sw.includes('"/vocabulary.json"') && sw.includes('"/daily.js"') && sw.includes('"/texture.js"'));

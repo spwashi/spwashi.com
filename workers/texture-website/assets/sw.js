@@ -1,6 +1,6 @@
 // Written by workers/texture-website/carry.mjs. The day's picture is chosen in the page, so this shell opens it with no network.
-const CACHE = "texture-405b74a0b664";
-const SHELL = ["/","/texture.css","/texture.js","/daily.js","/clean-still.js","/clean-still.css","/vocabulary.json","/favicon.svg","/manifest.webmanifest","/icon-192.png"];
+const CACHE = "texture-bd99ab7671da";
+const SHELL = ["/","/texture.css","/texture.js","/daily.js","/clean-still.js","/clean-still.css","/vocabulary.json","/favicon.svg","/manifest.webmanifest","/icon-192.png","/icon-512.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));

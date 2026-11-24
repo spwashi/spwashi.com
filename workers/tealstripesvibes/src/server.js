@@ -24,8 +24,8 @@
  */
 import { escapeHtml, securityHeaders } from "../../lib/http.js";
 // The pure part is ./vibe.js, which the page runs too; this module keeps the routes, the signing and the server-rendered page.
-import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, SHADER, TUPLE_NAMES, canonicalPath, expressionOf, filterLabel, grainUri, hourOf, maskLabel, nextHour, ogSvg, parseFilters, parseMask, seedForMoment, stripeGradient, tupleOf, vibe } from "./vibe.js";
-export { FACETS, FILTERS, GROUND, HOST, SEEDS, TUPLE_NAMES, canonicalPath, expressionOf, hourOf, parseFilters, parseMask, seedForMoment, tupleOf, vibe };
+import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, SHADER, TUPLE_NAMES, canonicalPath, expressionOf, filterLabel, grainUri, hourOf, maskLabel, moodOf, nextHour, ogSvg, parseFilters, parseMask, readStamp, seedForMoment, stampOf, stripeGradient, tupleOf, vibe } from "./vibe.js";
+export { FACETS, FILTERS, GROUND, HOST, SEEDS, TUPLE_NAMES, canonicalPath, expressionOf, hourOf, maskLabel, moodOf, parseFilters, parseMask, readStamp, seedForMoment, stampOf, tupleOf, vibe };
 
 
 /* ── crypto ──────────────────────────────────────────────── */
@@ -41,12 +41,14 @@ async function hmac(key, message) {
   return crypto.subtle.sign("HMAC", k, enc.encode(message));
 }
 
+/** Letters, not the public name, so a signature written as pr still verifies. */
+const maskKey = (mask) => (mask === "" ? "-" : mask);
 export async function signMask(key, seed, mask, filters, exp) {
-  return toHex(await hmac(key, `${seed}.${maskLabel(mask)}.${filterLabel(filters)}.${exp}`)).slice(0, 8);
+  return toHex(await hmac(key, `${seed}.${maskKey(mask)}.${filterLabel(filters)}.${exp}`)).slice(0, 8);
 }
 
 export async function stampFor(key, hour, seed, mask) {
-  return toBase32(await hmac(key, `${hour}|${seed}|${maskLabel(mask)}`)).slice(0, 5);
+  return toBase32(await hmac(key, `${hour}|${seed}|${maskKey(mask)}`)).slice(0, 5);
 }
 
 const sha256 = (text) => crypto.subtle.digest("SHA-256", enc.encode(text));

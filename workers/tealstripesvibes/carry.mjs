@@ -21,7 +21,7 @@ import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { rgbOf, squarePng } from "../lib/png.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
-import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, facetChips, maskLabel, vibe, vibeCss } from "./src/vibe.js";
+import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, facetChips, maskLabel, moodOf, vibe, vibeCss } from "./src/vibe.js";
 
 /** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
 const PINCH_TEXT = peerScriptPath("pinch-text-scale");
@@ -116,7 +116,7 @@ ${["angle", "drift", "breath", "grain", "beats", "steps"].map((key) => `      <l
 `;
 }
 
-const seedPage = (seed) => shell({ seed, mask: ALL, filters: [], title: `${seed} · ${ALL} — Teal Stripes Vibes`, mood: SEEDS[seed].mood, canonical: `${ORIGIN}${canonicalPath({ seed, mask: ALL, filters: [] })}` });
+const seedPage = (seed) => shell({ seed, mask: ALL, filters: [], title: `${seed} · ${moodOf(seed)} — Teal Stripes Vibes`, mood: SEEDS[seed].mood, canonical: `${ORIGIN}${canonicalPath({ seed, mask: ALL, filters: [] })}` });
 
 /** The icons: the ground's stripes at forty-five degrees, edge to edge, so a launcher's mask can take any shape from them. */
 export const ICONS = Object.freeze({

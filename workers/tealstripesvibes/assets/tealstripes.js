@@ -3,7 +3,7 @@
 // shader and the keys are the ones the worker's page carried; tuning, the
 // fading card and the share image are this page's own. With scripts off the
 // shell shows the vibe it was written with.
-import { FACETS, LOCK, facetChips, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf, lockVibe, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
+import { FACETS, LOCK, facetChips, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf, lockVibe, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, moodOf, readAddress, said, stampOf, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
 
 import { hasSetRing, mountSetRing, nearestLight, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
@@ -67,7 +67,8 @@ function paint() {
   $("caption").textContent = place.say;
   $("caption").hidden = !place.say;
   card.dataset.href = href;
-  document.title = `${place.say ? `${place.say} · ` : ""}${seed} · ${maskLabel(mask)}${filters.length ? ` · ${filters.join(",")}` : ""} — Teal Stripes Vibes`;
+  const face = maskLabel(mask) === "all" ? moodOf(seed) : maskLabel(mask);
+  document.title = `${place.say ? `${place.say} · ` : ""}${seed} · ${face}${filters.length ? ` · ${filters.join(",")}` : ""} — Teal Stripes Vibes`;
   document.querySelector('link[rel="canonical"]')?.setAttribute("href", href);
   // The browser's own chrome takes the vibe's ground.
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", v.palette[0]);
@@ -163,7 +164,7 @@ if (place.kind === "unknown") {
     const v = current();
     const p = shown();
     const light = nearestLight(v.palette[1]);
-    const expression = expressionOf(p.seed, p.mask, p.filters, v);
+    const expression = expressionOf(p.seed, p.mask, p.filters, v, stampOf(p.tuning));
     return {
       "attention.productions": { href: `https://attention.productions/${pathWord(SEEDS[p.seed].mood)}?light=${pathWord(light)}&shot=wide&ratio=widescreen`, says: `this vibe as a shot of "${SEEDS[p.seed].mood}", lit by ${light}` },
       "factshift.center": { href: `https://factshift.center/?spw=${encodeURIComponent(expression)}`, says: "this vibe's line, held on the canvas" },
@@ -235,26 +236,27 @@ function writeExpression(v) {
   };
   tok("mark", "integration", "^");
   tok("mark", "label", "vibe");
+  const stamp = stampOf(p.tuning);
+  const body = [
+    ...(maskLabel(p.mask) === "all" ? [] : maskLabel(p.mask).split(",")),
+    ...p.filters,
+  ];
   tok("br", "mode", "[");
   slot("seed", p.seed);
   tok("br", "mode", "]");
   tok("br", "direction", "{");
-  text([maskLabel(p.mask), ...p.filters].join(","));
+  text(body.length ? body.join(", ") : "all");
   tok("br", "direction", "}");
   tok("br", "concept", "<");
-  slot("palette", said("palette", v.palette));
-  tok("br", "concept", "|");
-  slot("rhythm", said("rhythm", v.rhythm));
-  tok("br", "concept", "|");
+  text(stamp ? `${moodOf(p.seed)} ${stamp}` : moodOf(p.seed));
+  tok("br", "concept", ">");
+  // The knobs stay scrubbable on the line, after the concept, so a drag still moves the stamp.
+  text(" ");
   slot("angle", said("angle", v.angle));
-  tok("br", "concept", "|");
+  text(" ");
   slot("drift", said("drift", v.motion.drift));
   text(" ");
-  slot("breath", said("breath", v.motion.breath));
-  tok("br", "concept", "|");
   slot("grain", said("grain", v.grain.amount));
-  text(` ${v.grain.kind}|${v.plate || "-"}`);
-  tok("br", "concept", ">");
 }
 
 function choices(slot) {

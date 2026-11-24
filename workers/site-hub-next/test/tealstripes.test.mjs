@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../src/index.js';
-import { GROUND, SEEDS, parseFilters, parseMask, signMask, stampFor, vibe } from '../src/tealstripes.js';
+import { GROUND, SEEDS, canonicalPath, expressionOf, maskLabel, parseFilters, parseMask, readStamp, signMask, stampFor, stampOf, vibe } from '../src/tealstripes.js';
 
 const KEY = 'test-signing-key';
 const NOW = '2026-10-13T21:30:00Z';
@@ -15,6 +15,17 @@ test('masks read as letters, sigils, or %23, and normalize to letters in facet o
   assert.equal(parseMask('%23*'), 'pr');
   assert.equal(parseMask('*#@~.$'), 'pramgs');
   assert.equal(parseMask(undefined), 'pramgs');
+  assert.equal(parseMask('palette,rhythm'), 'pr');
+  assert.equal(parseMask('palette+rhythm'), 'pr');
+  assert.equal(maskLabel('pr'), 'palette,rhythm');
+  assert.equal(canonicalPath({ seed: 'lantern', mask: 'pramgs', filters: ['golden'] }), '/lantern/golden');
+  assert.equal(canonicalPath({ seed: 'harbor', mask: 'pr', filters: [] }), '/harbor/palette,rhythm');
+  const knobs = { angle: 112, drift: 0.6 };
+  assert.equal(stampOf({}), '');
+  assert.deepEqual(readStamp(stampOf(knobs)), knobs);
+  const v = vibe('harbor', 'pramgs', ['golden']);
+  assert.equal(expressionOf('harbor', 'pramgs', ['golden'], v), '^vibe[harbor]{golden}<dusk>');
+  assert.equal(expressionOf('harbor', 'pramgs', ['golden'], v, stampOf(knobs)), `^vibe[harbor]{golden}<dusk ${stampOf(knobs)}>`);
   assert.equal(parseMask('-'), '');
   assert.equal(parseMask('px'), null);
   assert.deepEqual(parseFilters('night,hush'), ['night', 'hush']);
@@ -53,14 +64,14 @@ test('/ sends you to this hour, and the hour always paints the same seed', async
 test('paths and query strings render the same vibe with a canonical link', async () => {
   const path = await get('/harbor/pr/night');
   assert.equal(path.status, 200);
-  assert.match(path.headers.get('link'), /<https:\/\/tealstripesvibes\.com\/harbor\/pr\/night>; rel="canonical"/);
+  assert.match(path.headers.get('link'), /<https:\/\/tealstripesvibes\.com\/harbor\/palette,rhythm\/night>; rel="canonical"/);
   assert.match(path.headers.get('server-timing'), /^vibe;dur=/);
   assert.match(path.headers.get('content-security-policy'), /frame-ancestors 'self' https:\/\/attention\.productions/);
   const query = await get('/?seed=harbor&mask=*%23&filter=night');
   assert.equal(query.headers.get('link'), path.headers.get('link'));
   const html = await path.text();
   assert.match(html, /repeating-linear-gradient\(90deg/);
-  assert.match(html, /\^vibe\[harbor\]\{pr,night\}/);
+  assert.match(html, /\^vibe\[harbor\]\{palette, rhythm, night\}&lt;dusk&gt;/);
   assert.match(html, /class="stamp"/);
   assert.equal((await get('/nowhere')).status, 404);
 });
@@ -72,7 +83,7 @@ test('tuples are deterministic data with a strong ETag, 304, digest, and a text 
   assert.match(one.headers.get('etag'), /^"[0-9a-f]{20}"$/);
   assert.match(one.headers.get('content-digest'), /^sha-256=:[A-Za-z0-9+/=]+:$/);
   const body = await one.json();
-  assert.equal(body.mask, 'pr');
+  assert.equal(body.mask, 'palette,rhythm');
   assert.deepEqual(body.filters, ['night']);
   assert.equal(body.names.length, body.tuple.length);
   const again = await get('/tuple?seed=harbor&mask=*%23&filter=night');
@@ -80,11 +91,11 @@ test('tuples are deterministic data with a strong ETag, 304, digest, and a text 
   const cached = await get('/tuple?seed=harbor&mask=pr&filter=night', { headers: { 'If-None-Match': one.headers.get('etag') } });
   assert.equal(cached.status, 304);
   const text = await (await get('/tuple?seed=harbor&mask=pr&filter=night', { headers: { Accept: 'text/plain' } })).text();
-  assert.match(text, /^\^vibe\[harbor\]\{pr,night\}<.+>\n$/);
+  assert.match(text, /^\^vibe\[harbor\]\{palette, rhythm, night\}<dusk>\n$/);
   const many = await (await get('/tuple?seed=harbor&seed=ledger')).json();
   assert.equal(many.tuples.length, 2);
   const json = await (await get('/ledger/ag.json')).json();
-  assert.equal(json.mask, 'ag');
+  assert.equal(json.mask, 'angle,grain');
   const head = await get('/harbor', { method: 'HEAD' });
   assert.equal(head.status, 200);
   assert.equal(await head.text(), '');
@@ -112,13 +123,13 @@ test('a stamp is valid in its hour, expired after, unknown when forged', async (
   const code = await stampFor(KEY, '2026-10-13T21', 'harbor', 'pr');
   const ok = await get(`/stamp/${code}?seed=harbor&mask=pr&hour=2026-10-13T21`);
   assert.equal(ok.status, 200);
-  assert.match(await ok.text(), /^valid, harbor through pr, issued 2026-10-13T21:00Z, closes 2026-10-13T22:00Z/);
+  assert.match(await ok.text(), /^valid, harbor through palette,rhythm, issued 2026-10-13T21:00Z, closes 2026-10-13T22:00Z/);
   const late = await get(`/stamp/${code}?seed=harbor&mask=pr&hour=2026-10-13T21`, {}, { ...env, NOW: '2026-10-13T22:05:00Z' });
   assert.equal(late.status, 410);
   const wrong = await get(`/stamp/${code}?seed=ledger&mask=pr&hour=2026-10-13T21`);
   assert.equal(wrong.status, 404);
   const card = await (await get('/harbor/pr')).text();
-  assert.match(card, new RegExp(`/stamp/${code}\\?seed=harbor&amp;mask=pr&amp;hour=2026-10-13T21`));
+  assert.match(card, new RegExp(`/stamp/${code}\\?seed=harbor&amp;mask=palette,rhythm&amp;hour=2026-10-13T21`));
 });
 
 test('the preview image is an SVG of the same stripes', async () => {
