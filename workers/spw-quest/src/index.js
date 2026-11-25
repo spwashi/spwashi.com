@@ -716,7 +716,7 @@ function fileWorkspace(example, at = "") {
   const tabs = EXAMPLE_GROUPS.map((group) => `<div class="examples-row" role="group" aria-label="${escapeHtml(group)}"><span class="examples-group" aria-hidden="true">${escapeHtml(group)}</span><div class="examples-files">${EXAMPLES.filter((item) => item.group === group).map(link).join("")}</div></div>`).join("\n    ");
   const themeAttr = reading.theme ? ` data-theme="${escapeHtml(reading.theme)}"` : "";
   return `<section id="try" class="try" aria-labelledby="try-title">
-  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, a stage, a trial for the canvas, a team's files, and field practice</h2>
+  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, a stage, a trial for the canvas, a team's files, field practice, and the holidays</h2>
   <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it. On the stage, a pattern that performs sets this field's theme. Where one file points to another, its reading opens that file at the line it names.</p>
   <nav class="examples" aria-label="Files">
     ${tabs}

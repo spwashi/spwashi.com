@@ -40,8 +40,12 @@
 // hold one ticket at four rungs, so a hold and a compare on the canvas name
 // the slots that move; and the onboarding path routes a junior, a mid-level, a
 // senior and a staff engineer through the files (2026-11-16).
+//
+// The holiday row is a season's snippets (2026-11-25): a Thanksgiving table,
+// eight nights of lights, a winter hearth, and the year turning. Each is short
+// enough to keep, and each asks one question a person can answer in the room.
 
-export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial","Team","Practice"]);
+export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial","Team","Practice","Holiday"]);
 
 export const EXAMPLES = Object.freeze([
   {
@@ -1012,6 +1016,96 @@ tensions = &friction{
 ?["Does fixing focus restoration raise VoiceOver completion past 0.85 without slowing sighted users?"]{
   ~#expect: \`keeping one live node lifts screen-reader pass rate and trims median checkout by 18s\`
   !probe{ "re-run the 5-task scripted benchmark with 8 assistive-tech testers on staging build" }
+}`,
+  },
+  {
+    id: "table",
+    group: "Holiday",
+    tab: "Thanksgiving table",
+    file: "table.spw",
+    says: "Short. A Thanksgiving table: who cooks, what is labeled, and whether every guest can take a full plate.",
+    try: "Add a guest inside kitchen, or change seats from 8 to 10.",
+    script: `#>thanksgiving_table
+#:social #!meal
+@potluck: ~"./potluck.spw"
+
+seats = %places[8]{table}
+kitchen = {
+  @ada[stove]{turkey, gravy, greens}(thursday)<heat>,
+  @nio[sides]{rolls, cranberry, pie}(counter)<share>,
+  @ren[labels]{gluten_free, nut_free}(board)<safety>
+}
+thanks = path{~arrive[15:00]; *toast[16:00]; !plates[16:20]}
+
+?["Can every guest take a full plate from a labeled tray?"]{
+  ~#expect: \`three labeled mains sit apart before the toast\`
+  !probe{ "walk the board with Ren at 15:40 and read each card" }
+}`,
+  },
+  {
+    id: "lights",
+    group: "Holiday",
+    tab: "Eight nights",
+    file: "lights.spw",
+    says: "Short. Eight nights: who lights the shamash, what is fried, and which song is new.",
+    try: "Change 1..8 to the night you are on, or add a fourth part inside house.",
+    script: `#>eight_nights
+#:social #!ritual
+
+nights = %candles[1..8]{menorah}
+house = {
+  @mira[window]{shamash, matches, foil}(sill)<light>,
+  @joel[table]{latkes, applesauce}(kitchen)<fry>,
+  @lea[songs]{maoz_tzur, one_new}(room)<voice>
+}
+
+?["Is the shamash lit before any guest adds a candle?"]{
+  ~#expect: \`the helper candle burns before the first blessing\`
+  !probe{ "count the flames at the window at sundown" }
+}`,
+  },
+  {
+    id: "hearth",
+    group: "Holiday",
+    tab: "Winter hearth",
+    file: "hearth.spw",
+    says: "Short. The longest night: light, a pot, and what is offered, with a path you can still read.",
+    try: "Move citrus into the offer, or name the night you are keeping.",
+    script: `#>winter_hearth
+#:social #!gathering
+@table: ~"./table.spw"
+
+night = %longest[solstice]{hearth}
+room = {
+  @sol[light]{candles, low_lamps}(sill)<dark>,
+  @wren[food]{soup, bread, citrus}(pot)<warm>,
+  @ash[gifts]{made, shared, none}(tree)<offer>
+}
+
+?["Does the room stay readable by candle once the lamps go down?"]{
+  ~#expect: \`a path from door to seat stays lit, and the soup is labeled\`
+  !probe{ "walk the path at dusk and read one label without a lamp" }
+}`,
+  },
+  {
+    id: "year",
+    group: "Holiday",
+    tab: "Year turning",
+    file: "year.spw",
+    says: "Short. Two dated lines at the year: one practice to close, and one make, visit, and rest to open.",
+    try: "Add a third dated line inside kept, or change january to the month you mean.",
+    script: `#>year_threshold
+#:social #!keeping
+
+kept = ^"kept"{
+  >>[2026-12-31 21:10] close — one practice this year taught the hands
+  >>[2027-01-01 09:00] open — one make, one visit, one rest
+}
+next = ~open[january]{rest, one_make, one_visit}<year>
+
+?["Does the kept list name one thing to carry and one to leave?"]{
+  ~#expect: \`two dated lines, one close and one open\`
+  !probe{ "read both lines on the first morning and keep what you can say" }
 }`,
   },
 ]);

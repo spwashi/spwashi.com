@@ -39,7 +39,11 @@ export const SHELF_LINKS = Object.freeze({
   "critique": [{"name":"perspectives","file":"perspectives.spw","at":""},{"name":"headings","file":"headings.spw","at":""}],
   "negotiation": [{"name":"incident","file":"incident.spw","at":""},{"name":"gradient","file":"gradient.spw","at":""}],
   "charter": [{"name":"gathering","file":"potluck.spw","at":""},{"name":"debate","file":"debate.spw","at":""}],
-  "synthesis": [{"name":"calibration","file":"calibration.spw","at":""},{"name":"incident","file":"incident.spw","at":""}]
+  "synthesis": [{"name":"calibration","file":"calibration.spw","at":""},{"name":"incident","file":"incident.spw","at":""}],
+  "table": [{"name":"potluck","file":"potluck.spw","at":""}],
+  "lights": [],
+  "hearth": [{"name":"table","file":"table.spw","at":""}],
+  "year": []
 });
 
 /** The /learn panels (indexes into STEPS) whose lines use each operator and each brace pair. */
