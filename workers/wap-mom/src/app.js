@@ -480,7 +480,7 @@ export const APP_JS = `(() => {
   if (door) {
     const whisper = document.createElement("span");
     whisper.className = "door-whisper";
-    whisper.textContent = "through the wall · smut.today";
+    whisper.textContent = "Four rooms down one corridor, for adults.";
     whisper.hidden = true;
     door.before(whisper);
     const show = () => { whisper.hidden = false; };

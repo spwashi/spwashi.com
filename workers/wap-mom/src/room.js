@@ -33,6 +33,7 @@ export const OPEN_QUESTIONS = [
   "Which approximation deserves an issue of its own?",
   "What does a recipe prove?",
   "Where do π and e meet outside of an equation?",
+  "22/7 is off by about one part in 2,500. What else is worth keeping because it is close enough to share?",
 ];
 
 // The dimensions every issue offers a use in. Rename them here and every

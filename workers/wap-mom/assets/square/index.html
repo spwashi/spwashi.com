@@ -125,7 +125,9 @@
   .cite { font-size: .95rem; color: var(--muted); border-top: 1px solid var(--faint); padding-top: .8rem; margin: 1.4rem 0 .4rem; }
   .links { display: flex; flex-wrap: wrap; gap: 0 1.2rem; margin: 0; padding: 0; list-style: none; }
   .links a { display: inline-flex; align-items: center; min-block-size: 44px; }
-  .pager { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--rule); margin-top: 1.4rem; }
+  .kin { margin: 1.4rem 0 0; }
+  .kin a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .pager { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--rule); margin-top: .4rem; }
   .pager a { display: inline-flex; align-items: center; min-block-size: 44px; }
   .correction { margin: 1rem 0 0; padding: .6rem .8rem; border-left: 3px solid var(--accent); background: var(--card); font-size: .98rem; }
 
@@ -257,7 +259,7 @@
   <p class="expansion"><span aria-hidden="true">3.1415926<span class="here">5</span>3<span class="ahead">5</span><span class="ahead">8</span>…</span><span class="vh">This is number 3.14159265.</span></p>
 </header>
 <article aria-labelledby="issue-title">
-  <p class="kicker caps">No. 3.14159265 · Proofs · <span class="galley">galley proof</span></p>
+  <p class="kicker caps">No. 3.14159265 · <a href="/contents/#dept-proofs">Proofs</a> · <span class="galley">galley proof</span></p>
   <h1 id="issue-title">The Square</h1>
   <p class="dek">The one shape it will not become.</p>
   <div class="body">
@@ -298,6 +300,7 @@
     <li><a href="/square/clip/">Clipping</a></li>
   </ul>
 </article>
+<p class="kin">In <a href="/contents/#dept-proofs">Proofs</a>.</p>
 <nav class="pager" aria-label="Issues">
   <a href="/slice/" rel="prev">← No. 3.1415926</a>
   <a href="/patience/" rel="next">No. 3.141592653 →</a>
@@ -321,7 +324,7 @@
     <button type="button" id="clear-shelf" hidden>Clear shelf notes</button>
   </div>
   <p class="pwa-meta muted" id="pwa-status" aria-live="polite" hidden></p>
-  <a class="door" href="https://smut.today/" rel="nofollow" aria-label="smut.today">π</a>
+  <a class="door" href="https://smut.today/" rel="nofollow" title="Four rooms down one corridor, for adults">π<span class="vh"> Four rooms down one corridor, for adults.</span></a>
 </footer>
 </main>
 </body>

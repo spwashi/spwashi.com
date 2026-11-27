@@ -147,3 +147,28 @@ test('settle cookie round-trip supports all four pace options, type-larger, move
   assert.equal(clear.status, 303);
   assert.match(clear.headers.get('set-cookie'), /Max-Age=0/);
 });
+
+test('the corridor stays on every page, a mood travels into a room, and the peer kit is served', async () => {
+  for (const path of ['/', '/to-you/', '/pitches/', '/settle/', '/after-hours/']) {
+    const html = await (await get(path)).text();
+    assert.match(html, /aria-label="The four rooms"/, path);
+    for (const slug of ['after-hours', 'dispatch', 'threshold', 'dossier']) {
+      assert.match(html, new RegExp(`href="/${slug}/"`), path);
+    }
+  }
+  const here = await (await get('/after-hours/')).text();
+  assert.match(here, /href="\/after-hours\/"[^>]*aria-current="page"/);
+  assert.match(here, /Door 1 of 4/);
+  const warm = await (await get('/after-hours/?mood=warm')).text();
+  assert.match(warm, /data-mood-tint="warm"/);
+  assert.match(warm, /href="\/dispatch\/\?mood=warm"/);
+
+  const scale = await get('/text-scale.js');
+  assert.equal(scale.status, 200);
+  assert.match(await scale.text(), /export async function mountTextScale/);
+  const pinchHref = (await (await get('/')).text()).match(/id="text-pinch" href="([^"]+)"/);
+  assert.ok(pinchHref, 'the page names the carried pinch');
+  const pinch = await get(pinchHref[1]);
+  assert.equal(pinch.status, 200);
+  assert.match(pinch.headers.get('content-type'), /javascript/);
+});

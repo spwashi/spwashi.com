@@ -126,7 +126,9 @@ const STYLE = `
   .cite { font-size: .95rem; color: var(--muted); border-top: 1px solid var(--faint); padding-top: .8rem; margin: 1.4rem 0 .4rem; }
   .links { display: flex; flex-wrap: wrap; gap: 0 1.2rem; margin: 0; padding: 0; list-style: none; }
   .links a { display: inline-flex; align-items: center; min-block-size: 44px; }
-  .pager { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--rule); margin-top: 1.4rem; }
+  .kin { margin: 1.4rem 0 0; }
+  .kin a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .pager { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--rule); margin-top: .4rem; }
   .pager a { display: inline-flex; align-items: center; min-block-size: 44px; }
   .correction { margin: 1rem 0 0; padding: .6rem .8rem; border-left: 3px solid var(--accent); background: var(--card); font-size: .98rem; }
 
@@ -352,7 +354,7 @@ function colophon() {
     <button type="button" id="clear-shelf" hidden>Clear shelf notes</button>
   </div>
   <p class="pwa-meta muted" id="pwa-status" aria-live="polite" hidden></p>
-  <a class="door" href="https://smut.today/" rel="nofollow" aria-label="smut.today">π</a>
+  <a class="door" href="https://smut.today/" rel="nofollow" title="Four rooms down one corridor, for adults">π<span class="vh"> Four rooms down one corridor, for adults.</span></a>
 </footer>`;
 }
 

@@ -15,7 +15,20 @@ const citedNo = (issue) => `no. ${issue.no}`;
 function kicker(issue) {
   const dept = DEPARTMENTS[issue.department]?.name;
   const galley = issue.status === "draft" ? ` · <span class="galley">galley proof</span>` : "";
-  return `<p class="kicker caps">${escapeHtml(label(issue))}${dept ? ` · ${escapeHtml(dept)}` : ""}${galley}</p>`;
+  const deptLink = dept
+    ? ` · <a href="/contents/#dept-${escapeHtml(issue.department)}">${escapeHtml(dept)}</a>`
+    : "";
+  return `<p class="kicker caps">${escapeHtml(label(issue))}${deptLink}${galley}</p>`;
+}
+
+function kin(issue) {
+  const dept = DEPARTMENTS[issue.department];
+  if (!dept) return "";
+  const mates = printed
+    .filter((item) => item.department === issue.department && item.slug !== issue.slug)
+    .map((item) => `<a href="/${escapeHtml(item.slug)}/">${escapeHtml(item.title)}</a>`);
+  const also = mates.length ? ` · also ${mates.join(", ")}` : "";
+  return `<p class="kin">In <a href="/contents/#dept-${escapeHtml(issue.department)}">${escapeHtml(dept.name)}</a>${also}.</p>`;
 }
 
 export function citation(issue) {
@@ -133,6 +146,7 @@ export function renderIssue(issue, searchParams) {
     ${issue.clip ? `<li><a href="/${escapeHtml(issue.slug)}/clip/">Clipping</a></li>` : ""}
   </ul>
 </article>
+${kin(issue)}
 <nav class="pager" aria-label="Issues">
   ${prev ? `<a href="/${escapeHtml(prev.slug)}/" rel="prev">← ${escapeHtml(label(prev))}</a>` : "<span></span>"}
   ${next ? `<a href="/${escapeHtml(next.slug)}/" rel="next">${escapeHtml(label(next))} →</a>` : "<span></span>"}

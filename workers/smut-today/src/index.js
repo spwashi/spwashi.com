@@ -9,9 +9,17 @@
 
 import { escapeHtml, securityHeaders } from "../../lib/http.js";
 import { rgbOf, squarePng } from "../../lib/png.js";
+import { peerScriptPath } from "../../lib/peer-kit.js";
+import {
+  CARRIED_PINCH,
+  CARRIED_TEXT_SCALE,
+  CARRIED_TEXT_SCALE_CSS,
+  CARRIED_TEXT_SCALE_HEAD,
+} from "../../lib/peer-carried.js";
 import { DEFAULT_SPW_PRESETS, evalSpwDynamics, highlightSpw, serializeSpwClient } from "./spw.js";
 
-const VERSION = "0.1.1";
+const VERSION = "0.1.2";
+const PINCH_PATH = peerScriptPath("pinch-text-scale");
 
 const WORDS_PER_MINUTE = 220;
 
@@ -326,7 +334,7 @@ function murmur(now) {
 
 const BASE_SECURITY = securityHeaders({
   corp: "same-origin",
-  csp: "default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+  csp: "default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
 });
 
 const SMUT_BG = rgbOf("#11090c");
@@ -375,14 +383,6 @@ const MANIFEST = Object.freeze({
   ],
 });
 
-const TEXT_SCALE_HEAD_JS = `(() => {
-  try {
-    const step = localStorage.getItem("set.text-scale/1");
-    if (["70", "80", "90", "110", "120"].includes(step)) document.documentElement.setAttribute("data-text-scale", step);
-  } catch {}
-})();
-`;
-
 const STORY_SLUGS = STORIES.map((s) => `/${s.slug}/`);
 const SW_JS = `const CACHE = "smut-today-${VERSION}";
 const KEPT = ${JSON.stringify([
@@ -392,6 +392,9 @@ const KEPT = ${JSON.stringify([
   ...STORY_SLUGS,
   "/app.js",
   "/text-scale-head.js",
+  "/text-scale.js",
+  "/text-scale.css",
+  PINCH_PATH,
   "/favicon.svg",
   "/manifest.webmanifest",
   "/icons/icon-192.png",
@@ -433,31 +436,17 @@ self.addEventListener("fetch", (event) => {
 const APP_JS = `(() => {
   if ("serviceWorker" in navigator && window.top === window) navigator.serviceWorker.register("/sw.js").catch(() => {});
 
-  /* 1. Cluster-shared two-finger pinch to scale (70%-120%, key "set.text-scale/1"). */
+  /* 1. The peer kit pinches the words (70%–120%, key "set.text-scale/1"). The button below uses the same step. */
   const STEPS = ["70", "80", "90", "100", "110", "120"];
   const TEXT_KEY = "set.text-scale/1";
   const ROOM_KEY = "set.spw-room/1";
-  const IGNORE = "a, button, input, select, textarea, label, summary, details, video, audio, iframe";
-  let badge = null;
-  let badgeTimer = 0;
-  const sayScale = (text) => {
-    if (!badge) {
-      badge = document.createElement("p");
-      badge.className = "text-scale-badge";
-      badge.setAttribute("role", "status");
-      badge.setAttribute("aria-live", "polite");
-      document.body.append(badge);
-    }
-    badge.textContent = text;
-    badge.classList.add("on");
-    clearTimeout(badgeTimer);
-    badgeTimer = setTimeout(() => badge.classList.remove("on"), 1100);
-  };
   const getScale = () => {
     const v = document.documentElement.getAttribute("data-text-scale");
     return STEPS.includes(v) ? v : "100";
   };
+  let kitSet = null;
   const setScale = (step) => {
+    if (kitSet) { kitSet(step); return; }
     if (!STEPS.includes(step)) return;
     if (step === "100") document.documentElement.removeAttribute("data-text-scale");
     else document.documentElement.setAttribute("data-text-scale", step);
@@ -465,45 +454,12 @@ const APP_JS = `(() => {
       if (step === "100") localStorage.removeItem(TEXT_KEY);
       else localStorage.setItem(TEXT_KEY, step);
     } catch {}
-    sayScale("Text " + step + "%");
   };
   const main = document.querySelector("main");
-  const canTouch = (Number(navigator.maxTouchPoints) || 0) >= 2 || matchMedia("(any-pointer: coarse)").matches;
-  if (main && canTouch) {
-    let active = false;
-    let startDist = 0;
-    let startIdx = 3;
-    let previewIdx = 3;
-    const dist = (ts) => Math.hypot(ts[1].clientX - ts[0].clientX, ts[1].clientY - ts[0].clientY);
-    const ok = (el) => el instanceof Element && main.contains(el) && !el.closest(IGNORE);
-    const clear = () => {
-      active = false;
-      startDist = 0;
-      document.documentElement.removeAttribute("data-spw-pinch-scaling");
-    };
-    document.addEventListener("touchstart", (e) => {
-      if (e.touches.length !== 2 || ![...e.touches].every((t) => ok(t.target))) {
-        if (active) clear();
-        return;
-      }
-      active = true;
-      startDist = dist(e.touches);
-      startIdx = STEPS.indexOf(getScale());
-      previewIdx = startIdx;
-      document.documentElement.setAttribute("data-spw-pinch-scaling", "true");
-    }, { passive: true });
-    document.addEventListener("touchmove", (e) => {
-      if (!active || e.touches.length !== 2) { if (active) clear(); return; }
-      const d = dist(e.touches);
-      if (!(d > 0) || !(startDist > 0)) return;
-      e.preventDefault();
-      const change = Math.round(Math.log2(d / startDist) / 0.12);
-      const next = Math.max(0, Math.min(STEPS.length - 1, startIdx + change));
-      if (next !== previewIdx) { previewIdx = next; setScale(STEPS[next]); }
-    }, { passive: false });
-    document.addEventListener("touchend", clear, { passive: true });
-    document.addEventListener("touchcancel", clear, { passive: true });
-  }
+  import("/text-scale.js").then(({ mountTextScale, setTextScale }) => {
+    kitSet = setTextScale;
+    if (main) mountTextScale(main, { ignore: ".spw-editor, .word-slot, .room-dial, .corridor" });
+  }).catch(() => {});
 
   /* 2. PWA controls & privacy sweep on Forget me. */
   const keep = document.getElementById("keep-app");
@@ -1289,7 +1245,24 @@ function renderParagraphs(lines) {
     .join("");
 }
 
-function renderEditorialShot(story, { showLink = false } = {}) {
+function moodSuffix(mood) {
+  return mood && Object.hasOwn(REGISTER, mood) ? `?mood=${encodeURIComponent(mood)}` : "";
+}
+
+function storyHref(slug, mood) {
+  return `/${slug}/${moodSuffix(mood)}`;
+}
+
+function corridorNav(currentSlug, mood) {
+  const doors = STORIES.map((story, index) => {
+    const reg = registerOf(story);
+    const here = story.slug === currentSlug;
+    return `<a class="corridor-door" href="${storyHref(story.slug, mood)}" data-register="${escapeHtml(reg.name)}"${here ? ' aria-current="page"' : ""}><span class="corridor-index">${index + 1}</span> <span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span> <span class="corridor-title">${escapeHtml(story.title)}</span></a>`;
+  }).join("");
+  return `<nav class="corridor" aria-label="The four rooms">${doors}</nav>`;
+}
+
+function renderEditorialShot(story, { showLink = false, mood = "" } = {}) {
   const ed = story.edition;
   if (!ed) return "";
   const reg = registerOf(story);
@@ -1304,26 +1277,28 @@ function renderEditorialShot(story, { showLink = false } = {}) {
     <dt>Try tonight</dt><dd>${escapeHtml(ed.couplePrompt)}</dd>
     <dt>Writing circle</dt><dd>${escapeHtml(ed.circleNote)}</dd>
   </dl>
-  ${showLink ? `<p class="shot-foot"><a class="read-link" href="/${escapeHtml(story.slug)}/">Read the scene →</a></p>` : ""}
+  ${showLink ? `<p class="shot-foot"><a class="read-link" href="${storyHref(story.slug, mood)}">Read the scene →</a></p>` : ""}
 </section>`;
 }
 
-function renderStoryCard(story, { today = false } = {}) {
+function renderStoryCard(story, { today = false, mood = "" } = {}) {
   const reg = registerOf(story);
+  const href = storyHref(story.slug, mood);
   return `<article class="card card-${escapeHtml(reg.name)}${today ? " card-today" : " card-row"}" data-register="${escapeHtml(reg.name)}">
   <p class="kicker"><span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span> · ${escapeHtml(reg.promise)} · <span data-words="${wordCount(story)}">${escapeHtml(readLength(story))}</span></p>
-  <h3 class="card-title"><a href="/${escapeHtml(story.slug)}/">${escapeHtml(story.title)}</a></h3>
+  <h3 class="card-title"><a href="${href}">${escapeHtml(story.title)}</a></h3>
   <p class="card-kicker">${escapeHtml(story.kicker)}</p>
   <p class="card-summary">${escapeHtml(story.summary)}</p>
   ${renderMeta(story, { brief: !today })}
   <p class="cta-row">${today
-    ? `<a class="cta" href="/${escapeHtml(story.slug)}/">Enter the room <span aria-hidden="true">→</span></a>`
-    : `<a class="read-link" href="/${escapeHtml(story.slug)}/">Open ${escapeHtml(story.title)} <span aria-hidden="true">→</span></a>`}</p>
+    ? `<a class="cta" href="${href}">Enter the room <span aria-hidden="true">→</span></a>`
+    : `<a class="read-link" href="${href}">Open ${escapeHtml(story.title)} <span aria-hidden="true">→</span></a>`}</p>
 </article>`;
 }
 
-function layout({ title, description, canonical, body, crumb = "", prefs = SETTLE_DEFAULT, mood = "" }) {
+function layout({ title, description, canonical, body, crumb = "", prefs = SETTLE_DEFAULT, mood = "", carry, slug = "" }) {
   const current = (name) => (crumb === name ? ' aria-current="page"' : "");
+  const carried = carry === undefined ? mood : carry;
   const moodAttr = mood && Object.hasOwn(REGISTER, mood) ? ` data-mood-tint="${escapeHtml(mood)}"` : "";
   const htmlAttrs = [prefs.type === "larger" ? ' data-type="larger"' : "", prefs.move === "still" ? ' data-move="still"' : "", moodAttr].join("");
   return `<!DOCTYPE html>
@@ -1343,6 +1318,8 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="canonical" href="${escapeHtml(canonical)}">
+  <link rel="stylesheet" href="/text-scale.css">
+  <link rel="modulepreload" id="text-pinch" href="${escapeHtml(PINCH_PATH)}">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${escapeHtml(canonical)}">
@@ -1429,6 +1406,11 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     .age { font-size: .84rem; margin: .35rem 0 0; color: var(--muted); }
 
     /* Room dial: understated underlined tab rail rather than button pills */
+    .corridor { display: flex; gap: .35rem; overflow-x: auto; margin: 0; padding: .35rem 0 .55rem; border-bottom: 1px solid var(--line); }
+    .corridor-door { display: inline-flex; align-items: center; gap: .35rem; min-height: var(--touch); padding: 0 .55rem; flex: 0 0 auto; border-bottom: 2px solid transparent; color: var(--muted); text-decoration: none; }
+    .corridor-door[aria-current="page"] { color: var(--fg); border-bottom-color: var(--room-accent); }
+    .corridor-index { font-size: .75rem; font-variant-numeric: tabular-nums; }
+    .corridor-title { font-size: .92rem; }
     .room-dial { display: flex; flex-wrap: wrap; align-items: center; gap: .1rem 1.1rem; margin: 1.1rem 0 .4rem; border-bottom: 1px solid var(--line); }
     .dial-pill {
       display: inline-flex; align-items: center; min-height: var(--touch); padding: 0 .1rem;
@@ -1674,7 +1656,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     .spw-status[data-valid="false"] { color: var(--dirty); }
 
     .pwa-note { margin: .5rem 0 0; }
-    @media (pointer: coarse) { .focus-toggle, .keep-jump, .end-btn, .beat-note summary, .spw-door, .dial-pill { min-height: 44px; } }
+    @media (pointer: coarse) { .focus-toggle, .keep-jump, .end-btn, .beat-note summary, .spw-door, .dial-pill, .corridor-door { min-height: 44px; } }
     html[data-move="still"] *, html[data-move="still"] *::before, html[data-move="still"] *::after { transition: none !important; transform: none !important; animation: none !important; }
     @media (prefers-reduced-motion: reduce) {
       .card-today, .registers li, .linger-item summary, .keeps li, .text-scale-badge, .prose > p, .beat-wrap > p, .dial-pill, .tease-shot, .word-slot, body { transition: none; transform: none !important; animation: none !important; }
@@ -1702,7 +1684,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
       :root { --touch: 36px; }
     }
     @media print {
-      body > header, body > footer, .before, .next, .cta-row, .room-dial, .beat-note, .timed-bar, .shot-btn { display: none; }
+      body > header, body > footer, .before, .next, .cta-row, .room-dial, .corridor, .beat-note, .timed-bar, .shot-btn { display: none; }
       body { background: #fff; color: #000; }
       h1, h2, h3, a { color: #000; }
     }
@@ -1722,6 +1704,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
         <a class="leave" href="${escapeHtml(LEAVE_URL)}" rel="noreferrer">Leave</a>
       </nav>
     </div>
+    ${corridorNav(slug, carried)}
   </header>
   <main id="main">
     ${body}
@@ -1734,7 +1717,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
       <a href="/pitches/">The shelf</a>
       <a href="/settle/">Settle in</a>
       <a href="/today.json">today.json</a>
-      <a href="https://wap.mom/">wap.mom</a>
+      <a href="https://wap.mom/">Wondering About Pi</a>
     </nav>
     <div class="colophon-row">
       <p class="note" id="footer-colophon">smut.today ${escapeHtml(VERSION)}. The periodical is next door.</p>
@@ -1793,10 +1776,10 @@ function renderIndex(now, prefs, mood = "") {
     .join("");
 
   const list = others
-    .map((s) => `<li${activeMood && s.register !== activeMood ? " hidden" : ""}>${renderStoryCard(s)}</li>`)
+    .map((s) => `<li${activeMood && s.register !== activeMood ? " hidden" : ""}>${renderStoryCard(s, { mood: activeMood })}</li>`)
     .join("");
 
-  const editorialTeases = STORIES.map((s) => renderEditorialShot(s, { showLink: true })).join("");
+  const editorialTeases = STORIES.map((s) => renderEditorialShot(s, { showLink: true, mood: activeMood })).join("");
 
   return layout({
     prefs,
@@ -1814,7 +1797,7 @@ function renderIndex(now, prefs, mood = "") {
 </section>
 <section aria-labelledby="today-title">
   <h2 id="today-title" class="kicker">${activeMood ? `${escapeHtml(activeMood)} lead` : `Today · ${escapeHtml(new Date(now).toISOString().slice(0, 10))}`}</h2>
-  ${renderStoryCard(featured, { today: true })}
+  ${renderStoryCard(featured, { today: true, mood: activeMood })}
   <p class="murmur">${escapeHtml(murmur(now))}</p>
   ${settled}
 </section>
@@ -1851,6 +1834,7 @@ function renderLetter(prefs) {
   return layout({
     prefs,
     crumb: "letter",
+    mood: Object.hasOwn(REGISTER, prefs.pace) ? prefs.pace : "",
     title: `${LETTER.title} — smut.today`,
     description: LETTER.kicker,
     canonical: "https://smut.today/to-you/",
@@ -1884,6 +1868,7 @@ function renderPitches(prefs) {
   return layout({
     prefs,
     crumb: "pitches",
+    mood: Object.hasOwn(REGISTER, prefs.pace) ? prefs.pace : "",
     title: "The shelf — smut.today",
     description: "Three book premises for a shelf that already knows how to caption.",
     canonical: "https://smut.today/pitches/",
@@ -1899,19 +1884,24 @@ ${cards}
   });
 }
 
-function renderStory(story, prefs) {
+function renderStory(story, prefs, mood = "") {
   const other = otherStory(story);
   const reg = registerOf(story);
+  const asked = mood && Object.hasOwn(REGISTER, mood) ? mood : "";
+  const tint = asked || reg.name;
+  const place = STORIES.findIndex((item) => item.slug === story.slug) + 1;
   const cadence = story.cadence || { baseMs: 2200, jitterMs: 650 };
   const next = other
     ? `<nav class="next" aria-labelledby="next-title">
   <h2 id="next-title" class="kicker">${escapeHtml(reg.handoff)}</h2>
-  ${renderStoryCard(other)}
+  ${renderStoryCard(other, { mood: asked })}
 </nav>`
     : "";
   return layout({
     prefs,
-    mood: reg.name,
+    mood: tint,
+    carry: asked,
+    slug: story.slug,
     title: `${story.title} — smut.today`,
     description: `${story.summary} ${reg.name[0].toUpperCase()}${reg.name.slice(1)}, ${readLength(story)}.`,
     canonical: `https://smut.today/${story.slug}/`,
@@ -1924,6 +1914,7 @@ function renderStory(story, prefs) {
   <aside class="before" aria-labelledby="before-title">
     <h2 id="before-title" class="kicker">Before the door shuts</h2>
     ${renderMeta(story, { brief: true })}
+    <p class="note">Door ${place} of ${STORIES.length}${other ? `. Next door: <a href="${storyHref(other.slug, asked)}">${escapeHtml(other.title)}</a>, ${escapeHtml(registerOf(other).name)}.` : ""}</p>
     <p class="note">Told to you, in second person. Everyone here is grown and says yes. Dotted phrases swap on tap.</p>
     <div class="scene-stage" role="group" aria-label="Reading controls">
       <a class="stage-link" href="#text">Go straight in</a>
@@ -1984,6 +1975,7 @@ function renderSettle(prefs) {
   return layout({
     prefs,
     crumb: "settle",
+    mood: Object.hasOwn(REGISTER, prefs.pace) ? prefs.pace : "",
     title: "Settle in — smut.today",
     description: "Tell the room how you like it: which register leads, how big the words are, whether the page moves. Kept on this device until you say forget.",
     canonical: "https://smut.today/settle/",
@@ -2071,7 +2063,37 @@ export default {
     }
 
     if (url.pathname === "/text-scale-head.js") {
-      return new Response(TEXT_SCALE_HEAD_JS, {
+      return new Response(CARRIED_TEXT_SCALE_HEAD, {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "text/javascript; charset=UTF-8",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    }
+
+    if (url.pathname === "/text-scale.js") {
+      return new Response(CARRIED_TEXT_SCALE, {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "text/javascript; charset=UTF-8",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    }
+
+    if (url.pathname === "/text-scale.css") {
+      return new Response(CARRIED_TEXT_SCALE_CSS, {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "text/css; charset=UTF-8",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    }
+
+    if (PINCH_PATH && url.pathname === PINCH_PATH) {
+      return new Response(CARRIED_PINCH, {
         headers: {
           ...BASE_SECURITY,
           "Content-Type": "text/javascript; charset=UTF-8",
@@ -2174,7 +2196,7 @@ export default {
     const slug = url.pathname.replace(/^\/+|\/+$/g, "");
     const story = storyBySlug(slug);
     if (story) {
-      return new Response(renderStory(story, prefs), { headers: htmlHeaders });
+      return new Response(renderStory(story, prefs, url.searchParams.get("mood") || ""), { headers: htmlHeaders });
     }
 
     return new Response("No door here. The way in is https://smut.today/\n", {
