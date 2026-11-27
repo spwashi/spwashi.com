@@ -9,5 +9,9 @@
   // no database, no schedule, and no request logging to keep.
   "observability": {
     "enabled": false
+  },
+  // Empty on purpose: the five-minute schedule this worker once had is removed on deploy.
+  "triggers": {
+    "crons": []
   }
 }
