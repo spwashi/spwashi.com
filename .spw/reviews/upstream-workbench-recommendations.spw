@@ -41,6 +41,9 @@
 @plans_index: ~"../../.agents/plans/README.md"
 @practicality: ~"../caches/workbench-algorithmic-practicality-2026-11.spw"
 @linguistic_affordances: ~"../caches/linguistic-affordances-2026-11.spw"
+@aperture_cache: ~"../caches/factshift-aperture-rederivation-2026-11.spw"
+@roundtrip_cache: ~"../caches/ecosystem-roundtrip-architecture-2026-11.spw"
+@ecosystem_audit: ~"../audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
 @workbench_page: ~"../../projects/spw-workbench/index.html"
 @asks_context: ~"./upstream-workbench-recommendations/context.spw"
 @asks_corpus: ~"./upstream-workbench-recommendations/corpus-and-cli.spw"
@@ -448,6 +451,27 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   ][reg=set]
   ~#taste: "One parameterized kernel with scoped contexts beats every downstream regex workaround; keep Seed structural and let hosts paint physics."
   consume = `This site now drives highlighting from kernel tokens, documents all four open parser issue classes at @workbench_page#parsing-issues, and syncs @mount to bcf0da18b840.`
+}[reg=facet]
+
+^"week_2026_11_26"{
+  standing = `Synthesized across @ecosystem_audit, @aperture_cache, and @roundtrip_cache after evaluating signed frame-brace scrubbing on factshift.center (app b8e2222) alongside spw.quest (/physics, /pivot), spwashi.com (148 catalog defs, 773 site .spw files), and the 2026-11-11 workbench journal replies (one-table-many-scales, address-grain-edit). Detailed canvas and gesture asks landed in @asks_stage (ranks 6-8) and @asks_gestures (rank 2).`
+  proposals = #[
+    `&[seed] Export one operator_table (glyph, workbench word, reader name, LAW_SAYS body law, highlight role, container slot names, declared host alias columns) so spwashi.com, spw.quest, factshift.center, and editors delete parallel tables :: operators[canon]{glyph.law.alias}<export>`,
+    `+[seed] Export grainsAt, stepFrom, addressOf, resolveAddress, and graded reversible edit_verbs (L0/L1/L2 + inverse + delta) so editors, spw.quest, and factshift.center step one grain ladder :: grain[ladder]{address.step.edit}<inverse>`,
+    `+[release] Ship .d.ts typed_variants alongside dated reader.min.js / workbench.min.js releases and spw.pivots/1 separator turns so factshift.center retires its legacy March 2026 submodule :: release[typed]{dts.reader.pivots}<single_pin>`,
+    `=[theory] Keep interactive boundary disclosure (aperture: open <-> quiet <-> close) distinct from operational ChargePacket, Coulomb forces.charge, and material valence, and publish a per-frame clock / 0.0px sibling-isolation fixture matching spw.quest/physics :: stage[aperture]{open.quiet.close.clock}<honest>`,
+    `+[runtime] Publish cache_registry kept_line schema (key, clock, plane, tiers, until-when, forget verb) and canonical bracket stay rules bridging lore.land rooms and factshift drops :: memory[kept]{plane.clock.stay}<line>`,
+  ][reg=set]
+  measured = .{
+    ecosystem_audit = `148 catalog defs (16 orphan selectors, 22 root bindings, 3 uncoordinated data-spw-charge writers), 6 slot scrubbers (24/28/32/36px, 3 silent commit policies), 3 PINCH_MEASURE copies, 145 unknown data-spw-operator="state" attrs, 5-way charge homonym collision`
+    factshift_revisions = `3 workbench revisions inside one app (site mount bcf0da18, vendored reader, March submodule fffab72); 4 colliding horizontal stage gestures; global alpha drifting sibling ~ bodies 6px vs 0.0px in spw.quest/physics.js`
+  }[reg=facet]
+  probes = #[
+    `npm run audit:module-selectors && npm run ecology:language && npm run audit:plans`,
+    `ls workers/spw-quest/assets/parser/2026.11.13`,
+  ][reg=set]
+  ~#taste: "Put the shared tables, grain addresses, typed releases, and rest fixtures upstream once; then every return-leg cleanup on spwashi.com and its workers becomes deletion rather than coordination."
+  consume = `Return leg tracked in @roundtrip_cache#leg_4_return: promote gesture-measure.js into peer-kit now, unify spwashi.com's three charge writers and closed bus loops, consume upstream operator_table and grainsAt once shipped, activate already-bundled spokenLine/pairSound/readNumberForm exports, and land ungated homonym-renaming + brace-semantics cleanup slices.`
 }[reg=facet]
 
 ^"validation"{

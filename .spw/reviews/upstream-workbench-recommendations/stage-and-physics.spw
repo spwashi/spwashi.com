@@ -23,8 +23,12 @@
 
 @hub: ~"../upstream-workbench-recommendations.spw"
 @grow: ~"../../caches/workbench-interaction-theory-2026-11.spw"
+@aperture_cache: ~"../../caches/factshift-aperture-rederivation-2026-11.spw"
+@roundtrip_cache: ~"../../caches/ecosystem-roundtrip-architecture-2026-11.spw"
 @frames: ~"../../_workbench/docs/theory/spw/depiction-frames.spw"
 @distance: ~"../../_workbench/docs/theory/spw/threshold-distance.spw"
+@charge_bridge: ~"../../_workbench/docs/theory/spw/charge-valence-brace-bridge.spw"
+@quest_physics: ~"../../../workers/spw-quest/src/physics.js"
 
 operation = "audit"
 fixity = "tending"
@@ -131,6 +135,58 @@ expression = stage[physics]{centre.rest.wave.kept.labels.line.rooms}<canvas>
     replaces: "a stage remembered forever or not at all"
     probe: `read factshift.stage-mark and factshift.hand in a browser that moved them a week ago`
     question: "Should a moved mark go cold after a week unless touched, as lore.land's boxes do? That changes how long stored state lasts, so it is a proposal only."
+  }[reg=facet]
+
+  per_frame_heat_clocks: .{
+    rank = 6
+    claim: "A host that proves per-frame warm/cool clocks isolates sibling bodies at rest, while global simulation heat leaks across closed braces."
+    exists: "@quest_physics runs a per-body 60Hz warm/cool clock (cools after 12 calm ticks) with measured 0.0px outside displacement; factshift.center runs one global d3 alpha where warming bread drifted sibling ~soup parts ~6px."
+    gap: "No host-neutral frame-clock contract or rest-receipt schema tells a host when a frame has settled versus when a ~ body is intentionally drifting."
+    measured: .{
+      quest_outside_displacement = "0.0px outside closed braces during visitor touch in @quest_physics"
+      canvas_sibling_drift = "6px drift on sibling ~soup body while warming bread in factshift.center"
+    }[reg=facet]
+    recommendation = #[
+      `publish a frame-clock and rest-receipt fixture in host-receipts so both spw.quest/physics and factshift.center verify 0.0px sibling leakage`,
+      `name explicit clock classes (canvas seconds, site tens-of-seconds, address indefinite) beside cache_registry`,
+    ][reg=set]
+    replaces: "global heat leaking across unrelated containers"
+    probe: `inspect frame.warm cooling in workers/spw-quest/src/physics.js beside restLine in factshift forces.ts`
+    question: "Should a ~ body's rest be a bounded eddy with its own low floor, or strictly alpha = 0 once untouched?"
+  }[reg=facet]
+
+  aperture_not_fifth_charge: .{
+    rank = 7
+    claim: "Interactive frame disclosure (open inviting unnamed seats <-> quiet <-> close folding written parts) must stay distinct from ChargePacket, Coulomb forces.charge, and valence."
+    exists: "@charge_bridge (G6_discharge_homonym) already separates interpretive open/close polarity, operational ChargePacket, charge-neutral valence (boon..honk), and effect.l2 writes; @aperture_cache records how a proposed frame scrub collided with all four."
+    gap: "No canon vocabulary names the interactive boundary disclosure axis (aperture: open/quiet/close) separately from charge/discharge."
+    measured: .{
+      charge_senses = "5 live senses across workbench, spwashi.com, and factshift.center before any new frame gesture"
+    }[reg=facet]
+    recommendation = #[
+      `keep open/close canonical (L8_orientation) and reserve ChargePacket for portable runtime packets`,
+      `name interactive frame disclosure as aperture (open <-> quiet <-> close) in depiction/exhibit theory so hosts stop overloading charge/discharge`,
+    ][reg=set]
+    replaces: "a fifth homonym on charge and discharge"
+    probe: `read @charge_bridge beside @aperture_cache#six_cracks`
+    question: "Does aperture belong in depiction-frames as a named host posture beside ephemeral_bias?"
+  }[reg=facet]
+
+  typed_reader_and_pivots: .{
+    rank = 8
+    claim: "factshift.center still compiles a March 2026 workbench submodule for thirteen runtime types because dated parser releases ship no .d.ts declarations."
+    exists: "spw.quest carries dated releases (2026.10.13, 2026.11.13) with full/lite/reader/workbench JS bundles; factshift imports 13 runtime types from its legacy submodule."
+    gap: "Without emitted .d.ts beside reader.min.js / workbench.min.js and spw.pivots/1 separator turns, TypeScript consumers cannot retire legacy submodules or share pivot crumbs."
+    measured: .{
+      revisions_in_service = "3 workbench revisions inside one canvas (site mount bcf0da18, vendored reader, March submodule fffab72)"
+    }[reg=facet]
+    recommendation = #[
+      `emit .d.ts type declarations (typed_variants) with each dated release bundle`,
+      `export spw.pivots/1 and balanced recursive readLine/writeAt so factshift line-joints.ts and spw.quest pivot.js share one pivot engine`,
+    ][reg=set]
+    replaces: "three workbench revisions and two hand-written slot readers inside one app"
+    probe: `ls workers/spw-quest/assets/parser/2026.11.13`
+    question: "Will the next dated parser release include .d.ts beside workbench.min.js and reader.min.js?"
   }[reg=facet]
 }
 

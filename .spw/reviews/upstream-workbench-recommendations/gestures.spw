@@ -16,6 +16,9 @@
 #:layer #!pragmatics
 
 @hub: ~"../upstream-workbench-recommendations.spw"
+@aperture_cache: ~"../../caches/factshift-aperture-rederivation-2026-11.spw"
+@journal_address: ~"../../_workbench/.spw/caches/journal/2026-11-11-address-grain-edit.spw"
+@gesture_measure: ~"../../../public/js/kernel/gesture-measure.js"
 
 operation = "audit"
 fixity = "tending"
@@ -51,6 +54,25 @@ expression = gesture[operator]{hover.references.outline.inlay.lens.diagnostic.re
     replaces: "learning each surface's habits one by one"
     probe: `node scripts/lsp-probe.mjs . .spw/site.spw hover 283:4 284:5`
     question: "Is the table right? Two calls are yours: whether ~ potential is the preview gesture, and whether diagnostics are ! action or * value."
+  }[reg=facet]
+
+  gesture_commit_and_inverse: .{
+    rank = 2
+    claim: "Every gesture across editors, spw.quest, and factshift.center should declare its effect grade (L0 look, L1 visit bias, L2 commit), honor opposite-direction inverses, and step the same grain ladder."
+    exists: "@journal_address proposes one grain ladder (token, part, row, line, construct, block, surface) with grainsAt/stepFrom and reversible edit_verbs; @gesture_measure holds shared web thresholds; hosts currently split silently across 3 commit policies (live, on-lift, prime-then-keep)."
+    gap: "No shared verb/grade contract binds editor gestures, slot scrubbers, and canvas boundaries; cross-zero or release gestures risk mixing L0 preview with L2 mutation or = pinning (@aperture_cache)."
+    measured: .{
+      host_scrubbers = "6 slot scrub implementations across spwashi.com and workers (24/28/32/36px) with 3 silent commit policies"
+      factshift_horizontal_owners = "4 live horizontal handlers (region-rects, body-gestures, frame-refresh, held-expressions)"
+    }[reg=facet]
+    recommendation = #[
+      `tag every edit_verb and motion with its effect grade (L0 read/preview, L1 scoped/visit bias, L2 source write) and return its inverse`,
+      `export grainsAt and stepFrom from spw-seed so VS Code, Neovim, spw.quest, and factshift.center step the same ladder`,
+      `enforce opposite-direction symmetry (open <-> close, back <-> forward, expand <-> shrink) rather than bolting unrelated toggles onto zero-crossings`,
+    ][reg=set]
+    replaces: "drifting per-host gesture grammars and silent preview-vs-commit crossings"
+    probe: `read @journal_address#proposals beside @aperture_cache#six_principles`
+    question: "Should edit_verbs declare a static effect_grade field (l0|l1|l2) so editors and canvases render commit posture before release?"
   }[reg=facet]
 }
 #>wonder_editor_gesture_operators
