@@ -29,6 +29,14 @@
 @ways: ~"../caches/ways-2026-10.spw"
 @blog_starter: ~"../../.agents/plans/blog-blob-spw/blog-blob-spw.spw"
 @workbench_report: ~"../workbench-report.spw"
+@signals_css: ~"../../public/css/components/signals.css"
+@syntax_css: ~"../../public/css/grammar/syntax.css"
+@geometry_projection_css: ~"../../public/css/handles/operators/geometry-projection.css"
+@prepaint_state: ~"../../public/js/runtime/arrival/prepaint-state.js"
+@gesture_measure: ~"../../public/js/kernel/gesture-measure.js"
+@charge_bridge: ~"../_workbench/docs/theory/spw/charge-valence-brace-bridge.spw"
+@ecosystem_audit: ~"../audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
+@aperture_cache: ~"../caches/factshift-aperture-rederivation-2026-11.spw"
 
 operation = "contract"
 fixity = "tending"
@@ -148,6 +156,55 @@ source = "creator, 2026-10-06: sets of words like live/cooling/projected should 
   counts_2026_10_06 = `seed 2, experimental 81, provisional 1, tending 160, stable 35, settled 1, cold 4`
   status = "collision"
   reading = `provisional and settled appear once each and overlap experimental and stable`
+}[reg=facet]
+
+^"tempo"{
+  coordinate = `how fast a surface arrives or responds`
+  owners = #[@signals_css, @syntax_css, @geometry_projection_css, @prepaint_state, @region_profiler][reg=set]
+  altitudes = #[`page (data-spw-page-tempo, ?tempo=)`, `frame (.spw-frame[data-spw-tempo])`, `sigil region (data-spw-sigil-region-tempo)`][reg=set]
+  words = #[`snap`, `fast`, `base`, `deliberate`, `settle`][reg=set]
+  status = "collision"
+  reading = `settle names the slow end of a speed ladder while also naming arc rest across 52 files; renaming the slow speed at all three altitudes frees settle for rest`
+  proposal = #[`patient`, `gradual`, `lingering`, `lento`][reg=set]
+}[reg=facet]
+
+^"arc_rest"{
+  coordinate = `approaching or reaching rest at the end of an arc, or readied potential along a progression`
+  words = #[`settle`, `prime`, `phase`][reg=set]
+  status = "in use"
+  echoes = .{
+    settle = `page settling, region settling, component data-spw-box-settle-phase, module lifecycle settled — one shape across four altitudes, keep`
+    prime = `interaction prime, region primed, cauldron prime — one shape meaning readied potential, keep (distinct from .spw plan operation prime and number-theoretic pulse beats)`
+    phase = `hydration-phase, interaction-phase, ecology-phase, transition-phase — always attribute-namespaced (*-phase, never bare), keep`
+  }[reg=facet]
+}[reg=facet]
+
+^"charge_disambiguation"{
+  coordinate = `five distinct physical/semantic axes that previously collided under the word charge`
+  owners = #[@charge_bridge, @ecosystem_audit, @aperture_cache][reg=set]
+  words = #[`aperture`, `forces_charge`, `valence_pentad`, `charge_packet`, `charge_field_phase`][reg=set]
+  status = "collision"
+  senses = .{
+    aperture = `symmetric open <-> quiet <-> close grain disclosure on factshift.center (L0 transient lean in flight, L1 session hold on lift; never called charge)`
+    forces_charge = `d3 many-body repulsion parameter in factshift.center, exclusively owned by Shift+wheel and Reflex`
+    valence_pentad = `boon / bane / bone / bonk / honk material and narrative valence across lands and the Boonhonk Register`
+    charge_packet = `upstream workbench ChargePacket transfer/bias model (G6_discharge_homonym in @charge_bridge)`
+    charge_field_phase = `spwashi.com document attention phase (idle / arming / preview / charged / discharging / quiet) in charge-field.js`
+  }[reg=facet]
+  rule = `Name the axis directly: aperture for brace open/close disclosure, forces.charge for repulsion, valence for boon/bane/bone, and charge-field for document attention phases.`
+}[reg=facet]
+
+^"interaction_ladder"{
+  coordinate = `ordered cross-host gesture intensity rungs aligned to effect grades L0/L1/L2`
+  owners = #[@gesture_measure, @aperture_cache, @ecosystem_audit][reg=set]
+  words = #[`quiet`, `lean`, `hold`, `commit`][reg=set]
+  grades = .{
+    quiet = `dead zone (0); return here commits nothing`
+    lean = `L0 transient preview while pointer is down; 0 diff on cancel`
+    hold = `L1 session hold surviving lift without rewriting the line (aperture top rung: saturate)`
+    commit = `L2 durable document write, navigation, or URL parameter change`
+  }[reg=facet]
+  status = "in use"
 }[reg=facet]
 
 validation = #[`npm run spw:integrity`, `git diff --check`][reg=set]

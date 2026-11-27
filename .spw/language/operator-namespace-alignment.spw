@@ -28,6 +28,8 @@
 @sensor: ~"../../scripts/spw-language-ecology.mjs"
 @lite_scanner: ~"../_workbench/packages/spw-seed/src/lite.ts"
 @upstream_asks: ~"../reviews/upstream-workbench-recommendations.spw"
+@ecosystem_audit: ~"../audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
+@roundtrip_cache: ~"../caches/ecosystem-roundtrip-architecture-2026-11.spw"
 
 operation = "align"
 fixity = "tending"
@@ -140,6 +142,17 @@ expression = sigil[canon]{alias.copy}<one_table>
   ][reg=set]
   probe_ref = `npm run ecology:language && rg -n '@action|&amp;stream|\*merge|\$pragma|operator="(state|#>)"' --glob '*.html' --glob '!node_modules'`
   falsification = `Any route that prints a sigil whose atlas page shows a different character; any data-spw-operator whose type column disagrees with the visible nav token or label on the same host.`
+  status = "active"
+}[reg=facet]
+
+^"audit_2026_11_26"{
+  ~#note: "Measured 2026-11-26 via npm run ecology:language and cross-host survey (@ecosystem_audit, @roundtrip_cache)."
+  corpus_baseline = `773 site .spw files (187 claims, 153 probes, 139 hypotheses, ratio 1.10); 1,196 HTML files with 5,356 data-spw-semantic-expression handles and 253 .operator-chip elements.`
+  unknown_state = `145 HTML hosts still carry unknown data-spw-operator="state" (not in KNOWN_OPERATOR_TYPES); queued for Leg 4 return-leg cleanup.`
+  brace_spread = `data-spw-brace usage across HTML: 211 objective, 173 subjective, 8 objective-to-subjective, 4 balanced, 4 direction.`
+  land_sigil_split = `boon / bane / bone still carry two distinct sigil tables: factshift.center SITE_CONFIGS uses * . # while spwashi.com domain pages use > ! ^.`
+  peer_table_copies = `Six peer/runtime copies of the operator table still diverge across spwashi.com, spw.quest, factshift.center, attention.productions, texture.website, and lore.land; single-source upstream operator_table is filed in @upstream_asks (week_2026_11_26).`
+  probe_ref = `npm run ecology:language && npm run audit:module-selectors`
   status = "active"
 }[reg=facet]
 

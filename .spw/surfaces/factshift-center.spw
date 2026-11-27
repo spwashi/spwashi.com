@@ -38,8 +38,9 @@ contents = #[
   ~#note: "factshift.com's layout, read in its most accessible way: a frame of work on a ground, chrome held at the screen's corners. The center keeps the places and gives each corner one job."
   top_right = `what this is: the title, or the held line. A pinch resizes it, its left edge snaps it to one line or to wrapping, two taps on the square behind it put it back, and a line typed into it is held in place.`
   top_left = `where you are: the open tool's badge, flush with the side and level with the title; with the column out, one square a tool, the open one stepped in from the side.`
-  bottom_left = `what you can do: [...] and its rows, each a family of verbs. With [...] open, the frame pulls down to refresh.`
+  bottom_left = `what you can do: [...] and its rows, each a family of verbs (carried clear of [...] in dbdb3364). With [...] open, the frame pulls down to refresh.`
   bottom_right = `what you hold: the held line, and on an entered page the way back up (↑ and the parent line).`
+  edge_rails = `Carried in dbdb3364 (edge-scrub.ts): the page's left margin is the where rail (thread) and the right margin is the how rail (parts). Ending in the dead zone commits nothing.`
   frame = `the work: the canvas, and the open tool held by its handle.`
 }[reg=facet]
 
@@ -85,6 +86,8 @@ contents = #[
   summary = `A line too long for its place shows its fractal summary (line-summary.ts): the deepest bodies fold to {…} first. The title shows it past 32 characters; a long folded literal shows it in its node.`
   reading = `The [...] menu's reading family changes how the line is drawn, never what it says: container labels hidden for a still, braces as particles (each pair + and − by what it holds, a mode as an atom bonded to its word), every body as written. nested forces in the forces row sets how much a body inside a body keeps of its parent's strength (reading.ts, particles.ts).`
   fold = `A tap on a body's tab, or { on its focused word, draws the body as written, one node in place of its parts; the same again draws the parts. The line does not change. A question's body stays open. Renaming the literal rewrites the body inside its braces (brace-folds.ts).`
+  aperture = `Proposed 2026-11-26 (@aperture_cache): a symmetric open <-> quiet <-> close grain aperture on the active grain's real brace boundary (L0 transient lean in flight, L1 session hold on lift; rungs quiet, lean, hold, saturate). Never called charge, keeping forces.charge on Shift+wheel and Reflex and = on node pinning.`
+  scene_tune = `App working tree (uncommitted as of 2026-11-26): scene-tune.ts and side mark seats on regions.`
 }[reg=facet]
 
 ^"ties"{
@@ -125,6 +128,7 @@ contents = #[
   history = `Back and forward walk this visit's concepts as the browser's history: the band and the frame on touch, a tab's own edge swipe, Android's back, a trackpad's swipe and Alt+← → all reach the same entries; a mouse never starts the band.`
   editing = `Alt+Shift+→ grows the selection along the reading and ← steps back in; Alt+↑ ↓ moves a part; Tab closes only what a line owes; the bar under the line is the same acts for a thumb.`
   pressure = `The canvas reads no pointer force. Its magnitudes are distance, speed and time: how far past grow or shrink, how fast a throw, how long a hold, how wide a pinch. A device that reports force would use that scale.`
+  pointer_arbitration = `Target 2026-11-26 (P0, @aperture_cache): single pointer ownership (claimedPointer / swallowsTap via shared gesture-measure.js) so edge-scrub.ts, body-gestures.ts, pinch.ts, and tool-window.ts never double-answer one gesture.`
 }[reg=facet]
 
 ^"annotation"{
@@ -169,6 +173,11 @@ contents = #[
   sizes = `A kept container's size and place are canvas pixels, not shares of the line's column, so a much narrower window can misplace it.`
   loose_nodes = `A node added with ↑ is loose: it does not join the line by a drop, so an entered page with nothing inside has nothing to drag into an empty slot.`
   second_reader = `line-anatomy.ts is a second reader beside the workbench. The plan's next cut draws the workbench reader's outline and keeps line-anatomy until that projection can say the line back.`
+  global_heat = `2026-11-26 audit (@ecosystem_audit): the d3 simulation runs on one global alpha plus continuous entropyForce kicks, so waking one frame leaks motion into settled siblings. Target: port spw.quest/src/physics.js per-frame warm/cool clocks (P1).`
+  horizontal_collisions = `2026-11-26 audit: body-gestures.ts 24px side-edge resize and #held-expressions horizontal swipe collide with horizontal rails and any brace-rim aperture. Target: corner-only resize and retire #held-expressions horizontal swipe (P0).`
+  unmounted_rail = `2026-11-26 audit: #frame-scrub is referenced in code/theory drafts but has zero DOM mount in the app's index.html; any grain aperture mounts on the active grain's real brace boundary after P0.`
+  unsurfaced_storage = `2026-11-26 audit: spw-kept.ts persists kept lines in localStorage without an always-legible memory strip on the stage (P4).`
+  aperture_over_fifth_charge = `2026-11-26 audit (@aperture_cache): naming brace disclosure charge would create a fifth homonym beside forces.charge, valence, ChargePacket, and charge-field.js; keep the axis named aperture (open <-> quiet <-> close).`
 }[reg=facet]
 
 # About this file
@@ -192,3 +201,6 @@ source = "creator, 2026-10-30: expand on the factshift ui model in the .spw tree
 @menu_field: ~"./menu-field.spw"
 @interaction_microstates: ~"../conventions/interaction-microstates.spw"
 @namespace_table: ~"../language/operator-namespace-alignment.spw"
+@aperture_cache: ~"../caches/factshift-aperture-rederivation-2026-11.spw"
+@roundtrip_cache: ~"../caches/ecosystem-roundtrip-architecture-2026-11.spw"
+@ecosystem_audit: ~"../audits/ecosystem-planes-pivots-ontologies-2026-11.spw"

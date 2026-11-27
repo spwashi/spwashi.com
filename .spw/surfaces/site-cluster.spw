@@ -50,6 +50,7 @@ contents = #[^"roles", ^"carries", ^"releases", ^"loops", wonders][reg=set]
   factshift_to_spwashi = `factshift.center reads each tool as an operator whose window opens on its primed act as one line and leaves a * receipt (TOOLS.md). The same reading can tune spwashi.com: the cauldron chip already writes its live expression, the satchel offers the page's line, and the cauldron's moves are an open operator question (spellcraft-authoring #>wonder_spellcraft_operator_moves). Proposal: whichever operator table factshift settles is offered to the cauldron first.`
   spwashi_to_factshift = `spwashi.com's lines become factshift.center canvases: every route expression and plan head line opens with ?spw=; a plan's head line starts with #>, a frame a reader can enter.`
   quest_between = `spw.quest is where a line is understood before it is held: a shelf card can open its line on factshift.center, and factshift.center's held line can be pivoted or taken apart on spw.quest.`
+  roundtrip_2026_11 = `Four-leg architectural loop (@roundtrip_cache, @ecosystem_audit): (1) ecosystem peers share public/js/kernel/gesture-measure.js via build:peer-kit S4c, explicit 28px slot-scrub commit cues, and bidirectional from= return legs; (2) factshift.center ports spw.quest/src/physics.js per-frame warm/cool clocks (P1), clears horizontal gesture collisions (P0), differentiates [ ] { } ( ) < > materials (P2), and adds the symmetric open <-> quiet <-> close grain aperture (P3); (3) upstream spw-workbench receives week_2026_11_26 asks for single-source operator_table, grainsAt/stepFrom, typed .d.ts release, per-frame heat/aperture laws, and gesture commit/inverse laws; (4) the return leg consolidates spwashi.com's three data-spw-charge writers, resolves 145 unknown data-spw-operator="state" hosts, and retires duplicated peer operator tables.`
 }[reg=facet]
 
 #>wonder_site_cluster_frame_navigation
@@ -115,3 +116,5 @@ contents = #[^"roles", ^"carries", ^"releases", ^"loops", wonders][reg=set]
 @carry_parser: ~"../../workers/spw-quest/carry-parser.mjs"
 @peer_kit_script: ~"../../scripts/build-peer-kit.mjs"
 @parser_releases: ~"../../workers/spw-quest/assets/parser/index.json"
+@roundtrip_cache: ~"../caches/ecosystem-roundtrip-architecture-2026-11.spw"
+@ecosystem_audit: ~"../audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
