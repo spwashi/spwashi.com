@@ -164,3 +164,89 @@ export function dialOf(date) {
     elapsed: (now - current.from) / (current.to - current.from),
   };
 }
+
+const DAY_MS = 86_400_000;
+
+/** The ISO week a moment falls in, in UTC: { year, week }. Weeks start Monday; week 1 holds the year's first Thursday. */
+export function isoWeek(date) {
+  const day = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const weekday = (day.getUTCDay() + 6) % 7;
+  day.setUTCDate(day.getUTCDate() - weekday + 3);
+  const year = day.getUTCFullYear();
+  const january4 = new Date(Date.UTC(year, 0, 4));
+  const week = 1 + Math.round(((day - january4) / DAY_MS - 3 + ((january4.getUTCDay() + 6) % 7)) / 7);
+  return { year, week };
+}
+
+/**
+ * Which day of its hold a moment is: 1 on the hold's first day. A and B run
+ * thirteen days, so the day is the month's day counted modulo 13; C runs to
+ * the month's end, two to five days.
+ */
+export function dayOf(holder, now) {
+  const since = Date.parse(holder.since);
+  const of = Math.round((Date.parse(holder.releasesAt) - since) / DAY_MS);
+  const index = Math.min(of, Math.max(1, Math.floor((now.getTime() - since) / DAY_MS) + 1));
+  return { index, of };
+}
+
+/**
+ * The moment's clock as a line of Spw, beside the rule's own clock line
+ * ($clock[utc]{13th, 26th, last_day}): the week, and the day of the hold.
+ */
+export function clockLine(holder, now) {
+  const { week } = isoWeek(now);
+  const day = dayOf(holder, now);
+  return `$clock[utc]{w${week}, day ${day.index}/${day.of}}`;
+}
+
+/** Minutes until the cell turns to its next detail, or null on the hold's last hour. */
+export function nextTurnIn(holder, now) {
+  const turn = turnOf(holder, now);
+  if (turn.index >= turn.of - 1) return null;
+  const next = Date.parse(holder.since) + (turn.index + 1) * TURN_MS;
+  return Math.max(1, Math.ceil((next - now.getTime()) / 60_000));
+}
+
+/** How long ago a moment was, said plainly. */
+export function agoWords(ms) {
+  const minutes = Math.max(0, Math.round(ms / 60_000));
+  if (minutes < 2) return "a moment ago";
+  if (minutes < 90) return `${minutes} minutes ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 36) return `${hours} hours ago`;
+  const days = Math.round(hours / 24);
+  if (days < 14) return `${days} days ago`;
+  return `${Math.round(days / 7)} weeks ago`;
+}
+
+/** What a reader's browser keeps of a visit, so the next one can say what changed. Nothing leaves the device. */
+export function seenAt(now) {
+  const holder = holderFor(now);
+  return { at: now.getTime(), since: holder.since, title: holder.title, turn: turnOf(holder, now).index };
+}
+
+/**
+ * The line under the holder: what changed since the reader last looked, and
+ * when the next thing will. `seen` is what seenAt kept on the last visit, or
+ * null on the first.
+ */
+export function sinceWords(seen, now) {
+  const holder = holderFor(now);
+  const minutes = nextTurnIn(holder, now);
+  const next = minutes === null ? "The lock lets go at the close." : `The next detail turns in ${minutes} ${minutes === 1 ? "minute" : "minutes"}.`;
+  const valid = seen && Number.isFinite(seen.at) && seen.at <= now.getTime() && typeof seen.since === "string";
+  if (!valid) return `A new detail of the holder every hour, and a new holder at each close. ${next}`;
+  const ago = agoWords(now.getTime() - seen.at);
+  if (seen.since !== holder.since) {
+    let closes = 0;
+    for (let at = cycleFor(new Date(seen.at)).releasesAt; at <= now; at = cycleFor(at).releasesAt) closes += 1;
+    const handed = closes === 1 && seen.title !== holder.title
+      ? `${seen.title} let go, and ${holder.title} took the frame`
+      : `${closes} ${closes === 1 ? "close" : "closes"} passed, and ${holder.title} holds the frame now`;
+    return `Since your last look, ${ago}: ${handed}. ${next}`;
+  }
+  const turns = turnOf(holder, now).index - seen.turn;
+  if (turns <= 0) return `Same hour as your last look. ${next}`;
+  return `Since your last look, ${ago}: ${turns} new ${turns === 1 ? "detail" : "details"} of ${holder.title}. ${next}`;
+}

@@ -2,7 +2,7 @@
 // has left are worked out here, in the reader's browser, from the lock
 // (lock.js, carried from src/ by carry.mjs). Written by hand. With scripts off
 // the pages list the month's three holds and draw the mutex at rest.
-import { DIAL, countdown, dialOf, holderFor, lastDay, monthDay, nowLine, turnLine, turnOf } from "/lock.js";
+import { DIAL, clockLine, countdown, dayOf, dialOf, holderFor, isoWeek, lastDay, monthDay, nowLine, seenAt, sinceWords, turnLine, turnOf } from "/lock.js";
 import { hasSetRing, mountSetRing, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch } from "/pinch.js";
 import { mountTextScale } from "/text-scale.js";
@@ -41,6 +41,23 @@ function writeLine(el, text) {
 }
 
 if ($("holder-title")) $("holder-title").textContent = holder.title;
+
+/**
+ * The reader's last look, kept in this browser and nowhere else, so a return
+ * says what changed since (sinceWords). The look is taken on arrival: a
+ * refresh measures from the visit before it. visit-head.js reads the same key
+ * before first paint to lay the page out for a return.
+ */
+const SEEN_KEY = "mutex.buzz:seen";
+let lastLook = null;
+if ($("since")) {
+  try {
+    lastLook = JSON.parse(localStorage.getItem(SEEN_KEY) || "null");
+    localStorage.setItem(SEEN_KEY, JSON.stringify(seenAt(new Date())));
+  } catch {
+    lastLook = null;
+  }
+}
 
 const dial = $("dial");
 if (dial) {
@@ -119,6 +136,16 @@ if (dial) {
     });
   });
   if ($("now-line")) writeLine($("now-line"), nowLine(holder));
+  // The tab names what holds the lock, so a tab left open says it too.
+  document.title = `${holder.title} holds the lock — mutex.buzz`;
+  // Back again: the explanation is folded (mutex.css), and its summary opens it.
+  const explain = $("explain");
+  explain?.querySelector("summary")?.addEventListener("click", (event) => {
+    if (!document.documentElement.classList.contains("return") || explain.classList.contains("read")) return;
+    event.preventDefault();
+    explain.open = true;
+    explain.classList.add("read");
+  });
   // The set's ring, on the lock's own page (never /now/, which other pages frame): where the lock goes from here.
   mountSetRing("mutex.buzz", () => ({
     "factshift.center": { href: "https://factshift.center/?spw=mutex.buzz", says: "the lock read on the canvas: what holds it, as a line you can hold" },
@@ -160,6 +187,7 @@ function showTurn(turn) {
     image.style.transform = `scale(${turn.zoom})`;
   }
   if ($("turn-line")) writeLine($("turn-line"), turnLine(turn));
+  if ($("clock-line")) writeLine($("clock-line"), clockLine(holder, new Date()));
   if (dial) {
     const d = dialOf(new Date());
     perch($("bee"), d.needle.angle);
@@ -179,7 +207,13 @@ function tick() {
   }
   const share = (now.getTime() - since) / (until - since);
   const away = navigator.onLine === false ? " · offline, kept by this device" : "";
-  if ($("holder-when")) $("holder-when").textContent = `holds the lock · cycle ${holder.cycle} · ${monthDay(holder.since)} through ${lastDay(holder)} · turn ${turn.index + 1} of ${turn.of} · releases in ${countdown(holder, now)}${away}`;
+  const day = dayOf(holder, now);
+  if ($("holder-when")) $("holder-when").textContent = `holds the lock · cycle ${holder.cycle}, day ${day.index} of ${day.of} · week ${isoWeek(now).week} · turn ${turn.index + 1} of ${turn.of} · releases in ${countdown(holder, now)}${away}`;
+  const sinceLine = $("since");
+  if (sinceLine) {
+    const words = sinceWords(lastLook, now);
+    if (sinceLine.textContent !== words) sinceLine.textContent = words;
+  }
   if ($("spent")) $("spent").setAttribute("x2", (share * 100).toFixed(2));
   const rider = $("rider");
   if (rider) {
@@ -319,6 +353,21 @@ if (threads) {
     };
     requestAnimationFrame(frame);
   }
+}
+
+// Use the lock: the embed's code, copied whole.
+const copyEmbed = $("copy-embed");
+if (copyEmbed && navigator.clipboard) {
+  copyEmbed.hidden = false;
+  copyEmbed.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText($("embed-code").textContent);
+      copyEmbed.textContent = "Copied";
+    } catch {
+      copyEmbed.textContent = "Select it above";
+    }
+    setTimeout(() => { copyEmbed.textContent = "Copy"; }, 1800);
+  });
 }
 
 // spwashi.com's pinch on the words sizes them; the dial and the holder keep their own pinch (text-scale.js).

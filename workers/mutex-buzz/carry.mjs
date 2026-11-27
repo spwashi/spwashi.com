@@ -8,6 +8,8 @@
 // - assets/index.html and assets/now/index.html: each page with the month's
 //   holds drawn and listed, so they read with scripts off;
 // - assets/now.json: every hold from October 2026 through 2027, with its holder;
+// - assets/closes.ics: the same holds as a calendar, one day-long event where
+//   each begins, so a reader's calendar says when the lock changes hands;
 // - assets/folios/*.webp: the resting folios, copied from the site's images;
 // - favicon.svg, robots.txt, ecosystem.json, registry.json (the paths the host
 //   answered under site-hub-next), llms.txt, 404.html and _headers.
@@ -21,7 +23,7 @@ import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { CYCLES, DIAL, FOLIOS, QUEUE, dialOf, scheduleBetween } from "./src/lock.js";
-import { ICONS, iconPng } from "./src/icon.js";
+import { ICONS, iconPng, sameIconPng } from "./src/icon.js";
 import { parse } from "../../public/js/semantic/spw-workbench-reader.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -44,7 +46,8 @@ const DRAWN_MONTH = new Date(Date.UTC(2026, 10, 1));
 
 const BASE = ["X-Content-Type-Options: nosniff", "Referrer-Policy: strict-origin-when-cross-origin", "Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()"];
 export const CSP_HOME = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
-export const CSP_NOW = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions; upgrade-insecure-requests";
+// /now/ is the lock's embed: any https page may frame it (attention.productions does).
+export const CSP_NOW = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https:; upgrade-insecure-requests";
 
 /** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
 const PINCH_TEXT = peerScriptPath("pinch-text-scale");
@@ -63,6 +66,10 @@ function headersFile() {
     rule("/*.css", ["Cache-Control: public, max-age=300"]),
     rule("/*.spw", ["Cache-Control: public, max-age=300", "Content-Type: text/plain; charset=UTF-8", "Access-Control-Allow-Origin: *"]),
     rule("/*.txt", ["Cache-Control: public, max-age=300", "Content-Type: text/plain; charset=UTF-8"]),
+    rule("/*.ics", ["Cache-Control: public, max-age=3600", "Content-Type: text/calendar; charset=UTF-8", "Access-Control-Allow-Origin: *"]),
+    // The clock as a module another page can import: lock.js and the hold lines it imports.
+    rule("/lock.js", ["Access-Control-Allow-Origin: *"]),
+    rule("/lib/*", ["Access-Control-Allow-Origin: *"]),
     rule("/folios/*", ["Cache-Control: public, max-age=86400"]),
     rule("/icons/*", ["Cache-Control: public, max-age=86400"]),
     rule("/manifest.webmanifest", ["Cache-Control: public, max-age=300", "Content-Type: application/manifest+json"]),
@@ -83,7 +90,7 @@ const ordinal = (n) => `${n}${n % 10 === 1 && n !== 11 ? "st" : n % 10 === 2 && 
 
 /** The month's three holds as a list: which days, and what rests in each. */
 const holdsList = () => `<ol class="holds" aria-label="The month's three holds">
-        ${CYCLES.map(({ cycle, from, through }) => `<li data-cycle="${cycle}"><b>${cycle}</b> <span class="days">${ordinal(from)} to the ${through}</span> <span class="who">${escapeHtml(FOLIOS[cycle].title)}</span></li>`).join("\n        ")}
+        ${CYCLES.map(({ cycle, from, through }) => `<li data-cycle="${cycle}"><b>${cycle}</b> <span class="days">${ordinal(from)} to ${through.startsWith("the ") ? through : `the ${through}`}</span> <span class="who">${escapeHtml(FOLIOS[cycle].title)}</span></li>`).join("\n        ")}
       </ol>`;
 
 /** A bee facing along the ring, at the origin; the script sets where it flies. */
@@ -182,6 +189,7 @@ function sample(source) {
       <h2 class="kicker" id="sample-title">The rule, in Spw</h2>
       <pre class="spw" id="lock-spw">${paintLock(source)}
 <span class="line now-line" data-part="now" id="now-line" hidden></span>
+<span class="line" data-part="clock" id="clock-line" hidden></span>
 <span class="line" data-part="now" id="turn-line" hidden></span></pre>
       <p class="data"><a href="/lock.spw">lock.spw</a> · <a href="https://factshift.center/#spw64=${b64}">read it on the canvas ↗</a> · <a href="https://spw.quest/build#spw64=${b64}">take it apart on spw.quest ↗</a></p>
     </section>`;
@@ -208,7 +216,7 @@ function threads() {
         </figure>`;
 }
 
-function head(title, description, canonical) {
+function head(title, description, canonical, { visit = false } = {}) {
   return `<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>${escapeHtml(title)}</title>
@@ -223,7 +231,8 @@ function head(title, description, canonical) {
   <link rel="stylesheet" href="/set-ring.css">
   <link rel="stylesheet" href="/pinch.css">
   <link rel="stylesheet" href="/text-scale.css">
-  <script src="/text-scale-head.js"></script>
+  <script src="/text-scale-head.js"></script>${visit ? `
+  <script src="/visit-head.js"></script>` : ""}
   <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
   <script type="module" src="/mutex.js"></script>`;
 }
@@ -233,7 +242,7 @@ function home(source) {
   return `<!doctype html>
 <html lang="en">
 <head>
-  ${head("mutex.buzz — one concept in the frame at a time", "A lock on attention: one concept holds the frame, each hold releases at a close, and a laminated folio holds it the rest of the time.", `${ORIGIN}/`)}
+  ${head("mutex.buzz — one concept in the frame at a time", "A lock on attention: one concept holds the frame, each hold releases at a close, and a laminated folio holds it the rest of the time.", `${ORIGIN}/`, { visit: true })}
 </head>
 <body class="home">
   <main>
@@ -241,13 +250,13 @@ function home(source) {
       <p class="kicker">mutex.buzz · a lock on attention</p>
       <h1 id="t">One concept in the frame <code>at a time</code>.</h1>
       <p>A mutex lets one thread in and makes the rest wait. This one does that for attention: whatever holds the lock is the single thing the frame shows.</p>
-      <section class="explain" aria-labelledby="what-title">
-        <h2 class="kicker" id="what-title">What a mutex is</h2>
+      <details class="explain" id="explain" open>
+        <summary><h2 class="kicker" id="what-title">What a mutex is</h2></summary>
         <p>A mutex, short for <em>mutual exclusion</em>, is a lock a program puts around something several threads might touch at once: a file, a counter, a printer. A thread acquires the lock before it touches the thing and releases it when it is done. If another thread already holds it, the newcomer waits. The code that runs while the lock is held is the critical section, and only one thread is ever inside it.</p>
         <p>A semaphore can let several in at once; a mutex lets in exactly one, and only the one holding it can let go. One bee to a cell.</p>
         <p>Here, the shared thing is attention. A hold is the critical section, a close is the release, and the line of anyone waiting is public.</p>
         ${threads()}
-      </section>
+      </details>
       <ul class="rules">
         <li><b>hold</b>A hold starts at a close and releases at the next: the 13th, the 26th, and the last day of the month.</li>
         <li><b>rest</b>When nothing else holds it, a laminated folio does. The resting state is the work itself.</li>
@@ -262,14 +271,79 @@ function home(source) {
       ${dial()}
       <figcaption>
         <p class="holding"><strong id="holder-title">A folio</strong> <span id="holder-when">holds the lock this cycle.</span></p>
+        <p class="since" id="since">A new detail of the holder every hour, and a new holder at each close.</p>
       ${holdsList()}
+        <p class="data">The closes, in your calendar: <a href="webcal://mutex.buzz/closes.ics">subscribe</a> · <a href="/closes.ics">closes.ics</a></p>
       </figcaption>
     </figure>
     ${sample(source)}
+    ${uses()}
   </main>
 </body>
 </html>
 `;
+}
+
+/** The lock as a tool: what another page, a calendar, or a program can take from it. */
+const EMBED = `<iframe src="${ORIGIN}/now/" title="What holds the lock on mutex.buzz" width="480" height="300" loading="lazy"></iframe>`;
+function uses() {
+  return `<section class="uses" aria-labelledby="uses-title">
+      <h2 class="kicker" id="uses-title">Use the lock</h2>
+      <ul class="rules">
+        <li><b>embed</b>What holds now, on your own page, keeping time there: <code id="embed-code">${escapeHtml(EMBED)}</code> <button type="button" id="copy-embed" hidden>Copy</button></li>
+        <li><b>calendar</b>A day-long event wherever a hold begins, through 2027: <a href="webcal://mutex.buzz/closes.ics">subscribe</a> · <a href="/closes.ics">closes.ics</a></li>
+        <li><b>schedule</b><a href="/now.json">/now.json</a>: every hold through 2027, with its holder and its times in UTC.</li>
+        <li><b>module</b>The clock this page keeps, for your own: <code>import { holderFor, sinceWords } from "${ORIGIN}/lock.js"</code></li>
+      </ul>
+    </section>`;
+}
+
+/** iCalendar text: CRLF lines, commas and semicolons escaped, lines folded at 75 octets. */
+const icsText = (text) => String(text).replace(/\\/g, "\\\\").replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
+const fold = (line) => {
+  const out = [];
+  let rest = Buffer.from(line, "utf8");
+  while (rest.length > 75) {
+    let cut = 75;
+    while ((rest[cut] & 0xc0) === 0x80) cut -= 1;
+    while (cut > 1 && rest[cut - 1] === 0x20) cut -= 1;
+    out.push(rest.subarray(0, cut).toString("utf8"));
+    rest = Buffer.concat([Buffer.from(" "), rest.subarray(cut)]);
+  }
+  out.push(rest.toString("utf8"));
+  return out.join("\r\n");
+};
+const icsDate = (iso) => iso.slice(0, 10).replace(/-/g, "");
+
+/** Every hold as a day-long event on the day it begins: when to look again. Fixed stamps, so the carry is the same on any day. */
+function closesIcs(holds) {
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//mutex.buzz//closes//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "X-WR-CALNAME:mutex.buzz closes",
+    "X-WR-CALDESC:When the lock on attention changes hands: the 13th\\, the 26th\\, and the last day of the month (UTC).",
+    "REFRESH-INTERVAL;VALUE=DURATION:P1D",
+  ];
+  for (const hold of holds) {
+    const until = new Date(Date.parse(hold.releasesAt) - 1).toISOString();
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:hold-${icsDate(hold.since)}@mutex.buzz`,
+      `DTSTAMP:${icsDate(SCHEDULE.from)}T000000Z`,
+      `DTSTART;VALUE=DATE:${icsDate(hold.since)}`,
+      `DTEND;VALUE=DATE:${icsDate(new Date(Date.parse(hold.since) + 86_400_000).toISOString())}`,
+      `SUMMARY:${icsText(`${hold.title} takes the frame on mutex.buzz`)}`,
+      `DESCRIPTION:${icsText(`Cycle ${hold.cycle}: ${hold.title} holds the lock through ${until.slice(0, 10)}. ${ORIGIN}/`)}`,
+      `URL:${ORIGIN}/`,
+      "TRANSP:TRANSPARENT",
+      "END:VEVENT",
+    );
+  }
+  lines.push("END:VCALENDAR");
+  return `${lines.map(fold).join("\r\n")}\r\n`;
 }
 
 function now() {
@@ -317,7 +391,10 @@ A mutex (mutual exclusion) is a lock a program puts around something several thr
 
 - /lock.spw: the rule written in Spw, every mark doing one job: ^ gathers the lock, = fixes one holder, $ names the clock it runs on, ! is a hold, . the folio that rests, ~ the waiting, % the time to release, @ where it is seen, & what the frame is about, ? asks what holds now, # names the file.
 - Each hold is cut into turns of an hour: each turn the cell shows a different detail of the holder, whole on the first and last turns. The page says which turn it is as Spw, %turn[62/312]{hour}, and counts down to the release by the second.
-- /now/: what holds the lock now, framed by attention.productions.
+- /now/: what holds the lock now. Any https page may frame it: <iframe src="https://mutex.buzz/now/" title="What holds the lock on mutex.buzz" width="480" height="300"></iframe>. attention.productions does.
+- /closes.ics: every hold as a day-long calendar event on the day it begins (subscribe at webcal://mutex.buzz/closes.ics).
+- /lock.js: the clock as an ES module (CORS open): holderFor(date), turnOf, dayOf, isoWeek, clockLine, and sinceWords(seen, now) for a page that remembers its reader's last look.
+- The page also says the moment's clock as Spw, beside the rule's own: $clock[utc]{w48, day 1/4}, the ISO week and the day of the hold (A and B run thirteen days, so the day is the month's day modulo 13).
 - /now.json: the schedule, schema mutex.schedule.v1: every hold from ${SCHEDULE.from} up to ${SCHEDULE.until}, each with its cycle, since, releasesAt and holder. What holds now is the hold whose since is at or before now and whose releasesAt is after it.
 `;
 }
@@ -341,7 +418,7 @@ function manifest() {
 }
 
 /** Everything the service worker keeps, so the lock opens and keeps time with no network. */
-const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/lib/hold.js", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
+const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/visit-head.js", "/lock.js", "/lock.spw", "/lib/hold.js", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
 
 /**
  * The service worker. Pages come from the network when there is one and from
@@ -399,6 +476,7 @@ export async function carried() {
     ["now/index.html", now()],
     ["404.html", NOT_FOUND],
     ["now.json", `${JSON.stringify(schedule, null, 2)}\n`],
+    ["closes.ics", closesIcs(schedule.holds)],
     ["favicon.svg", FAVICON],
     ["robots.txt", "User-agent: *\nAllow: /\n"],
     ["ecosystem.json", JSON.stringify(ecosystemJson, null, 2)],
@@ -411,12 +489,16 @@ export async function carried() {
 
 /** The carried text files and the service worker named for them, with the hand-written page files and the images in its hash. */
 export async function carriedWithWorker() {
+  return serviceWorkerCarry(await carriedIcons());
+}
+
+async function serviceWorkerCarry(icons) {
   const files = await carried();
   const hash = createHash("sha256");
   for (const [name, body] of files) hash.update(name).update(body);
-  for (const name of ["mutex.css", "mutex.js"]) hash.update(name).update(await readFile(path.join(ASSETS, name)));
+  for (const name of ["mutex.css", "mutex.js", "visit-head.js"]) hash.update(name).update(await readFile(path.join(ASSETS, name)));
   for (const source of Object.values(FOLIO_SOURCES)) hash.update(await readFile(path.join(ROOT, source)));
-  for (const [name, icon] of Object.entries(ICONS)) hash.update(name).update(iconPng(icon.size, icon));
+  for (const { name, bytes } of icons) hash.update(name).update(bytes);
   return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12))]];
 }
 
@@ -439,26 +521,33 @@ async function folios(check) {
   return drift;
 }
 
-/** The app icons, drawn by src/icon.js and compared by hash. */
-async function icons(check) {
-  let drift = 0;
-  for (const [name, icon] of Object.entries(ICONS)) {
-    const want = iconPng(icon.size, icon);
+/** Keep valid icon bytes when zlib encodes the same pixels differently. */
+async function carriedIcons() {
+  return Promise.all(Object.entries(ICONS).map(async ([name, icon]) => {
     const target = path.join(ASSETS, "icons", name);
-    if (check) {
-      const have = await readFile(target).catch(() => null);
-      if (!have || sha(have) !== sha(want)) { drift += 1; console.error(`[mutex-carry] assets/icons/${name} differs from src/icon.js`); }
-      continue;
-    }
-    await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, want);
-  }
-  return drift;
+    const want = iconPng(icon.size, icon);
+    const have = await readFile(target).catch((error) => {
+      if (error.code !== "ENOENT") throw error;
+      return null;
+    });
+    return { name, target, bytes: sameIconPng(have, want) ? have : want, have };
+  }));
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const drift = (await writeOrCheck(ASSETS, await carriedWithWorker(), { check, label: "mutex-carry", hint: "run node workers/mutex-buzz/carry.mjs" })) + (await folios(check)) + (await icons(check));
+  const icons = await carriedIcons();
+  let drift = (await writeOrCheck(ASSETS, await serviceWorkerCarry(icons), { check, label: "mutex-carry", hint: "run node workers/mutex-buzz/carry.mjs" })) + (await folios(check));
+  for (const { name, target, bytes, have } of icons) {
+    if (bytes === have) continue;
+    if (check) {
+      drift += 1;
+      console.error(`[mutex-carry] assets/icons/${name} differs from src/icon.js`);
+      continue;
+    }
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, bytes);
+  }
   if (check && drift) process.exit(1);
   if (!check) console.log("[mutex-carry] wrote the lock, both pages, the schedule and the folios into workers/mutex-buzz/assets");
 }

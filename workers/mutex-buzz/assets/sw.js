@@ -1,6 +1,6 @@
 // Written by workers/mutex-buzz/carry.mjs. The lock works out "now" in the page, so with these kept it keeps time offline.
-const CACHE = "mutex-a656f7275dc0";
-const SHELL = ["/","/now/","/mutex.css","/mutex.js","/lock.js","/lock.spw","/lib/hold.js","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/peer/pinch-text-scale.c898b03dd8.js","/now.json","/favicon.svg","/manifest.webmanifest","/folios/lined-stage-facade.webp","/folios/teal-stripes-vibes-wash.webp","/folios/factshift-cabinet.webp","/icons/icon-192.png","/icons/icon-512.png","/icons/icon-maskable-512.png","/icons/apple-touch-icon.png"];
+const CACHE = "mutex-310551882e3f";
+const SHELL = ["/","/now/","/mutex.css","/mutex.js","/visit-head.js","/lock.js","/lock.spw","/lib/hold.js","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/peer/pinch-text-scale.c898b03dd8.js","/now.json","/favicon.svg","/manifest.webmanifest","/folios/lined-stage-facade.webp","/folios/teal-stripes-vibes-wash.webp","/folios/factshift-cabinet.webp","/icons/icon-192.png","/icons/icon-512.png","/icons/icon-maskable-512.png","/icons/apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));

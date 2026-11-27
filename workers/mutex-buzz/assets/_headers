@@ -9,7 +9,7 @@
   X-Frame-Options: DENY
 
 /now/
-  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https:; upgrade-insecure-requests
 
 /*.json
   Cache-Control: public, max-age=300
@@ -30,6 +30,17 @@
 /*.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
+
+/*.ics
+  Cache-Control: public, max-age=3600
+  Content-Type: text/calendar; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/lock.js
+  Access-Control-Allow-Origin: *
+
+/lib/*
+  Access-Control-Allow-Origin: *
 
 /folios/*
   Cache-Control: public, max-age=86400

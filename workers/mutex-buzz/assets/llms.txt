@@ -4,5 +4,8 @@ A mutex (mutual exclusion) is a lock a program puts around something several thr
 
 - /lock.spw: the rule written in Spw, every mark doing one job: ^ gathers the lock, = fixes one holder, $ names the clock it runs on, ! is a hold, . the folio that rests, ~ the waiting, % the time to release, @ where it is seen, & what the frame is about, ? asks what holds now, # names the file.
 - Each hold is cut into turns of an hour: each turn the cell shows a different detail of the holder, whole on the first and last turns. The page says which turn it is as Spw, %turn[62/312]{hour}, and counts down to the release by the second.
-- /now/: what holds the lock now, framed by attention.productions.
+- /now/: what holds the lock now. Any https page may frame it: <iframe src="https://mutex.buzz/now/" title="What holds the lock on mutex.buzz" width="480" height="300"></iframe>. attention.productions does.
+- /closes.ics: every hold as a day-long calendar event on the day it begins (subscribe at webcal://mutex.buzz/closes.ics).
+- /lock.js: the clock as an ES module (CORS open): holderFor(date), turnOf, dayOf, isoWeek, clockLine, and sinceWords(seen, now) for a page that remembers its reader's last look.
+- The page also says the moment's clock as Spw, beside the rule's own: $clock[utc]{w48, day 1/4}, the ISO week and the day of the hold (A and B run thirteen days, so the day is the month's day modulo 13).
 - /now.json: the schedule, schema mutex.schedule.v1: every hold from 2026-10-01 up to 2028-01-01, each with its cycle, since, releasesAt and holder. What holds now is the hold whose since is at or before now and whose releasesAt is after it.

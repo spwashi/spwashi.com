@@ -2,7 +2,7 @@
 // cell with two ink stripes on the hive's dark ground, the favicon's mark at
 // the sizes an installed app asks for. A maskable icon keeps the cell inside
 // the middle 80%, where every launcher's mask leaves it whole.
-import { deflateSync } from "node:zlib";
+import { deflateSync, inflateSync } from "node:zlib";
 
 const GROUND = [0x12, 0x0d, 0x07];
 const HONEY = [0xff, 0xc5, 0x3d];
@@ -66,6 +66,29 @@ export function iconPng(size, { share = 0.42, rounded = false } = {}) {
   header.writeUInt32BE(size, 4);
   header[8] = 8; header[9] = 6; header[10] = 0; header[11] = 0; header[12] = 0;
   return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk("IHDR", header), chunk("IDAT", deflateSync(Buffer.concat(rows), { level: 9 })), chunk("IEND", Buffer.alloc(0))]);
+}
+
+/** Compare the generated PNG layout and pixels independently of zlib's encoding. */
+export function sameIconPng(have, want) {
+  if (!have) return false;
+  if (have.equals(want)) return true;
+
+  const headerBytes = 33; // PNG signature and IHDR chunk.
+  const trailerBytes = 12; // Empty IEND chunk.
+  if (have.length < headerBytes + 12 + trailerBytes) return false;
+  if (!have.subarray(0, headerBytes).equals(want.subarray(0, headerBytes))) return false;
+  if (!have.subarray(-trailerBytes).equals(want.subarray(-trailerBytes))) return false;
+
+  const dataChunk = have.subarray(headerBytes, -trailerBytes);
+  const compressed = dataChunk.subarray(8, -4);
+  if (!dataChunk.equals(chunk("IDAT", compressed))) return false;
+
+  const pixels = inflateSync(want.subarray(headerBytes + 8, -trailerBytes - 4));
+  try {
+    return inflateSync(compressed, { maxOutputLength: pixels.length }).equals(pixels);
+  } catch {
+    return false;
+  }
 }
 
 /** The icons an installed mutex.buzz uses, by file name. */

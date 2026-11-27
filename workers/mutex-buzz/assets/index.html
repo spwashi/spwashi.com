@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="/pinch.css">
   <link rel="stylesheet" href="/text-scale.css">
   <script src="/text-scale-head.js"></script>
+  <script src="/visit-head.js"></script>
   <link rel="modulepreload" id="text-pinch" href="/peer/pinch-text-scale.c898b03dd8.js">
   <script type="module" src="/mutex.js"></script>
 </head>
@@ -25,8 +26,8 @@
       <p class="kicker">mutex.buzz · a lock on attention</p>
       <h1 id="t">One concept in the frame <code>at a time</code>.</h1>
       <p>A mutex lets one thread in and makes the rest wait. This one does that for attention: whatever holds the lock is the single thing the frame shows.</p>
-      <section class="explain" aria-labelledby="what-title">
-        <h2 class="kicker" id="what-title">What a mutex is</h2>
+      <details class="explain" id="explain" open>
+        <summary><h2 class="kicker" id="what-title">What a mutex is</h2></summary>
         <p>A mutex, short for <em>mutual exclusion</em>, is a lock a program puts around something several threads might touch at once: a file, a counter, a printer. A thread acquires the lock before it touches the thing and releases it when it is done. If another thread already holds it, the newcomer waits. The code that runs while the lock is held is the critical section, and only one thread is ever inside it.</p>
         <p>A semaphore can let several in at once; a mutex lets in exactly one, and only the one holding it can let go. One bee to a cell.</p>
         <p>Here, the shared thing is attention. A hold is the critical section, a close is the release, and the line of anyone waiting is public.</p>
@@ -41,7 +42,7 @@
           </svg>
           <figcaption><span id="threads-count">One inside, two waiting.</span> <button type="button" id="send-bee" hidden>Send a bee</button></figcaption>
         </figure>
-      </section>
+      </details>
       <ul class="rules">
         <li><b>hold</b>A hold starts at a close and releases at the next: the 13th, the 26th, and the last day of the month.</li>
         <li><b>rest</b>When nothing else holds it, a laminated folio does. The resting state is the work itself.</li>
@@ -73,11 +74,13 @@
       </svg>
       <figcaption>
         <p class="holding"><strong id="holder-title">A folio</strong> <span id="holder-when">holds the lock this cycle.</span></p>
+        <p class="since" id="since">A new detail of the holder every hour, and a new holder at each close.</p>
       <ol class="holds" aria-label="The month's three holds">
         <li data-cycle="A"><b>A</b> <span class="days">1st to the 13th</span> <span class="who">Lined stage facade</span></li>
         <li data-cycle="B"><b>B</b> <span class="days">14th to the 26th</span> <span class="who">Teal Stripes Vibes wash</span></li>
-        <li data-cycle="C"><b>C</b> <span class="days">27th to the the last day</span> <span class="who">factshift cabinet</span></li>
+        <li data-cycle="C"><b>C</b> <span class="days">27th to the last day</span> <span class="who">factshift cabinet</span></li>
       </ol>
+        <p class="data">The closes, in your calendar: <a href="webcal://mutex.buzz/closes.ics">subscribe</a> · <a href="/closes.ics">closes.ics</a></p>
       </figcaption>
     </figure>
     <section class="sample" aria-labelledby="sample-title">
@@ -100,8 +103,18 @@
 <span class="line" data-part="now">  <span class="m">!</span><span class="w">probe</span><span class="b-body">{</span> <span class="s">&quot;find the hold whose since is at or before now&quot;</span> <span class="b-body">}</span></span>
 <span class="line" data-part="now"><span class="b-body">}</span></span>
 <span class="line now-line" data-part="now" id="now-line" hidden></span>
+<span class="line" data-part="clock" id="clock-line" hidden></span>
 <span class="line" data-part="now" id="turn-line" hidden></span></pre>
       <p class="data"><a href="/lock.spw">lock.spw</a> · <a href="https://factshift.center/#spw64=Iz5tdXRleF9idXp6CiM6bG9jayAjIWF0dGVudGlvbgoKXmxvY2t7aG9sZCwgcmVzdCwgd2FpdH08YXR0ZW50aW9uPgo9aG9sZGVyc1tvbmVde2ZyYW1lfQokY2xvY2tbdXRjXXsxM3RoLCAyNnRoLCBsYXN0X2RheX0KIWhvbGR7Y2xvc2Ugfj4gY2xvc2V9Ci5yZXN0W2ZvbGlvXXtBLCBCLCBDfQp-d2FpdFtwdWJsaWNde3F1ZXVlfQolcmVsZWFzZXtub3cgfj4gY2xvc2V9PGRheXM-CkBhdHRlbnRpb24ucHJvZHVjdGlvbnN7ZnJhbWV9CiZmcmFtZXtob2xkZXIsIGNsb3NlLCBxdWV1ZX0KCj9bIldoYXQgaG9sZHMgdGhlIGZyYW1lIG5vdz8iXXsKICB-I2V4cGVjdDogYG9uZSBob2xkZXIsIHVudGlsIGl0cyBjbG9zZWAKICAhcHJvYmV7ICJmaW5kIHRoZSBob2xkIHdob3NlIHNpbmNlIGlzIGF0IG9yIGJlZm9yZSBub3ciIH0KfQo">read it on the canvas ↗</a> · <a href="https://spw.quest/build#spw64=Iz5tdXRleF9idXp6CiM6bG9jayAjIWF0dGVudGlvbgoKXmxvY2t7aG9sZCwgcmVzdCwgd2FpdH08YXR0ZW50aW9uPgo9aG9sZGVyc1tvbmVde2ZyYW1lfQokY2xvY2tbdXRjXXsxM3RoLCAyNnRoLCBsYXN0X2RheX0KIWhvbGR7Y2xvc2Ugfj4gY2xvc2V9Ci5yZXN0W2ZvbGlvXXtBLCBCLCBDfQp-d2FpdFtwdWJsaWNde3F1ZXVlfQolcmVsZWFzZXtub3cgfj4gY2xvc2V9PGRheXM-CkBhdHRlbnRpb24ucHJvZHVjdGlvbnN7ZnJhbWV9CiZmcmFtZXtob2xkZXIsIGNsb3NlLCBxdWV1ZX0KCj9bIldoYXQgaG9sZHMgdGhlIGZyYW1lIG5vdz8iXXsKICB-I2V4cGVjdDogYG9uZSBob2xkZXIsIHVudGlsIGl0cyBjbG9zZWAKICAhcHJvYmV7ICJmaW5kIHRoZSBob2xkIHdob3NlIHNpbmNlIGlzIGF0IG9yIGJlZm9yZSBub3ciIH0KfQo">take it apart on spw.quest ↗</a></p>
+    </section>
+    <section class="uses" aria-labelledby="uses-title">
+      <h2 class="kicker" id="uses-title">Use the lock</h2>
+      <ul class="rules">
+        <li><b>embed</b>What holds now, on your own page, keeping time there: <code id="embed-code">&lt;iframe src=&quot;https://mutex.buzz/now/&quot; title=&quot;What holds the lock on mutex.buzz&quot; width=&quot;480&quot; height=&quot;300&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;</code> <button type="button" id="copy-embed" hidden>Copy</button></li>
+        <li><b>calendar</b>A day-long event wherever a hold begins, through 2027: <a href="webcal://mutex.buzz/closes.ics">subscribe</a> · <a href="/closes.ics">closes.ics</a></li>
+        <li><b>schedule</b><a href="/now.json">/now.json</a>: every hold through 2027, with its holder and its times in UTC.</li>
+        <li><b>module</b>The clock this page keeps, for your own: <code>import { holderFor, sinceWords } from "https://mutex.buzz/lock.js"</code></li>
+      </ul>
     </section>
   </main>
 </body>

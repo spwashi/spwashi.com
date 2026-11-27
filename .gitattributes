@@ -1,2 +1,4 @@
 # Built snapshots keep their bundler output byte for byte; whitespace checks apply to authored files.
 workers/factshift-center/assets/** -whitespace
+# iCalendar lines end in CRLF (RFC 5545).
+*.ics -text whitespace=cr-at-eol

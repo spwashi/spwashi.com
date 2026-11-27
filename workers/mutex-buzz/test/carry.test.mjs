@@ -5,8 +5,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CSP_HOME, CSP_NOW, FOLIO_SOURCES, SCHEDULE, carried, carriedWithWorker, paintLock } from '../carry.mjs';
-import { ICONS, iconPng } from '../src/icon.js';
-import { CYCLES, DIAL, FOLIOS, TURN_MS, countdown, cycleFor, dialOf, holderFor, nowLine, turnLine, turnOf } from '../src/lock.js';
+import { ICONS, iconPng, sameIconPng } from '../src/icon.js';
+import { CYCLES, DIAL, FOLIOS, TURN_MS, clockLine, countdown, cycleFor, dayOf, dialOf, holderFor, isoWeek, nextTurnIn, nowLine, seenAt, sinceWords, turnLine, turnOf } from '../src/lock.js';
 import * as served from '../../site-hub-next/src/mutex.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 import { parse as parsePinned } from '../../spw-quest/assets/parser/2026.10.13/reader.min.js';
@@ -92,7 +92,7 @@ test('the dial keeps the month on its ring, and today moves around it', () => {
   assert.equal(nov[15].current, 'B');
 });
 
-test('/ refuses to be framed and /now/ lets attention.productions frame it, with no rule setting a policy twice', () => {
+test('/ refuses to be framed and /now/ is the lock\'s embed, framed by any https page, with no rule setting a policy twice', () => {
   const headers = readFileSync(path.join(assets, '_headers'), 'utf8');
   const rules = headers.split('\n\n').map((block) => block.split('\n').filter((l) => !l.startsWith('#')));
   const rule = (pattern) => rules.find((r) => r[0] === pattern) ?? [];
@@ -100,7 +100,8 @@ test('/ refuses to be framed and /now/ lets attention.productions frame it, with
   assert.ok(rule('/now/').includes(`  Content-Security-Policy: ${CSP_NOW}`));
   assert.ok(!rule('/now/').some((l) => l.includes('X-Frame-Options')));
   assert.ok(!rule('/*').some((l) => /Content-Security-Policy|X-Frame-Options/.test(l)), '/* sets no policy, so none is joined to another');
-  assert.match(CSP_NOW, /frame-ancestors 'self' https:\/\/attention\.productions/);
+  assert.match(CSP_NOW, /frame-ancestors 'self' https:;/);
+  assert.match(CSP_HOME, /frame-ancestors 'none'/);
   assert.doesNotMatch(`${CSP_HOME} ${CSP_NOW}`, /unsafe-inline/);
 });
 
@@ -113,7 +114,9 @@ test('the pages read with scripts off, carry nothing inline, and point to no one
   const home = readFileSync(path.join(assets, 'index.html'), 'utf8');
   assert.ok(home.includes('A mutex lets one thread in and makes the rest wait.'));
   // What a mutex is, said plainly before this lock's own rules.
-  const explain = home.slice(home.indexOf('<section class="explain"'), home.indexOf('</section>', home.indexOf('<section class="explain"')));
+  const explain = home.slice(home.indexOf('<details class="explain"'), home.indexOf('</details>', home.indexOf('<details class="explain"')));
+  // Open by default: with scripts off, and on a first visit, the explanation reads whole.
+  assert.ok(home.includes('<details class="explain" id="explain" open>'));
   for (const words of ['mutual exclusion', 'acquires the lock', 'releases it', 'critical section', 'semaphore']) assert.ok(explain.includes(words), words);
   assert.ok(home.indexOf('class="explain"') < home.indexOf('class="rules"'), 'the explanation comes before the rules');
   for (const { cycle } of CYCLES) assert.ok(home.includes(`<li data-cycle="${cycle}"><b>${cycle}</b>`), `hold ${cycle} is listed`);
@@ -164,13 +167,13 @@ test('mutex.buzz installs: a manifest with its icons and a shortcut, and a worke
     const png = readFileSync(path.join(assets, 'icons', name));
     assert.ok(png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), `${name} is a PNG`);
     assert.equal(png.readUInt32BE(16), icon.size, `${name} is ${icon.size} wide`);
-    assert.ok(png.equals(iconPng(icon.size, icon)), `${name} is what src/icon.js draws`);
+    assert.ok(sameIconPng(png, iconPng(icon.size, icon)), `${name} is what src/icon.js draws`);
   }
   // The worker keeps every file the lock needs, each one real, and names its cache for them.
   const sw = readFileSync(path.join(assets, 'sw.js'), 'utf8');
   const shell = JSON.parse(sw.match(/const SHELL = (\[.*\]);/)[1]);
   for (const file of shell) assert.ok(file === '/' || file === '/now/' || readFileSync(path.join(assets, file.slice(1))).length >= 0, file);
-  for (const needed of ['/', '/now/', '/lock.js', '/mutex.js', '/mutex.css', '/now.json']) assert.ok(shell.includes(needed), needed);
+  for (const needed of ['/', '/now/', '/lock.js', '/mutex.js', '/mutex.css', '/visit-head.js', '/now.json']) assert.ok(shell.includes(needed), needed);
   assert.match(sw, /const CACHE = "mutex-[0-9a-f]{12}";/);
   const headers = readFileSync(path.join(assets, '_headers'), 'utf8');
   assert.match(headers, /\/sw\.js\n  Cache-Control: no-cache/);
@@ -181,4 +184,63 @@ test('mutex.buzz installs: a manifest with its icons and a shortcut, and a worke
   }
   // Framed on attention.productions, /now/ registers nothing.
   assert.match(readFileSync(path.join(assets, 'mutex.js'), 'utf8'), /"serviceWorker" in navigator && window\.top === window/);
+});
+
+test('the moment has a clock at every grain: the ISO week, the day of the hold, and the hour, said as Spw beside the rule\'s clock', () => {
+  const weeks = { '2026-11-27': [2026, 48], '2027-01-01': [2026, 53], '2026-12-28': [2026, 53], '2027-01-04': [2027, 1], '2025-12-29': [2026, 1], '2027-12-31': [2027, 52] };
+  for (const [day, [year, week]] of Object.entries(weeks)) assert.deepEqual(isoWeek(new Date(`${day}T12:00:00Z`)), { year, week }, day);
+  for (const day of days(SCHEDULE.from, SCHEDULE.until)) {
+    const holder = holderFor(day);
+    const d = dayOf(holder, day);
+    // A and B run thirteen days, so the day of the hold is the month's day modulo 13; C runs to the month's end.
+    if (holder.cycle !== 'C') assert.equal(d.of, 13, `${day.toISOString()} ${holder.cycle}`);
+    else assert.ok(d.of >= 2 && d.of <= 5, `${day.toISOString()} C runs ${d.of}`);
+    assert.equal(d.index, ((day.getUTCDate() - 1) % 13) + 1, day.toISOString());
+    const line = clockLine(holder, day);
+    assert.match(line, /^\$clock\[utc\]\{w\d{1,2}, day \d{1,2}\/\d{1,2}\}$/);
+    assert.ok(whole(line), line);
+  }
+});
+
+test('a return says what changed since the last look, and every visit says when the next thing will', () => {
+  const now = new Date('2026-11-27T15:37:00Z');
+  assert.equal(nextTurnIn(holderFor(now), now), 23);
+  assert.equal(sinceWords(null, now), 'A new detail of the holder every hour, and a new holder at each close. The next detail turns in 23 minutes.');
+  assert.equal(sinceWords(seenAt(new Date('2026-11-27T15:05:00Z')), now), 'Same hour as your last look. The next detail turns in 23 minutes.');
+  assert.equal(sinceWords(seenAt(new Date('2026-11-27T13:05:00Z')), now), 'Since your last look, 3 hours ago: 2 new details of factshift cabinet. The next detail turns in 23 minutes.');
+  assert.equal(sinceWords(seenAt(new Date('2026-11-24T09:00:00Z')), now), 'Since your last look, 3 days ago: Teal Stripes Vibes wash let go, and factshift cabinet took the frame. The next detail turns in 23 minutes.');
+  assert.match(sinceWords(seenAt(new Date('2026-11-02T09:00:00Z')), now), /^Since your last look, 4 weeks ago: 2 closes passed, and factshift cabinet holds the frame now\./);
+  // The hold's last hour has no next detail: the close comes next.
+  assert.match(sinceWords(null, new Date('2026-11-30T23:30:00Z')), /The lock lets go at the close\.$/);
+  // A look kept from the future (a clock set wrong) or a broken record reads as a first visit.
+  assert.match(sinceWords({ at: now.getTime() + 60_000, since: 'x' }, now), /^A new detail/);
+  assert.match(sinceWords({ nonsense: true }, now), /^A new detail/);
+  // What is kept is the moment and the holder, nothing about the reader.
+  assert.deepEqual(Object.keys(seenAt(now)).sort(), ['at', 'since', 'title', 'turn']);
+});
+
+test('the lock is a tool: a calendar of its holds, an embed, a module, and a return laid out before first paint', () => {
+  const ics = readFileSync(path.join(assets, 'closes.ics'), 'utf8');
+  assert.ok(ics.startsWith('BEGIN:VCALENDAR\r\n') && ics.endsWith('END:VCALENDAR\r\n'));
+  assert.doesNotMatch(ics.replace(/\r\n/g, ''), /[\r\n]/, 'every line ends in CRLF');
+  for (const line of ics.split('\r\n')) assert.ok(Buffer.byteLength(line) <= 75, `folded: ${line}`);
+  assert.doesNotMatch(ics, /[ \t]+\r\n/, 'folds keep spaces on the continuation line');
+  const schedule = JSON.parse(readFileSync(path.join(assets, 'now.json'), 'utf8'));
+  const events = ics.split('BEGIN:VEVENT').slice(1);
+  assert.equal(events.length, schedule.holds.length);
+  assert.ok(events[0].includes(`DTSTART;VALUE=DATE:${schedule.holds[0].since.slice(0, 10).replace(/-/g, '')}`));
+  assert.equal(new Set(events.map((e) => e.match(/UID:(\S+)/)[1])).size, events.length, 'each event has its own UID');
+  const headers = readFileSync(path.join(assets, '_headers'), 'utf8');
+  assert.match(headers, /\/\*\.ics\n  Cache-Control: public, max-age=3600\n  Content-Type: text\/calendar; charset=UTF-8/);
+  assert.match(headers, /\/lock\.js\n  Access-Control-Allow-Origin: \*/);
+  assert.match(headers, /\/lib\/\*\n  Access-Control-Allow-Origin: \*/);
+  const home = readFileSync(path.join(assets, 'index.html'), 'utf8');
+  assert.ok(home.includes('<script src="/visit-head.js"></script>'), 'the return is laid out before first paint');
+  assert.ok(home.indexOf('/visit-head.js') < home.indexOf('/mutex.js') && home.indexOf('/visit-head.js') < home.indexOf('</head>'), 'it runs in the head, before the page script');
+  assert.doesNotMatch(readFileSync(path.join(assets, 'now/index.html'), 'utf8'), /visit-head/, 'an embed keeps no look');
+  assert.ok(home.includes('id="since"') && home.includes('id="clock-line"') && home.includes('class="uses"'));
+  assert.ok(home.includes('&lt;iframe src=&quot;https://mutex.buzz/now/&quot;'), 'the embed code is on the page');
+  const visit = readFileSync(path.join(assets, 'visit-head.js'), 'utf8');
+  assert.match(visit, /localStorage\.getItem\("mutex\.buzz:seen"\)/);
+  assert.match(readFileSync(path.join(assets, 'mutex.js'), 'utf8'), /const SEEN_KEY = "mutex\.buzz:seen";/);
 });

@@ -1,0 +1,505 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//mutex.buzz//closes//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:mutex.buzz closes
+X-WR-CALDESC:When the lock on attention changes hands: the 13th\, the 26th\
+ , and the last day of the month (UTC).
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+BEGIN:VEVENT
+UID:hold-20261001@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261001
+DTEND;VALUE=DATE:20261002
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2026-10-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261014@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261014
+DTEND;VALUE=DATE:20261015
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2026-10
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261027@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261027
+DTEND;VALUE=DATE:20261028
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2026-10-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261101@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2026-11-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261114@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2026-11
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261127@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2026-11-30. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261201@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2026-12-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261214@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261214
+DTEND;VALUE=DATE:20261215
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2026-12
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20261227@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261227
+DTEND;VALUE=DATE:20261228
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2026-12-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270101@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-01-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270114@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270115
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-01
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270127@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270127
+DTEND;VALUE=DATE:20270128
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-01-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270201@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-02-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270214@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270214
+DTEND;VALUE=DATE:20270215
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-02
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270227@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270227
+DTEND;VALUE=DATE:20270228
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-02-28. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270301@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-03-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270314@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270314
+DTEND;VALUE=DATE:20270315
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-03
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270327@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270327
+DTEND;VALUE=DATE:20270328
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-03-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270401@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-04-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270414@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270414
+DTEND;VALUE=DATE:20270415
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-04
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270427@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270427
+DTEND;VALUE=DATE:20270428
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-04-30. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270501@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270501
+DTEND;VALUE=DATE:20270502
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-05-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270514@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270514
+DTEND;VALUE=DATE:20270515
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-05
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270527@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270527
+DTEND;VALUE=DATE:20270528
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-05-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270601@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270601
+DTEND;VALUE=DATE:20270602
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-06-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270614@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270614
+DTEND;VALUE=DATE:20270615
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-06
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270627@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270627
+DTEND;VALUE=DATE:20270628
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-06-30. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270701@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270701
+DTEND;VALUE=DATE:20270702
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-07-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270714@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270714
+DTEND;VALUE=DATE:20270715
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-07
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270727@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270727
+DTEND;VALUE=DATE:20270728
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-07-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270801@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-08-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270814@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270814
+DTEND;VALUE=DATE:20270815
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-08
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270827@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270827
+DTEND;VALUE=DATE:20270828
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-08-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270901@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-09-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270914@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270914
+DTEND;VALUE=DATE:20270915
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-09
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20270927@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270927
+DTEND;VALUE=DATE:20270928
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-09-30. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271001@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271002
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-10-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271014@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271014
+DTEND;VALUE=DATE:20271015
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-10
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271027@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271027
+DTEND;VALUE=DATE:20271028
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-10-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271101@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271101
+DTEND;VALUE=DATE:20271102
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-11-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271114@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271114
+DTEND;VALUE=DATE:20271115
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-11
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271127@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271127
+DTEND;VALUE=DATE:20271128
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-11-30. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271201@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271201
+DTEND;VALUE=DATE:20271202
+SUMMARY:Lined stage facade takes the frame on mutex.buzz
+DESCRIPTION:Cycle A: Lined stage facade holds the lock through 2027-12-13.
+  https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271214@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271214
+DTEND;VALUE=DATE:20271215
+SUMMARY:Teal Stripes Vibes wash takes the frame on mutex.buzz
+DESCRIPTION:Cycle B: Teal Stripes Vibes wash holds the lock through 2027-12
+ -26. https://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hold-20271227@mutex.buzz
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271227
+DTEND;VALUE=DATE:20271228
+SUMMARY:factshift cabinet takes the frame on mutex.buzz
+DESCRIPTION:Cycle C: factshift cabinet holds the lock through 2027-12-31. h
+ ttps://mutex.buzz/
+URL:https://mutex.buzz/
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
