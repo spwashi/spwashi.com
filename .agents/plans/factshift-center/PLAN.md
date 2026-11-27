@@ -35,7 +35,8 @@ app history    f06caf5 -> 8de4f19 (edge-history), 8fbfef2 (wip/other-session-202
                bd2e7ad (hand on body & summaries), c4b0ca1 (summary overflow fix, carried in 7214c6e8),
                517c036 (arrival/pins/trail/surfaces), 253b949 (doc paste & tactile chrome)
 deploy pins    ecdf9aa0 (2026-11-06, snapshot 4995915c), e00fe5aa (2026-11-09, snapshot 525e3613),
-               2fbb2287 (2026-11-09, snapshot 7214c6e8), 629c2efb (2026-11-10, site rev 4)
+               2fbb2287 (2026-11-09, snapshot 7214c6e8), 629c2efb (2026-11-10, site rev 4),
+               62bef6e9 (2026-11-27, snapshot 9b32e963, one compass)
 app 2026-11-06 main b1fd11a past 99c10e6 by e6ed1b9 (slot reader) and b1fd11a (parser)
 app reader     src/js/vendor/spw-reader, prerelease 2026.11.07-pre.1 from spw-workbench 3f53adf2: the slot
                reader (readLine, writeLine, slotHash) and, since b1fd11a, spw-workbench/parser
