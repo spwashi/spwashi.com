@@ -1,0 +1,88 @@
+# Spw as CMS Ecosystem, Route Genres, Theater Mirrors, and Ground-Up Cauldron
+#
+# Records four connected architectural decisions from 2026-11-27:
+# 1. Spw doing real work as a static-first CMS ecosystem (.spw/cms/*.spw -> _partials/cms/*.html + active lenses + rotation + triptychs)
+# 2. Route-family physical/typographic genres and apparatus inversion
+# 3. Ecosystem sites as embedded components + native mirrors with ejected peer-kits (tuning thought, fixity: seed) and attention.productions as a live theater endpoint
+# 4. Ground-up Spw-native cauldron redesign queued immediately after the route/CMS refactor pass
+
+#>spw_cms_mirrors_cauldron_2026_11
+#:layer #!pragmatics
+#:operation #!cache
+#:fixity #!tending
+
+@curiosity_physics: ~"./curiosity-physics-wonder-2026-11.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@starter_kit_convention: ~"../conventions/site-starter-component-kit.spw"
+@starter_kit_plan: ~"../../.agents/plans/site-starter-component-kit/PLAN.md"
+@spellcraft_plan: ~"../../.agents/plans/spellcraft-authoring/PLAN.md"
+@cauldron_lens_plan: ~"../../.agents/plans/cauldron-lens-composition/PLAN.md"
+@landing_plan: ~"../../.agents/plans/landing-visual-hierarchy/PLAN.md"
+@lens_reach: ~"../../public/js/runtime/page/lens-reach.js"
+@attention_worker: ~"../../workers/attention-productions/src/compose.js"
+@roundtrip_cache: ~"./ecosystem-roundtrip-architecture-2026-11.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"spw_as_cms_ecosystem"{
+  problem = `Public routes hand-authored hundreds of repetitive cards while Spw expressions sat mostly as static labels, and .mode-switch lenses swapped one top paragraph while leaving 95% of the page unchanged.`
+  mechanism = .{
+    source = `.spw/cms/*.spw — valid workbench-parseable Spw files holding structured dispatches, multi-lens copy projections, tabular ratios, curiosity gaps, sideways hinges, scan paths, and cross-domain carry lines.`
+    compiler = `scripts/compile-spw-cms.mjs — zero-dependency build script consuming parse() from public/js/semantic/spw-workbench-reader.js and emitting static-first HTML partials into _partials/cms/*.html.`
+    inclusion = `<spw-include src="cms/<name>"></spw-include> expanded by scripts/template.mjs in both Vite dev and static dist/ builds — 100% readable with JavaScript off.`
+    active_lenses = `Emits [data-spw-copy-lens] sibling projections already supported by @lens_reach (syncProfileCopySelections + semantic-copy-lens.css), so switching a page's .mode-switch re-angles working cards, notes, and specimens across the route with zero new data-spw-* families.`
+    triptychs = `Material Triptychs (.prose · *scan · #>spw) let any CMS specimen flip between human prose, hand-made studio scan, and the exact .spw source block with one-click carry links to /tools/spw-parser/, spw.quest/pivot, and factshift.center.`
+    rotation = `Deterministic close/day rotation (13th and 26th closes + local day index, matching dayShot(day) in @attention_worker) spotlights today's dispatch while keeping sibling cards reachable.`
+  }[reg=facet]
+}[reg=facet]
+
+^"route_family_genres"{
+  principle = `Shared tokens and .spw-frame/.spw-chip contracts stay unified, while each major route family earns a distinct physical genre and quiet default apparatus.`
+  apparatus_inversion = `In default reading posture, .spec-strip and .spw-copy-motif-strip step back so pages open on voice, image, and playable artifacts; workshop/xray postures and focus-within bring the apparatus forward.`
+  genres = #{
+    broadsheet_dispatch = `/ (Home) — creator masthead + rotating close dispatch + material triptych + attention.productions theater window.`
+    kitchen_ledger = `/recipes/ — stained 4x6 index-card test-kitchen ledger, tabular ratios, sensory hook above the fold, [cook|^theory|~garden|@hospitality] lens switches.`
+    toy_first_monograph = `/topics/math/* — playable modular/geometric instrument in screen 1, pre-reveal curiosity prompt, wide margin sideways hinges.`
+    syntax_bench = `/topics/software/spw/ + /tools/spw-parser/ — live operator kinematics, curiosity-physics lab, single-seed CMS multi-projection proof.`
+  }
+}[reg=facet]
+
+^"attention_theater_and_ecosystem_mirrors"{
+  active_slice = .{
+    host = `attention.productions`
+    role = `Recognizable theater/viewfinder endpoint embedded natively on spwashi.com via .spw-theater-endpoint.`
+    grammar = `!shot[framing]{subject}(lighting)<lens> + ^frame{ =ratio[...] =focus[...] =light_from[...] ~move[...] }`
+    privacy_and_resilience = `Renders zero cross-origin requests on initial page load: static viewfinder crop marks, live Spw shot notation, interactive preset/slot steppers, direct deep-links to https://attention.productions/<subject>?shot=..., and an explicit consentful "Mount live theater" toggle that loads a sandboxed iframe on click.`
+  }[reg=facet]
+  tuning_thought_not_active_goal = .{
+    fixity = `seed`
+    status = `Tuning thought recorded per creator direction (2026-11-27); NOT an active implementation goal right now.`
+    idea = `Ecosystem sites (attention.productions, spw.quest, factshift.center, texture.website, wap.mom, mutex.buzz, lore.land) as dual-homed surfaces: (a) each appears on spwashi.com as a recognizable native mirror / embedded component (<div class="spw-peer-mirror" data-spw-peer="...">) speaking the peer's exact URL/Spw query contract, and (b) each peer repo/worker runs an ejected, domain-modified derivative of spwashi.com's portable starter kit (compose.css + compose.js + build-peer-kit.mjs).`
+    why_eject_not_monolith = `Ejecting a small starter snapshot lets each domain mutate its physics, typography, and interaction constants freely (e.g. factshift.center's 60fps canvas vs attention.productions's dark lime viewfinder vs texture.website's material cards) while keeping one shared Spw line/URL socket so pieces round-trip cleanly back into spwashi.com mirrors.`
+    when_revisited = `Revisit only after K1/K4 in @starter_kit_plan settle and the attention.productions theater endpoint proves the native-mirror + consentful-iframe pattern.`
+  }[reg=facet]
+}[reg=facet]
+
+^"cauldron_ground_up_redesign"{
+  sequencing = `Explicitly queued AFTER the route copy, lens, Spw CMS, and Spw-pages refactor pass lands cleanly.`
+  diagnosis = `The current cauldron mixes three metaphors — cooking/gardening verbs ("Mix fragments", "Nourish", "Prune"), a cassette-tape skeuomorph for returns, and 27+ data-spw-cauldron-* attributes — obscuring the underlying Spw algebra.`
+  ground_up_model = .{
+    core_claim = `The cauldron IS a live, editable Spw expression register: op cauldron[lens]{term_1, term_2 ~> term_3}<projection>.`
+    slot_1_prefix_op = `Leading sigil (. ~ ? * ! ^) is both the current phase indicator and the primary cycle/cast trigger — no separate 9-button verb bank.`
+    slot_2_mode_lens = `[lens] binds directly to the active page lens (reading, systems, cook, theory, studio, play) and re-projects what the held terms mean together.`
+    slot_3_body_algebra = `{...} holds collected page handles as typed AST atoms; separators between atoms (, parallel set, ; sequence, ~> directional hinge, . path) replace opaque "mix/nourish/prune" buttons with visible Spw composition operators.`
+    slot_4_conduit_projection = `<projection> names where the composed expression discharges: <copy> (.spw clipboard), <parser> (/tools/spw-parser/), <quest> (spw.quest/pivot), <canvas> (factshift.center/?spw=), or <theater> (attention.productions).`
+    returns_without_cassette = `Saved spells are simply named lines in a compact .spw register shelf ($%[saved_lines]); reopening a spell parses its line back into the four slots (decompose = parse, mix = serialize).`
+  }[reg=facet]
+  next_gate = `Build as a focused post-refactor prototype + spellcraft bench walk per @spellcraft_plan and @cauldron_lens_plan without breaking existing spell:capture / cauldron contract callers during the transition.`
+}[reg=facet]
+
+#>wonder_spw_cms_and_cauldron_2026_11
+?["When a single .spw CMS seed drives prose lenses, studio scans, and theater shots at build time, which authoring friction disappears first — and what minimum slot algebra makes the post-refactor cauldron feel like writing real Spw?"]{
+  #:depth #!computational
+  #:lens #!cms_ecology
+  ~#expect: "Build-time .spw -> _partials/cms/*.html eliminates duplicate hand-edited card markup immediately, and shows that four operable slots (op, [lens], {separators}, <projection>) suffice for the ground-up cauldron."
+  !probe{ "Land compile-spw-cms.mjs across Home, Recipes, and /topics/software/spw/, then review the live lens + triptych + theater feel before starting the cauldron rewrite." }
+  $%[ file.frame_count, file.brace_depth_max ]
+}

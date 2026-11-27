@@ -1,0 +1,78 @@
+# Curiosity as a Physics of Wonder
+#
+# Formalizes how curiosity acts as the directional potential gradient that
+# moves a reader toward non-collapsing wonder, and maps that physics onto
+# Spw operators, pre-reveal gaps, sideways hinges, and route architecture.
+
+#>curiosity_physics_wonder_2026_11
+#:layer #!semantics
+#:operation #!cache
+#:fixity #!tending
+
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@metaphysical_plan: ~"../../.agents/plans/spw-metaphysical-language/PLAN.md"
+@aperture_cache: ~"./factshift-aperture-rederivation-2026-11.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"thesis"{
+  claim = `Wonder is the non-collapsing field state (@wonder_doctrine); curiosity is the directional vector field across an information gap that pulls attention into that state. Without curiosity's gradient, wonder flattens into decorative mystery or static taxonomy; without wonder's open-return condition, curiosity collapses into trivia once answered.`
+  distinction = .{
+    curiosity = `Vector gradient: an asymmetric gap between a tangible observation in hand and a hidden law or neighbor just out of reach.`
+    wonder = `Field potential: the sustained resonance after a revelation opens a deeper structural invariant rather than terminating inquiry.`
+    anti_pattern = `Explaining what a page "holds" before showing a concrete phenomenon kills the gap at zero distance — zero gradient, zero motion.`
+  }[reg=facet]
+}[reg=facet]
+
+^"operator_kinematics"{
+  note = `How Spw's core sigils enact the curiosity-to-wonder trajectory in both notation and reader experience.`
+  arc = #[
+    `1. .ground (concrete observation) — start inside a sensory or playable fact: a beet stain on wood, × 5 on a 12-hour clock, a live !shot[...] frame.`
+    `2. ~gap (held potential) — expose an unresolved tension without answering it yet; hold two things beside each other so the gap hums.`
+    `3. ~#expect (pre-reveal commitment) — invite the reader to form a fast intuition or pick a guess before the mechanism runs.`
+    `4. ~>hinge (sideways transfer) — project the same invariant into an unexpected neighbor (sauce reduction ~> CSS bundle consolidation; mod-12 coprimes ~> fermentation cycles).`
+    `5. !act -> *precipitate (structural revelation) — let one direct manipulation collapse the surface puzzle into a crisp observable receipt.`
+    `6. ?wonder (widened horizon) — leave a deeper open question standing in the wake of the receipt so the second look is richer than the first.`
+  ][reg=set]
+}[reg=facet]
+
+^"five_laws_of_curiosity_physics"{
+  law_1_asymmetric_aperture = .{
+    statement = `Curiosity peaks when 70–85% of a pattern is concrete and one load-bearing joint is withheld or counterintuitive.`
+    page_rule = `Never open a route with an abstract inventory ("This shelf holds nine notebooks"). Open with the concrete 80% and let the missing 20% pull the eye down.`
+  }[reg=facet]
+  law_2_commitment_amplifies_surprise = .{
+    statement = `A revelation feels twice as alive when the reader silently or explicitly bets on ~#expect first.`
+    page_rule = `Pair interactive toys and kitchen ratios with a 1-line pre-reveal question (?[what happens when...]) before showing the explanation.`
+  }[reg=facet]
+  law_3_sideways_hinges_beat_taxonomy = .{
+    statement = `Vertical breadcrumbs ("Topics > Math > Number Theory") satisfy filing; sideways hinges (~> across distant crafts) ignite curiosity.`
+    page_rule = `Place compact margin hinges (.spw-curiosity-hinge) where a culinary, mathematical, visual, or linguistic invariant crosses domains.`
+  }[reg=facet]
+  law_4_apparatus_follows_appetite = .{
+    statement = `Inspector chrome, motif strips, and schema tags reward curiosity after appetite exists; shown before appetite, they act as friction.`
+    page_rule = `Quiet apparatus chrome in default reading posture; surface it when the reader switches lenses, focuses a frame, or opens workshop/xray posture.`
+  }[reg=facet]
+  law_5_non_terminal_revelation = .{
+    statement = `Per @wonder_doctrine's five falsification tests, a valid *precipitate must leave a live ?wonder rather than a closed textbook answer.`
+    page_rule = `Every CMS specimen and experiment closes with an open probe or a carryable Spw line that travels to /tools/spw-parser/, spw.quest, or factshift.center.`
+  }[reg=facet]
+}[reg=facet]
+
+^"falsification"{
+  f1 = `If readers skip pre-reveal ?[expect] prompts or find them quiz-like, keep the gap implicit in prose + immediate toy scrub rather than gating content behind clicks.`
+  f2 = `If sideways ~> hinges read as random non-sequiturs, tighten the rule: a hinge is legal only when both sides share a named structural invariant (ratio, cycle, boundary, residue).`
+  f3 = `If Spw expressions on public pages can be deleted without losing lens variation, cross-site carry, or structural switching, they are decorative sigils rather than working curiosity instruments.`
+}[reg=facet]
+
+#>wonder_curiosity_physics_2026_11
+?["Does ~#expect belong as a first-class interactive idiom in public Spw specimens — where a ?[...] block holds a hidden *[...] precipitate until the reader commits a guess or turns a lens?"]{
+  #:depth #!educational
+  #:lens #!curiosity_physics
+  ~#expect: "One-tap guess chips above a collapsible *precipitate make Spw's ? -> ! -> * arc bodily without blocking scripts-off reading (details/summary fallback)."
+  !probe{ "Ship one live curiosity-gap specimen on /recipes/ and /topics/software/spw/ with native <details> scripts-off fallback and progressive guess selection." }
+  $%[runtime.stage, runtime.queue_depth]
+}

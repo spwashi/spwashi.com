@@ -28,6 +28,7 @@ fixity = "tending"
  >>[2026-11-06 12:26] probe — wonder_landing_visual_hierarchy_projects_nav: rg finds no href '/projects/' in scripts/template.mjs or sw.js; Home, Now and about/website/ link it in their pages. The expect held.
  >>[2026-11-06 12:27] probe — wonder_landing_visual_hierarchy_one_rail: the cap stands at PLAN.md Validation 2 and session-2026-08-21.spw:87, the refusal at the archived companion's PLAN.md:76 ("No universal hero") and index.spw:46 ("without sharing one silhouette"). Nothing reconciles them yet.
  >>[2026-11-06 12:28] probe — wonder_landing_visual_hierarchy_settings_aisles: eight section.settings-shelf__aisle, each with an id and aria-labelledby; zero data-spw-cluster. Parcel C's open question moved from ^"open" into this wonder.
+ >>[2026-11-27 07:25] align — creator endorsed the Beet Stain Rule (copy-accessor.spw#voice_register), apparatus inversion in default reading posture, route-family physical genres, active multi-lens CMS sections, rotating Home dispatches, and an attention.productions theater endpoint frame (spw-cms-mirrors-cauldron-2026-11.spw). Preserving all viewport-still and component-contract anchors (#home-frame, #home-hook, #recipe-field, #weekly-practice).
 }
 
 ^"open"{
@@ -42,5 +43,5 @@ fixity = "tending"
  ~#next_commit: "~[services] Put the offer, the three paths and the pricing ahead of the tuning panel, in the seat the creator picks"
  ~#files_hot: "services/index.html, public/css/routes/surfaces/services.css, index.html, settings/index.html"
  ~#gate: "B waits on the tuning seat (index.spw#wonder_landing_visual_hierarchy_services_tuning_seat), chosen from the services-opening still, which is ungated to take; Services' first piece waits on the creator's look; D waits while Home is moving"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-27"
 }

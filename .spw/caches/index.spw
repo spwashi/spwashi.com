@@ -171,6 +171,8 @@
 @factshift_navigation_and_physics_2026_11: ~"./factshift-navigation-and-physics-2026-11.spw"  # cache: factshift.center as spatial fulcrum of the spw.quest / attention.productions / factshift.center triad — live bcf0da18 & attention-stage/dailies baseline, generalized arrival routing, eight-way navigation axes, canvas-vs-frame touch seam, five-grain scrub architecture (TREE/NODE/LINE vs. PART/CHAR), six-pair operator physics, orthogonal slot materials & sensory parity (#fnp-triad..#fnp-ecosystem)
 @factshift_aperture_rederivation_2026_11: ~"./factshift-aperture-rederivation-2026-11.spw"  # cache: evaluation of signed frame-brace scrub proposal (6 structural cracks), 6 distributed interaction principles, component re-derivation, and symmetric open <-> quiet <-> close grain aperture model
 @ecosystem_roundtrip_architecture_2026_11: ~"./ecosystem-roundtrip-architecture-2026-11.spw"  # cache: four-leg round-trip architecture (ecosystem -> factshift.center -> spw-workbench -> return into spwashi.com and peers) sequencing shared gesture kernel, per-frame clocks, upstream operator/grain/typed-reader asks, and site return-leg cleanup
+@curiosity_physics_wonder_2026_11: ~"./curiosity-physics-wonder-2026-11.spw"  # cache: curiosity as directional gradient across information gaps (.ground -> ~gap -> ~#expect -> ~>hinge -> !act -> *precipitate -> ?wonder), five curiosity laws, and falsification rules
+@spw_cms_mirrors_cauldron_2026_11: ~"./spw-cms-mirrors-cauldron-2026-11.spw"  # cache: Spw as build-time CMS ecosystem (.spw/cms -> _partials/cms), route-family genres, attention.productions theater endpoint, native peer mirrors tuning seed, and post-refactor ground-up cauldron register
 
 operation = "align"
 fixity = "tending"
@@ -282,6 +284,8 @@ fixity = "tending"
   factshift_navigation_and_physics_2026_11 = @factshift_navigation_and_physics_2026_11
   factshift_aperture_rederivation_2026_11 = @factshift_aperture_rederivation_2026_11
   ecosystem_roundtrip_architecture_2026_11 = @ecosystem_roundtrip_architecture_2026_11
+  curiosity_physics_wonder_2026_11 = @curiosity_physics_wonder_2026_11
+  spw_cms_mirrors_cauldron_2026_11 = @spw_cms_mirrors_cauldron_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
