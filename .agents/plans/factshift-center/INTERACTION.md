@@ -9,7 +9,7 @@ A behavior either primes a concept or actualizes it. In the tools, the primed ac
 A surface chooses its own acts. Four things stay the same from one surface to the next, and each has one owner in the app. A new gesture names all four before it lands.
 
 - **Direction, the compass** (`ui/compass.ts`). On the reading plane, which is the frame and the held line's bodies, a direction means one thing everywhere. Breadth: the content follows the finger, so rightward brings what came before (the part, the body, the line, the concept). Depth: as a scroll moves a page, up goes in and toward more (a nested body, the next stratum), and down comes out and toward the line as written. A diagonal's vertical half keeps depth's sign, so on a body ↗ goes in a level and ↙ comes out. That diagonal was reversed until 2026-11-27 (app hash in PLAN.md pins). The keys follow the scroll: ↓ and Shift+↓ go in. Chrome handles (`gestures.ts`: handle, lens, tile) keep their own verbs. The canvas ring is a radial picker. It places choices around the finger and does not read a direction.
-- **Ownership.** One touch is one gesture. Once a gesture crosses its line, no sibling listener answers that pointer (`claimedPointer` in `frame-refresh.ts`, `swallowsTap` in `gesture-claim.ts`). P0 carries the same rule to the horizontal owners that remain.
+- **Ownership.** A hold on the frame or the canvas waits the browser's hold time (quick 450, deliberate 750, slow 1100 ms; the [...] interface row, or the gesture card), and the frame's lit edge is a lean: it goes on lift, so a screenshot keeps none. One touch is one gesture. Once a gesture crosses its line, no sibling listener answers that pointer (`claimedPointer` in `frame-refresh.ts`, `swallowsTap` in `gesture-claim.ts`). P0 carries the same rule to the horizontal owners that remain.
 - **Saying.** Words go where nothing on screen shows the result. A landmark that shows it answers instead (Accessibility and annotation, below).
 - **Grade.** Every act is a lean (L0, gone on lift), a hold (L1, kept for this visit), or a keep (L2, which writes the line or the address). The act says which one (Grain aperture, below).
 
@@ -31,8 +31,9 @@ The gesture table in PLAN.md is the grammar. This is what each family does.
 | hold the canvas ring, drop a brace | the slot that could be filled | that slot, with `·` to name |
 | pinch on the stage | the coming size, said above the fingers | the radius, kept through the reinit (`pinch.ts`) |
 | swipe ↑ | | a new node, named in place, arriving selected |
+| link on a node's ring, or [...] "link to the next node tapped" | the node it starts from, dashed, with a crosshair over the rest | the next node tapped is linked to it; empty canvas lets it go |
 
-The [...] rows follow the same split. A row shows one verb. Turning the row (a swipe, ›, ← →) primes the next verb and remembers it. A tap actualizes the verb that is showing. A row is listed only while it has something to act on.
+The [...] rows lead with the moment: the selection's, then, while a line is held, how the canvas reads it; the rest keep their written place. The [...] rows follow the same split. A row shows one verb. Turning the row (a swipe, ›, ← →) primes the next verb and remembers it. A tap actualizes the verb that is showing. A row is listed only while it has something to act on.
 
 ## Submenus
 
@@ -69,6 +70,7 @@ Calling those zero-strength ties a primed relation, and calling `refers` the con
 - One touch is one gesture. Direction locks once the path crosses its line. It unlocks by returning near the start.
 - Back and forward walk this visit's concepts, which are the browser's history (`concept-history.ts`). On touch, a 72px band inside each side of the canvas steps back (rightward) or forward (leftward), since the system or the browser takes the bare edge; it may start on a region, and a tab at that edge names where it lands. The frame's ← → do the same. A phone tab's own edge swipe, Android's back, a trackpad's two-finger swipe and Alt+← → walk the same entries. A mouse never starts the band. The lines this browser keeps across visits stay on the hash's ← →.
 - Editing the prompt by its reading is a keyboard's Alt+Shift+→ (grow) and ← (back in), Alt+↑ ↓ (move a part) and Tab (only while a line owes closers); the bar under the line holds the same acts for a thumb (`line-edit.ts`).
+- The side edges read across layers. With one line held, a scrub down the left edge walks where: the whole stage, then each body from the outside in, and landing frames it. The right edge walks how the layer in hand is read: as written, by its parts, as particles (a question's body has no as written). Neither swaps the line for a file; a line with no bodies leaves the left edge to the .spw tree.
 - What each device should add and hold back is open in `wonder_factshift_devices`.
 
 The canvas does not read pointer pressure. The magnitudes it already has are distance, speed, and time: how far past grow or shrink, how fast a throw, how long a hold, how wide a pinch. A stylus or a force-sensitive pad would use that same scale. The open choice in `wonder_factshift_gestures`, whether the count of found gestures is play or pressure, sits inside this. Until a device reports force, distance and time remain the pressure.
