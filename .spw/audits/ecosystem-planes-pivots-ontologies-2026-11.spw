@@ -1,0 +1,195 @@
+# Ecosystem Components, Cognitive Planes, Pivots & Ontologies Audit (2026-11-26)
+#
+# Measured census of component wiring, cognitive-plane clocks and effect grades,
+# cross-host pivot/scrub controllers, and ontology/homonym drift across
+# spwashi.com, factshift.center, spw.quest, and the worker cluster.
+# Read-only evidence pass; every number comes from live sensors or direct reads.
+
+#>ecosystem_planes_pivots_ontologies_2026_11
+#:audit #!components #!planes #!pivots #!ontology #!ecosystem
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = ?ecosystem[audit]{components.planes.pivots.ontologies}<measure>
+
+summary = #[
+  `Component audit (2026-11-26): catalog holds 148 defs across 238 public routes (138 gated, 16 orphan selectors, 22 html/body/main bindings, 50 depth >= 10 hosts, 0 legacy .site-frame). Three uncoordinated JS writers own data-spw-charge, six hosts re-implement slot scrubbing with drifting step sizes and silent commit policies, and factshift.center holds four colliding horizontal gestures inside stage/held-line chrome.`,
+  `Cognitive-plane audit: the three clocks (canvas seconds, site ~40s, address indefinite) hold empirically, while factshift.center still shares one global simulation heat alpha (drifting sibling ~ bodies by 6px) where spw.quest/src/physics.js already proves per-frame warm/cool isolation and explicit touch/visitor/keep receipts.`,
+  `Pivot audit: spw.quest (/pivot, /build), factshift.center (line-joints.ts), spwashi.com (<spw-expression>), attention.productions, texture.website, and tealstripesvibes.com disagree on step width (24/28/32/36px), edge wrapping (clamp vs ring), commit timing (live vs on-lift vs prime-then-keep), length caps (200 vs 400), and return-leg provenance (from= dropped).`,
+  `Ontology audit (2026-11-26): ecology:language counts 1,196 HTML files, 5,356 data-spw-semantic-expression attrs, 145 unknown data-spw-operator="state" uses, and 773 tracked site .spw files (187 claims, 153 probes, ratio 1.10). Charge/discharge suffers a 5-way homonym collision across workbench theory, site charge-field, expression valence, d3 forces.charge, and proposed brace scrubbing; boon/bane/bone carry conflicting sigils between domain pages and SITE_CONFIGS; .spw/site.spw still cites .site-frame.`,
+][reg=set]
+
+contents = #[
+  ~"./ecosystem-planes-pivots-ontologies-2026-11.spw#components",
+  ~"./ecosystem-planes-pivots-ontologies-2026-11.spw#cognitive_planes",
+  ~"./ecosystem-planes-pivots-ontologies-2026-11.spw#pivots",
+  ~"./ecosystem-planes-pivots-ontologies-2026-11.spw#ontologies",
+  ~"./ecosystem-planes-pivots-ontologies-2026-11.spw#remediation_map",
+  ~"./ecosystem-planes-pivots-ontologies-2026-11.spw#owner_claim",
+][reg=set]
+
+^"components"{
+  ~#date: "2026-11-26"
+  site_catalog = .{
+    sensor = `npm run audit:module-selectors`
+    catalog_defs = 148
+    routes_scanned = 238
+    gated_defs = 138
+    no_selector_defs = 10
+    legacy_site_frame_hits = 0
+    combinator_depth_ge_2 = `4 modules (attention-section-handle:3, attention-reading-groove:2, attention-scroll-cadence:3, navigation-spells:3)`
+    root_bound_modules = `22 modules binding html, body, or main`
+    deep_hosts_ge_10 = `50 modules matching hosts at HTML depth >= 10 (deepest routes at depth 15: /, /topics/software/, /workers/spw-quest/assets/)`
+    orphan_selectors = #[
+      `folio-shelf`, `runtime-atlas`, `operator-phases`, `personas`,
+      `home-section-index`, `media-cauldron`, `narrative-instrumentation`,
+      `electromagnetic-containers`, `logo-runtime`, `dom-probes`,
+      `design-experiments`, `design-bench-live`, `design-review-surfaces`,
+      `annotation-layer`, `local-memory-controls`, `spw-hero-kinetic-stage`,
+    ][reg=set]
+    note = `Some orphans resolve only through build-time <spw-include> partials; verify built HTML before pruning (@module_selector_depth).`
+  }[reg=facet]
+
+  site_charge_writers = .{
+    finding = `Three writers mutate data-spw-charge with incompatible vocabularies and split bus channels.`
+    writers = #[
+      `public/js/runtime/interaction/brace-gestures.js: writes charging|active|sustained|charged; emits brace:charged|activated|armed|committed|discharged`,
+      `public/js/interface/haptics.js: writes arming|preview|charged; emits charge:armed|preview|charged|settled`,
+      `public/js/runtime/interaction/brace-pivots.js: pulses body[data-spw-charge="pulse"] for 480ms`,
+    ][reg=set]
+    blind_spot = `public/js/runtime/physics/charge-field.js listens for charge:* plus brace:discharged, so brace hover/hold/arming does not drive html[data-spw-charge-field] until release.`
+    hold_overlap = `brace-gestures.js (420ms, 8px slop) and haptics.js (520ms mouse / 420ms touch, 340ms dbltap) share capture-phase pointer events via fragile manual selector exclusions.`
+  }[reg=facet]
+
+  pinch_and_scrub_duplication = .{
+    pinch_copies = `PINCH_MEASURE thresholds (1.35/1.16/0.82/0.65) are duplicated in public/js/kernel/gesture-measure.js, workers/lib/pinch.js, and factshift scale-cue.ts; body-gestures.ts drifts to 0.80/1.25 while scale-cue.ts uses 0.68/1.32.`
+    ephemeral_clocks = `Toast and cue lifetimes drift across 900ms, 1100ms, 1200ms, 1400ms, 2400ms, 2800ms, 3500ms, and 4500ms with click-suppression windows from 0ms to 600ms.`
+    factshift_horizontal_collisions = #[
+      `region-rects.ts (EDGE_PX=24): slow horizontal drag on a body side edge resizes that side`,
+      `body-gestures.ts (<280ms, >=36px): quick edge flick frames sibling body; interior flick steps parts`,
+      `frame-refresh.ts (STEP_BAND=72px): touch horizontal swipe starting on g.region-group near stage edge steps concept history`,
+      `held-expressions.ts: horizontal swipe on corner held-line box still steps thread/held lines despite b8e2222 moving thread to left rail and parts to right rail`,
+    ][reg=set]
+    factshift_invisible_rail = `#frame-scrub (where/how rail in frame-refresh.ts) mounts only during a left/right 44px margin drag; any stage gesture trying to weight the where-rail mutates an unmounted surface.`
+  }[reg=facet]
+}[reg=facet]
+
+^"cognitive_planes"{
+  ~#date: "2026-11-26"
+  three_clocks = .{
+    canvas_plane = `factshift.center: seconds (d3 alpha cools ~0.87 -> 0.05 -> 0.001 in ~2s; restLine recovers pushed parts within ~1.2px; ~ bodies excluded from rest watch, remaining ~9.6px off).`
+    site_plane = `spwashi.com: tens of seconds (wonder-memory tau ~40s; charge-field decay 0.18 per 2800ms; discharging frame live state 1400ms).`
+    bench_plane = `spw.quest: indefinite in URL/fragment (?line=, ?t=, #spw64=); /physics runs per-body 60Hz warm/cool clocks (12 calm ticks) with measured 0.0px outside displacement.`
+    lock_plane = `mutex.buzz: calendar cycle (13-day holds A/B/C with 36h letting-go window) carried as *holds[cycle]{title}(since ~> until) and %turn[n/of]{hour}.`
+  }[reg=facet]
+
+  effect_grade_leaks = .{
+    grades = `L0 epistemic look (returns to rest, 0 bytes) | L1 visit-local bias (named clock or explicit clear, 0 bytes) | L2 pragmatic commit (rewrites line or URL, emits * receipt).`
+    leaks_measured = #[
+      `factshift global heat: warming one body in kitchen{^bread, ~soup, =spice, ?stock} drifted sibling ~soup parts ~6px (@stage_asks#receipts), violating depiction-frames frame clocks`,
+      `factshift pinch-spread / double-tap collapse: epistemic zoom and tap-to-inspect risk crossing into pragmatic enterNode/rename without a visible priming seam`,
+      `spwashi.com pocket hold: 420ms cauldron hold and 460ms region menu overlap on living terms / prime contracts`,
+      `factshift browser storage: ~18 factshift.* storage keys hold kept records (pins, talk, saved frames, moved mark, hand feel) on an undated, invisible cache lifecycle with no kept-line surface and an unprompted ?reset`,
+    ][reg=set]
+  }[reg=facet]
+
+  paper_vs_code_check = .{
+    finding = `Cross-product re-derivation verified zero hits in factshift app source for simplex, barycentric, hysteres, or trope (vendor aside). Live felt physics are damping, repulsion, homing, per-body operator laws (local-forces.ts), scene-tune multipliers (scene-tune.ts), and 1/d brace dipoles (particles.ts).`
+    rule = `Plans and caches must mark imagined or paper analogies distinct from live code.`
+  }[reg=facet]
+}[reg=facet]
+
+^"pivots"{
+  ~#date: "2026-11-26"
+  matrix = #[
+    `spwashi.com <spw-expression> · step 28px · edge clamp · commit live (dispatch spw:expression-change) · peek 420ms hold`,
+    `spw.quest /pivot · step 36px swipe or slider · edge wrap · commit prime-then-keep (2nd tap / Actualize) · cap 200 chars`,
+    `factshift.center edge-scrub.ts · step 32px vertical (0.45 cancel deadzone) · edge clamp (windowed 12) · commit on-lift`,
+    `factshift.center line-joints.ts / operator-field.ts · step 36px swipe · edge wrap · commit prime-then-keep (2nd tap)`,
+    `attention.productions attention.js · step 28px (6px slop) · edge wrap · commit live-preview -> on-lift URL + 6-slot takes`,
+    `texture.website texture.js · step 28px · edge wrap · commit live (history.replaceState during scrub, render on lift)`,
+    `tealstripesvibes.com tealstripes.js · step 24px slot / 48px field · edge wrap · commit prime-then-keep (Held/Trying bar, Keep/Let go)`,
+  ][reg=set]
+
+  gaps = #[
+    `Three commit policies (live, on-lift, prime-then-keep) lack a shared visual distinction across hosts`,
+    `Three length caps (spw.quest pivot 200, reader 400, specimens 400; factshift ?spw= 400) and unexported slot-order tables cause hand copies`,
+    `Return-leg provenance is lossy: spw.quest -> factshift.center and lore.land -> factshift.center drop from= / specimen id on the way back`,
+    `Joint rail crumbs in factshift still emit unparseable prose prefixes instead of parseable Spw like node[select] matching spw.pivots/1`,
+    `spw.quest /pivot and factshift line-anatomy still lack shared pre-reveal ~#expect prompts before showing computed diffs`,
+  ][reg=set]
+}[reg=facet]
+
+^"ontologies"{
+  ~#date: "2026-11-26"
+  language_sensor = .{
+    command = `npm run ecology:language`
+    html_files = 1196
+    semantic_expressions = 5356
+    operator_chip_mentions = 253
+    unknown_operator_state = `145 uses of data-spw-operator="state" (not in canonical operator types or declared aliases)`
+    brace_distribution = `211 objective, 173 subjective, 8 objective-to-subjective, 4 balanced, 4 direction`
+    site_spw_files = `773 tracked .spw files (no _workbench); 187 owner_claim/#, 153 probe_ref, 139 hypothesis (ratio 1.10)`
+    plan_audit_baseline = `npm run audit:plans: 57 live plans, 0 hard, 16 warnings (13 external app/deploy hashes in factshift-center/PLAN.md prose, 1 deploy id in spw-quest/PLAN.md, 1 stale wip in core-css-spend-cut, 1 missing wip in town-library-renewal)`
+  }[reg=facet]
+
+  charge_five_way_homonym = .{
+    authority = @charge_bridge
+    senses = #[
+      `1. Interpretive brace polarity (brace-physics.spw open/close accumulate_release — render profile, canonical coords open/close not left/right)`,
+      `2. Operational ChargePacket (spw-runtime charge.ts: latent -> potentiated -> bound -> mobile -> discharged -> shielded)`,
+      `3. Material valence pentad (boon, bane, bone, bonk, honk — charge-neutral quality frame)`,
+      `4. Simulation Coulomb repulsion (factshift forces.charge on Shift+wheel and Reflex charge card, plus particles.ts +/-q brace dipoles)`,
+      `5. Document electrostatic attention decay (spwashi.com charge-field.js arming -> preview -> charged -> discharging -> quiet)`,
+    ][reg=set]
+    risk = `Adding a horizontal frame-brace gesture named "charge/discharge" creates a sixth sense (or collapses aperture disclosure into forces.charge and = pinning).`
+  }[reg=facet]
+
+  cross_host_drift = #[
+    `Operator names: spwashi.com kernel & peer-kit name ^ integration, = binding, % normalize, {} direction; spw-workbench & spw.quest name ^ ascension, = configuration, % measure, {} definition`,
+    `Boon/bane/bone sigils: factshift SITE_CONFIGS assigns boon=*, bane=., bone=#; spwashi.com domain pages assign boon=>, bane=!, bone=^; commands/boon.ts emits #`,
+    `Bracket stay rules: lore.land rooms.spw forbids late arrival in () and staying in <>; factshift free-drop.ts allows dropping into both`,
+    `Stale site noun: .spw/site.spw line 220 still says "Every section is a .site-frame" where AGENTS.md mandates .spw-frame`,
+    `Unregistered homonyms: tempo="settle" collision at 3 CSS altitudes (homonym-renaming PLAN.md) has no entry yet in .spw/conventions/word-sets.spw`,
+  ][reg=set]
+}[reg=facet]
+
+^"remediation_map"{
+  batch_2_caches = `Cache the 6 distributed interaction principles and bipolar open/quiet/close aperture re-derivation (factshift-aperture-rederivation-2026-11.spw) plus the 4-leg ecosystem -> factshift -> workbench -> return loop (ecosystem-roundtrip-architecture-2026-11.spw).`
+  batch_3_upstream = `Update upstream-workbench-recommendations (stage-and-physics.spw, gestures.spw, hub) with per-frame heat receipts, aperture vs ChargePacket disambiguation, single operator_table, grainsAt/stepFrom, and typed .d.ts reader + spw.pivots/1 asks.`
+  batch_4_plans = `Update existing plans thoroughly (factshift-center, ecosystem-architecture, workers-wonder-kit, spw-planes, spw-quest, brace-semantics, interaction-grammar, spw-inquiry-loop, homonym-renaming) and clear audit:plans prose-hash warnings.`
+  batch_5_semantics = `Clean up drifted ontology files directly: word-sets.spw (tempo collision, settle echo, charge disambiguation, canonical 4-rung ladder), semantic-braces.spw, charge-cycle.spw, factshift-center.spw, site-cluster.spw, operator-namespace-alignment.spw, and site.spw (.site-frame -> .spw-frame).`
+}[reg=facet]
+
+^"owner_claim"{
+  claim #audit-ecosystem-planes-pivots-ontologies-001 {
+    layer = "pragmatic"
+    hypothesis = `Separating component wiring, cognitive-plane clocks, pivot commit policies, and ontology homonyms into one measured audit exposes the exact shared seams (gesture-measure, operator_table, per-frame clocks, 5-way charge split) that plans and upstream asks must close together.`
+    spec_ref = ".spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
+    impl_ref = "public/js/, workers/, .spw/conventions/, .agents/plans/"
+    probe_ref = `npm run audit:module-selectors && npm run ecology:language && npm run audit:plans`
+    falsification = `Any cited count diverges from the 2026-11-26 sensor run or any listed collision turns out already unified in code.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `npm run audit:module-selectors`,
+  `npm run ecology:language`,
+  `npm run audit:plans`,
+  `npm run check:agents`,
+][reg=set]
+
+# Handles, declared last.
+@audits_index: ~"./index.spw"
+@module_selector_depth: ~"./module-selector-depth-2026-09.spw"
+@factshift_verbs: ~"./factshift-center-verbs-2026-10.spw"
+@touch_contracts: ~"./touch-gesture-contracts-2026-09.spw"
+@charge_bridge: ~"../_workbench/docs/theory/spw/charge-valence-brace-bridge.spw"
+@stage_asks: ~"../reviews/upstream-workbench-recommendations/stage-and-physics.spw"
+@operator_namespace: ~"../language/operator-namespace-alignment.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@word_sets: ~"../conventions/word-sets.spw"
+@site: ~"../site.spw"

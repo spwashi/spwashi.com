@@ -60,6 +60,7 @@
 @page_structure: ~"./page-structure-2026-10.spw"  # audit: do routes close what they open, and can each part be addressed; npm run audit:page-structure
 @factshift_center_verbs: ~"./factshift-center-verbs-2026-10.spw"  # audit: factshift.center's nouns, the verbs each answers, and the verbs about the nouns
 @timeline_copy_resonance: ~"./timeline-copy-resonance-2026-09.spw"  # audit: the timeline as a public practice surface, not a résumé claim
+@ecosystem_planes_pivots_ontologies: ~"./ecosystem-planes-pivots-ontologies-2026-11.spw"  # audit 2026-11-26: components, cognitive planes, pivots, and ontology/homonym drift across the cluster
 
 operation = "align"
 fixity = "tending"
@@ -121,6 +122,7 @@ fixity = "tending"
     appendix_film = ~"./appendices/film-history-500y.spw"
     appendix_print = ~"./appendices/print-history-500y.spw"
     working_tree_index = ~"./working-tree-index-2026-07.spw"
+    ecosystem_planes_pivots_ontologies = ~"./ecosystem-planes-pivots-ontologies-2026-11.spw"
   }[reg=facet]
 }[reg=facet]
 
@@ -199,6 +201,13 @@ fixity = "tending"
     keys = #[`plan_spw_tree_2026_09`, `plan_ecology_semantics`, `commit_skill_induction`][reg=set]
     plans_dispatch = `../../.agents/plans/index.spw`
     note = `2026-09-07: live census and root-index bucket truth. 2026-07-12 remains the disposition review; do not regenerate it.`
+  }[reg=facet]
+
+  session_2026_11_ecosystem_planes: .{
+    reading_order = `ecosystem_planes_pivots_ontologies`
+    hub = @ecosystem_planes_pivots_ontologies
+    keys = #[`ecosystem_planes_pivots_ontologies`, `module_selector_depth`, `touch_gesture_contracts`, `factshift_center_verbs`, `brace_contract`][reg=set]
+    note = `2026-11-26: cross-host audit of components (148 catalog defs, 3 charge writers, 6 scrubbers), cognitive-plane clocks, pivot commit policies, and ontology homonyms (5-way charge collision, operator/valence drift).`
   }[reg=facet]
 }
 
@@ -328,6 +337,14 @@ fixity = "tending"
     @css_module_attribute_impact,
     @feature_utilization,
     @build_runtime_performance
+  >[reg=stream]
+
+  ecosystem_planes_pivots_ontologies = ?<
+    @ecosystem_planes_pivots_ontologies,
+    @module_selector_depth,
+    @touch_gesture_contracts,
+    @factshift_center_verbs,
+    @brace_contract
   >[reg=stream]
 }[reg=facet]
 
