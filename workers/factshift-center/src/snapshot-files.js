@@ -1,6 +1,6 @@
 // Written by workers/factshift-center/carry-shell.mjs from assets/ and version.json; do not edit by hand.
 // check-workers runs it with --check, so a refreshed snapshot without a fresh carry fails.
-export const SNAPSHOT = Object.freeze({"revision":"5a3e03f","snapshot":"2026-11-27"});
+export const SNAPSHOT = Object.freeze({"revision":"113a807","snapshot":"2026-11-27"});
 
 export const SNAPSHOT_FILES = Object.freeze([
   "/",

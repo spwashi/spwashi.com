@@ -216,7 +216,7 @@ test('the canvas head gains a bar color, an iOS icon and a preview, once', async
   assert.match(head, /<meta name="apple-mobile-web-app-capable" content="yes">/);
   assert.match(head, /<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">/);
   assert.match(head, /<link rel="apple-touch-icon" href="\/v0\.0\.1\/favicon\/192\.png">/);
-  assert.match(head, /<meta property="og:description" content="factshift\.center lays out a line of Spw/);
+  assert.match(head, /<meta property="og:description" content="Lay out an idea as nodes to move, link, and rewrite\."/);
   assert.equal(withSiteHead(withSiteHead('<head></head>', 'x'), 'x').split('data-factshift-site-head').length - 1, 1);
   // A block carried before is replaced, so new lines reach a carried snapshot.
   assert.equal(withSiteHead(withSiteHead('<head>\n</head>', 'old'), 'new'), withSiteHead('<head>\n</head>', 'new'));

@@ -8,7 +8,7 @@
 // until the creator chooses one.
 
 /** The app's own sentence, from the snapshot's <meta name="description">. */
-export const DESCRIPTION = "factshift.center lays out a line of Spw: who is looking, from where, and what is still open, as nodes to move, link, and rewrite.";
+export const DESCRIPTION = "Lay out an idea as nodes to move, link, and rewrite.";
 
 export const SITE_MANIFEST = Object.freeze({
   id: "/",
