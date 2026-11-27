@@ -106,7 +106,7 @@ export const NAVIGATION_WAIT_MS = 3500;
  * 6: a pasted tealstripes or texture address keeps a readable line, a mood colour,
  *    and the physics of the site the reader came from, 2026-11-24.
  */
-export const SITE_REVISION = 6;
+export const SITE_REVISION = 7;
 export const SHELL_VERSION = `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site${SITE_REVISION}`;
 
 /** The script at /sw.js, for a snapshot and the files it keeps; carry-shell.mjs writes it into assets/. */
@@ -204,6 +204,8 @@ export function withShell(html) {
  */
 export function withSiteHead(html, lines) {
   if (!lines || !html.includes("</head>")) return html;
+  // The carried head supplies the current favicon in place of the snapshot's.
+  html = html.replace(/^    <link rel="icon" href="\/v[^"\n]+\/favicon\/[^"\n]+">\n/m, "");
   const carried = html.indexOf('    <meta name="factshift-site-head"');
   if (carried !== -1 && carried < html.indexOf("</head>")) html = `${html.slice(0, carried)}${html.slice(html.indexOf("</head>"))}`;
   const at = html.indexOf("</head>");

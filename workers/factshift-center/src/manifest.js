@@ -1,17 +1,22 @@
 // factshift.center's installed face, layered over the snapshot's manifest.
 //
-// The app owns its name, colors and icons (assets/manifest.json, carried with
-// each snapshot). The site adds what makes it a good app on a home screen next
-// to spw.quest and spwashi.com (.spw/caches/pwa-roles-2026-11.spw): what it is
-// for, that a canvas turns, that a line arriving from spw.quest lands in the
-// open window, and two shortcuts to things it does. The mark stays the app's
-// until the creator chooses one.
+// The snapshot supplies the app's name and colors. The site carries the artwork
+// and the fields that describe how the canvas launches and receives a line.
 
 /** The app's own sentence, from the snapshot's <meta name="description">. */
 export const DESCRIPTION = "Lay out an idea as nodes to move, link, and rewrite.";
 
+const ARTWORK = "/branding";
+export const SOCIAL_IMAGE = `${ARTWORK}/share.png`;
+
+function icon(size, purpose = "any") {
+  const name = purpose === "maskable" ? "maskable" : "icon";
+  return { src: `${ARTWORK}/${name}-${size}.png`, sizes: `${size}x${size}`, type: "image/png", purpose };
+}
+
 export const SITE_MANIFEST = Object.freeze({
   id: "/",
+  icons: [32, 96, 192, 512].map((size) => icon(size)).concat(icon(512, "maskable")),
   description: DESCRIPTION,
   // A canvas reads in either direction; the snapshot says portrait-primary.
   orientation: "any",
@@ -37,21 +42,21 @@ export const SITE_MANIFEST = Object.freeze({
       short_name: "A line",
       url: "/?spw=garden%5Bcare%5D%7Bseed%2C%20water%7D",
       description: "garden[care]{seed, water}, as nodes to move and link.",
-      icons: [{ src: "/v0.0.1/favicon/96.png", sizes: "96x96", type: "image/png" }],
+      icons: [{ src: icon(96).src, sizes: "96x96", type: "image/png" }],
     },
     {
       name: "Spw window",
       short_name: "Spw",
       url: "/?mode=spw",
       description: "Open the prompt and thread on the canvas.",
-      icons: [{ src: "/v0.0.1/favicon/96.png", sizes: "96x96", type: "image/png" }],
+      icons: [{ src: icon(96).src, sizes: "96x96", type: "image/png" }],
     },
     {
       name: "Help",
       short_name: "Help",
       url: "/help",
       description: "The help topics, open in the Spw window.",
-      icons: [{ src: "/v0.0.1/favicon/96.png", sizes: "96x96", type: "image/png" }],
+      icons: [{ src: icon(96).src, sizes: "96x96", type: "image/png" }],
     },
   ],
 });
@@ -73,20 +78,25 @@ export const INDEXED = Object.freeze(["/"]);
  * the bare document as canonical.
  */
 export function headLines(manifest = {}, document = "/") {
-  const icon = (manifest.icons || []).find((entry) => entry.sizes === "192x192")?.src || "/v0.0.1/favicon/192.png";
   return [
     `<meta name="theme-color" content="${manifest.theme_color || "#4c1d1d"}">`,
     `<meta name="mobile-web-app-capable" content="yes">`,
     `<meta name="apple-mobile-web-app-capable" content="yes">`,
     `<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">`,
-    `<link rel="apple-touch-icon" href="${icon}">`,
+    `<link rel="icon" type="image/png" sizes="32x32" href="${icon(32).src}">`,
+    `<link rel="apple-touch-icon" sizes="180x180" href="${icon(180).src}">`,
     `<meta name="apple-mobile-web-app-title" content="${manifest.short_name || "factshift"}">`,
     `<meta property="og:type" content="website">`,
     `<meta property="og:site_name" content="factshift.center">`,
     `<meta property="og:title" content="factshift.center">`,
     `<meta property="og:description" content="${DESCRIPTION}">`,
     `<meta property="og:url" content="${ORIGIN}${document}">`,
-    `<meta name="twitter:card" content="summary">`,
+    `<meta property="og:image" content="${ORIGIN}${SOCIAL_IMAGE}">`,
+    `<meta property="og:image:type" content="image/png">`,
+    `<meta property="og:image:width" content="1200">`,
+    `<meta property="og:image:height" content="630">`,
+    `<meta property="og:image:alt" content="Factshift’s maroon frame surrounds a gray canvas with a highlighted focal square and linked nodes.">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
     `<link rel="canonical" href="${ORIGIN}${document}">`,
     `<meta name="robots" content="${INDEXED.includes(document) ? "index, follow" : "noindex, follow"}">`,
   ].join("\n    ");

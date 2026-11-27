@@ -8,29 +8,34 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "/v0.0.1/favicon/16.png",
-      "sizes": "16x16",
-      "type": "image/png"
-    },
-    {
-      "src": "/v0.0.1/favicon/32.png",
+      "src": "/branding/icon-32.png",
       "sizes": "32x32",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/v0.0.1/favicon/96.png",
+      "src": "/branding/icon-96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/v0.0.1/favicon/192.png",
+      "src": "/branding/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/v0.0.1/favicon/512.png",
+      "src": "/branding/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/branding/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "orientation": "any",
@@ -83,7 +88,7 @@
       "description": "garden[care]{seed, water}, as nodes to move and link.",
       "icons": [
         {
-          "src": "/v0.0.1/favicon/96.png",
+          "src": "/branding/icon-96.png",
           "sizes": "96x96",
           "type": "image/png"
         }
@@ -96,7 +101,7 @@
       "description": "Open the prompt and thread on the canvas.",
       "icons": [
         {
-          "src": "/v0.0.1/favicon/96.png",
+          "src": "/branding/icon-96.png",
           "sizes": "96x96",
           "type": "image/png"
         }
@@ -109,7 +114,7 @@
       "description": "The help topics, open in the Spw window.",
       "icons": [
         {
-          "src": "/v0.0.1/favicon/96.png",
+          "src": "/branding/icon-96.png",
           "sizes": "96x96",
           "type": "image/png"
         }

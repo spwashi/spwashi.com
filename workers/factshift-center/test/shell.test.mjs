@@ -186,7 +186,15 @@ test('the installed face: the app\'s name, colors and icons, with the site\'s de
   assert.deepEqual(siteManifest(manifest), manifest);
   assert.equal(manifest.name, 'factshift');
   assert.equal(manifest.theme_color, '#4c1d1d');
-  assert.equal(manifest.icons.length, 5);
+  assert.deepEqual(manifest.icons.map(({ sizes, purpose }) => [sizes, purpose]), [
+    ['32x32', 'any'], ['96x96', 'any'], ['192x192', 'any'], ['512x512', 'any'], ['512x512', 'maskable'],
+  ]);
+  for (const { src, sizes } of manifest.icons) {
+    assert.ok(SNAPSHOT_FILES.includes(src), src);
+    const png = readFileSync(new URL(`assets${src}`, root));
+    assert.equal(png.toString('ascii', 1, 4), 'PNG');
+    assert.equal(`${png.readUInt32BE(16)}x${png.readUInt32BE(20)}`, sizes);
+  }
   assert.equal(manifest.orientation, 'any');
   assert.deepEqual(manifest.display_override, ['window-controls-overlay', 'standalone', 'minimal-ui', 'browser']);
   assert.deepEqual(manifest.launch_handler, { client_mode: ['navigate-existing', 'auto'] });
@@ -215,7 +223,15 @@ test('the canvas head gains a bar color, an iOS icon and a preview, once', async
   assert.match(head, /<meta name="mobile-web-app-capable" content="yes">/);
   assert.match(head, /<meta name="apple-mobile-web-app-capable" content="yes">/);
   assert.match(head, /<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">/);
-  assert.match(head, /<link rel="apple-touch-icon" href="\/v0\.0\.1\/favicon\/192\.png">/);
+  assert.match(head, /<link rel="apple-touch-icon" sizes="180x180" href="\/branding\/icon-180\.png">/);
+  assert.equal(head.split('rel="icon"').length - 1, 1);
+  assert.match(head, /rel="icon"[^>]+href="\/branding\/icon-32\.png"/);
+  assert.match(head, /property="og:image" content="https:\/\/factshift\.center\/branding\/share\.png"/);
+  assert.match(head, /name="twitter:card" content="summary_large_image"/);
+  const share = readFileSync(new URL('assets/branding/share.png', root));
+  assert.equal(share.readUInt32BE(16), 1200);
+  assert.equal(share.readUInt32BE(20), 630);
+  assert.ok(!SNAPSHOT_FILES.includes('/branding/share.png'));
   assert.match(head, /<meta property="og:description" content="Lay out an idea as nodes to move, link, and rewrite\."/);
   assert.equal(withSiteHead(withSiteHead('<head></head>', 'x'), 'x').split('data-factshift-site-head').length - 1, 1);
   // A block carried before is replaced, so new lines reach a carried snapshot.
