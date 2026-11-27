@@ -98,6 +98,33 @@ season[boundary]{no.silent.mint}`,
   beat: `beat[unary]{close}<offer>
 beat[pair]{pieces}<compose>
 beat[season]{portfolio}<dwell>`,
+  /** Curiosity as a physics of wonder: gap, commitment, sideways hinge, precipitate, open horizon. */
+  curiosity_physics: `#>curiosity_arc
+.ground{ beet_stain, modular_clock }
+~gap{ "8 cups stock simmered down to 1 cup" }
+~#expect: "zero salt evaporates with steam -> 8x salinity"
+reduction[kitchen]{volume_loss} ~> bundle[css]{unused_rules}
+!probe{ simmer_to_glace } -> *precipitate[8x_salinity]
+?["Why do acid and bitter herbs shift non-linearly on the same curve?"]{}`,
+  /** Build-time Spw CMS seed frame projecting lenses, studio scan, and AST carry links. */
+  cms_seed: `^"cms_single_seed_specimen"{
+  kind = "dispatch"
+  expression = "cms[syntax]{seed.compile.project}<spw>"
+  lens_reading = "One .spw block holds prose, lens variants, scan, and carry links."
+  lens_systems = "Compiled at build time via spw-workbench-reader.js into static HTML."
+  hinge_label = "~>about_domains"
+  scan_src = "/public/images/assets/folios/folio-babbling-noodling-play-display.webp"
+}[reg=facet]`,
+  /** Cinematography & stage-lighting shot grammar shared with attention.productions. */
+  attention_shot: `!shot[close-up]{laminated folio on workbench}(lamplight)<85mm>
+^frame{
+  =ratio[scope]
+  =focus[left_third]
+  =light_from[right]
+  ~move[still]
+  %tempo[1]
+}
+@material: ~"texture.website/linen.spw"`,
 });
 
 /** Where a sample sits, and what its script is doing. `href` is a page on this site, a section of this tool, or the workbench. */
@@ -191,6 +218,21 @@ export const SPW_LITERAL_PARSER_PLACES = Object.freeze({
     says: 'Three beats of one offer: close, compose, and dwell.',
     href: '/services/creator/#first-beat',
     label: 'First beat',
+  },
+  curiosity_physics: {
+    says: 'Curiosity as wonder physics: ground fact, held gap, ~#expect prediction, ~> sideways hinge, *precipitate, and open ?wonder.',
+    href: '/topics/software/spw/#curiosity-physics',
+    label: 'Curiosity physics',
+  },
+  cms_seed: {
+    says: 'A build-time .spw CMS frame that compiles into multi-lens prose, a studio scan triptych, and AST carry links.',
+    href: '/topics/software/spw/#spw-cms-live',
+    label: 'Spw CMS proof',
+  },
+  attention_shot: {
+    says: 'A physical camera setup (!shot[framing]{subject}(lighting)<lens>) shared directly with the attention.productions stage.',
+    href: '/topics/software/spw/#spw-attention-theater',
+    label: 'Theater viewfinder',
   },
 });
 

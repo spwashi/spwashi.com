@@ -155,7 +155,7 @@ export const FEATURE_DEFS = [
     id: 'spw-cms-surface',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
-    selector: '[data-cms-surface]',
+    selector: '[data-cms-host], [data-cms-surface]',
     rootMode: 'each',
     describes: 'cms[seed]{rotate.triptych.expect.theater}<spw> enhances build-time .spw CMS bands with daily rotation, prose/scan/spw triptychs, curiosity-gap predictions, and consentful attention.productions viewfinder embeds',
     updates: [

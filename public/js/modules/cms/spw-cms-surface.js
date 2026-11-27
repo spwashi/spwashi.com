@@ -210,7 +210,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   contract: Object.freeze({
     story: 'A single .spw CMS seed renders whole with scripts off and wakes into daily rotation, 3-face material triptychs, pre-reveal curiosity gaps, and a zero-unsolicited-network attention.productions stage.',
     wonder: ['comparison', 'inquiry', 'projection'],
-    host: '[data-cms-surface]',
+    host: '[data-cms-host], [data-cms-surface]',
     css: ['/public/css/components/spw-cms.css'],
     value: 'Proves Spw doing real multi-projection CMS work across routes without adding a client framework.',
   }),
