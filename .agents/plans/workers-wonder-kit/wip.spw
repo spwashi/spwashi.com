@@ -26,6 +26,7 @@ fixity = "tending"
  >>[2026-11-16 20:16] land — workers/lib/hold.js writes the two lines. mutex nowLine, turnLine and turnOf, and tealstripes lockVibe, call it. Each carry copies the file to assets/lib/hold.js and the shell lists /lib/hold.js. factshift liveLines keeps its copy. S4 still waits on the creator for which doors have a sentence.
  >>[2026-11-17 13:37] align — Refined PLAN.md and index.spw across all ecosystem domains as explicit operator/cluster representations (seven-host ring plus lore.land, smut.today, autonomous.feedback, boon/bane/bone.land, brainstorm.monster, trope.wiki); documented collectible slot-handle convergence from attention.productions compose.js (MARK_OP/BRACKET_OP scrubbers) to texture.website; tied number-theory convergents and modular cycles into wap.mom (Archimedes 96-gon, 22/7, 355/113) and mutex.buzz (mod 97 golden-angle phyllotaxis); added #>wonder_set_collectible_handles and #>wonder_seats_disagree for extended multi-seat wonder.
  >>[2026-11-17 21:46] align — Recorded S7 (proposed): brainstorm.monster (random hash + word hibernating seed) paired with autonomous.feedback/{seed} as a personal mutex.buzz loop for individual collaborators; noted tealstripesvibes rename (d5badb5d) and pending spw-quest carry-specimens.mjs re-harvest surfaced by check:workers after route/copy commits.
+ >>[2026-11-26 22:18] align — Recorded post-11-17 worker commits (1a900096, 58ede179, dbdb3364, 6a1ddad3) and added S8 (proposed): carry public/js/kernel/gesture-measure.js via build:peer-kit (S4c) to retire duplicated PINCH_MEASURE copies in workers/lib/pinch.js and factshift scale-cue.ts, unify the six cross-host horizontal slot scrubbers around explicit live/on-lift/prime-then-keep cues, and close bidirectional from= return legs across peers.
 }
 
 ^"open"{
@@ -35,8 +36,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "landed"
- ~#next_commit: "S4 waits: the creator says which of spw.quest, wap.mom, and texture.website have a sentence; reconcile collectible slot handles across attention.productions and texture.website"
- ~#files_hot: "workers/lib/hold.js, workers/lib/set-ring.js, the mutex and tealstripes carries"
+ ~#next_commit: "S4 waits on the creator saying which doors have a sentence; S8 queues gesture-measure.js (peer-kit S4c), unified 28px scrub cues, and from= return legs"
+ ~#files_hot: "workers/lib/hold.js, workers/lib/set-ring.js, workers/lib/pinch.js, public/js/kernel/gesture-measure.js"
  ~#gate: "S4 waits on the creator saying which doors have a sentence"
- ~#last_stream: "2026-11-17"
+ ~#last_stream: "2026-11-26"
 }

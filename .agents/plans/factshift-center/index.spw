@@ -1,4 +1,4 @@
-# Review 2026-11-06 — keep, tending; nothing moved since 2026-10-30. factshift.com is the prototype; factshift.center examines which concepts a physics can represent. Hesitance to AI is understood and, for the engineer, not minded. Agentic development adds cohesion and performance. Next canvas cut: the workbench's reading.
+# Review 2026-11-26 — keep, tending; app carried in dbdb3364 (thread left, parts right), re-derived around six distributed principles (P0-P5) and symmetric open <-> quiet <-> close grain aperture. Next canvas cut: P0 gesture arbitration, P1 per-frame heat clocks, and Slice 5 typed reader.
 # Plan Index — factshift.center
 #
 # factshift.com is the prototype. factshift.center examines which concepts a particular
@@ -76,6 +76,9 @@ intent: .{
 @hosts: ~"./HOSTS.md"
 # The open hold as the expression a reader starts from, and attention's ladders as the devices that frame it.
 @hub: ~"./hub.spw"
+@aperture_cache: ~"../../../.spw/caches/factshift-aperture-rederivation-2026-11.spw"
+@roundtrip_cache: ~"../../../.spw/caches/ecosystem-roundtrip-architecture-2026-11.spw"
+@ecosystem_audit: ~"../../../.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
 
 dispatch: .{
  plan = @plan
@@ -87,6 +90,9 @@ dispatch: .{
  hosts = @hosts
  hub = @hub
  ui_model = @ui_model
+ aperture_cache = @aperture_cache
+ roundtrip_cache = @roundtrip_cache
+ ecosystem_audit = @ecosystem_audit
 }[reg=facet]
 
 ^"connection_points"{
@@ -462,4 +468,18 @@ invariants: #[
   ~#probe(read)
   !probe{ "rg -n \"follows|accesses|bonded|joint\" workers/factshift-center/app/src/js/simulation/edges/relations.ts workers/factshift-center/app/src/js/modes/spw/line-joints.ts" }
   $%[interstitial.typed_joints, interstitial.uniform_links, interstitial.crumb_parseable]
+}
+
+#>wonder_factshift_grain_aperture
+?["Should the active frame's brace boundary expose a symmetric open <-> quiet <-> close grain aperture (L0 lean in flight, L1 session hold on lift) after P0 clears horizontal collisions and P1 localizes heat?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @plan @interaction @aperture_cache @ecosystem_audit
+  ~#taste: "Potential needs a boundary, and the square is the seat, not the boundary — but the brace boundary is an aperture (open/close disclosure), never a fifth meaning of charge."
+  ~#hypothesis: "Once P0 moves container resize to corners and retires horizontal swipe on #held-expressions, and P1 ports spw.quest's per-frame heat clocks, a horizontal scrub on the active grain's real brace rim discloses unnamed slots toward the opener and symmetrically settles/folds them toward the closer on a four-rung ladder (quiet, lean, hold, saturate) without touching forces.charge or = node pinning."
+  ~#tension: "body-gestures.ts currently claims 24px side edges for slow resize, #held-expressions claims horizontal swipe, #frame-scrub is unmounted in index.html, and global d3 alpha leaks wakes into settled sibling frames."
+  ~#expect: "edge-scrub.ts owns the page's left where and right how rails, #frame-scrub has zero DOM mount, and d3 simulation runs on one global alpha."
+  ~#unblocks: "P0 gesture arbitration, P1 per-frame heat clocks, and P3 symmetric grain aperture in PLAN.md"
+  ~#probe(read)
+  !probe{ "rg -n \"frame-scrub|EDGE_PX|alphaTarget\" workers/factshift-center/app/src" }
+  $%[aperture.symmetric_open_close, aperture.open_only, aperture.defer_until_p1]
 }

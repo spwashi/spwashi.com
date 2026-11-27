@@ -1,4 +1,4 @@
-# Review 2026-11-06 — keep: S0–S3, S6 and G landed; S4a, one paint for the site and the quest, is next once the creator answers the first-portable wonder; S5 and S7 wait on the creator.
+# Review 2026-11-26 — keep: S0–S3, S6 and G landed; 2026-11-26 four-leg round-trip architecture queues S4c (gesture-measure.js) beside S4a (one paint) and upstream week_2026_11_26 asks; S5 and S7 wait on the creator.
 # Plan Index — ecosystem-architecture
 #
 # Status 2026-11-06. S0–S3, S6 and G landed; the instrument travels next (S4a, S4b), behind the creator's first-portable answer.
@@ -66,6 +66,9 @@ intent: .{
 @domains: ~"../../../.spw/domains.spw"
 @lore_land_support: ~"./lore-land-support.spw"
 @lore_land_plans: ~"./lore-land-plans.spw"
+@ecosystem_audit: ~"../../../.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
+@roundtrip_cache: ~"../../../.spw/caches/ecosystem-roundtrip-architecture-2026-11.spw"
+@aperture_cache: ~"../../../.spw/caches/factshift-aperture-rederivation-2026-11.spw"
 
 dispatch: .{
  plan = @plan
@@ -77,6 +80,9 @@ dispatch: .{
  public = @public
  core = @core
  fonts = @fonts
+ ecosystem_audit = @ecosystem_audit
+ roundtrip_cache = @roundtrip_cache
+ aperture_cache = @aperture_cache
 }[reg=facet]
 
 ^"connection_points"{

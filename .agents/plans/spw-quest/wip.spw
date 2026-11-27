@@ -87,6 +87,7 @@ fixity = "tending"
  >>[2026-11-10 07:10] land — deployed at the creator's ask as version 37b8a679. Live: /physics is 200, titled "A line at rest", and with scripts off it says this is the line at rest. Six static assets uploaded: sitemap, arcs, bench, forms, shelf, and shelf/plans. The feel, the room's name, what a marked visitor does, and whether a part comes home or stays stay the creator's.
  >>[2026-11-13 23:58] land — carried parser release 2026.11.13 from the workbench, cut at 0bb93f60 from a clean checkout: full, lite, reader and workbench in min and debug forms with source maps, parser.js the same bytes as full.min.js, 14 files. carry-parser-release --check matches every file of both releases and the prerelease to its manifest, and index.json lists 2026.11.13 newest. The workbench's prereleases pre.1 to pre.5 of this day carried seed twice in workbench.min.js and were never carried here.
  >>[2026-11-17 13:37] align — Updated spw-quest PLAN.md and index.spw with 2026-11-17 trajectory refinements: recorded that 2026.10.13 + 2026.11.13 unblocks slice H's two-release pairing once reading-drift specimen diffs land; added #>wonder_spw_quest_pre_reveal_expect (pre-reveal guest prediction before showing pivot/compare results, closing the 2026-11-12 journal gap); queued S4a spw-highlight peer-kit sharing, spw.pivots/1 + digraph stack convergence, collectible slot-handle UI parity with attention.productions/texture.website, and number-theory ratio/modulus construct specimens. Working tree in workers/spw-quest/ stayed untouched.
+ >>[2026-11-26 22:18] align — Updated PLAN.md Status (recorded 6a1ddad3 four holiday guide files, cleared the bare deploy id warning in audit:plans by keeping 96f38b9c in wip.spw alone); anchored /physics per-body warm/cool clocks as the reference locality model for factshift.center P1, aligned /pivot onto the cross-host 28px prime-then-keep scrub contract (workers-wonder-kit S8), and queued bidirectional from= return legs plus S4c gesture-measure.js via build:peer-kit.
 }
 
 ^"architecture"{
@@ -232,9 +233,9 @@ fixity = "tending"
 }
 
 ^"cache"{
- ~#status: "live from the 2026-11-10 deploy (version 96f38b9c, working tree on 74546803), plus 2026.11.13 parser release, /physics, /forms, /bench, /arcs, /specimens.json, and /llms.txt"
- ~#next_commit: "creator phone review at 390 px, pre-reveal ~#expect prompt trial, S4a spw-highlight peer-kit share, and N2 keep finished quest"
- ~#files_hot: "workers/spw-quest/src/file-reader.js, workers/spw-quest/src/index.js, workers/spw-quest/test/hand.test.mjs, public/js/semantic/spw-genre-checks.js"
+ ~#status: "live from the 2026-11-10 deploy (version 96f38b9c, on 74546803), plus 6a1ddad3 holiday files, 2026.11.13 parser release, /physics, /forms, /bench, /arcs, /specimens.json, and /llms.txt"
+ ~#next_commit: "creator phone review at 390 px, pre-reveal ~#expect prompt trial, S4a spw-highlight + S4c gesture-measure peer-kit share, bidirectional from= return links, and N2 keep finished quest"
+ ~#files_hot: "workers/spw-quest/src/file-reader.js, workers/spw-quest/src/physics.js, workers/spw-quest/src/pivot.js, workers/spw-quest/src/index.js"
  ~#gate: "the creator's calls on the hand: whether the slot rows on /build fold or retire, whether the hand sits on the guide's first screen, and the wording of each consequence; the < & > swipe against brace-semantics §D and P and Q still wait on brace-semantics#wonder_brace_semantics_highlighter_then_now"
- ~#last_stream: "2026-11-17"
+ ~#last_stream: "2026-11-26"
 }

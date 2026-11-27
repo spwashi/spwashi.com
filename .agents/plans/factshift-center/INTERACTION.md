@@ -79,3 +79,20 @@ A submenu level, a primed act, and an actualized act each need that one sentence
 ## Ephemeral UI
 
 The leans, the scrub, the joint preview, and the theme that expires are [hub.spw](./hub.spw) `^"ephemeral"`. `/{path}` is the title by default (`^"path"`): a file answers first, `/demo` and `/help` stay, and any other miss is that title. A domain is not its own route.
+
+## Grain aperture & effect-grade contract (2026-11-26, proposed)
+
+Derived in [factshift-aperture-rederivation](../../../.spw/caches/factshift-aperture-rederivation-2026-11.spw) and gated on `#>wonder_factshift_grain_aperture` (`index.spw`). Every gesture on the canvas declares its effect grade so the hand always knows whether a motion is reversible on lift, reversible in the session, or mutating the line:
+
+| Grade | Meaning | Examples | Inverse |
+| --- | --- | --- | --- |
+| `L0` transient lean | Lives only while the finger is down or until the next act starts; leaves `0` diff on cancel | edge-rail stop preview, joint turn preview, aperture scrub in flight, hover ring | return to dead zone or lift |
+| `L1` session hold | Survives lift in this browser/session; leaves the held line and URL untouched | camera frame, brace fold/stratum, aperture rung (`lean`/`hold`/`saturate`), kept reference (`spw-kept.ts`), `=` node pin | symmetric close / undo / clear |
+| `L2` document write | Rewrites the held line (`editLine` / `writeAt`) or URL physics parameters | rename, container drop, reorder, spawn slot, `Shift+wheel` / Reflex `forces.charge`, primed submit | browser undo / history back |
+
+- **Symmetric grain aperture (`open <-> quiet <-> close`):** Bound to the active grain's real brace boundary (only after P0 retires horizontal body-edge resize and `#held-expressions` horizontal swipe, and never onto unmounted `#frame-scrub`). Called **aperture** (open/close disclosure), never `charge`, so `forces.charge` stays strictly on `Shift+wheel` and Reflex, and `boon/bane` stays on valence.
+  - **Open (objective, toward left opener):** leans unnamed seats (`[ ]`, `( )`, `< >`) toward the focal square and weights the left `where` rail.
+  - **Quiet (`0`):** dead zone matching `edge-scrub.ts`; ending where the scrub began commits nothing.
+  - **Close (subjective, toward right closer):** walks open disclosure back to `quiet`, and past `quiet` folds settled seats cleanly (without hijacking `=` node pinning, which remains node-level kept/loose).
+  - **Rungs & receipt:** snaps on lift to `quiet`, `lean`, `hold`, `saturate`. While held, only the live rung speaks; one receipt names brace + rung on lift and leaves when the next act starts.
+- **Single pointer ownership (`claimedPointer`):** Once a gesture crosses its dead zone (`gesture-measure.js` / `swallowsTap`), no sibling listener (`body-gestures.ts`, `edge-scrub.ts`, `pinch.ts`, `tool-window.ts`) may answer the same pointer. Page left/right margins remain `where` / `how`; the focal square remains `out` / `in`.

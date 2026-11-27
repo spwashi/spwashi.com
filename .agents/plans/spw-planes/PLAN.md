@@ -1,14 +1,8 @@
 # Plan: spw-planes
 
-**Status 2026-11-07.** Four agents read the Spw sites as planes and left inspectable work: a report each, phone and desktop stills, and probe scripts.
-- **Ecology** read spwashi.com's components.
-- **Physics** read factshift.center's field.
-- **Quest** read spw.quest, the bench between them.
-- **Ground** read the workbench's theory and the boon/bane/bone lands.
+**Status 2026-11-26.** The 2026-11-07 four-plane pass (Ecology on `spwashi.com`, Physics on `factshift.center`, Quest on `spw.quest`, Ground on workbench theory and `boon`/`bane`/`bone`) was re-audited on 2026-11-26 in [ecosystem-planes-pivots-ontologies](../../../.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw) alongside [factshift-aperture-rederivation](../../../.spw/caches/factshift-aperture-rederivation-2026-11.spw). Two bugs the original quest agent found remain fixed and live (`ddec8392`; version `75b5b8a2`), and `spw.quest/physics` now proves per-body local warm/cool clocks on disk (`workers/spw-quest/src/physics.js`) where `factshift.center` still runs one global d3 `alpha`. Their 21 wonders live in [wonders.spw](wonders.spw), where `npm run wonder` reads them (two answered). The rest of this plan waits on the creator's answers to the questions below, while the 2026-11-26 audit reconciliation updates the cognitive-plane and ontology findings.
 
-Two bugs the quest agent found are fixed and live on spw.quest (ddec8392; version 75b5b8a2). The guide's note boots, and a script carried back from factshift.center fills /build in place, never reaching the server. Their 21 wonders are in [wonders.spw](wonders.spw), where `npm run wonder` reads them; two are answered. The rest of this plan waits on the creator's answers to the questions below.
-
-**Related:** [factshift-center OPERATORS.md](../factshift-center/OPERATORS.md) (the lifecycle note this pass tested) · [brace-semantics](../brace-semantics/PLAN.md) (§E door, §F) · [spw-quest](../spw-quest/PLAN.md) · [interaction-grammar](../interaction-grammar/PLAN.md) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) · [host-frame cache](../../../.spw/caches/host-frame-2026-09.spw).
+**Related:** [ecosystem-planes-pivots-ontologies](../../../.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw) (2026-11-26 audit) · [factshift-aperture-rederivation](../../../.spw/caches/factshift-aperture-rederivation-2026-11.spw) · [factshift-center OPERATORS.md](../factshift-center/OPERATORS.md) (the lifecycle note this pass tested) · [brace-semantics](../brace-semantics/PLAN.md) (§E door, §F) · [spw-quest](../spw-quest/PLAN.md) · [interaction-grammar](../interaction-grammar/PLAN.md) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) · [host-frame cache](../../../.spw/caches/host-frame-2026-09.spw).
 
 The creator, 2026-11-07: "consider spwashi.com component ecological theory and factshift.center informatic physics as separate planes united by spw.quest … partially a reflection on the boon/bane/bone .land trichotomy … clarifying how the material metareality of these surfaces relates to business or academic value."
 
@@ -72,6 +66,16 @@ One expression is read three ways today: wording on a spwashi.com card, slots on
   - A screenshot is both the receipt and the source.
   - The ecology probes make a short, repeatable audit for a client's site: which components claim one gesture, what covers reading text at rest, and how much arrival grows against what was authored.
 - **Nothing here is a price or a promise.** The order card's wording and anything about Dregg stay the creator's.
+
+## 2026-11-26 Audit reconciliation
+
+Measured in [ecosystem-planes-pivots-ontologies](../../../.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw) against the live repos and workbench theory (`charge-valence-brace-bridge.spw`, `cross-product-rederivation.spw`, `2026-11-11-one-table-many-scales.spw`):
+
+1. **Effect grades sharpen the bone/boon/bane accounting.** Every plane now splits gesture effects into `L0` transient lean (0 diff on lift), `L1` session hold (local view/fold/aperture/pin, line untouched), and `L2` document write (`editLine` / URL / file). Keeping `L0` and `L1` distinct from `L2` prevents "every scrub writes the document" drift.
+2. **Per-frame heat is already proven on Quest, not yet on Factshift.** `workers/spw-quest/src/physics.js` runs per-body warm/cool clocks so a visitor entering one body leaves settled siblings at `0.0 px` displacement; `factshift.center` still runs one global d3 `alpha` (plus continuous `entropyForce` kicks), leaking wakes across frames. Porting per-frame clocks (`factshift-center` P1) closes the largest physics gap between the two planes.
+3. **Honest paper-vs-code boundary.** The workbench's `cross-product-rederivation.spw` separates four formal cognitive axes (`orientation`, `containment`, `charge`, `role`) on paper from what live DOM/canvas code actually wires. On `spwashi.com`, `data-spw-charge` still has three uncoordinated writers (`brace-gestures.js`, `haptics.js`, `brace-pivots.js`) and `brace:*` arming events do not feed `charge-field.js`.
+4. **Five-way `charge` collision confirmed.** Per `charge-valence-brace-bridge.spw`, `charge` now collides across five distinct meanings: (a) grain aperture disclosure (`open`/`close`), (b) d3 repulsion `forces.charge`, (c) the `boon`/`bane`/`bone`/`bonk`/`honk` valence pentad, (d) upstream `ChargePacket` (`G6_discharge_homonym`), and (e) `spwashi.com`'s `charge-field.js` phase (`idle`/`primed`/`charged`/`sustained`). Disambiguation lands in `.spw/conventions/{word-sets,charge-cycle,semantic-braces}.spw`.
+5. **Land sigil split remains live.** `factshift.center`'s `SITE_CONFIGS` maps `boon`/`bane`/`bone` to `* . #`, whereas `spwashi.com`'s domain pages map them to `> ! ^`. One upstream `operator_table` + valence descriptor (`week_2026_11_26`) stays the clean resolution.
 
 ## Ready without a taste call
 

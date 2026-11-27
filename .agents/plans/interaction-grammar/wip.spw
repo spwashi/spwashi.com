@@ -99,6 +99,7 @@ fixity = "tending"
  >>[2026-11-08 16:42] plan — cluster B in semantic-copy-depth/update-clusters-2026-11.spw. The settings passage stays next. A second commit quotes a public verb only after R3 or R4 changes one. Taste question: #>wonder_update_clusters_gesture_cohesion.
  >>[2026-11-08 17:24] plan — cluster B quotes one of two sources already in the code: GESTURE_CHARGE in expression-query.js, or the living-term title in haptics.js. The phase names stay INTERACTION_PHASES in arc-taxonomy.js.
  >>[2026-11-10 11:14] note — lore-land-plans.spw#value: a later visit changes with a plain-words note, and nobody loses the gesture they had. Beside PLAN.E's continuity and the premium test. The settings passage stays next.
+ >>[2026-11-26 22:18] align — Updated PLAN.md after the 2026-11-26 ecosystem audit (.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw): recorded gesture-measure.js landing (67261257), surfaced the three uncoordinated data-spw-charge writers (brace-gestures.js, haptics.js, brace-pivots.js) plus the unbridged brace:* -> charge-field.js seam, and aligned the canonical 4-rung cross-host ladder (quiet -> lean -> hold -> commit) with L0/L1/L2 effect grades and build:peer-kit S4c.
 }
 
 ^["open"]{
@@ -119,10 +120,10 @@ fixity = "tending"
 ^["cache"]{
  ~#status: "implementing"
  ~#next_commit: "+[settings] Say what each gesture does on this site, quoting each authored contract beside what it does today"
- ~#files_hot: ".spw/conventions/interaction-microstates.spw, settings/index.html, public/js/runtime/interaction/brace-gestures.js"
+ ~#files_hot: ".spw/conventions/interaction-microstates.spw, settings/index.html, public/js/kernel/gesture-measure.js, public/js/runtime/interaction/brace-gestures.js, public/js/runtime/physics/charge-field.js"
  ~#gate: "nothing"
  ~#open_count: "6"
- ~#last_stream: "2026-11-10"
+ ~#last_stream: "2026-11-26"
  ~#taste_debt: "Multi-language surfaces must remain honest: the guest language teaches itself; Spw provides the frame without subordinating the guest. Cross-session familiarity must not cross the stated privacy property (senses without remembering who) without a deliberate, logged decision to do so."
 }
 

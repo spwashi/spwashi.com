@@ -1,4 +1,4 @@
-# Review 2026-11-16 — the hold is the start, /{path} is the title, nothing built.
+# Review 2026-11-26 — the hold is the start, /{path} is the title, grain aperture and per-frame heat sequenced ahead of new chrome.
 # The canvas's side of the set. Claims, not a companion essay.
 # workers-wonder-kit owns the set that already shipped. This file owns what the canvas has not.
 
@@ -14,6 +14,9 @@
 @operators: ~"./OPERATORS.md"
 @set_plan: ~"../workers-wonder-kit/index.spw"
 @ecosystem: ~"../ecosystem-architecture/PLAN.md"
+@aperture_cache: ~"../../../.spw/caches/factshift-aperture-rederivation-2026-11.spw"
+@roundtrip_cache: ~"../../../.spw/caches/ecosystem-roundtrip-architecture-2026-11.spw"
+@ecosystem_audit: ~"../../../.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
 @mutex_lines: ~"../../../workers/factshift-center/app/src/js/ui/mutex-lines.ts"
 @mutex_feed: ~"../../../workers/factshift-center/app/src/js/ui/mutex-feed.ts"
 @lock: ~"../../../workers/mutex-buzz/src/lock.js"
@@ -86,7 +89,8 @@ expression = title[path]{hold}<frame>
 ^"ephemeral"{
   now = `sayNearHandle is one note beside the handle, on the 2.4s hold.`
   seat = `The sentence sits on the surface that earned it. The clock starts when the hand lifts.`
-  scrub = `The left edge is where and the right edge is how. While the finger moves, the stop's line is the lean. Release writes. A return home writes nothing.`
+  scrub = `The left edge is where (thread) and the right edge is how (parts, carried in dbdb3364). While the finger moves, the stop's line is the lean. Release writes. A return home writes nothing.`
+  aperture = `Grain disclosure is a symmetric open <-> quiet <-> close aperture on the active grain's real brace boundary (L0 in flight, L1 on lift; rungs quiet, lean, hold, saturate). It is never called charge (forces.charge stays on Shift+wheel and Reflex) and never mounts onto dead #frame-scrub (@aperture_cache).`
   joint = `On the held line the left rail is jointsOf and the right rail is that joint's turns. says is the lean. Release is the write.`
   theme = `A scrub along the known records wears that hue and expires unless kept. No picker, and no hue that is not in a record.`
   quiet = `No 418 and no secret theme.`
@@ -95,6 +99,7 @@ expression = title[path]{hold}<frame>
 ^"field"{
   themed = `SITE_CONFIGS themes boon.land, bane.land, bone.land, and lore.land at load. factshift.center is empty. The set's other hosts are absent.`
   kick = `entropy, force, and signal add a kick every tick while alpha is up, so a line still finding its seats does not arrive.`
+  heat = `Global d3 alpha leaks wakes across settled sibling frames; port spw.quest/src/physics.js per-frame warm/cool clocks so local acts leave settled siblings at 0.0 px (P1, @roundtrip_cache).`
   tune = `The held line may choose the profile that exists: * pulls, . kicks, # damps, ~ steps. @ leans toward a point. % adds nothing.`
   seats = `formatSpw, bodyPlan, and arrange each read the braces alone. One matrix of written order, slot, and open depth would feed all three.`
 }[reg=facet]
@@ -136,7 +141,8 @@ expression = title[path]{hold}<frame>
     `wonder_factshift_hold`,
     `wonder_factshift_field`,
     `wonder_factshift_ephemeral`,
-    `wonder_factshift_interstitials`
+    `wonder_factshift_interstitials`,
+    `wonder_factshift_grain_aperture`
   ][reg=set]
   set = `Where this file and what the set already shipped disagree, the question stays in workers-wonder-kit.`
 }[reg=facet]

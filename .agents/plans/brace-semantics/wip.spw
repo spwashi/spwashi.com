@@ -40,6 +40,7 @@ fixity = "experimental"
  >>[2026-11-06 12:24] revise — draft kept: the element pair as an ungated slice (3.5), the one-line block, the hosts that write their line, the no-write-back rule. Cut: the archetype table's wrong attribute and event names, "expose readSpwHydration" (it exists), a write under the name hydrate, the proposed-commit facet. Slices 2 and 3 split into 2a/2b and 3a/3b; 3b found the boon and bane alias in layout.css, cinematic.css and four recipe routes, not only brace-pivots.js. Refs re-measured: core.css:1596, spw.d.ts:281, toSpwExpression, constructSpell, buildPinRecord, ensureElementDeepLink.
  >>[2026-11-10 11:14] note — lore-land-plans.spw#value: both brace orders parse. Accumulate and discharge stays PLAN.A's reading. A pin that keeps its expression is the market sentence. Slice 2a stays next.
  >>[2026-11-17 13:37] align — Refined PLAN.md beside 2026-11-17 cross-host findings: paired brace-pair containment with factshift.center interstitial delimiters (. , ; ~> -> || :) and spw.pivots/1 separator turns, and noted attention.productions compose.js MARK_OP/BRACKET_OP <a class="slot"> scrubbers as a live realization of §D collectible slot handles beside Circle vs Atlas bracket sequence conventions. Slice 2a stays next.
+ >>[2026-11-26 22:18] align — Aligned PLAN.md with workbench charge-valence-brace-bridge.spw (open/close canonical L8_orientation, left/right render profile), brace-hysteresis-crease-2026-09.spw, 2026-11-26 ecology:language data-spw-brace counts, and factshift.center's symmetric open <-> quiet <-> close grain aperture re-derivation (separating aperture disclosure from forces.charge and boon/bane valence). Slices 2a, 2b, 3a, 3b, 3.5 remain ungated.
 }
 
 ^"open"{
@@ -58,5 +59,5 @@ fixity = "experimental"
  ~#next_commit: "+[runtime] Let a pin keep the expression it was made with (Slice 2a)"
  ~#files_hot: "public/js/runtime/memory/pin-registry.js, public/js/interface/composition.js, public/css/handles/operators/bias-and-phrases.css, public/js/runtime/interaction/brace-pivots.js, public/js/semantic/spw-block-association.js"
  ~#gate: "nothing for 2a, 2b, 3a, 3b and 3.5; the five decisions, then a browser look for the instrument and the door"
- ~#last_stream: "2026-11-17"
+ ~#last_stream: "2026-11-26"
 }
