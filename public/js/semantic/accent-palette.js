@@ -247,6 +247,7 @@ function inferOperationalPayload(target) {
     const tokens = uniqueAccentValues([
         ...tokensFromHref(href),
         ...parseAccentList(actionable.getAttribute('data-spw-accent-anchor') || '').map(normalizeAccentToken),
+        normalizeAccentToken(actionable.dataset.spwToken || ''),
         normalizeAccentToken(text)
     ]);
 
@@ -364,15 +365,16 @@ export function samplePaletteFromImage(image, maxColors = 6) {
     }
 }
 
-export function inferAnchorTokens(container) {
+export function inferAnchorTokens(container, { includeContext = true } = {}) {
     const manual = parseAccentList(container.dataset.spwAccentAnchor || '').map(normalizeAccentToken);
-    const inferred = [];
-    const links = container.querySelectorAll('a[href]');
+    const links = container.matches('a[href]') ? [container] : container.querySelectorAll('a[href]');
+    const inferred = Array.from(links).flatMap((link) => [
+        ...tokensFromHref(link.getAttribute('href') || ''),
+        normalizeAccentToken(link.dataset.spwToken || ''),
+        normalizeAccentToken(link.textContent || '')
+    ]);
 
-    links.forEach((link) => {
-        inferred.push(...tokensFromHref(link.getAttribute('href') || ''));
-        inferred.push(normalizeAccentToken(link.textContent || ''));
-    });
+    if (!includeContext) return uniqueAccentValues([...manual, ...inferred]);
 
     const surface = normalizeAccentToken(container.closest('[data-spw-surface]')?.dataset?.spwSurface || '');
     const context = normalizeAccentToken(container.closest('[data-spw-context]')?.dataset?.spwContext || '');

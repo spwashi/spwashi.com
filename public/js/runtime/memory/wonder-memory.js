@@ -8,11 +8,11 @@ import {
     normalizeAccentToken,
     parseAccentList,
     resolveAccentTokenColors,
-    tokensFromHref,
     uniqueAccentValues
 } from '/public/js/semantic/accent-palette.js';
 import { describeCognitiveState } from '/public/js/runtime/memory/cognitive-state.js';
 
+const VISUAL_ROUTE_LINK_SELECTOR = 'a.spw-visual-link-card[href]';
 const MEMORY_TARGET_SELECTOR = [
     '.topic-photo-card',
     '.image-study',
@@ -21,6 +21,7 @@ const MEMORY_TARGET_SELECTOR = [
     '[data-spw-image-surface]',
     '.page-index a',
     '.spw-chip',
+    VISUAL_ROUTE_LINK_SELECTOR,
     '.frame-sigil',
     '.spec-pill',
     '.intent-cluster',
@@ -157,9 +158,9 @@ function getManualMemoryTokens(target) {
 }
 
 function inferTargetTokens(target) {
-    const hrefTokens = target.matches('a[href]')
-        ? tokensFromHref(target.getAttribute('href') || '')
-        : [];
+    if (target.matches(VISUAL_ROUTE_LINK_SELECTOR)) {
+        return inferAnchorTokens(target, { includeContext: false });
+    }
 
     const localHost = target.closest?.('[data-spw-memory-anchor], [data-spw-accent-anchor], [data-spw-context], [data-spw-surface]') || null;
     const contextualTokens = localHost && localHost !== target
@@ -168,7 +169,6 @@ function inferTargetTokens(target) {
 
     return uniqueAccentValues([
         ...getManualMemoryTokens(target),
-        ...hrefTokens,
         ...inferAnchorTokens(target),
         ...contextualTokens,
         normalizeAccentToken(target.textContent || '')

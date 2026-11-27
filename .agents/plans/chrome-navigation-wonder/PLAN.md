@@ -8,6 +8,10 @@
 
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md) (breadcrumb spell) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived). **Absorbed 2026-10-10:** [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).
 
+**Lens navigation alignment (2026-11-27).** Home lens chips pair readable destinations with authored Spw tokens. Shared recent-path memory reads the destination of visual link cards on Home and Topics so a related chip and card can respond to the same move. See the [home renovation alignment](../../../.spw/caches/home-renovation-2026-11.spw#lens_navigation_alignment_2026_11_27).
+
+**Landing-page navigation alignment (2026-11-27).** On Topics, Play, Tools, and Projects, headings name the route or task and chips name the destination in readable prose. Use existing Spw tokens where the operator carries meaning. Preserve destination and fragment coverage while cutting copy that repeats the headings or controls. Validate with copy and operator audits, the route manifests, and the local checks.
+
 ## The crumb travels, and long Spw folds (2026-11-09)
 
 [site-alignment](../../../.spw/caches/site-alignment-2026-11.spw). A page turned from the crumb's page slot now carries `?spw-rail=crumb`, so the next page opens as a crumb, not the rail (`rail-crumb.js`, `scripts/tests/rail-crumb-travel.test.mjs`). `public/js/kernel/spw-summary.js` says a long Spw line at a width without dropping a closer, folding the deepest bodies first; the cauldron's trail, gesture, trace and carried value use it. Next, ranked there: travel by rail or crumb landing with a link's arrival, expression turns heard on the bus, `<spw-expression>` on the reader, settings as one expression to turn, and chrome motion on the tokens.

@@ -175,3 +175,16 @@ contents = #[
 @chrome_owner: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
 @cauldron_owner: ~"../../.agents/plans/cauldron-lens-composition/PLAN.md"
 @landing_owner: ~"../../.agents/plans/landing-visual-hierarchy/PLAN.md"
+
+
+^"lens_navigation_alignment_2026_11_27"{
+  operation = "align"
+  fixity = "tending"
+  focus = "navigation clarity"
+  element = "memory"
+  owner = "Home lens prose and the existing wonder-memory projection"
+  goal = "There is a concrete next move in each lens. A chip speaks the destination in prose and carries its Spw token for navigation and recent-path matching."
+  lens_controls = "Choosing a lens sends its topic through the existing accent anchor so readers get a related signal while still on Home."
+  route_cards = "A visual route card reads its own link for recent-path matching. Inherited page context does not light the whole atlas."
+  validation = "Copy accessor census, module selector census, pocket still, and local checks."
+}[reg=facet]
