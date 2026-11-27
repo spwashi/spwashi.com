@@ -1,8 +1,11 @@
 /**
  * What a note is and which site it is about. No rendering, no network.
+ *
+ * A note is a card its writer keeps. Nothing here stores, counts, or sends
+ * one: the writer decides where the card goes.
  */
 
-export const VERSION = "0.3.0";
+export const VERSION = "0.4.0";
 
 /** Floor for a written note that has no type. A chosen kind, common note, or thanks is a complete submission. */
 export const NOTE_MIN = 8;
@@ -37,14 +40,20 @@ export function normalizeHost(input) {
   return value;
 }
 
-export function orgFromHostname(hostname) {
-  const host = String(hostname || "").toLowerCase().replace(/\.$/, "");
-  if (host === "autonomous.feedback" || host === "www.autonomous.feedback") return null;
-  const suffix = ".autonomous.feedback";
-  if (!host.endsWith(suffix)) return null;
-  const label = host.slice(0, -suffix.length);
-  if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)) return null;
-  return label;
+/**
+ * The sites a card can be about: one person's sites, read by that person.
+ * LISTED are the ones that link here, in the order the home page names them.
+ */
+export const OWN_SITES = Object.freeze([
+  "spwashi.com", "resume.spwashi.com", "lore.land", "texture.website", "attention.productions",
+  "bane.land", "bone.land", "boon.land", "brainstorm.monster", "factshift.center", "mutex.buzz",
+  "newyear.life", "rpgwednesday.shop", "spw.rest", "spwashi.biz", "spwashi.click", "spwashi.ink",
+  "tealstripesvibes.com", "trope.wiki", "smut.today", "wap.mom", "spw.quest",
+]);
+export const LISTED = Object.freeze(["spwashi.com", "lore.land", "spw.quest", "attention.productions"]);
+
+export function isOwnSite(host) {
+  return OWN_SITES.includes(String(host || "").toLowerCase());
 }
 
 /**
@@ -58,7 +67,7 @@ export const CONTEXTS = Object.freeze([
     title: "Broken",
     operator: "action",
     prompt: "What failed, and what you did just before it failed.",
-    example: "I chose Pay. The button spun, then the page went blank.",
+    example: "I pressed Next. The button spun, then the page went blank.",
     copy_unit: "feedback.broken.lede",
     expression: "feedback[broken]{claim}",
   },
@@ -68,7 +77,7 @@ export const CONTEXTS = Object.freeze([
     title: "Confusing",
     operator: "concept-edge",
     prompt: "What you could not tell how to do, and where you were.",
-    example: "The search box looks like a button. I typed in the heading instead.",
+    example: "The menu looks like a heading. I tapped the title instead.",
     copy_unit: "feedback.confusing.lede",
     expression: "feedback[confusing]{claim}",
   },
@@ -78,7 +87,7 @@ export const CONTEXTS = Object.freeze([
     title: "Missing",
     operator: "frame",
     prompt: "What you expected to find on the page, and did not.",
-    example: "There is no way back to the cart after the address step.",
+    example: "There is no way back to the start after the second step.",
     copy_unit: "feedback.missing.lede",
     expression: "feedback[missing]{claim}",
   },
@@ -88,7 +97,7 @@ export const CONTEXTS = Object.freeze([
     title: "Wrong",
     operator: "action",
     prompt: "What the page says or does that does not match the thing it is about.",
-    example: "The price on the list is 12. The price on the form is 15.",
+    example: "The page says it was posted Monday. The date beside it says Tuesday.",
     copy_unit: "feedback.wrong.lede",
     expression: "feedback[wrong]{claim}",
   },
@@ -98,7 +107,7 @@ export const CONTEXTS = Object.freeze([
     title: "Question",
     operator: "frame",
     prompt: "What you need the person who runs the site to answer.",
-    example: "Can I finish this step without creating an account?",
+    example: "Can I read this without the sound on?",
     copy_unit: "feedback.question.lede",
     expression: "feedback[question]{address}",
   },
@@ -108,7 +117,7 @@ export const CONTEXTS = Object.freeze([
     title: "Appreciation",
     operator: "wonder",
     prompt: "What was clear or easy, and where you noticed it.",
-    example: "The message under the email field told me exactly what to fix.",
+    example: "The line under the field told me exactly what to change.",
     copy_unit: "feedback.appreciation.lede",
     expression: "feedback[appreciation]{gift}",
   },
@@ -116,8 +125,8 @@ export const CONTEXTS = Object.freeze([
 
 /**
  * The kind a note has when nobody chose one. Not a chip and not an address:
- * a preselected kind would file every untouched note under it and bend the
- * counts, so an unsorted note stays a plain note.
+ * a preselected kind would sort every untouched note under it, so an unsorted
+ * note stays a plain note.
  */
 export const NOTE = Object.freeze({
   slug: "note",
@@ -125,7 +134,7 @@ export const NOTE = Object.freeze({
   title: "Note",
   operator: "frame",
   prompt: "What happened, and where were you?",
-  example: "I looked for the price and found it only after the form.",
+  example: "I looked for the next page and found it only at the very end.",
   copy_unit: "feedback.note.lede",
   expression: "feedback[note]{claim}",
 });
@@ -139,8 +148,6 @@ export const LEGACY_SLUGS = Object.freeze({
   wonder: "appreciation",
   brief: "question",
 });
-
-export const DEFAULT_KIND = "broken";
 
 /** A site path, or "" when the value is not a path. */
 export function cleanPath(value) {
@@ -160,8 +167,8 @@ export function cleanPath(value) {
 /**
  * The page a reader came from, when the Referer is the site itself (or its
  * www form). A bare "/" is ignored: browsers cut a cross-site Referer to the
- * origin by default, so "/" cannot be told apart from "unknown". Snippets send
- * the full URL with referrerpolicy="no-referrer-when-downgrade".
+ * origin by default, so "/" cannot be told apart from "unknown". The sites'
+ * links send the full URL with referrerpolicy="no-referrer-when-downgrade".
  */
 export function refererPath(referer, host) {
   if (!referer || !host) return "";
@@ -176,16 +183,6 @@ export function refererPath(referer, host) {
   if (from !== String(host).toLowerCase()) return "";
   const path = cleanPath(url.pathname);
   return path === "/" ? "" : path;
-}
-
-/**
- * Monday of the week a timestamp falls in, as YYYY-MM-DD (UTC). A note that is
- * counted is counted under this week, so the card and the desk name the same one.
- */
-export function weekOf(issued) {
-  const day = new Date(`${String(issued).slice(0, 10)}T00:00:00Z`);
-  const back = (day.getUTCDay() + 6) % 7;
-  return new Date(day.getTime() - back * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 }
 
 /** The current slug for a slug or a legacy alias, or "" if it names no kind. */

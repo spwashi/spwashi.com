@@ -3,28 +3,44 @@ import assert from 'node:assert/strict';
 import worker from '../src/index.js';
 import { CLIENT_SCRIPT } from '../src/client.js';
 import { contrast, readConfig, subjectFor } from '../src/config.js';
-import { normalizeHost } from '../src/model.js';
-import { memoryDb } from './memory-db.mjs';
-import { digest, weekOf } from '../src/desk.js';
+import { LISTED, isOwnSite, normalizeHost } from '../src/model.js';
 
 const get = (host, path, options) => worker.fetch(new Request(`https://${host}${path}`, options));
 const page = async (path, options) => (await get('autonomous.feedback', path, options)).text();
-const form = (fields) => ({
+const form = (fields, headers = {}) => ({
   method: 'POST',
-  headers: { 'content-type': 'application/x-www-form-urlencoded' },
+  headers: { 'content-type': 'application/x-www-form-urlencoded', ...headers },
   body: new URLSearchParams(fields),
 });
-const json = (body) => ({
-  method: 'POST',
-  headers: { accept: 'application/json', 'content-type': 'application/json' },
-  body: JSON.stringify(body),
-});
+const NOTE = 'The folio page loads slowly on my phone.';
 
-/** Serve client files for named hosts; everything else is a 404 or a fast 200 homepage. */
+const decode = (text) => text.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+/** What a card page made: the card's data, its text, and whether it carries words. */
+function cardOf(html) {
+  const tag = html.match(/<article class="card" id="card"[^>]*>/)?.[0] || '';
+  const attr = (name) => {
+    const value = tag.match(new RegExp(` data-${name}="([^"]*)"`))?.[1];
+    return value === undefined ? null : decode(value);
+  };
+  return {
+    kind: attr('kind'),
+    site: attr('site'),
+    host: attr('host'),
+    address: attr('address'),
+    note: attr('note'),
+    subject: decode(html.match(/<span class="card-subject">([^<]*)<\/span>/)?.[1] || ''),
+    slip: decode(html.match(/<pre id="slip">([\s\S]*?)<\/pre>/)?.[1] || ''),
+    worded: !/No written detail/.test(html),
+  };
+}
+
+/** Serve client files for named hosts and record every host asked; everything else is a 404 or a fast 200 homepage. */
 function stubFetch(files = {}) {
   const real = globalThis.fetch;
+  const asked = [];
   globalThis.fetch = async (input) => {
     const url = new URL(typeof input === 'string' ? input : input.url);
+    asked.push(url.hostname);
     if (url.pathname === '/.well-known/autonomous-feedback.json') {
       const file = files[url.hostname];
       if (!file) return new Response('missing', { status: 404 });
@@ -34,76 +50,69 @@ function stubFetch(files = {}) {
     }
     return new Response(null, { status: 200 });
   };
-  return () => { globalThis.fetch = real; };
+  const restore = () => { globalThis.fetch = real; };
+  restore.asked = asked;
+  return restore;
 }
 
-test('a pasted link becomes a domain', () => {
-  assert.equal(normalizeHost('https://www.Shop.example/about?x=1#top'), 'shop.example');
-  assert.equal(normalizeHost('  example.org:8080/ '), 'example.org');
-  assert.equal(normalizeHost('mailto:someone@example.org'), 'example.org');
+test('a pasted link becomes a domain, and only the listed sites take notes', () => {
+  assert.equal(normalizeHost('https://www.Spwashi.com/about?x=1#top'), 'spwashi.com');
+  assert.equal(normalizeHost('  lore.land:8080/ '), 'lore.land');
   assert.equal(normalizeHost(''), '');
+  assert.ok(isOwnSite('spw.quest'));
+  assert.ok(!isOwnSite('example.org'));
+  assert.ok(LISTED.every(isOwnSite));
 });
 
-test('the homepage explains the product and starts setup', async () => {
+test('the home page names the sites and says nothing is stored', async () => {
   const restore = stubFetch();
   try {
     const home = await page('/');
-    assert.match(home, /<h1>Tell a website what happened<\/h1>/);
-    // The first thing on the page is a card whose site you type in place.
-    assert.match(home, /<form method="post" action="\/note" class="write begin"/);
-    assert.match(home, /class="card-site-input" id="site" name="host"[^>]*data-begin-site/);
-    assert.match(home, /<textarea class="card-write" id="begin-note" name="note"/);
-    assert.match(home, /Or try one that is set up: <a href="\/lore\.land">/);
-    assert.doesNotMatch(home, /example\.com<\/span>/);
-    assert.match(home, /action="\/start"/);
-    assert.match(home, /class="skip" href="#main"/);
-    assert.match(home, /aria-describedby="host-hint"/);
-    assert.doesNotMatch(home, /<select|spwashi|subdomain/i);
-    assert.match(home, /viewport-fit=cover/);
-    assert.match(home, /<summary>How it works, and what it costs<\/summary>/);
-    const go = await get('autonomous.feedback', '/note?host=https%3A%2F%2Fwww.Shop.example%2F');
-    assert.equal(go.status, 302);
-    assert.equal(go.headers.get('location'), 'https://autonomous.feedback/shop.example');
-    const carried = await get('autonomous.feedback', '/note?host=shop.example&note=The%20price%20was%20hard%20to%20find.');
-    assert.equal(carried.status, 302);
-    assert.equal(carried.headers.get('location'), 'https://autonomous.feedback/shop.example?note=The+price+was+hard+to+find.');
+    assert.match(home, /<h1>A note about a page<\/h1>/);
+    assert.match(home, /Nothing is stored\. A reply is not promised\./);
+    for (const host of LISTED) assert.match(home, new RegExp(`href="/${host.replace('.', '\\.')}"`));
+    const main = home.slice(home.indexOf('<main'));
+    assert.doesNotMatch(main, /<form|Run a site|\/start|\/meter|inbox|desk/i);
     const privacy = await page('/privacy');
-    assert.match(privacy, /<h1>How notes are kept<\/h1>/);
-    assert.match(privacy, /Three days, unless the owner saves the note\./);
-    assert.match(home, /An inbox: on request\./);
-    assert.doesNotMatch(home, /come later/);
-    assert.match(await page('/?host=https%3A%2F%2Fwww.Shop.example%2Fabout'), /value="shop\.example"/);
-    assert.match(await page('/?host=%3Cx%3E'), /value=""/);
-    const desk = await (await get('acme.autonomous.feedback', '/new-project.example', { headers: { accept: 'application/json' } })).json();
-    assert.equal(desk.org, 'acme');
+    assert.match(privacy, /<h1>What happens to a note<\/h1>/);
+    assert.match(privacy, /Nothing you write is stored\./);
+    assert.match(privacy, /no accounts, no cookies, and no counts/);
+    assert.doesNotMatch(privacy.slice(privacy.indexOf('<main')), /inbox|three days|owner/i);
+    assert.equal(restore.asked.length, 0);
   } finally {
     restore();
   }
 });
 
-test('setup fills every codeblock with the domain, kind, and method', async () => {
+test('a site that is not one of these gets no form and is never fetched', async () => {
   const restore = stubFetch();
   try {
-    const empty = await page('/start');
-    assert.match(empty, /Showing example\.com until you enter your domain/);
-    // No kind is preselected by default: the link opens the form as is.
-    assert.match(empty, /href=&quot;https:\/\/autonomous\.feedback\/example\.com&quot;/);
-    assert.match(empty, /None \(recommended\)/);
-    const setup = await page('/start?host=https%3A%2F%2Fshop.example%2F&how=form&kind=question');
-    assert.match(setup, /action=&quot;https:\/\/autonomous\.feedback\/shop\.example&quot;/);
-    assert.match(setup, /name=&quot;kind&quot; value=&quot;question&quot;/);
-    assert.match(setup, /Question for shop\.example/);
-    assert.match(setup, /curl -X POST https:\/\/autonomous\.feedback\/shop\.example/);
-    assert.match(setup, /No file found for shop\.example yet/);
-    assert.match(setup, /&quot;host&quot;: &quot;shop\.example&quot;/);
-    assert.match(setup, /\.nojekyll/);
-    assert.match(setup, /value="form" checked/);
-    const data = setup.match(/<script type="application\/json" id="setup-data">([\s\S]*?)<\/script>/)[1];
-    assert.doesNotMatch(data, /</);
-    assert.ok(JSON.parse(data).snippets.frame.template.includes('{{host}}'));
-    const bad = await get('autonomous.feedback', '/start?host=localhost');
-    assert.equal(bad.status, 400);
-    assert.match(await bad.text(), /aria-invalid="true"/);
+    const other = await get('autonomous.feedback', '/example.org/broken');
+    assert.equal(other.status, 404);
+    const html = await other.text();
+    assert.match(html, /<h1>No form for example\.org<\/h1>/);
+    assert.match(html, /href="\/spwashi\.com"/);
+    const posted = await get('autonomous.feedback', '/example.org', form({ kind: 'broken', note: NOTE }));
+    assert.equal(posted.status, 404);
+    assert.doesNotMatch(await posted.text(), /class="card"/);
+    assert.ok(!restore.asked.includes('example.org'));
+  } finally {
+    restore();
+  }
+});
+
+test('what the desk, setup, meter, frame, and climate answered is gone', async () => {
+  const restore = stubFetch();
+  try {
+    for (const path of ['/desk', '/start', '/start/spwashi.com', '/meter', '/now', '/climate.json', '/ready', '/alerts.json', '/spwashi.com/inbox', '/spwashi.com/config.json', '/spwashi.com/broken.json', '/embed/spwashi.com', '/https://spwashi.com/broken']) {
+      const response = await get('autonomous.feedback', path);
+      assert.equal(response.status, 404, path);
+    }
+    const tenant = await get('acme.autonomous.feedback', '/spwashi.com', form({ kind: 'broken', note: NOTE }));
+    assert.equal(tenant.status, 200);
+    assert.doesNotMatch(await tenant.text(), /account:|acme/);
+    const health = await (await get('autonomous.feedback', '/health')).json();
+    assert.equal(health.ok, true);
   } finally {
     restore();
   }
@@ -112,500 +121,208 @@ test('setup fills every codeblock with the domain, kind, and method', async () =
 test('the write page is a labelled form with the kind as a choice', async () => {
   const restore = stubFetch();
   try {
-    const write = await page('/example.org/question');
-    assert.match(write, /<h1 class="write-title">A note for example\.org<\/h1>/);
+    const write = await page('/spw.quest/question');
+    assert.match(write, /<h1 class="write-title">A note for spw\.quest<\/h1>/);
+    assert.match(write, /href="https:\/\/spw\.quest\/">Open spw\.quest</);
     // One choice, one group: the link's kind is checked in it, and choosing never rewrites the address.
     assert.match(write, /name="what" value="kind:question" checked/);
-    assert.doesNotMatch(write, /data-href=/);
     assert.match(write, /<fieldset id="what" class="chips what">/);
     assert.match(write, /data-clear-what hidden>Clear the choice</);
     assert.match(write, /<p class="sr-only" id="note-hint">[^<]*Optional once you pick something above\./);
-    assert.match(write, /<p class="row-caption" id="what-kinds">Pick one, or just write<\/p>/);
-    // The question is the label; the note is written on the card itself.
     assert.match(write, /<label for="note" class="question" data-fill="prompt"[^>]*>What you need the person who runs the site to answer\.<\/label>/);
     assert.match(write, /<article class="card live" data-live-card[\s\S]*<span class="card-kind" data-live="kind">Question<\/span>[\s\S]*<textarea class="card-write" id="note" name="note"/);
-    assert.match(write, /aria-describedby="note-hint"/);
-    assert.match(write, /You keep the card for example\.org\. A reply is not promised\. <a href="\/privacy">How notes are kept<\/a>/);
-    assert.match(write, /class="hp" aria-hidden="true"/);
+    assert.match(write, /You keep the card for spw\.quest\. Nothing is stored, and a reply is not promised\. <a href="\/privacy">What happens to a note<\/a>/);
     assert.match(write, />Make my card</);
-    assert.match(write, /name="what" value="thanks" data-kind-title="Appreciation" data-expression="feedback\[appreciation\]\{gift\}" data-body="Thanks\."/);
-    // The card shows what a tap on this kind sends.
+    // The address names the site; the form does not send it again.
+    assert.doesNotMatch(write, /name="host"/);
     assert.match(write, /placeholder="I have a question about this\."/);
-    // Without a kind in the link, nothing is chosen for the writer.
-    const bare = await page('/example.org');
-    assert.doesNotMatch(bare, /name="kind" value="[a-z]+" checked/);
+    assert.doesNotMatch(write, /class="hp"|Run a site|\/start|checkout|Pay|cart/);
+    const bare = await page('/spw.quest');
+    assert.doesNotMatch(bare, /name="what" value="[a-z:]+" checked/);
     assert.match(bare, /What happened, and where were you\?/);
-    assert.match(await page('/broken?host=example.org'), /id="host"[^>]*value="example\.org"/);
-    const moved = await get('autonomous.feedback', '/WWW.Example.org/broken');
+    assert.equal((await get('autonomous.feedback', '/broken')).status, 302);
+    assert.equal((await get('autonomous.feedback', '/broken?host=spw.quest')).headers.get('location'), 'https://autonomous.feedback/spw.quest/broken');
+    assert.equal((await get('autonomous.feedback', '/broken?host=example.org')).headers.get('location'), 'https://autonomous.feedback/');
+    const moved = await get('autonomous.feedback', '/WWW.Spw.Quest/broken');
     assert.equal(moved.status, 301);
-    assert.equal(moved.headers.get('location'), 'https://autonomous.feedback/example.org/broken');
+    assert.equal(moved.headers.get('location'), 'https://autonomous.feedback/spw.quest/broken');
     // The URL names the kind by its label; old slugs move to the matching address.
-    const legacy = await get('autonomous.feedback', '/example.org/brief');
-    assert.equal(legacy.status, 301);
-    assert.equal(legacy.headers.get('location'), 'https://autonomous.feedback/example.org/question');
-    assert.equal((await get('autonomous.feedback', '/wonder?host=example.org')).headers.get('location'), 'https://autonomous.feedback/appreciation?host=example.org');
-    assert.equal((await get('autonomous.feedback', '/embed/example.org/review')).headers.get('location'), 'https://autonomous.feedback/embed/example.org/broken');
-    assert.equal((await get('autonomous.feedback', '/example.org/problem')).headers.get('location'), 'https://autonomous.feedback/example.org/broken');
-    const framed = await get('autonomous.feedback', '/embed/new-project.example');
-    assert.equal(framed.headers.get('x-frame-options'), null);
-    const policy = framed.headers.get('content-security-policy');
-    assert.match(policy, /frame-ancestors https:\/\/new-project\.example/);
-    assert.match(policy, /'self'/);
-    assert.equal((await get('autonomous.feedback', '/example.org/broken')).headers.get('x-frame-options'), 'DENY');
+    assert.equal((await get('autonomous.feedback', '/spw.quest/brief')).headers.get('location'), 'https://autonomous.feedback/spw.quest/question');
+    assert.equal((await get('autonomous.feedback', '/spw.quest/problem')).headers.get('location'), 'https://autonomous.feedback/spw.quest/broken');
+    assert.equal((await get('autonomous.feedback', '/spw.quest/broken')).headers.get('x-frame-options'), 'DENY');
   } finally {
     restore();
   }
 });
 
-test('a rejected note comes back in the form, not as JSON', async () => {
+test('words never ride in an address', async () => {
   const restore = stubFetch();
   try {
-    const short = await get('autonomous.feedback', '/example.org', form({ note: '<b>no' }));
+    const carried = await page('/spw.quest?note=The%20guide%20lost%20me%20here.');
+    assert.doesNotMatch(carried, /The guide lost me here\./);
+    assert.match(carried, /<form method="post" action="\/spw\.quest"/);
+  } finally {
+    restore();
+  }
+});
+
+test('a rejected note comes back in the form', async () => {
+  const restore = stubFetch();
+  try {
+    const short = await get('autonomous.feedback', '/spw.quest', form({ note: '<b>no' }));
     assert.equal(short.status, 400);
     const html = await short.text();
     assert.match(html, /class="error-summary" role="alert"/);
     assert.match(html, /Tap one of the choices above, or write a few more words \(at least 8 characters\)\./);
     assert.match(html, /aria-invalid="true"/);
     assert.match(html, />&lt;b&gt;no<\/textarea>/);
-    const typed = await get('autonomous.feedback', '/example.org', form({ kind: 'broken', note: '<b>no' }));
+    const typed = await get('autonomous.feedback', '/spw.quest', form({ kind: 'broken', note: '<b>no' }));
     assert.equal(typed.status, 200);
-    assert.match(await typed.text(), />&lt;b&gt;no</);
-    const onlyType = await (await get('autonomous.feedback', '/example.org/broken', json({}))).json();
-    assert.equal(onlyType.context, 'broken');
+    const onlyType = cardOf(await page('/spw.quest/broken', form({})));
+    assert.equal(onlyType.kind, 'Broken');
     assert.equal(onlyType.worded, false);
-    assert.match(onlyType.markdown, /Something here is broken\./);
-    const noSite = await get('autonomous.feedback', '/broken', form({ host: 'not a site', note: 'Something is broken here.' }));
-    assert.equal(noSite.status, 400);
-    assert.match(await noSite.text(), /is not a domain/);
-    const api = await get('autonomous.feedback', '/example.org', json({ note: 'short' }));
-    assert.equal(api.status, 400);
-    assert.equal((await api.json()).error, 'note_bounds');
-    for (const path of ['/broken', '/example.org/broken', '/embed/example.org']) {
-      const rejected = await get('autonomous.feedback', path, { method: 'POST', body: 'unparsed', headers: { accept: 'application/json', 'content-type': 'application/json' } });
-      assert.equal(rejected.status, 400);
-    }
+    assert.match(onlyType.slip, /Something here is broken\./);
+    const unread = await get('autonomous.feedback', '/spw.quest/broken', { method: 'POST', body: 'unparsed', headers: { 'content-type': 'application/json' } });
+    assert.equal(unread.status, 400);
   } finally {
     restore();
   }
 });
 
-test('a note becomes a card to save, share, or post', async () => {
+test('a note becomes a card that names the page it is about, and nothing is stored', async () => {
   const restore = stubFetch();
   try {
-    const card = await page('/example.org', form({ kind: 'appreciation', note: 'The map on the about page <b>kept</b> going.' }));
-    assert.match(card, /<h1>Your card is ready<\/h1>/);
-    assert.match(card, /class="card-kind">Appreciation</);
-    assert.match(card, /class="card-site">example\.org</);
-    assert.match(card, /&lt;b&gt;kept&lt;\/b&gt;/);
-    assert.doesNotMatch(card, /<b>kept<\/b>/);
-    assert.match(card, /data-save-image hidden/);
-    assert.match(card, /data-stamp><\/p>/);
-    assert.match(card, /href="https:\/\/bsky\.app\/intent\/compose\?text=[^"]*example\.org/);
-    assert.match(card, /Nothing was stored/);
-    assert.doesNotMatch(card, /Message on|send-title/);
-    const slip = await (await get('autonomous.feedback', '/example.org/broken', json({ note: 'The checkout button does nothing after pay.' }))).json();
-    assert.equal(slip.stored, false);
-    assert.equal(slip.title, 'Broken');
-    assert.match(slip.markdown, /checkout button does nothing/);
-    const switched = await (await get('autonomous.feedback', '/example.org/broken', json({ kind: 'question', note: 'Can I finish this step without creating an account?' }))).json();
-    assert.equal(switched.context, 'question');
-    // An old slug in a request body still works.
-    const aliased = await (await get('autonomous.feedback', '/example.org', json({ kind: 'practice', note: 'A dark mode would help at night.' }))).json();
-    assert.equal(aliased.context, 'confusing');
+    const html = await page('/spw.quest', form({ kind: 'appreciation', path: '/learn', note: 'The walk on the learn page <b>kept</b> going.' }));
+    assert.match(html, /<h1>Your card is ready<\/h1>/);
+    assert.match(html, /class="card-kind">Appreciation</);
+    assert.match(html, /class="card-site">spw\.quest</);
+    assert.match(html, /&lt;b&gt;kept&lt;\/b&gt;/);
+    assert.doesNotMatch(html, /<b>kept<\/b>/);
+    assert.match(html, /data-save-image hidden/);
+    assert.match(html, /data-stamp><\/p>/);
+    assert.match(html, /Nothing was stored\. The card lives on this page and in whatever you save or send\./);
+    // The card's address is the work, not this form.
+    const card = cardOf(html);
+    assert.equal(card.address, 'spw.quest/learn');
+    assert.equal(card.host, 'spw.quest');
+    assert.match(html, /<span class="card-address">spw\.quest\/learn<\/span>/);
+    const body = html.slice(html.indexOf('<main'));
+    assert.doesNotMatch(body, /autonomous\.feedback\/spw\.quest|via autonomous|Sent to|inbox/);
+    assert.match(html, /href="https:\/\/bsky\.app\/intent\/compose\?text=Appreciation%20for%20spw\.quest%2Flearn%3A%20/);
+    assert.match(card.slip, /^# Appreciation for spw\.quest/);
+    assert.match(card.slip, /about: https:\/\/spw\.quest\/learn/);
+    assert.doesNotMatch(card.slip, /via:|account:/);
+    // A kind named in the body wins, and an old slug still works there.
+    assert.equal(cardOf(await page('/spw.quest/broken', form({ kind: 'question', note: 'Can I read this without the sound on?' }))).kind, 'Question');
+    assert.equal(cardOf(await page('/spw.quest', form({ kind: 'practice', note: 'A dark mode would help at night.' }))).kind, 'Confusing');
   } finally {
     restore();
   }
 });
 
-test('a client file shapes the form, the theme, and the frame', async () => {
+test('a client file shapes the form and the theme', async () => {
   const restore = stubFetch({
-    'shop.example': {
+    'wap.mom': {
       schema: 'autonomous-feedback.client.v0',
-      host: 'shop.example',
-      name: 'Shop',
-      title: 'What was hard to use?',
+      host: 'wap.mom',
+      name: 'Wap',
+      title: 'What was hard to read?',
       intro: 'Tell us what broke.',
       kinds: ['broken', 'question', 'nonsense', 'brief'],
-      labels: { broken: { title: 'Bug report', prompt: 'What broke, and on which page?' } },
-      routes: [{ name: 'Cart', path: '/cart' }],
+      labels: { broken: { title: 'Misprint', prompt: 'What broke, and on which page?' } },
+      routes: [{ name: 'Cabinet', path: '/cabinet' }],
       from: 'required',
-      contact: { bluesky: '@Shop.Example', x: 'shop_example', mastodon: '@shop@example.social' },
-      button: 'Send it',
+      contact: { bluesky: '@Wap.Mom', x: 'wap_mom', mastodon: '@wap@example.social' },
+      button: 'Make it',
       note: { min: 20, max: 500 },
-      frame: { ancestors: ['https://blog.shop.example', 'http://insecure.example', 'https://blog.shop.example/path'] },
+      queue: { want: true },
+      inbox: { key: `sha256:${'a'.repeat(64)}` },
+      frame: { ancestors: ['https://blog.wap.mom'] },
       theme: { mode: 'light', background: '#ffffff', text: '#111111', accent: '#fafafa', corners: 'sharp', font: 'serif' },
     },
-    'other.example': { schema: 'autonomous-feedback.client.v0', host: 'shop.example', name: 'Imposter' },
+    'bone.land': { schema: 'autonomous-feedback.client.v0', host: 'wap.mom', name: 'Imposter' },
   });
   try {
-    const write = await page('/shop.example');
-    assert.match(write, /<h1 class="write-title">What was hard to use\?<\/h1>/);
-    assert.match(write, /href="https:\/\/shop\.example\/"/);
+    const write = await page('/wap.mom');
+    assert.match(write, /<h1 class="write-title">What was hard to read\?<\/h1>/);
     assert.match(write, /Tell us what broke\./);
-    assert.match(write, /<span>Bug report<\/span>/);
+    assert.match(write, /<span>Misprint<\/span>/);
     assert.doesNotMatch(write, /Appreciation/);
-    assert.match(write, /<label for="from" class="sr-only">Your name or handle<\/label>/);
     assert.match(write, /id="from"[^>]*required/);
-    // The minimum is enforced, and named only when a note falls short of it.
     assert.doesNotMatch(write, /at least 20 characters/);
-    const short = await (await get('autonomous.feedback', '/shop.example', form({ note: 'Too short', from: 'A reader' }))).text();
+    const short = await page('/wap.mom', form({ note: 'Too short', from: 'A reader' }));
     assert.match(short, /at least 20 characters/);
     assert.match(write, /maxlength="500"/);
-    assert.doesNotMatch(write, /minlength=/);
-    assert.match(write, />Send it</);
+    assert.match(write, />Make it</);
     assert.match(write, /--bg:#ffffff/);
     assert.match(write, /--accent:#0f766e/);
     assert.match(write, /--radius:\.2rem/);
-
-    const missingFrom = await get('autonomous.feedback', '/shop.example', form({ kind: 'broken', note: 'The cart empties itself on refresh.' }));
+    const missingFrom = await get('autonomous.feedback', '/wap.mom', form({ kind: 'broken', note: 'The cabinet empties itself on refresh.' }));
     assert.equal(missingFrom.status, 400);
     assert.match(await missingFrom.text(), /Add your name or handle/);
-    const brief = await get('autonomous.feedback', '/shop.example', form({ kind: 'broken', from: 'Ana', note: 'Cart broke' }));
-    assert.equal(brief.status, 200);
-    const wrongKind = await get('autonomous.feedback', '/shop.example', form({ kind: 'appreciation', from: 'Ana', note: 'I love the new product photos.' }));
+    const wrongKind = await get('autonomous.feedback', '/wap.mom', form({ kind: 'appreciation', from: 'Ana', note: 'I love the new printed issue.' }));
     assert.equal(wrongKind.status, 400);
-    assert.match(await wrongKind.text(), /Shop does not take appreciation notes/);
-    const card = await page('/shop.example', form({ kind: 'broken', from: 'Ana', path: '/cart', note: 'The cart empties itself on refresh.' }));
-    assert.match(card, /class="card-site">Shop</);
-    assert.match(card, /class="card-kind">Bug report</);
-    assert.match(card, /— Ana/);
-    assert.match(card, /Cart · \/cart/);
-    // The owner's own contacts: Message buttons, and Post links that mention them.
-    assert.match(card, /<h2 id="send-title">Send it to Shop<\/h2>/);
-    assert.match(card, /href="https:\/\/bsky\.app\/profile\/shop\.example"><strong>Message on Bluesky<\/strong><span>@shop\.example</);
-    assert.match(card, /href="https:\/\/x\.com\/shop_example"><strong>Message on X<\/strong>/);
-    assert.match(card, /intent\/compose\?text=%40shop\.example%20/);
-    assert.match(card, /intent\/post\?text=%40shop_example%20/);
-
-    const report = await (await get('autonomous.feedback', '/shop.example/config.json')).json();
-    assert.equal(report.found, true);
-    assert.ok(report.problems.some((p) => /nonsense/.test(p)));
-    assert.ok(report.problems.some((p) => /brief → question/.test(p)));
-    assert.deepEqual(report.kinds, ['broken', 'question']);
-    assert.ok(report.problems.some((p) => /contrast/.test(p)));
-    assert.ok(report.problems.some((p) => /insecure\.example/.test(p)));
-    assert.deepEqual(report.frame.ancestors, ['https://blog.shop.example']);
-    assert.deepEqual(report.contact, { bluesky: 'shop.example', x: 'shop_example' });
-    assert.ok(report.problems.some((p) => /contact\.mastodon is not supported/.test(p)));
-    const policy = (await get('autonomous.feedback', '/embed/shop.example')).headers.get('content-security-policy');
-    assert.match(policy, /https:\/\/blog\.shop\.example/);
-    assert.doesNotMatch(policy, /insecure\.example/);
-
-    const imposter = await (await get('autonomous.feedback', '/other.example/config.json')).json();
-    assert.equal(imposter.found, false);
-    assert.equal(imposter.name, '');
-    const setup = await page('/start?host=shop.example');
-    assert.match(setup, /Found a configuration file for shop\.example/);
-    assert.match(setup, /Some of it was not applied/);
+    assert.match(await wrongKind.text(), /Wap does not take appreciation notes/);
+    const html = await page('/wap.mom', form({ kind: 'broken', from: 'Ana', path: '/cabinet', note: 'The cabinet empties itself on refresh.' }));
+    const card = cardOf(html);
+    assert.equal(card.site, 'Wap');
+    assert.equal(card.kind, 'Misprint');
+    assert.match(html, /— Ana/);
+    assert.match(html, /Cabinet · \/cabinet/);
+    // The site's own contacts: Message buttons, and Post links that mention them.
+    assert.match(html, /<h2 id="send-title">Send it to Wap<\/h2>/);
+    assert.match(html, /href="https:\/\/bsky\.app\/profile\/wap\.mom"><strong>Message on Bluesky<\/strong><span>@wap\.mom</);
+    assert.match(html, /href="https:\/\/x\.com\/wap_mom"><strong>Message on X<\/strong>/);
+    assert.match(html, /intent\/compose\?text=%40wap\.mom%20/);
+    // A file for another host configures nothing.
+    assert.match(await page('/bone.land'), /A note for bone\.land/);
   } finally {
     restore();
   }
 });
 
-test('theme colours that are hard to read fall back', () => {
+test('a client file is read within reason, and fields this form no longer reads are ignored', () => {
   assert.ok(contrast('#000000', '#ffffff') > 20);
-  const config = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', theme: { background: '#777777', text: '#888888' } }, 'a.example');
+  const config = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'spwashi.com', theme: { background: '#777777', text: '#888888' } }, 'spwashi.com');
   assert.equal(config.theme.background, '#0a1012');
   assert.ok(config.problems.some((p) => /below 4\.5:1/.test(p)));
-  const clean = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', theme: { mode: 'light' } }, 'a.example');
-  assert.deepEqual(clean.problems, []);
+  const legacy = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'spwashi.com', queue: { want: true }, inbox: { key: 'a secret' }, frame: { ancestors: ['https://x.example'] } }, 'spwashi.com');
+  assert.equal(legacy.queue, undefined);
+  assert.equal(legacy.inbox, undefined);
+  assert.equal(legacy.frame, undefined);
+  assert.doesNotMatch(JSON.stringify(legacy), /a secret/);
+  const imposter = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'lore.land', name: 'Imposter' }, 'spwashi.com');
+  assert.equal(imposter.found, false);
+  assert.equal(imposter.name, '');
 });
 
-test('a public file cannot carry an inbox token', () => {
-  const report = readConfig({
-    schema: 'autonomous-feedback.client.v0',
-    host: 'a.example',
-    token: 'super-secret-value',
-  }, 'a.example');
-  assert.ok(report.problems.some((line) => /token does not belong/.test(line)));
-  assert.equal(JSON.stringify(report).includes('super-secret-value'), false);
-});
-
-
-test('a site that asks for a queue can list and clear its notes', async () => {
-  const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
-  });
-  const env = { DB: memoryDb(), INBOX_READ_TOKEN: 'desk-token', DESK_HOSTS: 'kept.example' };
-  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
-  try {
-    const filed = await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.', path: '/checkout' }));
-    const slip = await filed.json();
-    assert.equal(filed.status, 200);
-    assert.equal(slip.stored, true);
-    assert.equal(slip.queue, 'desk');
-    const inbox = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
-    assert.equal(inbox.filings.length, 1);
-    assert.match(inbox.filings[0].note, /too far apart/);
-    const cleared = await (await call('/kept.example/inbox', { method: 'DELETE', headers: { authorization: 'Bearer desk-token' } })).json();
-    assert.equal(cleared.cleared, 1);
-    const empty = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
-    assert.deepEqual(empty.filings, []);
-  } finally {
-    restore();
-  }
-});
-
-test('asking for a queue does not keep notes until the desk opens for the host', async () => {
-  const restore = stubFetch({
-    'asks.example': { schema: 'autonomous-feedback.client.v0', host: 'asks.example', queue: { want: true } },
-  });
-  const env = { DB: memoryDb(), INBOX_READ_TOKEN: 'desk-token', DESK_HOSTS: 'kept.example' };
-  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
-  try {
-    const slip = await (await call('/asks.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json();
-    assert.equal(slip.stored, false);
-    assert.equal(slip.queue, 'requested');
-    const card = await (await call('/asks.example/broken', form({ note: 'The label and the field are too far apart to tell they belong together.' }))).text();
-    assert.match(card, /has asked for an inbox, but it is not open yet/);
-    assert.match(card, /Nothing was stored/);
-    const inbox = await call('/asks.example/inbox', { headers: { authorization: 'Bearer desk-token' } });
-    assert.equal(inbox.status, 501);
-    const config = await (await call('/asks.example/config.json')).json();
-    assert.equal(config.desk, 'requested');
-    const contract = await (await call('/asks.example/broken.json')).json();
-    assert.equal(contract.ingest.stores, false);
-    assert.equal(contract.queue.requested, true);
-    assert.match(await (await call('/start?host=asks.example')).text(), /Inbox: requested/);
-    assert.match(await (await call('/asks.example/broken')).text(), /You keep the card for asks\.example\. A reply is not promised\./);
-  } finally {
-    restore();
-  }
-});
-
-test('a bound queue stays closed while the inbox token is unset', async () => {
-  const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
-  });
-  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example' };
-  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
-  try {
-    // No reader: nothing is kept, and any bearer is answered 501.
-    const unread = await (await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json();
-    assert.equal(unread.stored, false);
-    const bearer = { authorization: 'Bearer anything' };
-    const read = await call('/kept.example/inbox', { headers: bearer });
-    assert.equal(read.status, 501);
-    assert.deepEqual((await read.json()).filings, []);
-    assert.equal((await call('/kept.example/inbox', { method: 'DELETE', headers: bearer })).status, 501);
-    assert.equal((await call('/kept.example/inbox')).status, 401);
-    // With a reader, the desk opens and keeps what follows.
-    env.INBOX_READ_TOKEN = 'desk-token';
-    assert.equal((await (await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json()).stored, true);
-    const kept = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
-    assert.equal(kept.filings.length, 1);
-  } finally {
-    restore();
-  }
-});
-
-test('an inbox token can be checked and still does not open a queue', async () => {
-  const locked = await get('autonomous.feedback', '/example.org/inbox');
-  assert.equal(locked.status, 401);
-  const unread = await worker.fetch(new Request('https://autonomous.feedback/example.org/inbox', {
-    headers: { authorization: 'Bearer desk-token' },
-  }), { INBOX_READ_TOKEN: 'desk-token' });
-  assert.equal(unread.status, 501);
-  const wrong = await worker.fetch(new Request('https://autonomous.feedback/example.org/inbox', {
-    headers: { authorization: 'Bearer other-token' },
-  }), { INBOX_READ_TOKEN: 'desk-token' });
-  assert.equal(wrong.status, 401);
-});
-
-test('the inbox stays locked and old doors stay closed', async () => {
-  const restore = stubFetch();
-  try {
-    assert.equal((await get('autonomous.feedback', '/example.org/inbox')).status, 401);
-    assert.equal((await get('autonomous.feedback', '/example.org/inbox', { headers: { authorization: 'Bearer untrusted' } })).status, 501);
-    assert.equal((await get('autonomous.feedback', '/example.org?bearer=untrusted')).status, 400);
-    // No site used /for/{host}; it was retired, not redirected.
-    assert.equal((await get('autonomous.feedback', '/for/example.org/problem')).status, 404);
-    assert.equal((await get('autonomous.feedback', '/for/example.org')).status, 404);
-    assert.equal((await get('autonomous.feedback', '/favicon.ico')).status, 404);
-    assert.equal((await get('autonomous.feedback', '/example.org/nonsense')).status, 404);
-  } finally {
-    restore();
-  }
-});
-
-test('the meter answers in a sentence and says what to do next', async () => {
-  let restore = stubFetch();
-  try {
-    const up = await page('/meter?host=shop.example');
-    assert.match(up, /data-weather="clear">Up</);
-    assert.match(up, /shop\.example responded in under 0\.3 seconds \(HTTP 200\)\./);
-    assert.match(up, /href="\/start\?host=shop\.example"/);
-    const bad = await get('autonomous.feedback', '/meter?host=127.0.0.1');
-    assert.equal(bad.status, 400);
-    assert.match(await bad.text(), /is not a public domain/);
-    assert.match(await page('/meter'), /Enter a public site/);
-  } finally {
-    restore();
-  }
-  const real = globalThis.fetch;
-  globalThis.fetch = async () => { throw new Error('offline'); };
-  try {
-    const down = await page('/meter?host=shop.example');
-    assert.match(down, /data-weather="storm">Down</);
-    assert.match(down, /did not respond within 4 seconds\./);
-  } finally {
-    globalThis.fetch = real;
-  }
-});
-
-test('the page script compiles', () => {
-  assert.doesNotThrow(() => new Function(`var __defProp=(t,p,d)=>Object.defineProperty(t,p,d);var __name=(t,v)=>__defProp(t,"name",{value:v,configurable:true});${CLIENT_SCRIPT}`));
-  assert.doesNotMatch(CLIENT_SCRIPT, /<\/script/i);
-});
-
-const sha = async (text) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)))].map((b) => b.toString(16).padStart(2, '0')).join('');
-const cookieFrom = (response) => (response.headers.get('set-cookie') || '').split(';')[0];
-const NOTE = 'The label and the field are too far apart to tell they belong together.';
-
-test('an owner opens their inbox with a key whose hash is in their file, and saves within a limit', async () => {
-  const key = 'owner-key-for-kept-example';
-  const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true }, inbox: { key: `sha256:${await sha(key)}` } },
-  });
-  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example', SAVE_LIMIT: '1' };
-  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
-  try {
-    await call('/kept.example/broken', json({ note: NOTE }));
-    await call('/kept.example/confusing', json({ note: `${NOTE} Again.` }));
-    const locked = await call('/kept.example/inbox');
-    assert.equal(locked.status, 401);
-    assert.match(await locked.text(), /name="key"/);
-    const wrong = await call('/kept.example/inbox', form({ action: 'open', key: 'nope' }));
-    assert.equal(wrong.status, 401);
-    const opened = await call('/kept.example/inbox', form({ action: 'open', key }));
-    assert.equal(opened.status, 303);
-    assert.match(opened.headers.get('set-cookie'), /HttpOnly; Secure; SameSite=Strict/);
-    assert.match(opened.headers.get('set-cookie'), /Path=\/kept\.example\/inbox/);
-    const cookie = { cookie: cookieFrom(opened) };
-    const page = await (await call('/kept.example/inbox', { headers: cookie })).text();
-    assert.match(page, /too far apart/);
-    assert.match(page, /Counted on \d{4}-\d{2}-\d{2} unless you save it\./);
-    const [first, second] = env.DB._notes.map((n) => n.id);
-    const saved = await call('/kept.example/inbox', { ...form({ action: 'save', id: first }), headers: { ...form({}).headers, ...cookie } });
-    assert.equal(saved.headers.get('location'), 'https://autonomous.feedback/kept.example/inbox?done=saved');
-    const over = await call('/kept.example/inbox', { ...form({ action: 'save', id: second }), headers: { ...form({}).headers, ...cookie } });
-    assert.equal(over.headers.get('location'), 'https://autonomous.feedback/kept.example/inbox?done=limit');
-    assert.match(await (await call('/kept.example/inbox?done=limit', { headers: cookie })).text(), /You have saved 1 card, the most this inbox keeps\. Release one/);
-    // The owner key reads the JSON API too; it does not open another site's desk.
-    const api = await (await call('/kept.example/inbox', { headers: { authorization: `Bearer ${key}` } })).json();
-    assert.equal(api.filings.filter((f) => f.saved).length, 1);
-    assert.equal((await call('/other.example/inbox', { headers: { authorization: `Bearer ${key}` } })).status, 501);
-  } finally {
-    restore();
-  }
-});
-
-test('unsaved cards older than three days become tallies; saved cards keep their words', async () => {
-  const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true }, routes: [{ name: 'Checkout', path: '/checkout' }] },
-  });
-  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example', INBOX_READ_TOKEN: 'desk-token' };
-  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
-  try {
-    for (const kind of ['broken', 'broken', 'missing']) await call(`/kept.example/${kind}`, json({ note: NOTE, path: '/checkout' }));
-    await call('/kept.example/appreciation', json({ note: 'Kept because the owner saved it on purpose.' }));
-    const old = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString();
-    for (const n of env.DB._notes) n.issued = old;
-    env.DB._notes.find((n) => n.kind === 'appreciation').saved = 1;
-    // The cron also snapshots the climate into the Workers cache; give it one.
-    const hadCaches = 'caches' in globalThis;
-    globalThis.caches = { default: { put: async () => {}, match: async () => undefined } };
-    try {
-      await worker.scheduled({}, env, null);
-    } finally {
-      if (!hadCaches) delete globalThis.caches;
-    }
-    assert.equal(env.DB._notes.length, 1);
-    assert.equal(env.DB._notes[0].kind, 'appreciation');
-    const tallies = [...env.DB._tallies.values()].map(({ about, kind, cards, worded }) => `${about} ${kind} ${cards} ${worded}`).sort();
-    assert.deepEqual(tallies, ['Checkout broken 2 2', 'Checkout missing 1 1']);
-    const api = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
-    assert.equal(api.filings.length, 1);
-    assert.equal(api.tallies.reduce((sum, t) => sum + t.cards, 0), 3);
-    // The digest folds stored counts and live cards into the same week.
-    assert.equal(api.digest.weeks.reduce((sum, w) => sum + w.cards, 0), 4);
-    assert.doesNotMatch(JSON.stringify(api.tallies), /too far apart/);
-  } finally {
-    restore();
-  }
-});
-
-test('the operator desk lists every open inbox, previews compaction, and compacts one site', async () => {
-  const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
-  });
-  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example idle.example', INBOX_READ_TOKEN: 'desk-token' };
-  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
-  try {
-    await call('/kept.example/broken', json({ note: NOTE }));
-    env.DB._notes[0].issued = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString();
-    assert.equal((await call('/desk')).status, 401);
-    assert.equal((await call('/desk', form({ action: 'open', key: 'owner-guess' }))).status, 401);
-    const opened = await call('/desk', form({ action: 'open', key: 'desk-token' }));
-    assert.equal(opened.status, 303);
-    assert.match(opened.headers.get('set-cookie'), /Path=\//);
-    const cookie = { cookie: cookieFrom(opened) };
-    const desk = await (await call('/desk', { headers: cookie })).text();
-    assert.match(desk, /Next compaction counts 1 card:/);
-    assert.match(desk, /idle\.example[\s\S]*does not ask for an inbox/);
-    const compacted = await call('/desk', { ...form({ action: 'compact', host: 'kept.example' }), headers: { ...form({}).headers, ...cookie } });
-    assert.equal(compacted.headers.get('location'), 'https://autonomous.feedback/desk?compacted=1&host=kept.example');
-    assert.equal(env.DB._notes.length, 0);
-    // The operator cookie also opens a site's inbox page.
-    assert.match(await (await call('/kept.example/inbox', { headers: cookie })).text(), /<h2 id="week-title">This week/);
-  } finally {
-    restore();
-  }
+test('the page script compiles and holds no setup, key, or desk code', () => {
+  assert.doesNotThrow(() => new Function(CLIENT_SCRIPT));
+  assert.match(CLIENT_SCRIPT, /input\[name="what"\]:checked/);
+  assert.match(CLIENT_SCRIPT, /\[data-copy\]/);
+  assert.doesNotMatch(CLIENT_SCRIPT, /keygen|inbox|setup-data|owner-snippet|begin-site/);
 });
 
 test('the write page names the page the reader came from, when the Referer is the site', async () => {
   const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', routes: [{ name: 'Checkout', path: '/checkout' }] },
+    'wap.mom': { schema: 'autonomous-feedback.client.v0', host: 'wap.mom', routes: [{ name: 'Cabinet', path: '/cabinet' }] },
   });
   const call = (path, headers = {}) => worker.fetch(new Request(`https://autonomous.feedback${path}`, { headers }));
   try {
-    const named = await (await call('/kept.example/broken', { referer: 'https://www.kept.example/checkout?order=8812#pay' })).text();
-    assert.match(named, /On <strong>Checkout · \/checkout<\/strong>/);
+    const named = await (await call('/wap.mom/broken', { referer: 'https://www.wap.mom/cabinet?drawer=8812#top' })).text();
+    assert.match(named, /On <strong>Cabinet · \/cabinet<\/strong>/);
     assert.match(named, /<summary>Change or clear the page<\/summary>/);
     assert.doesNotMatch(named, /8812/);
-    const unnamed = await (await call('/kept.example/broken', { referer: 'https://kept.example/blog/post' })).text();
-    assert.match(unnamed, /On <strong>\/blog\/post<\/strong>/);
-    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://elsewhere.example/checkout' })).text(), /class="page-known"/);
+    assert.match(named, /<span class="card-address">wap\.mom\/cabinet<\/span>/);
+    const unnamed = await (await call('/wap.mom/broken', { referer: 'https://wap.mom/issues/3' })).text();
+    assert.match(unnamed, /On <strong>\/issues\/3<\/strong>/);
+    assert.doesNotMatch(await (await call('/wap.mom/broken', { referer: 'https://elsewhere.example/cabinet' })).text(), /class="page-known"/);
     // An origin-only Referer cannot be told from "unknown".
-    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://kept.example/' })).text(), /class="page-known"/);
-    assert.match(await (await call('/kept.example/broken?at=/about', { referer: 'https://kept.example/checkout' })).text(), /On <strong>\/about<\/strong>/);
-    const slip = await (await worker.fetch(new Request('https://autonomous.feedback/kept.example/broken', { ...json({ note: NOTE }), headers: { ...json({}).headers, referer: 'https://kept.example/checkout' } }))).json();
-    assert.equal(slip.path, '/checkout');
-    assert.equal(slip.route, 'Checkout');
-  } finally {
-    restore();
-  }
-});
-
-test('a client file carries only the hash of an inbox key', () => {
-  const good = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', inbox: { key: `sha256:${'a'.repeat(64)}` } }, 'a.example');
-  assert.equal(good.inbox.key, `sha256:${'a'.repeat(64)}`);
-  const raw = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', inbox: { key: 'my-secret-key' } }, 'a.example');
-  assert.equal(raw.inbox.key, '');
-  assert.ok(raw.problems.some((p) => /hash of your key, never the key/.test(p)));
-  assert.doesNotMatch(JSON.stringify(raw), /my-secret-key/);
-});
-
-test('a listed desk with no reader keeps nothing', async () => {
-  const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
-  });
-  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example' };
-  try {
-    const slip = await (await worker.fetch(new Request('https://autonomous.feedback/kept.example/broken', json({ note: NOTE })), env)).json();
-    assert.equal(slip.stored, false);
-    assert.equal(slip.queue, 'requested');
-    assert.equal(env.DB._notes.length, 0);
+    assert.doesNotMatch(await (await call('/wap.mom/broken', { referer: 'https://wap.mom/' })).text(), /class="page-known"/);
+    assert.match(await (await call('/wap.mom/broken?at=/about', { referer: 'https://wap.mom/cabinet' })).text(), /On <strong>\/about<\/strong>/);
+    const card = cardOf(await (await worker.fetch(new Request('https://autonomous.feedback/wap.mom/broken', form({ note: NOTE }, { referer: 'https://wap.mom/cabinet' })))).text());
+    assert.equal(card.address, 'wap.mom/cabinet');
+    assert.match(card.slip, /page: Cabinet \/cabinet/);
   } finally {
     restore();
   }
@@ -613,7 +330,7 @@ test('a listed desk with no reader keeps nothing', async () => {
 
 const MAPPED = {
   schema: 'autonomous-feedback.client.v0',
-  host: 'maker.example',
+  host: 'spwashi.com',
   name: 'Maker',
   subjects: [
     {
@@ -628,7 +345,7 @@ const MAPPED = {
 };
 
 test('a client file maps the creator\'s subjects, threads, and asks, within limits', () => {
-  const config = readConfig(MAPPED, 'maker.example');
+  const config = readConfig(MAPPED, 'spwashi.com');
   assert.deepEqual(config.subjects.map((s) => s.id), ['folios', 'recipes']);
   assert.ok(config.problems.some((p) => /Each subject needs an id/.test(p)));
   assert.equal(config.subjects[0].threads[0].stance, 'On purpose for now.');
@@ -640,21 +357,21 @@ test('a client file maps the creator\'s subjects, threads, and asks, within limi
 
 test('about decides whether the note is about the site or the subject', async () => {
   const siteFile = { ...MAPPED, about: 'site', title: 'What happened on the site?' };
-  const workFile = { ...MAPPED, host: 'tale.example', about: 'subject', title: 'A note about the lore' };
-  assert.equal(readConfig(siteFile, 'maker.example').about, 'site');
-  assert.equal(readConfig(workFile, 'tale.example').about, 'subject');
-  const rejected = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', about: 'lore' }, 'a.example');
+  const workFile = { ...MAPPED, host: 'lore.land', about: 'subject', title: 'A note about the lore' };
+  assert.equal(readConfig(siteFile, 'spwashi.com').about, 'site');
+  assert.equal(readConfig(workFile, 'lore.land').about, 'subject');
+  const rejected = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'spwashi.com', about: 'lore' }, 'spwashi.com');
   assert.equal(rejected.about, '');
   assert.ok(rejected.problems.some((problem) => /about must be/.test(problem)));
-  const restore = stubFetch({ 'maker.example': siteFile, 'tale.example': workFile });
+  const restore = stubFetch({ 'spwashi.com': siteFile, 'lore.land': workFile });
   try {
-    const sitePage = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', { headers: { referer: 'https://maker.example/design/folios/' } }))).text();
+    const sitePage = await (await worker.fetch(new Request('https://autonomous.feedback/spwashi.com/broken', { headers: { referer: 'https://spwashi.com/design/folios/' } }))).text();
     assert.match(sitePage, /<h1 class="write-title">What happened on the site\?<\/h1>/);
     assert.match(sitePage, /On <strong data-fill="subject-name">Folios<\/strong>/);
     assert.match(sitePage, /Where on the site\?/);
     assert.match(sitePage, /Often said about this part/);
     assert.ok(sitePage.indexOf('id="what-kinds"') < sitePage.indexOf('id="what-folios"'));
-    const workPage = await (await worker.fetch(new Request('https://autonomous.feedback/tale.example', { headers: { referer: 'https://tale.example/design/folios/' } }))).text();
+    const workPage = await (await worker.fetch(new Request('https://autonomous.feedback/lore.land', { headers: { referer: 'https://lore.land/design/folios/' } }))).text();
     assert.match(workPage, /<h1 class="write-title">A note about the lore<\/h1>/);
     assert.match(workPage, /About <strong data-fill="subject-name">Folios<\/strong>/);
     assert.match(workPage, /What is this about\?/);
@@ -666,44 +383,43 @@ test('about decides whether the note is about the site or the subject', async ()
 });
 
 test('the write page picks the subject from the page, and follows it with threads and asks', async () => {
-  const restore = stubFetch({ 'maker.example': MAPPED });
+  const restore = stubFetch({ 'spwashi.com': MAPPED });
   try {
-    const page = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', { headers: { referer: 'https://maker.example/design/folios/' } }))).text();
-    assert.match(page, /name="subject" value="folios" checked/);
-    assert.match(page, /Which folio, and what happened\?/);
-    assert.match(page, /<p class="row-caption" id="what-folios">Often said about Folios<\/p>/);
-    assert.match(page, /name="what" value="thread:folios:order-by-card" data-kind-title="Note" data-about="Folios · Ordering is by card" data-body="Count me too\."/);
-    // The page picked the subject, so it is stated, with a way to change it.
-    assert.match(page, /About <strong data-fill="subject-name">Folios<\/strong>/);
-    assert.match(page, /name="what" value="thread:folios:order-by-card"/);
-    assert.match(page, /<strong>Maker:<\/strong> On purpose for now\./);
-    assert.match(page, /<summary>Say more<\/summary>/);
-    assert.match(page, /name="ask-0"/);
+    const html = await (await worker.fetch(new Request('https://autonomous.feedback/spwashi.com/broken', { headers: { referer: 'https://spwashi.com/design/folios/' } }))).text();
+    assert.match(html, /name="subject" value="folios" checked/);
+    assert.match(html, /Which folio, and what happened\?/);
+    assert.match(html, /<p class="row-caption" id="what-folios">Often said about Folios<\/p>/);
+    assert.match(html, /name="what" value="thread:folios:order-by-card" data-kind-title="Note" data-about="Folios · Ordering is by card" data-body="Count me too\."/);
+    assert.match(html, /About <strong data-fill="subject-name">Folios<\/strong>/);
+    assert.match(html, /<strong>Maker:<\/strong> On purpose for now\./);
+    assert.match(html, /<summary>Say more<\/summary>/);
+    assert.match(html, /name="ask-0"/);
     // The subject's kinds hide the rest, and the rules ride in the page's own style.
-    assert.match(page, /label\.chip\[data-kind\]:not\(\[data-kind="broken"\], \[data-kind="appreciation"\]\):not\(:has\(input:checked\)\) \{ display: none; \}/);
-    const bare = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken'))).text();
+    assert.match(html, /label\.chip\[data-kind\]:not\(\[data-kind="broken"\], \[data-kind="appreciation"\]\):not\(:has\(input:checked\)\) \{ display: none; \}/);
+    const bare = await (await worker.fetch(new Request('https://autonomous.feedback/spwashi.com/broken'))).text();
     assert.doesNotMatch(bare, /name="subject" value="[a-z]+" checked/);
   } finally {
     restore();
   }
 });
 
-test('a thread can be joined without words, and asks land on the card and in the slip', async () => {
-  const restore = stubFetch({ 'maker.example': MAPPED });
+test('a thread can be joined without words, and asks land on the card and in its text', async () => {
+  const restore = stubFetch({ 'spwashi.com': MAPPED });
+  const send = async (fields) => page('/spwashi.com/broken', form(fields));
   try {
-    const counted = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', json({ subject: 'folios', thread: 'folios:order-by-card' })))).json();
-    assert.equal(counted.thread, 'order-by-card');
+    const counted = cardOf(await send({ subject: 'folios', thread: 'folios:order-by-card' }));
     assert.equal(counted.worded, false);
-    assert.match(counted.markdown, /Count me too\./);
-    assert.match(counted.markdown, /thread: Ordering is by card/);
-    const asked = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', form({ subject: 'folios', note: 'The order card did not tell me what happens next.', 'ask-0': 'The pie one.', 'ask-1': 'A reply within a week.', thread: 'folios:order-by-card' })))).text();
+    assert.equal(counted.subject, 'Folios · Ordering is by card');
+    assert.match(counted.slip, /Count me too\./);
+    assert.match(counted.slip, /thread: Ordering is by card/);
+    const asked = await send({ subject: 'folios', note: 'The order card did not tell me what happens next.', 'ask-0': 'The pie one.', 'ask-1': 'A reply within a week.', thread: 'folios:order-by-card' });
     assert.match(asked, /<span class="card-subject">Folios · Ordering is by card<\/span>/);
     assert.match(asked, /<dt>Which folio were you looking at\?<\/dt><dd>The pie one\.<\/dd>/);
     assert.match(asked, /Maker has said about this<\/h2>/);
-    assert.match(asked, /## Which folio were you looking at\?\nThe pie one\./);
-    const wrong = await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', json({ subject: 'nope', note: 'Something long enough to send here.' })));
+    assert.match(cardOf(asked).slip, /## Which folio were you looking at\?\nThe pie one\./);
+    const wrong = await get('autonomous.feedback', '/spwashi.com/broken', form({ subject: 'nope', note: 'Something long enough to send here.' }));
     assert.equal(wrong.status, 400);
-    assert.equal((await wrong.json()).error, 'invalid_subject');
+    assert.match(await wrong.text(), /Choose one of the parts of the site listed, or leave it blank\./);
   } finally {
     restore();
   }
@@ -712,176 +428,58 @@ test('a thread can be joined without words, and asks land on the card and in the
 test('a kind comes from evidence: the writer, the common note, or a thanks; otherwise the note stays unsorted', async () => {
   const file = JSON.parse(JSON.stringify(MAPPED));
   file.subjects[0].threads[0].kind = 'question';
-  const restore = stubFetch({ 'maker.example': file });
-  const send = async (body) => (await worker.fetch(new Request('https://autonomous.feedback/maker.example', json(body)))).json();
+  const restore = stubFetch({ 'spwashi.com': file });
+  const send = async (fields) => cardOf(await page('/spwashi.com', form(fields)));
   try {
-    assert.equal((await send({ note: 'Nothing chosen, just a few words.' })).context, 'note');
-    assert.equal((await send({ subject: 'folios', thread: 'folios:order-by-card' })).context, 'question');
+    assert.equal((await send({ note: 'Nothing chosen, just a few words.' })).kind, 'Note');
+    assert.equal((await send({ subject: 'folios', thread: 'folios:order-by-card' })).kind, 'Question');
     const thanked = await send({ thread: 'thanks' });
-    assert.equal(thanked.context, 'appreciation');
-    assert.equal(thanked.thread, 'thanks');
+    assert.equal(thanked.kind, 'Appreciation');
     assert.equal(thanked.worded, false);
-    assert.equal((await send({ kind: 'broken', subject: 'folios', thread: 'folios:order-by-card', note: 'Chosen by me, with words.' })).context, 'broken');
-    const empty = await worker.fetch(new Request('https://autonomous.feedback/maker.example', json({})));
-    assert.equal((await empty.json()).errors.note, 'Tap one of the choices above, or write what happened.');
+    assert.equal((await send({ kind: 'broken', subject: 'folios', thread: 'folios:order-by-card', note: 'Chosen by me, with words.' })).kind, 'Broken');
+    assert.match(await page('/spwashi.com', form({})), /Tap one of the choices above, or write what happened\./);
   } finally {
     restore();
   }
-});
-
-test('the digest groups a week by subject and common note, flags due cards, and suggests threads', () => {
-  const now = Date.parse('2026-09-24T12:00:00Z');
-  assert.equal(weekOf('2026-09-24T12:00:00Z'), '2026-09-21');
-  assert.equal(weekOf('2026-09-21T00:00:00Z'), '2026-09-21');
-  const tallies = [{ week: '2026-09-21', about: 'folios', thread: 'order-by-card', kind: 'question', cards: 5, worded: 1 }];
-  const note = (over) => ({ issued: '2026-09-23T10:00:00Z', context: 'confusing', subject: 'recipes', thread: null, worded: true, saved: false, ...over });
-  const notes = [note({}), note({}), note({ issued: '2026-09-22T09:00:00Z' }), note({ subject: 'folios', thread: 'order-by-card', context: 'question', worded: false }), note({ thread: 'thanks', context: 'appreciation', worded: false })];
-  const { due, weeks } = digest(tallies, notes, now);
-  assert.equal(due, 1);
-  assert.equal(weeks[0].cards, 10);
-  assert.equal(weeks[0].thanks, 1);
-  const folios = weeks[0].groups.find((g) => g.about === 'folios');
-  assert.deepEqual([folios.cards, folios.worded], [6, 1]);
-  assert.deepEqual(weeks[0].hints, [{ about: 'recipes', cards: 3 }]);
 });
 
 test('the form sends one choice, and a common note left over from another subject is dropped, not an error', async () => {
-  const restore = stubFetch({ 'maker.example': MAPPED });
-  const send = (fields) => worker.fetch(new Request('https://autonomous.feedback/maker.example', { ...form(fields), headers: { ...form({}).headers, accept: 'application/json' } }));
+  const restore = stubFetch({ 'spwashi.com': MAPPED });
+  const send = (fields) => get('autonomous.feedback', '/spwashi.com', form(fields));
   try {
-    const thread = await (await send({ subject: 'folios', what: 'thread:folios:order-by-card' })).json();
-    assert.equal(thread.thread, 'order-by-card');
+    const thread = cardOf(await (await send({ subject: 'folios', what: 'thread:folios:order-by-card' })).text());
+    assert.equal(thread.subject, 'Folios · Ordering is by card');
     assert.equal(thread.worded, false);
-    assert.equal((await (await send({ what: 'kind:broken' })).json()).context, 'broken');
-    assert.equal((await (await send({ what: 'thanks' })).json()).context, 'appreciation');
+    assert.equal(cardOf(await (await send({ what: 'kind:broken' })).text()).kind, 'Broken');
+    assert.equal(cardOf(await (await send({ what: 'thanks' })).text()).kind, 'Appreciation');
     // Without script, switching the subject leaves the old common note checked but hidden; it is ignored.
     const stale = await send({ subject: 'recipes', what: 'thread:folios:order-by-card', note: 'Words about recipes instead.' });
     assert.equal(stale.status, 200);
-    const staleSlip = await stale.json();
-    assert.equal(staleSlip.thread, null);
-    assert.equal(staleSlip.subject, 'recipes');
+    const staleCard = cardOf(await stale.text());
+    assert.equal(staleCard.subject, 'Recipes');
+    assert.doesNotMatch(staleCard.slip, /thread:/);
     const staleOnly = await send({ subject: 'recipes', what: 'thread:folios:order-by-card' });
     assert.equal(staleOnly.status, 400);
-    assert.deepEqual(Object.keys((await staleOnly.json()).errors), ['note']);
+    assert.match(await staleOnly.text(), /Tap one of the choices above, or write what happened\./);
   } finally {
     restore();
   }
 });
 
-test('the homepage card can send at once, or open the site form with its words, never in an address', async () => {
-  // This site takes names; a site whose file turns them off drops the byline on its own form.
-  const restore = stubFetch({ 'maker.example': { ...MAPPED, from: 'optional' }, 'quiet.example': { schema: 'autonomous-feedback.client.v0', host: 'quiet.example' } });
-  try {
-    const home = await page('/');
-    assert.match(home, /<button type="submit" name="step" value="send">Send<\/button>/);
-    assert.match(home, /name="step" value="details" class="secondary">Add details first</);
-    assert.match(home, /id="begin-from" name="from"/);
-    const details = await get('autonomous.feedback', '/note', form({ step: 'details', host: 'https://www.maker.example/', note: 'The folio page loads slowly on my phone.', from: 'Maya' }));
-    assert.equal(details.status, 200);
-    assert.equal(details.headers.get('location'), null);
-    const html = await details.text();
-    assert.match(html, /<form method="post" action="\/maker\.example" class="write"/);
-    assert.match(html, />The folio page loads slowly on my phone\.<\/textarea>/);
-    assert.match(html, /id="from"[^>]*value="Maya"/);
-    const quiet = await (await get('autonomous.feedback', '/note', form({ step: 'details', host: 'quiet.example', note: 'Something long enough.', from: 'Maya' }))).text();
-    assert.doesNotMatch(quiet, /id="from"/);
-    const sent = await get('autonomous.feedback', '/note', form({ step: 'send', host: 'maker.example', note: 'The folio page loads slowly on my phone.' }));
-    assert.equal(sent.status, 200);
-    assert.match(await sent.text(), /class="card" id="card"/);
-  } finally {
-    restore();
-  }
-});
-
-/** A Workers-style default cache, so intake limits and the five-minute config cache run as deployed. */
-function stubCache() {
-  const had = Object.prototype.hasOwnProperty.call(globalThis, 'caches');
-  const real = globalThis.caches;
-  const store = new Map();
-  globalThis.caches = {
-    default: {
-      async match(request) { return store.get(request.url)?.clone(); },
-      async put(request, response) { store.set(request.url, response); },
-    },
-  };
-  return () => { if (had) globalThis.caches = real; else delete globalThis.caches; };
-}
-
-test('a slowed note comes back with its words, choice, name, and page still in the form', async () => {
-  const restoreFetch = stubFetch({ 'maker.example': { ...MAPPED, from: 'optional' } });
-  const restoreCache = stubCache();
-  const words = 'The folio page loads slowly on my phone.';
-  const send = () => get('autonomous.feedback', '/maker.example', form({ subject: 'folios', what: 'kind:broken', note: words, from: 'Maya', path: '/folios/red' }));
-  try {
-    for (let i = 0; i < 8; i += 1) assert.equal((await send()).status, 200);
-    const slowed = await send();
-    assert.equal(slowed.status, 429);
-    const html = await slowed.text();
-    assert.match(html, /Too many notes from this network\. Your note is still here/);
-    assert.match(html, />The folio page loads slowly on my phone\.<\/textarea>/);
-    assert.match(html, /id="from"[^>]*value="Maya"/);
-    assert.match(html, /name="what" value="kind:broken" checked/);
-    assert.match(html, /name="subject" value="folios" checked/);
-    assert.match(html, /On <strong>\/folios\/red<\/strong>/);
-    // The open write page keeps them too, and a JSON caller still gets JSON.
-    for (let i = 0; i < 8; i += 1) await get('autonomous.feedback', '/note', form({ host: 'other.example', note: words }));
-    const open = await get('autonomous.feedback', '/note', form({ host: 'other.example', note: words }));
-    assert.equal(open.status, 429);
-    assert.match(await open.text(), />The folio page loads slowly on my phone\.<\/textarea>/);
-    const api = await get('autonomous.feedback', '/maker.example', json({ note: words }));
-    assert.equal(api.status, 429);
-    assert.equal((await api.json()).error, 'slow_down');
-  } finally {
-    restoreCache();
-    restoreFetch();
-  }
-});
-
-test('a rejected note still shows the page it will send', async () => {
+test('a rejected note still shows the page it will name', async () => {
   const restore = stubFetch({
-    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', routes: [{ name: 'Checkout', path: '/checkout' }] },
+    'wap.mom': { schema: 'autonomous-feedback.client.v0', host: 'wap.mom', routes: [{ name: 'Cabinet', path: '/cabinet' }] },
   });
   try {
-    // A plain form on the site's own page: the Referer names the page, and the note is too short to send.
-    const rejected = await worker.fetch(new Request('https://autonomous.feedback/kept.example', { ...form({ note: 'short' }), headers: { ...form({}).headers, referer: 'https://kept.example/checkout?order=8812' } }));
+    const rejected = await worker.fetch(new Request('https://autonomous.feedback/wap.mom', form({ note: 'short' }, { referer: 'https://wap.mom/cabinet?drawer=8812' })));
     assert.equal(rejected.status, 400);
     const html = await rejected.text();
-    assert.match(html, /On <strong>Checkout · \/checkout<\/strong>/);
+    assert.match(html, /On <strong>Cabinet · \/cabinet<\/strong>/);
     assert.match(html, /<summary>Change or clear the page<\/summary>/);
-    assert.match(html, /id="path" name="path" type="text" value="\/checkout"/);
+    assert.match(html, /id="path" name="path" type="text" value="\/cabinet"/);
     assert.doesNotMatch(html, /8812/);
     // With no page, the question stays one optional line.
-    assert.match(await page('/kept.example', form({ note: 'short' })), /<summary>Which page\? Optional\.<\/summary>/);
-  } finally {
-    restore();
-  }
-});
-
-test('the card says what an inbox keeps: words for three days, then one count; a tap is only ever a count', async () => {
-  const restore = stubFetch({ 'maker.example': { ...MAPPED, queue: { want: true } }, 'ask.example': { schema: 'autonomous-feedback.client.v0', host: 'ask.example', queue: { want: true } } });
-  const env = { DB: memoryDb(), DESK_HOSTS: 'maker.example', INBOX_READ_TOKEN: 'operator-token' };
-  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
-  const monday = weekOf(new Date().toISOString());
-  try {
-    // Beside Send the form stays one courtesy line; the mechanics are on the card and on /privacy.
-    const write = await (await call('/maker.example')).text();
-    assert.match(write, /Goes straight to Maker\. A reply is not promised\. <a href="\/privacy">How notes are kept<\/a>/);
-    const worded = await (await call('/maker.example', form({ subject: 'folios', what: 'kind:broken', note: NOTE }))).text();
-    assert.match(worded, /<h1>Sent to Maker<\/h1>/);
-    assert.match(worded, new RegExp(`Your words are kept for three days, longer if Maker saves the card\\. After that they are deleted and one count remains: <strong>Broken · Folios · week of ${monday}</strong>\\.`));
-    const tap = await (await call('/maker.example', form({ subject: 'folios', what: 'thread:folios:order-by-card' }))).text();
-    assert.match(tap, new RegExp(`You sent a tap, so there are no words of yours to keep\\. It counts once: <strong>Folios · Ordering is by card · week of ${monday}</strong>\\.`));
-    assert.doesNotMatch(tap, /the words are deleted/);
-    const thanks = await (await call('/maker.example', form({ what: 'thanks' }))).text();
-    assert.match(thanks, new RegExp(`It counts once: <strong>Thanks · week of ${monday}</strong>`));
-    // The same count the owner's digest shows.
-    const inbox = await (await call('/maker.example/inbox', { headers: { cookie: 'af_inbox=operator-token' } })).text();
-    assert.match(inbox, /One tap, no written detail\. Counted on \d{4}-\d{2}-\d{2}\./);
-    assert.match(inbox, /Counted on \d{4}-\d{2}-\d{2} unless you save it\./);
-    // Where nothing is kept, the card does not speak of counts.
-    const unkept = await (await call('/ask.example', form({ what: 'kind:broken' }))).text();
-    assert.match(unkept, /Nothing was stored/);
-    assert.doesNotMatch(unkept, /counts once|one count remains/);
+    assert.match(await page('/wap.mom', form({ note: 'short' })), /<summary>Which page\? Optional\.<\/summary>/);
   } finally {
     restore();
   }
@@ -890,89 +488,12 @@ test('the card says what an inbox keeps: words for three days, then one count; a
 test('the card can be read and copied as text with script off', async () => {
   const restore = stubFetch();
   try {
-    const card = await page('/example.org', form({ kind: 'broken', note: 'The pay button spun, then the page went blank.' }));
+    const card = await page('/spw.quest', form({ kind: 'broken', note: 'The next button spun, then the page went blank.' }));
     assert.match(card, /<details class="slip">\s*<summary>The card as text<\/summary>/);
-    assert.match(card, /<pre id="slip"># Broken for example\.org/);
+    assert.match(card, /<pre id="slip"># Broken for spw\.quest/);
     assert.doesNotMatch(card, /id="slip" hidden/);
     // A button that needs script waits for it, like Save image and Share.
     assert.match(card, /<button type="button" class="door" data-copy="slip" hidden>/);
-    assert.match(CLIENT_SCRIPT, /\[data-copy\]/);
-  } finally {
-    restore();
-  }
-});
-
-test('setup says when no file was found, and checks again at once when asked', async () => {
-  const files = {};
-  const restoreFetch = stubFetch(files);
-  const restoreCache = stubCache();
-  try {
-    const before = await page('/start?host=late.example&how=frame&kind=question');
-    assert.match(before, /<strong>No file found for late\.example yet\.<\/strong> The defaults are in use\./);
-    assert.match(before, /<form method="get" action="\/start" class="recheck">/);
-    assert.match(before, /<input type="hidden" name="how" value="frame"[^>]*>\s*<input type="hidden" name="kind" value="question"[^>]*>/);
-    assert.match(before, /<button type="submit" name="check" value="now" class="secondary">Check again now<\/button>/);
-    // The owner publishes the file. The five-minute cache still answers with the old result.
-    files['late.example'] = { schema: 'autonomous-feedback.client.v0', host: 'late.example', name: 'Late' };
-    assert.match(await page('/start?host=late.example'), /No file found for late\.example yet/);
-    const checked = await page('/start?host=late.example&check=now');
-    assert.match(checked, /<strong>Found a configuration file for late\.example\.<\/strong>/);
-    assert.match(checked, /Checked <a href="https:\/\/late\.example\/\.well-known\/autonomous-feedback\.json">[^<]+<\/a> just now\./);
-    // The fresh result is what every other page now uses.
-    assert.match(await page('/late.example'), /A note for Late/);
-    assert.match(await page('/start?host=late.example'), /Found a configuration file for late\.example/);
-    // A file that could not be read says why, not "not found".
-    files['broken.example'] = { schema: 'autonomous-feedback.client.v0', host: 'elsewhere.example' };
-    const wrong = await page('/start?host=broken.example');
-    assert.match(wrong, /<strong>A file was found for broken\.example, but it was not applied\.<\/strong>/);
-    // Checking again is budgeted like the meter: past the limit, the last result shows with a reason.
-    for (let i = 0; i < 20; i += 1) await get('autonomous.feedback', '/start?host=late.example&check=now');
-    const slowed = await get('autonomous.feedback', '/start?host=late.example&check=now');
-    assert.equal(slowed.status, 200);
-    assert.match(await slowed.text(), /Too many checks from this network\. This is the last result/);
-  } finally {
-    restoreCache();
-    restoreFetch();
-  }
-});
-
-test('routing ergonomics normalize pasted paths, shortcuts, embeds, and helpful 404s', async () => {
-  const restore = stubFetch();
-  try {
-    const startShortcut = await get('autonomous.feedback', '/start/WWW.Shop.example?how=frame');
-    assert.equal(startShortcut.status, 302);
-    assert.equal(startShortcut.headers.get('location'), 'https://autonomous.feedback/start?how=frame&host=shop.example');
-
-    const siteSetup = await get('autonomous.feedback', '/shop.example/setup');
-    assert.equal(siteSetup.status, 302);
-    assert.equal(siteSetup.headers.get('location'), 'https://autonomous.feedback/start?host=shop.example');
-
-    const meterSlash = await get('autonomous.feedback', '/meter/');
-    assert.equal(meterSlash.status, 200);
-    const meterShortcut = await get('autonomous.feedback', '/meter/www.Shop.example');
-    assert.equal(meterShortcut.status, 302);
-    assert.equal(meterShortcut.headers.get('location'), 'https://autonomous.feedback/meter?host=shop.example');
-
-    const pasted = await get('autonomous.feedback', '/https://www.Shop.example/broken');
-    assert.equal(pasted.status, 302);
-    assert.equal(pasted.headers.get('location'), 'https://autonomous.feedback/shop.example/broken');
-
-    const embedNorm = await get('autonomous.feedback', '/embed/WWW.Shop.example/question');
-    assert.equal(embedNorm.status, 301);
-    assert.equal(embedNorm.headers.get('location'), 'https://autonomous.feedback/embed/shop.example/question');
-
-    const missHtml = await get('autonomous.feedback', '/not-a-domain-at-all');
-    assert.equal(missHtml.status, 404);
-    const missBody = await missHtml.text();
-    assert.match(missBody, /href="\/start"/);
-    assert.match(missBody, /href="\/meter"/);
-
-    const missJson = await get('autonomous.feedback', '/not-a-domain-at-all', { headers: { accept: 'application/json' } });
-    assert.equal(missJson.status, 404);
-    const missData = await missJson.json();
-    assert.equal(missData.error, 'not_found');
-    assert.ok(Array.isArray(missData.routes) && missData.routes.includes('/start'));
-    assert.match(CLIENT_SCRIPT, /input\[name="what"\]:checked/);
   } finally {
     restore();
   }

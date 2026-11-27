@@ -199,3 +199,25 @@ summary = #[
   ][reg=set]
   next_inquiry = `?["If autonomous.feedback is redesigned around the artifact a reader came from, what single minimal card contract fits spwashi.com, lore.land, spw.quest, and factshift.center without adding a CMS or auth?"]{ ~#expect: "origin artifact URL + host-owned kind label + one claim/try + one honest limit, with zero shop defaults and no form footer inside the card crop" }`
 }[reg=facet]
+
+^"card_only_2026_11_27"{
+  id = "feedback-contour-2026-11-card-only"
+  dated = "2026-11-27"
+  operation = "cache"
+  fixity = "tending"
+  source = `creator, 2026-11-27: "the feedback desk needs more mindfulness; that site has no data and I am the only intended consumer; it can be redesigned", then, offered card only, one private inbox, or retiring the site, chose card only.`
+  claim = `autonomous.feedback is one person's card, not a product: a reader keeps a card about a page on the creator's sites, and nothing is stored. The blocks above that wait on the creator's read are answered here: the desk, the paid rung, and the five-minute cron are pruned.`
+  landed = #[
+    `Nothing stored, counted, or scheduled: no database, no cron, no desk or inbox, no keys, and the worker's own request logging off.`,
+    `Only OWN_SITES (model.js) get a form; any other host gets a plain page and its file is never fetched.`,
+    `The card's address is the page it is about, so a stranger who sees it reaches the work, not the form; the "Run a site?" footer is gone (constellation_rethink_2026_11, copy_refinement_rules).`,
+    `Kind examples name nothing a store sells (ecosystem_direction_2026_11, smallest_patches, first lever).`,
+    `Words never ride in an address: ?note= is not read.`,
+  ][reg=set]
+  contract = ~"../slices/feedback-desk-flow/index.spw"
+  still_open = #[
+    `Say when a subject is dropped past the cap (ecosystem_direction_2026_11, second lever).`,
+    `The card's origin link back to the chapter, line, or swatch beyond its path (constellation_rethink_2026_11, next_inquiry).`,
+    `The remote database and the old secret, which the creator removes.`,
+  ][reg=set]
+}[reg=facet]

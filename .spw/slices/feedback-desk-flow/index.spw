@@ -1,157 +1,57 @@
-# Feedback desk flow
+# Feedback card flow
 #
-# How a card on autonomous.feedback is kept, saved, compacted, and read, and who
-# can see what at each step. Written to be audited: every state and transition
-# names the code that decides it and the test that holds it, and the audit
-# section lists the queries and probes that check production against it.
+# How a note on autonomous.feedback becomes a card its writer keeps. Nothing
+# is stored, counted, or sent. The slice keeps its old folder name so its
+# citations hold; the desk it once described was retired on 2026-11-27.
 
 #>feedback_desk_flow
-#:slice #!feedback #!desk #!storage #!privacy #!audit
+#:slice #!feedback #!card #!privacy
 #:operation #!contract
 #:fixity #!tending
 #:layer #!pragmatics
 
 @product: ~"../../caches/feedback-product-2026-09.spw"
+@contour: ~"../../caches/feedback-contour-2026-11.spw"
 @worker: ~"../../../workers/autonomous-feedback/src/index.js"
-@desk: ~"../../../workers/autonomous-feedback/src/desk.js"
-@intake: ~"../../../workers/autonomous-feedback/src/intake.js"
 @config: ~"../../../workers/autonomous-feedback/src/config.js"
 @model: ~"../../../workers/autonomous-feedback/src/model.js"
 @pages: ~"../../../workers/autonomous-feedback/src/pages.js"
-@worker_config: ~"../../../workers/autonomous-feedback/wrangler.jsonc"
-@migrations: ~"../../../workers/autonomous-feedback/migrations/"
 @tests: ~"../../../workers/autonomous-feedback/test/routes.test.mjs"
-@memory_db: ~"../../../workers/autonomous-feedback/test/memory-db.mjs"
-@readme: ~"../../../workers/README.md"
 
 operation = "contract"
 fixity = "tending"
 landed = `2026-09-23`
+redesigned = `2026-11-27`
 
 intent: .{
- goal = `Keep a reader's words only where the site's owner can read them, only for as long as the owner chooses to keep them, and reduce the rest to counts that hold no words.`
- decided_by = `creator, 2026-09-23: three-day auto compaction of unsaved cards; owners save a limited set; the operator checks every open desk as Spwashi; compaction keeps tallies only; referer detection preferred.`
+ goal = `A reader says what happened on a page, in a tap or a few words, and keeps the card. The card reaches the creator only if the reader sends it.`
+ decided_by = `creator, 2026-11-27: "the feedback desk needs more mindfulness; that site has no data and I am the only intended consumer; it can be redesigned", then chose card only: nothing stored.`
 }[reg=facet]
 
 actors: .{
- reader = `writes a note at /{host}/{kind}; gets a card to save or send; never signs in`
- owner = `publishes https://{host}/.well-known/autonomous-feedback.json; holds the inbox key; reads, saves, releases, and deletes at /{host}/inbox`
- operator = `Spwashi; holds INBOX_READ_TOKEN; lists hosts in DESK_HOSTS; reads every open desk at /desk and runs Compact now`
- cron = `the worker's */5 * * * * trigger; compacts every site on each tick (index.js scheduled)`
+ reader = `writes at /{host}[/{kind}] on one of the creator's sites; gets a card to save, copy, message, or post; never signs in`
+ creator = `the only intended reader of a card, by message or by a post that mentions them`
 }[reg=facet]
 
-keys: .{
- queue_want = `client file "queue": { "want": true } — the owner asks for a desk. Free. Opens nothing by itself.`
- desk_hosts = `worker var DESK_HOSTS, space- or comma-separated — the operator lists a host. The paid switch; settled by reply, no checkout. Open: spwashi.com, spw.quest, lore.land (2026-09-23; all the operator's own).`
- operator_token = `worker secret INBOX_READ_TOKEN — opens every desk. Never in a file, never in a query string.`
- owner_key = `a secret only the owner keeps; the file publishes inbox.key = "sha256:" + 64 hex of it. config.js rejects anything else and never echoes it. Opens that host's desk only.`
- save_limit = `worker var SAVE_LIMIT, default 10 (desk.js DEFAULT_SAVE_LIMIT). The candidate paid dimension.`
-}[reg=facet]
-
-desk_states: .{
- decided_by = `desk.js deskState(env, host, config)`
- none = `the file is missing, unreadable, or does not set queue.want. Nothing is kept.`
- requested = `queue.want is set, but the host is not in DESK_HOSTS, D1 is not bound, or no reader exists (no INBOX_READ_TOKEN and no inbox.key). Nothing is kept.`
- open = `queue.want AND host in DESK_HOSTS with D1 bound AND a reader exists. New cards are kept.`
- reported_at = #[`/{host}/config.json → desk`, `/{host}/{kind}.json → ingest.stores, queue.attached, queue.requested`, `/start?host= → "Inbox: requested" | "Inbox: open"`, `/desk → each listed host`][reg=set]
-}[reg=facet]
-
-card_lifecycle: .{
- filed = `POST /{host}[/{kind}] → readFiling (index.js). Intake is rate-limited per address (intake.js intakeOpen). The page comes from the body's path, else ?at=, else the Referer (see page_detection).`
- kept = `desk open → keepNote (desk.js): one notes row, saved = 0. Refused as "full" at UNSAVED_CAP (200) unsaved cards per host. Desk not open → stored = false, queue "requested" or "unattached"; no row is written.`
- saved = `owner or operator → setSaved(true) (desk.js). Refused as "limit" once SAVE_LIMIT cards are saved. A saved card keeps its words until released or deleted. It is never compacted.`
- released = `setSaved(false). The card is unsaved again; if it is older than three days it is compacted at the next tick.`
- deleted = `deleteNotes (desk.js), one card or all; the words are gone and nothing is counted.`
- compacted = `compact (desk.js): every unsaved card with issued older than COMPACT_AFTER_DAYS (3) becomes +1 card on tallies(host, week = Monday of issued, about = subject id or page name or path or "", thread = common-note id or "thanks" or "", kind), adding 1 to worded when it came in the writer's own words, and its notes row is deleted. Both statements run in one D1 batch (one transaction), so a count never exists without its deletion or the reverse. Runs on every cron tick for all hosts, and from /desk Compact now for one host.`
- tally = `what survives compaction: host, week, about, thread, kind, cards, worded. No note text, no writer, no path beyond the page the site named or the path the reader kept (migration 0004).`
- kind = `from evidence only (index.js readFiling): the tag the writer chose, else the common note's kind, else appreciation for "Just saying thanks", else NOTE ("note", unsorted). Nothing is preselected unless the link names a kind, so untouched notes never inflate a category.`
- what = `2026-09-23: the form sends one choice, what = kind:{slug} | thread:{subject}:{id} | thanks, from one radio group (API callers may still send kind and thread). A tap with no words sends the line the card showed ("Count me too.", "Thanks.", a kind's own line such as "Something here is broken.") and is recorded worded = 0. A common note from another subject (left checked and hidden when the subject changed without script) is dropped, not an error. Choosing never rewrites the address, so a reader's choice cannot become the next reader's default; a choice can be cleared (Clear, or Escape).`
- digest = `desk.js digest(tallies, notes): each week grouped by about and thread, stored counts and live cards together; thanks counted apart; due = unsaved cards within a day of compaction; hints = subjects with 3 or more notes that joined no common note, so the owner's map can grow. The inbox page opens with it; the JSON API carries it.`
- seen = `cookie af_seen (Path=/{host}/inbox, HttpOnly, 90 days) marks cards newer than the owner's last visit. The server keeps no visit history.`
-}[reg=facet]
-
-page_detection: .{
- decided_by = `index.js pageFrom (GET) and readFiling (POST); model.js refererPath`
- order = `?at= on the link, else the Referer when its host is the site or www.site, else the picker. A body path on POST wins over the Referer.`
- origin_only = `A Referer of "/" is ignored: browsers cut cross-site Referers to the origin by default, so "/" cannot be told from unknown. The link and frame snippets carry referrerpolicy="no-referrer-when-downgrade" so the full path arrives; the HTML-form snippet names its page with a hidden path input.`
- privacy = `cleanPath drops query and fragment. A detected page is shown to the writer ("On Checkout · /checkout") with the picker under "Change or clear the page", so the writer sees and can clear it before sending.`
-}[reg=facet]
-
-access: .{
- decided_by = `intake.js deskAccess; index.js strongestAccess, handleInbox, handleDesk`
- presented = `Authorization: Bearer (scripts), else cookie af_inbox (Path=/{host}/inbox), else cookie af_desk (Path=/). Cookies are HttpOnly, Secure, SameSite=Strict, Max-Age 12 hours, set only after a key typed into a POST form checks out. Every browser action is a same-origin POST; the page CSP allows no fetch.`
- results = `operator token → "operator" on any host. SHA-256 of the key equal to the host's inbox.key → "owner" on that host only. No key → 401. Wrong key → 401. Neither token nor owner key configured → 501 for JSON. Desk not open → 501 for JSON, an explanatory page for browsers.`
- routes = #[
-  `GET /{host}/inbox (browser): key form (401) | inbox page: due warning, this week's digest with map hints, earlier weeks, New ("Counted on {issued + 3 days} unless you save it", marked new since the last visit), Saved n of limit`,
-  `POST /{host}/inbox (form): action open | close | save | release | delete → 303 back with ?done=`,
-  `GET /{host}/inbox (Bearer or Accept: json): { filings, tallies, digest, saved_limit, … }`,
-  `POST /{host}/inbox (Bearer, JSON { id, saved }): 200 | 409 limit | 404 missing`,
-  `DELETE /{host}/inbox[?id=] (Bearer): { cleared }`,
-  `GET /desk: key form (401) | every DESK_HOSTS entry with new, saved, oldest new card, and the next compaction as a tally preview`,
-  `POST /desk (form): action open | close | compact host → 303 /desk?compacted=n&host=`
- ][reg=set]
-}[reg=facet]
-
-copy_contract: .{
- rule = `Every storage sentence follows deskState. Never tell a writer a card was kept for an owner who cannot read it.`
- write_page = `2026-09-23, creator: storage wording read as hedging; expectations travel by courtesy, and the mechanics live on one page. The form is the card (a live card whose header follows the choices and whose body is the textarea); beside Send, one line: open desk "Goes straight to {site}."; otherwise "You get the card to send {site}." Both link /privacy ("How notes are kept"), which holds the three days, the counts, the name, the readers, and what is never kept.`
- card_page = `stored: "Sent to {site}", the same card stamped Sent; earlier wording: "Kept for {site} for three days, longer if they save it" + "If it is not saved within three days, it becomes a count by page and kind, and its words are deleted"; requested: "has asked for an inbox, but it is not open yet, so this card was not kept"; full: "The inbox … is full". 2026-11-10: a stored card names the count it becomes, as the digest names it (pages.js countLine; the week from model.js weekOf): worded "Your words are kept for three days, longer if {site} saves the card. After that they are deleted and one count remains: {kind · about · common note · week of Monday}"; a tap "You sent a tap, so there are no words of yours to keep. It counts once: …". The card's text sits under "The card as text" with script off`
- home = `What it costs: any site, free; your site, free; an inbox, on request — "keeps new cards for three days. You save the ones worth keeping; the rest become counts by page and kind."`
- decided_by = `pages.js renderWrite, renderCard, renderHome, configStatus, renderInbox`
-}[reg=facet]
-
-storage: .{
- notes = `migrations 0001–0004: id, host, kind, title, note, writer, issued, route_name, route_path, saved, subject, thread, worded`
- tallies = `migration 0004 (replaces 0003's table): PRIMARY KEY (host, week, about, thread, kind), cards, worded`
- apply = `migrations/ applied to the worker's remote database, by the creator`
+card: .{
+ made = `POST /{host}[/{kind}] → readFiling → renderCard (index.js, pages.js). Nothing is written anywhere.`
+ kind = `from evidence only: the kind the writer chose, else the common note's kind, else appreciation for "Just saying thanks", else an unsorted note.`
+ address = `the page the card is about (host and path), never this form, so a stranger who sees the card reaches the work.`
+ page = `?at= on the link, else a same-site Referer, else the picker. Query and fragment are dropped, and the writer sees the page before making the card.`
 }[reg=facet]
 
 invariants: #[
- .{ id = `fd-01` ; claim = `No card is kept for a host whose desk is not open.` ; code = `index.js maybeKeep → deskState` ; test = `asking for a queue does not keep notes until the desk opens for the host; a listed desk with no reader keeps nothing` }[reg=facet],
- .{ id = `fd-02` ; claim = `No card is kept that no one can read: open requires INBOX_READ_TOKEN or the host's inbox.key.` ; code = `desk.js deskState readable` ; test = `a listed desk with no reader keeps nothing; a bound queue stays closed while the inbox token is unset` }[reg=facet],
- .{ id = `fd-03` ; claim = `An unsaved card's words last at most three days plus one cron interval.` ; code = `desk.js compact; index.js scheduled` ; test = `unsaved cards older than three days become tallies; saved cards keep their words` }[reg=facet],
- .{ id = `fd-04` ; claim = `Tallies hold no reader words.` ; code = `migration 0004 columns; compact INSERT … SELECT` ; test = `unsaved cards older than three days become tallies (doesNotMatch note text)` }[reg=facet],
- .{ id = `fd-11` ; claim = `An untouched note is filed as an unsorted note, never under a preselected kind.` ; code = `index.js readFiling kind; pages.js renderWrite selected` ; test = `a kind comes from evidence …; the write page is a labelled form (bare page has nothing checked)` }[reg=facet],
- .{ id = `fd-12` ; claim = `The digest counts every card once: compacted counts and live cards never overlap.` ; code = `desk.js digest; compact deletes what it counts` ; test = `the digest groups a week by subject and common note …; compaction test (digest total 4)` }[reg=facet],
- .{ id = `fd-05` ; claim = `A count and the deletion of its card commit together.` ; code = `desk.js compact db.batch` ; test = `review: D1 batch is a transaction; the memory DB runs the pair in order` }[reg=facet],
- .{ id = `fd-06` ; claim = `A site never has more than SAVE_LIMIT saved cards.` ; code = `desk.js setSaved` ; test = `an owner opens their inbox … and saves within a limit` }[reg=facet],
- .{ id = `fd-07` ; claim = `An owner key opens only its own host; the file holds only its hash.` ; code = `intake.js deskAccess; config.js inbox.key` ; test = `an owner opens their inbox …; a client file carries only the hash of an inbox key` }[reg=facet],
- .{ id = `fd-08` ; claim = `No key travels in a query string or a public file.` ; code = `index.js bearer_in_query; intake.js rejectPublicSecrets; config.js inbox.key` ; test = `a public file cannot carry an inbox token; the inbox stays locked and old doors stay closed` }[reg=facet],
- .{ id = `fd-09` ; claim = `Only /desk can compact on demand, and only for the operator.` ; code = `index.js handleDesk` ; test = `the operator desk lists every open inbox, previews compaction, and compacts one site` }[reg=facet],
- .{ id = `fd-10` ; claim = `A detected page is shown to the writer before sending, and never carries a query or fragment.` ; code = `model.js refererPath; pages.js routeField` ; test = `the write page names the page the reader came from, when the Referer is the site; a rejected note still shows the page it will send` }[reg=facet]
+ .{ id = `fc-01` ; claim = `Nothing a reader writes is stored, counted, or scheduled: the worker has no database and no schedule, and its own request logging is off.` ; code = `wrangler.jsonc; index.js` ; test = `the home page names the sites and says nothing is stored` }[reg=facet],
+ .{ id = `fc-02` ; claim = `Only the creator's sites take notes, and no other site's file is fetched.` ; code = `model.js OWN_SITES, isOwnSite; config.js fetchRaw` ; test = `a site that is not one of these gets no form and is never fetched` }[reg=facet],
+ .{ id = `fc-03` ; claim = `Words never ride in an address.` ; code = `index.js handleSite` ; test = `words never ride in an address` }[reg=facet],
+ .{ id = `fc-04` ; claim = `The card names the page it is about, not this form.` ; code = `pages.js aboutAddress, cardMarkup` ; test = `a note becomes a card that names the page it is about, and nothing is stored` }[reg=facet],
+ .{ id = `fc-05` ; claim = `The desk, setup, meter, frame, and climate routes are gone.` ; code = `index.js fetch` ; test = `what the desk, setup, meter, frame, and climate answered is gone` }[reg=facet]
 ][reg=set]
 
-audit: .{
- local = `node --test workers/autonomous-feedback/test/routes.test.mjs — every invariant above names its test`
- run_sql = `each query below, read-only, against the worker's remote database, by the creator`
- queries = #[
-  .{ checks = `fd-03` ; expect = `no rows` ; sql = `SELECT host, COUNT(*) AS overdue FROM notes WHERE saved = 0 AND issued < strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-3 days', '-10 minutes') GROUP BY host` }[reg=facet],
-  .{ checks = `fd-06` ; expect = `no rows (with SAVE_LIMIT 10)` ; sql = `SELECT host, COUNT(*) AS saved FROM notes WHERE saved = 1 GROUP BY host HAVING COUNT(*) > 10` }[reg=facet],
-  .{ checks = `fd-01` ; expect = `every host is in DESK_HOSTS` ; sql = `SELECT DISTINCT host FROM notes UNION SELECT DISTINCT host FROM tallies` }[reg=facet],
-  .{ checks = `fd-04` ; expect = `host, week, about, thread, kind, cards, worded and nothing else` ; sql = `PRAGMA table_info(tallies)` }[reg=facet],
-  .{ checks = `kept cap` ; expect = `no rows` ; sql = `SELECT host, COUNT(*) FROM notes WHERE saved = 0 GROUP BY host HAVING COUNT(*) > 200` }[reg=facet]
- ][reg=set]
- probes = #[
-  `curl -s https://autonomous.feedback/{host}/config.json → .desk is "none" | "requested" | "open"`,
-  `curl -s -H "Authorization: Bearer $INBOX_READ_TOKEN" -H "accept: application/json" https://autonomous.feedback/desk → .sites[] with unsaved, saved, oldest, due`,
-  `curl -s -o /dev/null -w '%{http_code}' https://autonomous.feedback/{host}/inbox → 401`
- ][reg=set]
- cadence = `After each deploy that touches desk.js, index.js, intake.js, or a migration; and once per release close (13th / 26th).`
-}[reg=facet]
-
-negative_boundaries: #[
- `No model-written summaries in compaction; tallies only (creator, 2026-09-23). A summary pass would be a separate, opt-in desk feature.`,
- `No owner accounts, passwords, or email; the owner key is the whole identity.`,
- `No checkout; DESK_HOSTS changes by hand after a reply settles.`,
- `No per-note pricing, no reader charges, no ranking.`,
- `No key in a query string, a public file, or a log line.`,
- `No fetch from pages (CSP default-src 'none'); desk pages are forms and redirects.`
+retired = #[
+ `2026-11-27: the desk (kept cards, saves, compaction into weekly counts), owner and operator keys, the paid desk switch, the setup page and its snippets, the meter, the frame, the climate probes, per-account subdomains, and the network rate limit. Their history is in git.`
 ][reg=set]
 
-open: #[
- `Key rotation: a new inbox.key applies within the 5-minute config cache; the old key's cookie stops working at that point. Say so on /start?`,
- `Whether SAVE_LIMIT becomes per host (a paid desk raises it) or stays one number.`,
- `Whether the owner's inbox should show the day's compaction ("3 cards were counted yesterday") as a notice.`
-][reg=set]
+open = `The remote database and the worker's old secret outlive the code until the creator removes them.`
 
-validation = `node --test workers/autonomous-feedback/test/routes.test.mjs; npm run check:workers; the audit queries above against the remote D1 after deploy`
+validation = `node --test workers/autonomous-feedback/test/routes.test.mjs`

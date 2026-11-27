@@ -1,16 +1,15 @@
 /**
- * Client configuration: a site publishes
+ * Client configuration: each of the sites (model.js OWN_SITES) may publish
  *   https://{host}/.well-known/autonomous-feedback.json
  * to shape its own form and cards. The file only ever configures the host it
  * was fetched from. Anything missing, malformed, or unsafe falls back to the
- * defaults, and every fallback is reported so the owner can fix it.
+ * defaults, and every fallback is named in `problems` (read by the tests).
  *
  * Within reason: labels, order, and bounds for the form; colour tokens, mode,
  * corners, and font for the theme. No stylesheet URLs, no HTML, no scripts —
  * the page's CSP would block them, and tokens cannot inject anything.
  */
-import { rejectPublicSecrets } from "./intake.js";
-import { CONTEXTS, LEGACY_SLUGS, NOTE_MAX, NOTE_MIN, cleanPath, isPublicSite, resolveSlug, validSubject } from "./model.js";
+import { CONTEXTS, LEGACY_SLUGS, NOTE_MAX, NOTE_MIN, cleanPath, isOwnSite, resolveSlug, validSubject } from "./model.js";
 
 export const CONFIG_PATH = "/.well-known/autonomous-feedback.json";
 export const CONFIG_SCHEMA = "autonomous-feedback.client.v0";
@@ -46,9 +45,6 @@ export function defaultConfig(host) {
     labels: {},
     from: "off",
     note: { min: NOTE_MIN, max: NOTE_MAX },
-    frame: { ancestors: [] },
-    queue: { want: false },
-    inbox: { key: "" },
     routes: [],
     subjects: [],
     // "" keeps today's form. "site" asks about using the site. "subject" asks about the work.
@@ -194,7 +190,7 @@ export function subjectFor(config, path) {
   return best?.subject || null;
 }
 
-/** Validate a parsed file for `host`. Pure, so tests and the setup page can call it directly. */
+/** Validate a parsed file for `host`. Pure, so tests can call it directly. Fields this form no longer reads (queue, inbox, frame) are ignored. */
 export function readConfig(raw, host) {
   const config = defaultConfig(host);
   const problems = config.problems;
@@ -210,7 +206,6 @@ export function readConfig(raw, host) {
     return config;
   }
 
-  rejectPublicSecrets(raw, problems);
   config.name = cleanText(raw.name, 60);
   config.title = cleanText(raw.title, 80);
   config.intro = cleanText(raw.intro, 300);
@@ -309,112 +304,12 @@ export function readConfig(raw, host) {
 
   config.subjects = readSubjects(raw.subjects, problems);
 
-  if (raw.queue != null) {
-    if (typeof raw.queue !== "object" || Array.isArray(raw.queue)) problems.push("queue must be an object like { \"want\": true }.");
-    else if (raw.queue.want === true) config.queue.want = true;
-    else if (raw.queue.want != null && raw.queue.want !== false) problems.push("queue.want must be true or false.");
-  }
-
-  // The owner's inbox key, published only as its SHA-256; the key itself stays with the owner.
-  if (raw.inbox != null) {
-    const key = typeof raw.inbox === "object" && !Array.isArray(raw.inbox) ? String(raw.inbox.key ?? "").trim().toLowerCase() : "";
-    if (/^sha256:[0-9a-f]{64}$/.test(key)) config.inbox.key = key;
-    else problems.push("inbox.key must be \"sha256:\" and 64 hex characters: the hash of your key, never the key.");
-  }
-
-  if (raw.frame?.ancestors != null) {
-    const list = Array.isArray(raw.frame.ancestors) ? raw.frame.ancestors.slice(0, 10) : [];
-    for (const entry of list) {
-      let url;
-      try {
-        url = new URL(String(entry));
-      } catch {
-        problems.push(`frame.ancestors entry "${cleanText(String(entry), 80)}" is not a URL.`);
-        continue;
-      }
-      if (url.protocol !== "https:" || url.pathname !== "/" || url.search || url.hash || !isPublicSite(url.hostname)) {
-        problems.push(`frame.ancestors entry "${cleanText(String(entry), 80)}" must be an https origin with no path, like https://blog.example.com.`);
-        continue;
-      }
-      config.frame.ancestors.push(url.origin);
-    }
-  }
-
   config.theme = readTheme(raw.theme, problems);
   return config;
 }
 
-/** A starter file for `host`, shown on the setup page with the domain filled in. */
-export function starterConfig(host) {
-  // A small, complete example: one subject with a common note and an ask. Every other field has a sensible default.
-  return {
-    schema: CONFIG_SCHEMA,
-    host,
-    name: "",
-    intro: "What was hard to use, and what worked.",
-    thanks: "Thank you. I read every one of these.",
-    subjects: [
-      {
-        id: "start",
-        name: "Getting started",
-        paths: ["/"],
-        prompt: "What were you looking for?",
-        asks: ["What brought you here?"],
-        threads: [{ id: "where-to-start", name: "Not sure where to start", kind: "confusing" }],
-      },
-    ],
-    from: "optional",
-    theme: { mode: "light", accent: "#0f766e", corners: "round", font: "system" },
-  };
-}
-
-/** A validated configuration written back out as a clean client file. */
-export function configToFile(config) {
-  const file = { schema: CONFIG_SCHEMA, host: config.host };
-  if (config.name) file.name = config.name;
-  if (config.title) file.title = config.title;
-  if (Object.keys(config.contact).length) file.contact = { ...config.contact };
-  if (config.intro) file.intro = config.intro;
-  if (config.about) file.about = config.about;
-  file.kinds = [...config.kinds];
-  if (Object.keys(config.labels).length) file.labels = config.labels;
-  file.from = config.from;
-  if (config.button) file.button = config.button;
-  if (config.thanks) file.thanks = config.thanks;
-  file.note = { ...config.note };
-  if (config.queue?.want) file.queue = { want: true };
-  if (config.inbox?.key) file.inbox = { key: config.inbox.key };
-  if (config.routes?.length) file.routes = config.routes.map(({ name, path }) => ({ name, path }));
-  if (config.subjects?.length) {
-    file.subjects = config.subjects.map((subject) => {
-      const out = { id: subject.id, name: subject.name };
-      if (subject.paths.length) out.paths = [...subject.paths];
-      if (subject.prompt) out.prompt = subject.prompt;
-      if (subject.example) out.example = subject.example;
-      if (subject.kinds.length) out.kinds = [...subject.kinds];
-      if (subject.asks.length) out.asks = [...subject.asks];
-      if (subject.threads.length) {
-        out.threads = subject.threads.map((thread) => {
-          const t = { id: thread.id, name: thread.name };
-          if (thread.stance) t.stance = thread.stance;
-          if (thread.link) t.link = thread.link;
-          if (thread.kind) t.kind = thread.kind;
-          return t;
-        });
-      }
-      return out;
-    });
-  }
-  if (config.frame.ancestors.length) file.frame = { ancestors: [...config.frame.ancestors] };
-  if (config.theme) {
-    const { mode, background, text, accent, corners, font } = config.theme;
-    file.theme = { mode, background, text, accent, corners, font };
-  }
-  return file;
-}
-
 async function fetchRaw(host) {
-  if (!isPublicSite(host)) return { error: "not_public" };
+  if (!isOwnSite(host)) return { error: "not_own" };
   const url = `https://${host}${CONFIG_PATH}`;
   let response;
   try {
@@ -442,7 +337,7 @@ async function fetchRaw(host) {
 }
 
 const FETCH_PROBLEMS = Object.freeze({
-  not_public: "The site is not a public domain, so no file was fetched.",
+  not_own: "The site is not one this form takes notes for, so no file was fetched.",
   unreachable: `The file could not be fetched within ${FETCH_TIMEOUT_MS / 1000} seconds.`,
   redirected_elsewhere: "The file redirected to a different site, so it was ignored.",
   missing: "No configuration file was found. The defaults apply.",
@@ -452,15 +347,13 @@ const FETCH_PROBLEMS = Object.freeze({
 
 /**
  * Configuration for `host`, cached for a few minutes so a card page never
- * waits on a slow client site. Never throws; failures become defaults plus a
- * problem line. `status` says why no file was read ("missing" is not a problem:
- * most sites have none).
+ * waits on a slow site. Never throws; failures become defaults plus a problem
+ * line. `status` says why no file was read ("missing" is not a problem).
  */
-export async function loadConfig(host, { fresh = false } = {}) {
+export async function loadConfig(host) {
   const cache = typeof caches !== "undefined" ? caches.default : null;
   const key = cache ? new Request(`https://autonomous.feedback/_config/${host}`) : null;
-  // fresh: the owner asked to check again (setup). Fetch once more and replace what every page reads.
-  if (cache && !fresh) {
+  if (cache) {
     const hit = await cache.match(key);
     if (hit) return hit.json();
   }
@@ -500,5 +393,5 @@ export function themeCss(theme) {
   const surface = toHex(mix(text, bg, theme.mode === "light" ? 0.035 : 0.05));
   const field = toHex(mix(text, bg, theme.mode === "light" ? 0.015 : 0.02));
   const muted = toHex(mix(text, bg, 0.68));
-  return `:root { color-scheme: ${theme.mode}; --bg:${theme.background}; --fg:${theme.text}; --muted:${muted}; --accent:${theme.accent}; --line:rgba(${rgb.join(",")},.28); --surface:${surface}; --field:${field}; --radius:${RADII[theme.corners]}; --pill:${theme.corners === "sharp" ? RADII.sharp : "999px"}; --font:${FONTS[theme.font]};${theme.mode === "light" ? " --storm:#b42318; --warn:#8a4b0f;" : ""} } body.embed { background: var(--bg); }`;
+  return `:root { color-scheme: ${theme.mode}; --bg:${theme.background}; --fg:${theme.text}; --muted:${muted}; --accent:${theme.accent}; --line:rgba(${rgb.join(",")},.28); --surface:${surface}; --field:${field}; --radius:${RADII[theme.corners]}; --pill:${theme.corners === "sharp" ? RADII.sharp : "999px"}; --font:${FONTS[theme.font]};${theme.mode === "light" ? " --storm:#b42318; --warn:#8a4b0f;" : ""} }`;
 }

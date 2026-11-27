@@ -1,10 +1,8 @@
 /**
  * Progressive enhancement for autonomous.feedback pages. Every page works
- * without it: forms post, the setup page rerenders on submit, cards can be
- * screenshotted. The script is ordinary code serialized into the page, so the
- * browser normalizes a pasted link with the same function the server uses.
+ * without it: forms post and cards can be screenshotted. The script is
+ * ordinary code serialized into the page.
  */
-import { normalizeHost, validSubject } from "./model.js";
 
 function clientMain() {
   const storage = (() => {
@@ -19,166 +17,13 @@ function clientMain() {
   })();
   const say = (message) => (typeof announce === "function" ? announce(message) : undefined);
 
-  // A pasted link becomes a domain as soon as the field is left.
+  // A named page fills the path field.
   document.querySelectorAll('input[name="route"]').forEach((input) => {
     input.addEventListener("change", () => {
       const path = document.getElementById("path");
       if (path && input.value) path.value = input.value;
     });
   });
-
-  document.querySelectorAll("[data-host-field]").forEach((field) => {
-    // Each field has its own "Open this site" link; a field without one leaves the others alone.
-    const visit = field.parentElement?.querySelector("[data-visit]");
-    const paintVisit = () => {
-      const clean = normalizeHost(field.value);
-      if (!visit) return;
-      if (validSubject(clean)) {
-        visit.href = `https://${clean}/`;
-        visit.hidden = false;
-        visit.textContent = `Open ${clean}`;
-      } else {
-        visit.hidden = true;
-        visit.removeAttribute("href");
-      }
-    };
-    field.addEventListener("input", paintVisit);
-    field.addEventListener("change", () => {
-      const clean = normalizeHost(field.value);
-      if (clean && clean !== field.value) field.value = clean;
-      paintVisit();
-      const form = field.closest("form");
-      // Only the open write page names its site in the address; other forms leave the address alone.
-      if (!form || form.id !== "write" || form.querySelector('input[type="hidden"][name="host"]') || !validSubject(clean)) return;
-      const what = form.querySelector('input[name="what"]:checked')?.value || "";
-      const kind = what.startsWith("kind:") ? what.slice(5) : form.querySelector('input[name="kind"]:checked')?.value || "";
-      const next = `/${clean}${kind ? `/${kind}` : ""}${location.search}`;
-      if (next !== location.pathname + location.search) history.pushState(null, "", next);
-    });
-    paintVisit();
-  });
-
-  // Setup: the code, preview, and test commands follow the form.
-  const setup = document.getElementById("setup");
-  const dataNode = document.getElementById("setup-data");
-  if (setup && dataNode) {
-    const data = JSON.parse(dataNode.textContent);
-    const host = setup.querySelector("[data-host-field]");
-    const snippet = document.getElementById("snippet");
-    const testSnippet = document.getElementById("test-snippet");
-    const configSnippet = document.getElementById("config-snippet");
-    const preview = document.getElementById("preview");
-    const fills = (name) => document.querySelectorAll(`[data-fill="${name}"]`);
-    let frameTimer = 0;
-
-    // The same words the server writes: no kind means the reader has to write; a kind makes words optional.
-    const escape = (text) => String(text).split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split('"').join("&quot;");
-    const fill = (template, domain, kind) => template
-      .split("{{host}}").join(domain)
-      .split("{{kindpath}}").join(kind.slug === "note" ? "" : `/${kind.slug}`)
-      .split("{{kind}}").join(kind.slug)
-      .split("{{label}}").join(kind.slug === "note" ? `Feedback for ${domain}` : `${escape(kind.title)} for ${domain} <span>Optional detail</span>`)
-      .split("{{placeholder}}").join(kind.slug === "note" ? "What happened?" : "Optional detail");
-
-    const paint = () => {
-      const typed = normalizeHost(host.value);
-      const usable = typed && validSubject(typed);
-      const domain = usable ? typed : data.example;
-      const how = setup.querySelector('input[name="how"]:checked')?.value || "link";
-      const slug = setup.querySelector('input[name="kind"]:checked')?.value || data.kinds[0].slug;
-      const kind = data.kinds.find((k) => k.slug === slug) || data.kinds[0];
-      const chosen = data.snippets[how];
-      const code = fill(chosen.template, domain, kind);
-      snippet.textContent = code;
-      testSnippet.textContent = fill(data.test, domain, kind);
-      if (configSnippet && data.config) configSnippet.textContent = fill(data.config, domain, kind);
-      fills("host").forEach((node) => { node.textContent = domain; });
-      fills("how-label").forEach((node) => { node.textContent = chosen.label; });
-      fills("where").forEach((node) => { node.textContent = chosen.where; });
-      fills("config-url").forEach((node) => { node.textContent = `https://${domain}/.well-known/autonomous-feedback.json`; });
-      fills("test-link").forEach((node) => {
-        const tail = kind.slug === "note" ? "" : `/${kind.slug}`;
-        node.href = `/${domain}${tail}`;
-        node.textContent = `autonomous.feedback/${domain}${tail}`;
-      });
-      document.querySelectorAll("[data-when-empty]").forEach((node) => { node.hidden = usable; });
-      // "Check again now" keeps the choices made here.
-      document.querySelectorAll('[data-carry="how"]').forEach((node) => { node.value = how; });
-      document.querySelectorAll('[data-carry="kind"]').forEach((node) => { node.value = slug; });
-
-      // The preview renders the generated code, which only ever holds a validated domain.
-      if (how === "frame") {
-        const src = `/embed/${domain}${kind.slug === "note" ? "" : `/${kind.slug}`}`;
-        let frame = preview.querySelector("iframe");
-        if (!frame || preview.dataset.how !== "frame") {
-          preview.innerHTML = "";
-          frame = document.createElement("iframe");
-          frame.width = "100%";
-          frame.height = "560";
-          frame.style.border = "0";
-          preview.append(frame);
-        }
-        frame.title = `Preview: feedback frame for ${domain}`;
-        clearTimeout(frameTimer);
-        frameTimer = setTimeout(() => {
-          if (frame.getAttribute("src") !== src) frame.src = src;
-        }, 400);
-      } else if (how === "fetch") {
-        preview.innerHTML = '<p class="note">Your own code decides how this looks.</p>';
-      } else {
-        preview.innerHTML = code.split("https://autonomous.feedback").join("");
-      }
-      preview.dataset.how = how;
-
-      const params = new URLSearchParams();
-      if (usable) params.set("host", typed);
-      if (how !== "link") params.set("how", how);
-      if (slug !== data.kinds[0].slug) params.set("kind", slug);
-      const next = `/start${params.toString() ? `?${params}` : ""}`;
-      if (next !== location.pathname + location.search) history.replaceState(null, "", next);
-    };
-
-    setup.addEventListener("input", paint);
-    setup.addEventListener("change", paint);
-    setup.addEventListener("submit", (event) => {
-      event.preventDefault();
-      paint();
-      say("The code is up to date.");
-    });
-  }
-
-  // Home: the first card's address follows the site as it is typed.
-  const beginSite = document.querySelector("[data-begin-site]");
-  if (beginSite) {
-    const address = document.querySelector('[data-fill="begin-address"]');
-    const beginCard = beginSite.closest("[data-live-card]");
-    const paintBegin = () => {
-      const typed = normalizeHost(beginSite.value);
-      if (address) address.textContent = `autonomous.feedback/${typed || "…"}`;
-      if (beginCard) beginCard.dataset.filled = String(Boolean(typed && validSubject(typed)));
-    };
-    beginSite.addEventListener("input", paintBegin);
-    beginSite.closest("form")?.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
-        beginSite.closest("form").requestSubmit();
-      }
-    });
-    paintBegin();
-  }
-
-  // Home, for owners: the one-line snippet follows the domain as it is typed.
-  const ownerSnippet = document.querySelector("[data-owner-snippet]");
-  const ownerSite = ownerSnippet?.closest("form")?.querySelector("[data-host-field]");
-  if (ownerSnippet && ownerSite) {
-    const paintSnippet = () => {
-      const typed = normalizeHost(ownerSite.value);
-      const domain = typed && validSubject(typed) ? typed : "yoursite.com";
-      ownerSnippet.textContent = ownerSnippet.dataset.ownerSnippet.split("{{host}}").join(domain).split("{{kindpath}}").join("");
-    };
-    ownerSite.addEventListener("input", paintSnippet);
-    paintSnippet();
-  }
 
   // A live card leans toward the pointer and catches a little light. Never while typing, never for coarse pointers or reduced motion.
   if (window.matchMedia?.("(pointer: fine) and (prefers-reduced-motion: no-preference)")?.matches) {
@@ -372,31 +217,13 @@ function clientMain() {
     if (summary) summary.focus();
   }
 
-  // Setup: make an inbox key on this device. Only its hash goes in the public file.
-  const keygen = document.querySelector("[data-keygen]");
-  if (keygen && crypto?.subtle) {
-    keygen.hidden = false;
-    const keyOut = document.getElementById("inbox-key-value");
-    const hashOut = document.getElementById("inbox-key-hash");
-    keygen.querySelector("[data-make-key]")?.addEventListener("click", async () => {
-      const bytes = crypto.getRandomValues(new Uint8Array(32));
-      const hex = (buffer) => [...new Uint8Array(buffer)].map((b) => b.toString(16).padStart(2, "0")).join("");
-      const key = hex(bytes);
-      const hash = hex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(key)));
-      if (keyOut) keyOut.textContent = key;
-      if (hashOut) hashOut.textContent = `"inbox": { "key": "sha256:${hash}" }`;
-      keygen.querySelectorAll("[data-key-result]").forEach((node) => { node.hidden = false; });
-      say("Made a key. Copy it somewhere safe before leaving this page.");
-    });
-  }
-
   // Card: save it as an image, share it, or post it; any of these stamps it.
   const share = document.querySelector(".share");
   const card = document.getElementById("card");
   if (share && card) {
     // The card arrived, so the unsent draft for this site is done.
     if (storage) {
-      storage.removeItem(`af:draft:${(card.dataset.address || "").split("/")[1] || ""}`);
+      storage.removeItem(`af:draft:${card.dataset.host || ""}`);
       storage.removeItem("af:draft:any");
     }
     // Copy needs script; without it the text sits under "The card as text".
@@ -549,6 +376,4 @@ function clientMain() {
   }
 }
 
-export const CLIENT_SCRIPT = `${validSubject.toString()}
-${normalizeHost.toString()}
-(${clientMain.toString()})();`;
+export const CLIENT_SCRIPT = `(${clientMain.toString()})();`;

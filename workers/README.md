@@ -45,70 +45,35 @@ its own section. After the sets, "When it worked" lists doctor, the expected
 files (`EXPECTED_FILES`, shared with the recipe), and no commit, and "Then"
 offers the first-patch prompt. `claude -p`, `codex exec`, and `grok` each receive the same job.
 
-`autonomous.feedback` is a feedback form for any website. A reader writes a
-note at `/{host}/{kind}` (kinds: `broken`, `confusing`, `missing`, `wrong`,
-`question`, `appreciation`; the URL matches the label, and older slugs such as
-`problem`, `suggestion`, `review`, `brief`, `wonder` redirect) and gets a card to save as an image,
-share, post, or copy. Nothing is stored unless the site has an open inbox (below). `/start?host=&how=&kind=` is setup: it
-fills the link, frame, HTML form, `fetch`, and `curl` codeblocks with the
-domain and previews the result. `/meter?host=` checks whether a site responds. `/privacy` is the one page
-that says how notes are kept; the forms link to it instead of explaining.
-Pasted links are normalized to a domain everywhere (`https://www.Example.com/x`
-→ `example.com`), and `/WWW.Example.com/...` redirects to one address per site.
-A rejected note comes back in the form with its errors, not as JSON, unless the
-request asks for JSON. So does a note sent past the intake limit (429): its
-words, choice, name, and page are still in the form, and the browser keeps the
-draft until a card arrives. A page the form carries is always shown, never
-folded away. A stored card names the count it becomes after three days; a tap
-with no words says it is only that count. With script off the card's text sits
-under "The card as text".
+`autonomous.feedback` takes notes about pages on the creator's own sites
+(`OWN_SITES` in `src/model.js`). A reader writes at `/{host}/{kind}` (kinds:
+`broken`, `confusing`, `missing`, `wrong`, `question`, `appreciation`; older
+slugs redirect) and gets a card to save as an image, share, post, or copy.
+Nothing is stored, counted, or sent: a card reaches anyone only if its writer
+sends it, and it names the page it is about, not the form. `/privacy` says so
+in one place. Any other host gets a page saying there is no form for it, and
+its files are never fetched. Words never ride in an address. With script off
+the card's text sits under "The card as text".
 
-A site configures its own form and theme by publishing
+Each site can shape its form with
 `https://{host}/.well-known/autonomous-feedback.json`
-(`autonomous-feedback.client.v0`): kinds and their order, per-kind labels, a
-display name, a form heading (`title`), an intro, `about` (`site` asks about
-using the site and leads with the kinds; `subject` asks about the work and
-leads with the common notes), the button text, DM contacts
-(`contact.bluesky`, `contact.x`: Message buttons on the card page and a mention
-in the Post links), an optional or required name field,
-note length bounds, extra frame ancestors, and theme tokens (mode, background,
-text, accent, corners, font). The file only configures the host that served it,
-is cached for five minutes (setup's "Check again now" reads it once more,
-within the meter's budget), and falls back to defaults field by field; colours
-below WCAG contrast are replaced. No stylesheet URLs or HTML are accepted.
-`/{host}/config.json` shows what was applied and why anything was not. On
-GitHub Pages built by Jekyll, a `.nojekyll` file is needed for `.well-known`.
-spwashi.com is the first client: `.well-known/autonomous-feedback.json` in this
-repo (light theme from the site's paper, ink, and teal; serif; optional name),
-linked from the Feedback card on /contact/.
-
-An inbox (the desk) keeps cards for a site in D1 only when the client file
-sets `queue.want: true`, the host is listed in the `DESK_HOSTS` var, and
-someone can read it: the operator's `INBOX_READ_TOKEN`, or the owner's key,
-published in the file only as `inbox.key: "sha256:…"`. Otherwise nothing is
-kept, and every page says so. New cards wait three days; the owner saves up
-to `SAVE_LIMIT` (default 10) at `/{host}/inbox`, and the cron compacts the
-rest into weekly tallies (subject or page, common note, kind, cards, and how
-many were in the writer's own words) with no words. The inbox opens with a
-digest of the week built from those counts and the live cards. `/desk` is the
-operator's view of every open desk, with Compact now. The whole flow, its
-invariants, and audit queries: `.spw/slices/feedback-desk-flow/index.spw`.
-The write page names the page a reader came from (`?at=`, else a same-site
-Referer); the link and frame snippets send the full Referer. `/for/{host}` was
-retired on 2026-09-22; no site used it. `/climate.json` remains the machine
-reading of the existing cluster. A request hostname can mark an account on the
-filing; the public page does not describe that routing. Source:
-`src/model.js` (kinds, validation), `src/config.js` (client file),
-`src/pages.js` (rendering), `src/client.js` (progressive enhancement),
-`src/index.js` (routes).
+(`autonomous-feedback.client.v0`): kinds and labels, a heading and intro,
+`about`, subjects with common notes and asks, named routes, message contacts
+(`contact.bluesky`, `contact.x`), an optional or required name, note bounds,
+and theme tokens. The file only configures the host that served it, is cached
+for five minutes, and falls back to defaults field by field; colours below
+WCAG contrast are replaced. On GitHub Pages built by Jekyll, a `.nojekyll`
+file is needed for `.well-known`. spwashi.com's file is in this repo, linked
+from the Feedback card on /contact/. The contract and its tests:
+`.spw/slices/feedback-desk-flow/index.spw`. Source: `src/model.js` (kinds,
+sites), `src/config.js` (client file), `src/pages.js` (rendering),
+`src/client.js` (progressive enhancement), `src/index.js` (routes).
 
 Quest and feedback deploy as separate workers, each from its own config, dry
 run first; deploy is the creator's. Neither config lists domain routes. After
 the first split, point the existing domains at the new script names and leave
-the old combined script unused. The feedback worker keeps its notes in a
-database migrated from `migrations/`, reads `DESK_HOSTS` from its vars, and
-opens no inbox until its read secret is set. The five-minute cron stays on
-`autonomous-feedback`.
+the old combined script unused. The feedback worker has no database, no
+schedule, and no secrets.
 
 ## Local secrets
 

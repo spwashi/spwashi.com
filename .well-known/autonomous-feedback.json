@@ -297,16 +297,6 @@
     "x": "spwashi"
   },
   "from": "optional",
-  "queue": {
-    "want": true
-  },
-  "frame": {
-    "ancestors": [
-      "https://spwashi.com",
-      "https://www.spwashi.com",
-      "https://spw.quest"
-    ]
-  },
   "theme": {
     "mode": "light",
     "background": "#eee9dd",

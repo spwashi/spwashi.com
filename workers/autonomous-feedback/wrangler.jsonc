@@ -5,22 +5,9 @@
   "compatibility_date": "2026-09-19",
   "workers_dev": false,
   "preview_urls": false,
+  // A note becomes a card its writer keeps. Nothing is stored, so there is
+  // no database, no schedule, and no request logging to keep.
   "observability": {
-    "enabled": true
-  },
-  "triggers": {
-    "crons": ["*/5 * * * *"]
-  },
-  // Hosts whose desk is open. A client file's queue.want asks; this list opens.
-  "vars": {
-    "DESK_HOSTS": "spwashi.com spw.quest lore.land"
-  },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "autonomous-feedback",
-      "database_id": "849e2ca5-26fc-4587-b2ed-6751f4370f7b",
-      "migrations_dir": "migrations"
-    }
-  ]
+    "enabled": false
+  }
 }

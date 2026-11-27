@@ -3,10 +3,10 @@
   "canon": "workers/",
   "note": "This tree is the source for the public host cluster. Do not attach a Worker to spwashi.com. Do not mention infrastructure ownership in public HTML.",
   "pages_subjects": ["spwashi.com", "resume.spwashi.com", "lore.land"],
-  "inbox": {
+  "notes": {
     "worker": "autonomous-feedback",
     "path": "/{host}",
-    "schema": "inbox.v0"
+    "stores": false
   },
   "serving": {
     "note": "How each host answers (2026-11-11). A fixed answer is a file, served at the edge without running code; the worker runs for what computes. files: the assets layer answers everything and the worker runs only for its declared exceptions (or never). mixed: the worker runs first, with declared file exceptions. script: the worker answers everything. check:workers holds each unit's wrangler config to its tier. A held name never redirects to spwashi.com, since public HTML must not show ownership; its next step is a file-only worker of its own. www to each apex belongs to a Redirect Rule in the dashboard.",
@@ -15,7 +15,7 @@
       "wap-mom": { "now": "files", "script": ["/cabinet", "/cabinet/*", "/*/draw"], "next": "a www Redirect Rule" },
       "spw-quest": { "now": "mixed", "next": "bare /pivot, /specimens, /physics and /constructs are files since 2026-11-23 (carry-rooms.mjs); a query on those paths opens the same file. /build stays scripted because Read and Format post to it. /learn, /install, the card and a line as a path stay scripted. / is a file since 2026-11-16 (carry-guide.mjs)" },
       "smut-today": { "now": "script", "next": "files, with the day picked in the reader's page from a schedule file and the cookie's choices kept in the page" },
-      "autonomous-feedback": { "now": "script", "next": "privacy, robots and the kind files as files; measure the five-minute cron and peer fetches before cutting them" },
+      "autonomous-feedback": { "now": "script", "next": "home, privacy and robots as files; the write and card pages stay script while each site's client file shapes them. Nothing is stored and nothing runs on a schedule" },
       "tealstripesvibes": { "now": "files", "script": ["/m/*", "/stamp/*", "/tuple", "/og/*", "/*.json"], "next": "tealstripesvibes.com/* answers here since 2026-11-24. www.tealstripesvibes.com/* stays on site-hub-next and 302s to the apex. Pages are files painted in the reader's browser; the worker keeps signed masks, stamps and the machine readings. TSV_SIGNING_KEY is not set, so pages say unsigned. The first paint calls choices, valueNow and same, so those three are function declarations" },
       "mutex-buzz": { "now": "files", "next": "mutex.buzz answers here once its route moves in the dashboard (2026-11-16: under site-hub-next it answered 429, error 1027); until then site-hub-next still answers it from src/mutex.js, which can go after the move. Which hold is open is worked out in the reader's browser; /now.json is the schedule through 2027, and carry.mjs extends it" },
       "attention-productions": { "now": "files", "next": "attention.productions answers here since 2026-11-16 through the Worker route attention.productions/* (fail closed). Cloudflare refused it as a custom domain because the apex is a proxied CNAME to site-hub-bih.pages.dev (externally managed DNS); with no route on it the apex shows error 1014, so the route stays until that record is deleted and the custom domain added. www.attention.productions/* is still a site-hub-next route, which answers 429 (1027) while the daily Worker requests are spent; a Redirect Rule from www to the apex would answer it before any Worker. site-hub-next src/hosts/attention.js can go once www no longer reaches it" },

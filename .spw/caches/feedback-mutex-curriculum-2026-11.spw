@@ -19,7 +19,6 @@
 @systems: ~"../../services/systems/index.html"
 @thesis: ~"../../topics/software/index.html"
 @model: ~"../../workers/autonomous-feedback/src/model.js"
-@desk_js: ~"../../workers/autonomous-feedback/src/desk.js"
 @mutex: ~"../../workers/site-hub-next/src/mutex.js"
 @hub: ~"../../workers/site-hub-next/src/index.js"
 
