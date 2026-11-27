@@ -122,6 +122,7 @@ fixity = "tending"
  >>[2026-11-16 20:40] align — The line's place stays: the stepper and the corner say ↑ n of N ↓, and the hint says whether those keys change the line or move the caret. A pull or a side step eats the tap only after it crosses its land; a scrub eats it once it leaves home. The hub hosts brand the field by one physical difference each, asked in hub.spw ^"brand", not drawn. S4a stays next.
  >>[2026-11-17 13:37] align — Cross-host trajectory refinement (2026-11-17): conceptualized factshift.center explicitly as both a brace-pair dipole/well physics representation and an interstitial delimiter/separator joint topology (. chain, , ring, ; sequence, ~> relay, -> edge, || parallel, : binding tether plus ~ ^ & @ inter-line ties); targeted parseable node[select] rail crumbs matching upstream spw.pivots/1; tied Slice 5 upgrade directly to upstream parser-releases ~[typed_variants] (.d.ts) and spw.pivots/1 separator turns; added #>wonder_factshift_interstitials in index.spw and hub.spw.
  >>[2026-11-26 22:15] align — Thorough 2026-11-26 plan alignment after the ecosystem planes/pivots/ontologies audit (.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw) and aperture re-derivation (.spw/caches/factshift-aperture-rederivation-2026-11.spw). Updated PLAN.md Status to dbdb3364 (thread left, parts right, menu clear of [...]), moved external app/deploy hashes into the fenced pins block (clearing 13 audit:plans warnings), added P0-P5 sequencing (corner-only resize + claimedPointer, spw.quest per-frame heat clocks, orthogonal slot materials, symmetric open <-> quiet <-> close grain aperture, kept-line memory surface, Slice 5 typed reader), added Effect-Grade & Grain Aperture contract to INTERACTION.md, updated hub.spw, and added #>wonder_factshift_grain_aperture to index.spw.
+ >>[2026-11-27 02:40] align — one compass for the reading plane: app 5a3e03f adds ui/compass.ts (breadth: rightward brings before; depth: up in, down out) and flips a body's ↗ ↙ to in and out, matching the frame's depth axis; INTERACTION.md names three constants (direction, ownership, grade). Headless Chrome through real flicks; not carried, not deployed.
 }
 
 ^"open"{
@@ -138,5 +139,5 @@ fixity = "tending"
  ~#next_commit: "P0 gesture arbitration (corner-only resize, retire #held-expressions swipe, claimedPointer) then P1 per-frame heat clocks from spw.quest/src/physics.js; leave the snapshot until reviewed"
  ~#files_hot: ".agents/plans/factshift-center/PLAN.md, .agents/plans/factshift-center/INTERACTION.md, .agents/plans/factshift-center/hub.spw, .agents/plans/factshift-center/index.spw, .agents/plans/factshift-center/wip.spw"
  ~#gate: "wonder_factshift_grain_aperture for P3; the projection says the line back before line-anatomy is retired"
- ~#last_stream: "2026-11-26"
+ ~#last_stream: "2026-11-27"
 }

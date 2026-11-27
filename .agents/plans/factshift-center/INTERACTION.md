@@ -4,6 +4,14 @@ Companion to [PLAN.md](./PLAN.md); the whole canvas model is [.spw/surfaces/fact
 
 A behavior either primes a concept or actualizes it. In the tools, the primed act is `primedAction` and actualizing it is `performPrimed` (`workers/factshift-center/app/src/js/ui/tool-primed.ts`). Actualizing writes the line, or changes the simulation in a way the line or the address can say back. A behavior that cannot say what it did is outside the examination.
 
+## Three constants
+
+A surface chooses its own acts. Three things stay the same from one surface to the next, and each has one owner in the app. A new gesture names all three before it lands.
+
+- **Direction, the compass** (`ui/compass.ts`). On the reading plane, which is the frame and the held line's bodies, a direction means one thing everywhere. Breadth: the content follows the finger, so rightward brings what came before (the part, the body, the line, the concept). Depth: as a scroll moves a page, up goes in and toward more (a nested body, the next stratum), and down comes out and toward the line as written. A diagonal's vertical half keeps depth's sign, so on a body ↗ goes in a level and ↙ comes out. That diagonal was reversed until 2026-11-27 (app hash in PLAN.md pins). The keys follow the scroll: ↓ and Shift+↓ go in. Chrome handles (`gestures.ts`: handle, lens, tile) keep their own verbs. The canvas ring is a radial picker. It places choices around the finger and does not read a direction.
+- **Ownership.** One touch is one gesture. Once a gesture crosses its line, no sibling listener answers that pointer (`claimedPointer` in `frame-refresh.ts`, `swallowsTap` in `gesture-claim.ts`). P0 carries the same rule to the horizontal owners that remain.
+- **Grade.** Every act is a lean (L0, gone on lift), a hold (L1, kept for this visit), or a keep (L2, which writes the line or the address). The act says which one (Grain aperture, below).
+
 ## Behaviors
 
 The gesture table in PLAN.md is the grammar. This is what each family does.
