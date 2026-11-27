@@ -1,0 +1,119 @@
+# Home Close Dispatch & Theater Seed
+#
+# Single-source Spw CMS seed for spwashi.com/ (Home):
+# - Fortnightly close + deterministic daily dispatch rotation
+# - Multi-lens copy projections ([reading], [systems], [play], [studio])
+# - Material Triptychs (.prose · *scan · #>spw)
+# - Recognizable attention.productions theater endpoint
+
+#>cms_home_issue
+#:cms #!home #!rotation #!theater
+#:layer #!pragmatics
+#:operation #!prime
+#:fixity #!tending
+
+@recipes_route: ~"/recipes/#recipe-field"
+@math_route: ~"/topics/math/number-theory/#modular-clock"
+@play_route: ~"/play/rpg-wednesday/"
+@spw_route: ~"/topics/software/spw/#spw-operator-atlas"
+@folios_route: ~"/design/folios/"
+
+operation = "prime"
+fixity = "tending"
+
+^"meta"{
+  kind = `home_issue`
+  section_id = `home-cms-dispatch`
+  sigil = `~[close]`
+  operator = `potential`
+  title = `Open on the bench right now`
+  close_stamp = `Close 2026-11.B · 13-day cadence`
+  expression = `dispatch[reading]{close.rotate.triptych}<home>`
+  lede = `Three live threads rotate by day and re-angle when you switch the page lens above — flip any card between prose, hand-drawn folio scan, and the .spw block that compiled it.`
+}[reg=facet]
+
+^"dispatch_kitchen_ratio"{
+  kind = `dispatch`
+  slug = `beet-stain-reduction`
+  badge = `01 · Kitchen & Ratio`
+  title = `A beet stains the board; a sauce remembers everything`
+  expression = `kitchen[reading]{reduction.ratio}<recipes>`
+  route = `/recipes/#cms-recipes-ledger`
+  route_label = `#>recipes_ledger`
+  route_op = `frame`
+  lens_reading = `Boiling water off a pan concentrates aroma and salt at different emotional speeds: what tasted timid at twenty minutes turns brassy at twenty-four. Season for the volume you are landing on, not the pot you started with.`
+  lens_systems = `Reduction is lossy state compression with a conserved invariant: volatile aromatics escape, water evaporates, but dissolved NaCl stays fixed in the buffer. Early salt scales inversely with final volume.`
+  lens_play = `Treat seasoning like late-session stakes at the Wednesday table: hold the salt back while the scene is still boiling down, then commit once the room's final volume is clear.`
+  lens_studio = `Iron-gall ink, glaze tests, and stock reductions share one studio law — pigment and salt never leave the vessel when the carrier evaporates.`
+  hinge_label = `~>CSS_bundles`
+  hinge_href = `/topics/software/spw/#spw-cms-live`
+  hinge_note = `Stylesheet bundling fails on the same curve: strip redundant wrappers before locking token contrast.`
+  scan_src = `/public/images/assets/folios/folio-bean-green-tale-lore-display.webp`
+  scan_alt = `Hand-lettered yellow cards on violet tracing a bean from earth to sprout, stalk, print, and film`
+  scan_caption = `Laminated studio folio: bean-to-stalk ledger card, scanned from the bench.`
+}[reg=facet]
+
+^"dispatch_clock_coprime"{
+  kind = `dispatch`
+  slug = `modular-clock-star`
+  badge = `02 · Math & Rhythm`
+  title = `Step by 5 around 12 hours and you visit every hour before Midnight`
+  expression = `clock[systems]{coprime.orbit}<math>`
+  route = ~"/topics/math/number-theory/#modular-clock"
+  route_label = `#>modular_clock`
+  route_op = `frame`
+  lens_reading = `Count by fours on a twelve-hour face and you trap yourself in a triangle (0, 4, 8). Count by fives and the chord weaves a twelve-pointed star that touches every single hour before returning home.`
+  lens_systems = `A stride k generates Z/nZ iff gcd(k, n) = 1. Prime moduli guarantee full-cycle coverage for every non-zero stride — why hash tables, polyrhythms, and deterministic day rotators love primes.`
+  lens_play = `Five-beat patrol clocks against twelve-watch campaign turns ensure guards and weather never fall into a stale three-turn loop.`
+  lens_studio = `Riso overprints and woven borders get moiré-free shimmer when repeat intervals are coprime to the sheet grid.`
+  hinge_label = `~>fermentation_schedule`
+  hinge_href = ~"/recipes/#weekly-practice"
+  hinge_note = `Sourdough refreshes and brassica brines drift across week boundaries by the exact remainder arithmetic.`
+  scan_src = `/public/images/assets/folios/folio-ampersand-hair-cube-display.webp`
+  scan_alt = `Hand-drawn studio folio pairing geometric cube edges with braided ampersand strokes`
+  scan_caption = `Geometric braid study from the laminated folio shelf.`
+}[reg=facet]
+
+^"dispatch_table_aperture"{
+  kind = `dispatch`
+  slug = `grain-aperture-table`
+  badge = `03 · Language & Table`
+  title = `Open the brace to ask what is unnamed; close it to keep what settled`
+  expression = `aperture[play]{open.quiet.close}<spw>`
+  route = `/topics/software/spw/#curiosity-physics`
+  route_label = `#>curiosity_physics`
+  route_op = `frame`
+  lens_reading = `A good notebook margin holds two kinds of ink: open brackets for questions still pulling at you, and closed lines for receipts that survived contact with the bench.`
+  lens_systems = `Spw models curiosity as a signed gradient: ~ holds uncollapsed potential, ~#expect commits a prediction, ! runs the probe, and * precipitates a receipt while ? keeps the outer horizon open.`
+  lens_play = `At the RPG Wednesday table, one constrained character — one clear goal, one real limit — creates ten times more story pressure than a ten-page backstory.`
+  lens_studio = `Washi-tape labels, laminated cards, and browser canvases all answer one gesture grammar: spread to enter a grain, pinch to summary.`
+  hinge_label = `~>rpg_wednesday`
+  hinge_href = ~"/play/rpg-wednesday/"
+  hinge_note = `See how session recaps and world locks carry the same open/closed brace discipline.`
+  scan_src = `/public/images/assets/folios/folio-character-seed-lore-land-display.webp`
+  scan_alt = `Laminated folio showing Character Seed and Episode Card feeding an arrow into Lore Land`
+  scan_caption = `Character seed -> Lore Land folio plate.`
+}[reg=facet]
+
+^"theater_window"{
+  kind = `theater`
+  id = `home-attention-theater`
+  title = `attention.productions · Viewfinder Endpoint`
+  expression = `theater[shot]{viewfinder.slots}<attention>`
+  lede = `attention.productions is the ecosystem's cinematography and stage-lighting peer: every URL is a physical camera setup compiled from one Spw !shot[...] line. Step a lens or lighting preset locally — zero third-party requests fire unless you mount the live viewfinder.`
+  shot_1_slug = `lamplight-on-laminated-folio`
+  shot_1_spw = `!shot[close-up]{laminated folio on workbench}(lamplight)<85mm>
+^frame{ =ratio[scope] =focus[left_third] =light_from[right] ~move[still] %tempo[1] }`
+  shot_1_url = `https://attention.productions/laminated-folio-on-workbench?shot=close-up&lens=85mm&light=lamplight&from=right&move=still&ratio=scope&focus=left_third`
+  shot_1_caption = `85mm close-up · warm lamplight from right · 2.39:1 scope crop`
+  shot_2_slug = `overhead-kitchen-ledger`
+  shot_2_spw = `!shot[overhead]{beet-stained cedar board and salt cellar}(north_window)<35mm>
+^frame{ =ratio[academy] =focus[center] =light_from[left] ~move[drift] %tempo[1] }`
+  shot_2_url = `https://attention.productions/beet-stained-cedar-board?shot=overhead&lens=35mm&light=north_window&from=left&move=drift&ratio=academy&focus=center`
+  shot_2_caption = `35mm overhead · cool north-window key from left · 1.37:1 academy card`
+  shot_3_slug = `wide-wednesday-table`
+  shot_3_spw = `!shot[wide]{six chairs around paper map and brass dice}(candle)<24mm>
+^frame{ =ratio[widescreen] =focus[deep] =light_from[practical] ~move[push] %tempo[2] }`
+  shot_3_url = `https://attention.productions/six-chairs-around-paper-map?shot=wide&lens=24mm&light=candle&from=practical&move=push&ratio=widescreen&focus=deep`
+  shot_3_caption = `24mm wide · practical candle pool · 1.85:1 slow push`
+}[reg=facet]

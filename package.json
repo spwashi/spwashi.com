@@ -25,6 +25,8 @@
     "build:site:run": "node --import ./scripts/lib/register-public-imports.mjs scripts/build.mjs",
     "build:vite": "npm run build:tools && npm run build:runtime && node scripts/css-build.mjs && vite build",
     "catalog": "node scripts/generate-design-catalog.mjs",
+    "cms:build": "node scripts/compile-spw-cms.mjs",
+    "cms:check": "node scripts/compile-spw-cms.mjs --check",
     "check": "npm run audit && npm run check:local",
     "check:local": "node scripts/check-local.mjs",
     "check:local:serial": "node scripts/check-local.mjs --serial",

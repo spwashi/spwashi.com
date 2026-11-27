@@ -1597,3 +1597,16 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
 .operator-example-try {
   margin-block-start: var(--space-xs, 0.4rem);
 }
+
+/* Toy-first math monograph & Spw syntax bench genre */
+:where(body[data-spw-surface="topics"] .spw-monograph-lead, body[data-spw-surface="software"] .spw-monograph-lead) {
+  display: grid;
+  gap: clamp(0.9rem, 2vw, 1.35rem);
+}
+
+@media (min-width: 60rem) {
+  :where(body[data-spw-surface="topics"] .spw-monograph-lead--split) {
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    align-items: start;
+  }
+}

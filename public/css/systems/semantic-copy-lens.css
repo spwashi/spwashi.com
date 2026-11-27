@@ -59,6 +59,12 @@
 }
 
 /* Match document active lens (from lens-modes.js) */
+:where(html[data-spw-active-lens-mode="reading"] [data-spw-copy-lens~="reading"]),
+:where(html[data-spw-active-lens-mode="studio"] [data-spw-copy-lens~="studio"]),
+:where(html[data-spw-active-lens-mode="cook"] [data-spw-copy-lens~="cook"]),
+:where(html[data-spw-active-lens-mode="theory"] [data-spw-copy-lens~="theory"]),
+:where(html[data-spw-active-lens-mode="garden"] [data-spw-copy-lens~="garden"]),
+:where(html[data-spw-active-lens-mode="hospitality"] [data-spw-copy-lens~="hospitality"]),
 :where(html[data-spw-active-lens-mode="surface"] [data-spw-copy-lens~="surface"]),
 :where(html[data-spw-active-lens-mode="syntax"] [data-spw-copy-lens~="syntax"]),
 :where(html[data-spw-active-lens-mode="artifacts"] [data-spw-copy-lens~="artifacts"]),

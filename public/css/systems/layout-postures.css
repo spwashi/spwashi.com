@@ -121,3 +121,15 @@ html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="worksho
 :where(html[data-spw-query-parity="synced"]) {
   --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.5), 0.58);
 }
+
+/* Apparatus inversion (2026-11-27): quiet decorative motif/spec strips in default
+   reading posture so pages open on voice, image, and playable objects; workshop
+   and field postures or keyboard focus bring the apparatus back to full ink. */
+:where(html:not([data-spw-explore-posture="workshop"]):not([data-spw-explore-posture="field"]):not([data-spw-debug-mode]) .spw-copy-motif-strip) {
+  display: none;
+}
+
+:where(html:not([data-spw-explore-posture="workshop"]):not([data-spw-explore-posture="field"]):not([data-spw-debug-mode]) body:not([data-spw-surface="rpg-wednesday"]) .spec-strip:not(:focus-within)) {
+  opacity: 0.62;
+  font-size: 0.78rem;
+}

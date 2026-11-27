@@ -12,6 +12,7 @@
 @import url('/public/css/components/spw-paste.css') layer(components);
 @import url('/public/css/components/folio-day.css') layer(components);
 @import url('/public/css/components/spw-hero-kinetic-stage.css') layer(components);
+@import url('/public/css/components/spw-cms.css') layer(components);
 
 @import url('/public/css/systems/pretext-physics.css') layer(systems);
 @import url('/public/css/systems/feature-discovery.css') layer(systems);

@@ -31090,6 +31090,18 @@ html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="worksho
 :where(html[data-spw-query-parity="synced"]) {
   --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.5), 0.58);
 }
+
+/* Apparatus inversion (2026-11-27): quiet decorative motif/spec strips in default
+   reading posture so pages open on voice, image, and playable objects; workshop
+   and field postures or keyboard focus bring the apparatus back to full ink. */
+:where(html:not([data-spw-explore-posture="workshop"]):not([data-spw-explore-posture="field"]):not([data-spw-debug-mode]) .spw-copy-motif-strip) {
+  display: none;
+}
+
+:where(html:not([data-spw-explore-posture="workshop"]):not([data-spw-explore-posture="field"]):not([data-spw-debug-mode]) body:not([data-spw-surface="rpg-wednesday"]) .spec-strip:not(:focus-within)) {
+  opacity: 0.62;
+  font-size: 0.78rem;
+}
 }
 
 /* /public/css/systems/effect-interpretation.css */
@@ -38391,6 +38403,12 @@ html[data-spw-interactive-medium-ready="true"] {
 }
 
 /* Match document active lens (from lens-modes.js) */
+:where(html[data-spw-active-lens-mode="reading"] [data-spw-copy-lens~="reading"]),
+:where(html[data-spw-active-lens-mode="studio"] [data-spw-copy-lens~="studio"]),
+:where(html[data-spw-active-lens-mode="cook"] [data-spw-copy-lens~="cook"]),
+:where(html[data-spw-active-lens-mode="theory"] [data-spw-copy-lens~="theory"]),
+:where(html[data-spw-active-lens-mode="garden"] [data-spw-copy-lens~="garden"]),
+:where(html[data-spw-active-lens-mode="hospitality"] [data-spw-copy-lens~="hospitality"]),
 :where(html[data-spw-active-lens-mode="surface"] [data-spw-copy-lens~="surface"]),
 :where(html[data-spw-active-lens-mode="syntax"] [data-spw-copy-lens~="syntax"]),
 :where(html[data-spw-active-lens-mode="artifacts"] [data-spw-copy-lens~="artifacts"]),

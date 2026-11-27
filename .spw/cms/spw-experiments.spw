@@ -1,0 +1,92 @@
+# Spw Live Design, Curiosity Physics & CMS Showcase Seed
+#
+# Compiled into _partials/cms/spw-experiments.html for /topics/software/spw/:
+# - Interactive Curiosity Physics lab (~gap -> ~#expect -> ~>hinge -> ! -> * -> ?)
+# - Single-Seed CMS Proof (one .spw block -> active lenses + triptych + carry links)
+# - attention.productions Theater Endpoint specimen
+# - Post-refactor Spw-native Cauldron register preview
+
+#>cms_spw_experiments
+#:cms #!spw #!curiosity_physics #!cms_proof #!theater
+#:layer #!semantics
+#:operation #!prime
+#:fixity #!tending
+
+@parser_tool: ~"/tools/spw-parser/"
+@domains_hub: ~"/about/domains/"
+@curiosity_cache: ~"../caches/curiosity-physics-wonder-2026-11.spw"
+@cms_cache: ~"../caches/spw-cms-mirrors-cauldron-2026-11.spw"
+
+operation = "prime"
+fixity = "tending"
+
+^"meta"{
+  kind = `spw_experiments`
+  section_id = `curiosity-physics`
+  sigil = `?physics[curiosity]`
+  operator = `wonder`
+  title = `Curiosity as a physics of wonder — and Spw doing real CMS work`
+  close_stamp = `Live seed · .spw/cms/spw-experiments.spw`
+  expression = `spw[syntax]{curiosity.cms.theater}<atlas>`
+  lede = `Wonder is the open field state; curiosity is the directional gradient across an information gap that pulls you into it. Below, Spw operators run that trajectory live — and compile this entire band from a single .spw seed.`
+}[reg=facet]
+
+^"curiosity_arc_probe"{
+  kind = `curiosity_gap`
+  id = `spw-curiosity-brace-law`
+  badge = `Law 2 · ~#expect before *precipitate`
+  question = `In Spw's local-law physics, when you write ?{ a, b } versus !{ a, b }, who feels the leading ? or ! operator — every nested grandchild down the tree, or only the direct members a and b?`
+  expression = `law[syntax]{expect.locality}<braces>`
+  guess_a = `Every nested descendant inherits the outer operator`
+  guess_b = `Only direct members of {...} feel its leading operator; nested braces declare their own local law`
+  guess_c = `Operators only color text and never scope a brace body`
+  correct = `b`
+  reveal_title = `*precipitate — Strict lexical locality keeps nested worlds composable`
+  reveal_body = `The operator immediately before { ... } governs that container's direct members alone. Inside ?{ a, !{ x, y } }, the outer frame stays an open question while !{ x, y } commits a concrete sub-move without collapsing its parent question.`
+  wonder_tail = `?open — What happens on a spatial canvas when you pinch !{ x, y } closed inside ?{ a, !{ x, y } } — how should its summary glyph announce that a committed act lives inside an open question?`
+}[reg=facet]
+
+^"cms_single_seed_specimen"{
+  kind = `dispatch`
+  id = `spw-cms-live`
+  slug = `one-seed-four-projections`
+  badge = `CMS Proof · One .spw frame, four projections`
+  title = `Write the structure once in .spw; project prose, lens variants, studio scan, and AST carry links`
+  expression = `cms[syntax]{seed.compile.project}<spw>`
+  route = ~"/tools/spw-parser/"
+  route_label = `!open[parser]`
+  route_op = `action`
+  lens_reading = `Instead of hand-editing twin HTML cards across routes, a .spw seed holds the claim, its lens variations, its physical studio scan, and its cross-domain hinge in one checkable block.`
+  lens_systems = `scripts/compile-spw-cms.mjs parses .spw/cms/*.spw with spw-workbench-reader.js at build time, validates zero syntax errors, and emits scripts-off static partials into _partials/cms/*.html.`
+  lens_play = `Switch to *scan or #>spw on this card: the #>spw tab renders the exact source frame from .spw/cms/spw-experiments.spw with one-click jump links to the browser parser, spw.quest, and factshift.center.`
+  lens_studio = `Hand-lettered laminated folios stay first-class siblings of source code — *scan shows the physical sheet while #>spw shows the notation that indexes it.`
+  hinge_label = `~>about_domains`
+  hinge_href = ~"/about/domains/"
+  hinge_note = `See how spw.quest, factshift.center, attention.productions, and mutex.buzz divide the same grammar across hosts.`
+  scan_src = `/public/images/assets/folios/folio-babbling-noodling-play-display.webp`
+  scan_alt = `Hand-drawn studio folio titled Babbling and Noodling Play with branching notation sketches`
+  scan_caption = `Babbling & Noodling folio scan — notation sketched by hand before entering .spw.`
+}[reg=facet]
+
+^"spw_theater_specimen"{
+  kind = `theater`
+  id = `spw-attention-theater`
+  title = `Theater projection · !shot[...] -> attention.productions`
+  expression = `shot[syntax]{camera.light.lens}<attention>`
+  lede = `The same slot grammar — operator, [framing], {subject}, (lighting), <lens> — drives attention.productions as a live cinematography endpoint. Step through three stage setups or open the live viewfinder on demand.`
+  shot_1_slug = `syntax-bench-macro`
+  shot_1_spw = `!shot[macro]{brass nib over brace lattice}(raking_sun)<100mm>
+^frame{ =ratio[square] =focus[near] =light_from[left] ~move[still] %tempo[1] }`
+  shot_1_url = `https://attention.productions/brass-nib-over-brace-lattice?shot=macro&lens=100mm&light=raking_sun&from=left&move=still&ratio=square&focus=near`
+  shot_1_caption = `100mm macro · raking side light on paper tooth · 1:1 square plate`
+  shot_2_slug = `vellum-overlay-stack`
+  shot_2_spw = `!shot[medium]{three translucent vellum sheets with overlapping braces}(backlight)<50mm>
+^frame{ =ratio[academy] =focus[center] =light_from[back] ~move[rack] %tempo[1] }`
+  shot_2_url = `https://attention.productions/three-translucent-vellum-sheets?shot=medium&lens=50mm&light=backlight&from=back&move=rack&ratio=academy&focus=center`
+  shot_2_caption = `50mm medium · backlit vellum coverage algebra · focus rack`
+  shot_3_slug = `canvas-projection-stage`
+  shot_3_spw = `!shot[wide]{projected AST constellation on studio wall}( tungsten )<28mm>
+^frame{ =ratio[scope] =focus[deep] =light_from[top] ~move[orbit] %tempo[2] }`
+  shot_3_url = `https://attention.productions/projected-ast-constellation?shot=wide&lens=28mm&light=tungsten&from=top&move=orbit&ratio=scope&focus=deep`
+  shot_3_caption = `28mm scope · studio wall projection · slow orbital drift`
+}[reg=facet]

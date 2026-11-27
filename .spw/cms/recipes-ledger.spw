@@ -1,0 +1,84 @@
+# Kitchen Ledger CMS Seed
+#
+# Stained index-card test-kitchen ledger for /recipes/:
+# - Tabular working ratios
+# - Multi-lens projections ([cook], [theory], [garden], [hospitality])
+# - Pre-reveal curiosity gap (?[expect] -> *[precipitate])
+# - Material Triptych (.prose · *scan · #>spw)
+
+#>cms_recipes_ledger
+#:cms #!recipes #!ledger #!curiosity
+#:layer #!pragmatics
+#:operation #!prime
+#:fixity #!tending
+
+@math_clock: ~"/topics/math/number-theory/#modular-clock"
+@spw_atlas: ~"/topics/software/spw/#spw-operator-atlas"
+@folios_shelf: ~"/design/folios/"
+
+operation = "prime"
+fixity = "tending"
+
+^"meta"{
+  kind = `recipes_ledger`
+  section_id = `cms-recipes-ledger`
+  sigil = `^ledger[ratios]`
+  operator = `integration`
+  title = `Bench cards — ratios that change when your lens changes`
+  close_stamp = `4x6 Test-Kitchen Cards · compiled from .spw/cms/recipes-ledger.spw`
+  expression = `ledger[cook]{ratios.heat.ferment}<recipes>`
+  lede = `Switch [cook], ^theory, ~garden, or @hospitality in the hero bar above: these index cards re-angle from stove cues to physical invariants, compost return, or table timing.`
+}[reg=facet]
+
+^"card_emulsion"{
+  kind = `ledger_card`
+  slug = `pan-emulsion`
+  card_no = `CARD 01 · EMULSION`
+  title = `Starch water + cold fat = gloss without cream`
+  ratio = `3 tbsp pasta water : 2 tbsp cold butter : off-heat toss`
+  expression = `emulsion[cook]{starch.shear}<pan>`
+  lens_cook = `Pull the skillet off the burner before the butter goes in, splash starchy water first, and shake hard enough to hear a wet slap instead of a sizzle. Sizzle means the fat is splitting; slap means droplets are suspending.`
+  lens_theory = `Amylose leached into boiling water coats sheared fat globules as a steric stabilizer; above ~78°C milk solids flocculate and coalesce back into slick grease.`
+  lens_garden = `Save winter squash peels and leek tops in the freezer bag beside the stockpot — mineral-rich broth emulsifies twice as cleanly as tap water.`
+  lens_hospitality = `Hold pasta ninety seconds shy of al dente before guests sit; the ninety-second finish in the pan is the entire show and plates hot.`
+  hinge_label = `~>damping_viscosity`
+  hinge_href = `/topics/software/spw/#curiosity-physics`
+  hinge_note = `Same threshold law as UI spring damping: shear + viscosity turns oscillation into smooth settle.`
+  scan_src = `/public/images/assets/illustrations/boon-dough-pearl-skin-display.webp`
+  scan_alt = `Studio study of taut pearl-smooth dough skin resting on a floured wooden board`
+  scan_caption = `Surface tension study: hydrated gluten and fat suspension.`
+}[reg=facet]
+
+^"card_lacto_brine"{
+  kind = `ledger_card`
+  slug = `lacto-brine`
+  card_no = `CARD 02 · FERMENT`
+  title = `Two percent salt by total weight — water plus vegetable`
+  ratio = `1000 g chopped cabbage + water : 20 g fine sea salt : 18–21°C`
+  expression = `ferment[cook]{salinity.succession}<jar>`
+  lens_cook = `Weigh the empty jar first, tare it, pack the vegetables and cover with water, then multiply that combined gram weight by 0.02. Brining only the water under-salts dense roots and stalls the souring.`
+  lens_theory = `2.0% w/w NaCl selectively suppresses aerobic spoilage flora while Leuconostoc mesenteroides drops pH below 4.6, handing the baton to acid-tolerant Lactobacillus plantarum.`
+  lens_garden = `Outer cabbage leaves carry the wild lactic bloom straight from the bed; rinse mud gently, never scrub with chlorinated hot water, and use one whole outer leaf as the submerged follower.`
+  lens_hospitality = `Label the lid with start date and gram tare on masking tape — a jar opened on Wednesday night turns plain rice and roast pork into a feast in thirty seconds.`
+  hinge_label = `~>modular_cycles`
+  hinge_href = ~"/topics/math/number-theory/#modular-clock"
+  hinge_note = `Succession stages step like modular residues: day 3 fizz, day 7 tang, day 21 cellar calm.`
+  scan_src = `/public/images/routes/recipes/traveling-pantry-machine-source-display.webp`
+  scan_alt = `Illustrated traveling pantry shelf lined with labeled jars, weights, and kitchen instruments`
+  scan_caption = `Traveling pantry shelf — jars, tares, and living cultures.`
+}[reg=facet]
+
+^"expect_reduction_salt"{
+  kind = `curiosity_gap`
+  id = `recipes-curiosity-reduction`
+  badge = `?curiosity_probe · Pre-reveal check`
+  question = `You salt a 2-quart stock until it tastes balanced, then simmer it down to 1 cup of demi-glace. How salty is that final cup?`
+  expression = `probe[cook]{expect.reduction}<salt>`
+  guess_a = `About 2x saltier — most salt steams off`
+  guess_b = `8x saltier — zero salt evaporates with steam`
+  guess_c = `Roughly the same — gelatin buffers the salt`
+  correct = `b`
+  reveal_title = `*precipitate — Concentration scales 1:1 with volume loss (8x)`
+  reveal_body = `Two quarts is 8 cups. Water boils at 100°C; sodium chloride boils at 1,465°C. Every milligram of salt you put into the 8-cup pot is still sitting inside that 1-cup reduction — only now gelatin coats the tongue so the spike hits half a second late.`
+  wonder_tail = `?open — Why do acid and bitter herbs shift perception non-linearly during the same reduction while salt stays strictly linear?`
+}[reg=facet]

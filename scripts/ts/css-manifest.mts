@@ -86,6 +86,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/home-panels.css',
     '/public/css/components/spw-paste.css',
     '/public/css/components/folio-day.css',
+    '/public/css/components/spw-cms.css',
   ],
   membership: [],
   newyear: ['/public/css/components/cards/seed-card.css'],
@@ -107,7 +108,10 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
   ],
   privacy: [],
   projects: [],
-  recipes: ['/public/css/routes/surfaces/recipes.css'],
+  recipes: [
+    '/public/css/routes/surfaces/recipes.css',
+    '/public/css/components/spw-cms.css',
+  ],
   research: [],
   'rpg-wednesday': [
     '/public/css/routes/surfaces/play.css',
@@ -138,6 +142,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
   ],
   topics: [
     '/public/css/routes/surfaces/topics.css',
+    '/public/css/components/spw-cms.css',
     '/public/css/systems/film-scene-composition.css',
     '/public/css/systems/scene-interaction.css',
     '/public/css/effects/enhancements.css',

@@ -556,3 +556,17 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
 :where(body[data-spw-surface="recipes"] #grower-start .frame-details summary) {
   cursor: pointer;
 }
+
+/* Stained 4x6 test-kitchen index-card ledger genre */
+:where(body[data-spw-surface="recipes"] .spw-cms-card) {
+  border-block-start: 3px solid color-mix(in srgb, var(--recipes-ember) 68%, var(--recipes-accent));
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 1.62rem,
+      color-mix(in srgb, var(--recipes-accent) 7%, transparent) 1.62rem,
+      color-mix(in srgb, var(--recipes-accent) 7%, transparent) 1.68rem
+    ),
+    var(--recipes-panel-warm);
+}

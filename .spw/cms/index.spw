@@ -1,0 +1,32 @@
+# Spw CMS Seeds Index
+#
+# Build-time Spw content & structure seeds compiled by scripts/compile-spw-cms.mjs
+# into _partials/cms/*.html and included via <spw-include src="cms/...">.
+
+#>spw_cms_index
+#:cms #!index
+#:layer #!pragmatics
+#:operation #!align
+#:fixity #!tending
+
+@cms_cache: ~"../caches/spw-cms-mirrors-cauldron-2026-11.spw"
+@curiosity_physics: ~"../caches/curiosity-physics-wonder-2026-11.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@home_issue: ~"./home-issue.spw"
+@recipes_ledger: ~"./recipes-ledger.spw"
+@spw_experiments: ~"./spw-experiments.spw"
+
+operation = "align"
+fixity = "tending"
+
+^"registry"{
+  home_issue = @home_issue
+  recipes_ledger = @recipes_ledger
+  spw_experiments = @spw_experiments
+}[reg=facet]
+
+^"contract"{
+  compiler = `scripts/compile-spw-cms.mjs`
+  output_dir = `_partials/cms/`
+  rule = `Every seed parses cleanly with public/js/semantic/spw-workbench-reader.js, resolves pathRefs via spw:integrity, emits static-first HTML readable with scripts off, and projects multi-lens copy through existing [data-spw-copy-lens] attributes.`
+}[reg=facet]
