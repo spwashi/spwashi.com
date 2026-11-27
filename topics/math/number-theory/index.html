@@ -52,12 +52,16 @@
                     </div>
                 </div>
                 <div class="topic-hero-copy" data-spw-slot="body">
-                        <p class="spec-kicker">Math / Pure Structure</p>
-                        <h1 id="number-theory-title">Number theory is arithmetic that remembers structure.</h1>
-                        <p>Addition and multiplication look familiar in number theory, but familiar operations start leaving visible fingerprints: divisibility, remainders, prime factorization, and cyclic repetition. The field is deep because the integers are simple enough to doodle and stubborn enough to keep surprising you. If you want the nearest algebraic continuation, go next to <a href="/topics/math/field-theory/#prime-fields">field theory</a>; if you want the software-facing echo, go to <a href="/topics/software/parsers/#parser-doodles">parsers</a>.</p>
+                        <p class="spec-kicker">Math · Toy-First Monograph</p>
+                        <h1 id="number-theory-title">Count by 4 on a 12-hour clock and you trap a triangle; count by 5 and you weave a star.</h1>
+                        <p>Throw away full turns and keep only the remainder: suddenly plain integers grow grain, bottlenecks, and hidden symmetry. Drag the modular clock right below from composite <code>12</code> to prime <code>13</code> before reading a single definition — watch shared factors collapse into spokes while coprimes touch every hour.</p>
+                        <aside class="spw-curiosity-hinge" aria-label="Sideways connections">
+                            <a class="spw-chip" href="/recipes/#cms-recipes-ledger" data-spw-operator="potential">~&gt;fermentation_brines</a>
+                            <span>Kitchen succession stages and parser state machines fold along the same residue classes as <a href="/topics/math/field-theory/#prime-fields">prime fields</a> and <a href="/topics/software/parsers/#parser-doodles">parsers</a>.</span>
+                        </aside>
                         <nav class="frame-operators" aria-label="Number theory routes">
-                            <a class="spw-chip" data-spw-handle="true" href="#number-theory-intuition" data-spw-operator="frame" data-spw-action="address">#&gt;intuition_first</a>
                             <a class="spw-chip" data-spw-handle="true" href="#modular-clock" data-spw-operator="frame" data-spw-action="address">#&gt;modular_clock</a>
+                            <a class="spw-chip" data-spw-handle="true" href="#number-theory-intuition" data-spw-operator="frame" data-spw-action="address">#&gt;intuition_first</a>
                             <a class="spw-chip" data-spw-handle="true" href="#divisibility-handles" data-spw-operator="frame" data-spw-action="address">#&gt;divisibility_handles</a>
                             <a class="spw-chip" data-spw-handle="true" href="/topics/math/field-theory/#prime-fields" data-spw-operator="potential" data-spw-action="explore">~field_theory</a>
                             <a class="spw-chip" data-spw-handle="true" href="/topics/math/combinatorics/#combinatorics-intuition" data-spw-operator="potential" data-spw-action="explore">~combinatorics</a>
@@ -76,45 +80,19 @@
             <nav class="page-index" aria-label="Number theory sections">
                 <ul>
                     <li><a href="#number-theory-hero">Overview</a></li>
-                    <li><a href="#number-theory-intuition">Intuition First</a></li>
                     <li><a href="#modular-clock">Modular Clock</a></li>
+                    <li><a href="#number-theory-intuition">Why It Folds</a></li>
                     <li><a href="#divisibility-handles">Divisibility Handles</a></li>
                     <li><a href="#number-theory-neighbors">Neighbor Routes</a></li>
                 </ul>
             </nav>
 
-            <section class="spw-frame" id="number-theory-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_number_theory__intuition" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
-                <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#number-theory-intuition" data-spw-operator="ground">.intuition_first</a>
-                    <h2>Intuition First</h2>
-                </header>
-                <p data-spw-textual-role="note">A good first feeling for number theory is that integers carry more memory than real-number arithmetic suggests. Ask whether one number divides another, or what remains after division, and suddenly arithmetic stops being smooth and starts forming textures: periodicity, factor families, prime bottlenecks, and repeating cycles. The <a href="#divisibility-handles">divisibility handles</a> below turn that feeling into a few reusable ideas.</p>
-                <p data-spw-textual-role="note">This is why clocks are such a useful entry point. A clock throws away full turns and remembers only the residue class. That small act of forgetting is mathematically productive. It lets you see congruence as a pattern language: two numbers can be different in the usual sense and still be the same from the perspective of a chosen modulus, which is exactly the move that prepares you for <a href="/topics/math/field-theory/#prime-fields">prime fields</a>.</p>
-                <div class="topic-reference-grid">
-                    <article class="topic-reference-card" data-spw-kind="card" data-spw-role="reference" data-spw-category-family="specimen" data-spw-form="brace">
-                        <h3 data-spw-slot="header">Prime numbers</h3>
-                        <p data-spw-slot="body">Primes act like structural atoms. They are not the only important objects, but many later patterns depend on how integers break into prime pieces.</p>
-                        <a href="#divisibility-handles" data-spw-slot="actions">anchor: divisibility handles</a>
-                    </article>
-                    <article class="topic-reference-card" data-spw-kind="card" data-spw-role="reference" data-spw-category-family="specimen" data-spw-form="brace">
-                        <h3 data-spw-slot="header">Congruence</h3>
-                        <p data-spw-slot="body">Saying two numbers are congruent modulo n means they land in the same residue class after division by n.</p>
-                        <a href="#modular-clock" data-spw-slot="actions">anchor: modular clock</a>
-                    </article>
-                    <article class="topic-reference-card" data-spw-kind="card" data-spw-role="reference" data-spw-category-family="specimen" data-spw-form="brace">
-                        <h3 data-spw-slot="header">Field bridge</h3>
-                        <p data-spw-slot="body">Prime moduli are special because modular arithmetic modulo p behaves cleanly enough to form a field.</p>
-                        <a href="/topics/math/field-theory/#prime-fields" data-spw-slot="actions">next: prime fields</a>
-                    </article>
-                </div>
-            </section>
-
             <section class="spw-frame" id="modular-clock" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_number_theory__modular_clock" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#modular-clock" data-spw-operator="integration">^"modular_clock"{</a>
-                    <h2>Portable Diagram: Multiplication On A Clock</h2>
+                    <h2>Try the clock first: i ↦ k × i (mod n)</h2>
                 </header>
-                <p data-spw-textual-role="note">This SVG diagram maps each residue i to k × i (mod n). To read it intuitively, watch four things at once: what moves, what stays fixed, where different residues collapse onto the same destination, and which patterns only appear because divisibility is quietly organizing the picture. That contrast is the bridge into <a href="/topics/math/field-theory/#prime-fields">field theory</a> and a useful analogy for <a href="/topics/software/parsers/#parser-memory">parser equivalence classes</a>.</p>
+                <p data-spw-textual-role="note"><strong>~#expect before you drag:</strong> keep modulus at <code>12</code> and slide multiplier from <code>5</code> to <code>6</code> — predict how many hours survive on the rim. Then slide modulus to <code>13</code> and try to make <em>any</em> multiplier collapse. You cannot: prime moduli have no shared divisors to fold along, which is the whole doorway into <a href="/topics/math/field-theory/#prime-fields">finite fields</a> and <a href="/topics/software/parsers/#parser-memory">parser equivalence classes</a>.</p>
                 <div class="math-interactive-lab" data-math-visual="mod-clock">
                     <div class="math-diagram-controls">
                         <label class="math-control">
@@ -131,31 +109,34 @@
                             <title id="number-clock-title">Modular multiplication clock</title>
                             <desc id="number-clock-desc">A modular arithmetic clock diagram that updates when the modulus and multiplier controls move.</desc>
                         </svg>
-                        <figcaption data-spw-textual-role="note">If the controls are unavailable, read the default picture as multiplication by 5 on a 12-hour clock. The diagram still shows the basic idea: one operation keeps moving the marks, the clock face stays fixed, and shared factors show up as visible folding.</figcaption>
+                        <figcaption data-spw-textual-role="note">Default state (scripts off): multiplication by 5 on a 12-hour clock — coprime stride, zero collapsed spokes.</figcaption>
                     </figure>
                     <p class="math-diagram-status" data-role="status">Move the controls to compare prime and composite moduli.</p>
-                    <div class="topic-reference-grid">
-                        <article class="topic-reference-card">
-                            <h3>What changes</h3>
-                            <p>Each residue travels to a new position under multiplication by the chosen factor.</p>
-                            <a href="#modular-clock">anchor: modular clock</a>
-                        </article>
-                        <article class="topic-reference-card">
-                            <h3>What stays fixed</h3>
-                            <p>The modulus keeps the clock face stable. Only the routing of positions changes inside that fixed habitat.</p>
-                            <a href="#number-theory-intuition">anchor: intuition first</a>
-                        </article>
-                        <article class="topic-reference-card">
-                            <h3>What collapses</h3>
-                            <p>When the multiplier shares factors with the modulus, several residues land in the same sector. That collapse is divisibility made visible.</p>
-                            <a href="#divisibility-handles">next: divisibility handles</a>
-                        </article>
-                        <article class="topic-reference-card">
-                            <h3>Where it leads</h3>
-                            <p>Prime moduli behave more cleanly, which is why this picture naturally hands off to finite fields and inverses.</p>
-                            <a href="/topics/math/field-theory/#prime-fields">route: prime fields</a>
-                        </article>
-                    </div>
+                </div>
+            </section>
+
+            <section class="spw-frame" id="number-theory-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_number_theory__intuition" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#number-theory-intuition" data-spw-operator="ground">.intuition_first</a>
+                    <h2>Why forgetting full turns reveals hidden grain</h2>
+                </header>
+                <p data-spw-textual-role="note">Real-number division smooths everything out (<code>14 ÷ 12 = 1.166…</code>). Integer arithmetic refuses to forget the remainder (<code>14 ≡ 2 mod 12</code>). That productive act of throwing away full turns turns an infinite line into a finite wheel where prime bottlenecks, cyclic orbits, and shared factors become visible geometry.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card" data-spw-kind="card" data-spw-role="reference" data-spw-category-family="specimen" data-spw-form="brace">
+                        <h3 data-spw-slot="header">Prime bottlenecks</h3>
+                        <p data-spw-slot="body">Primes cannot be factored into smaller steps, so on a prime clock every non-zero multiplier permutes all hours cleanly without collisions.</p>
+                        <a href="#divisibility-handles" data-spw-slot="actions">anchor: divisibility handles</a>
+                    </article>
+                    <article class="topic-reference-card" data-spw-kind="card" data-spw-role="reference" data-spw-category-family="specimen" data-spw-form="brace">
+                        <h3 data-spw-slot="header">Visible folding</h3>
+                        <p data-spw-slot="body">When <code>gcd(k, n) = d &gt; 1</code>, the wheel folds <code>d</code>-to-1 onto a smaller sub-polygon — divisibility drawn as chord density.</p>
+                        <a href="#modular-clock" data-spw-slot="actions">anchor: modular clock</a>
+                    </article>
+                    <article class="topic-reference-card" data-spw-kind="card" data-spw-role="reference" data-spw-category-family="specimen" data-spw-form="brace">
+                        <h3 data-spw-slot="header">Field bridge</h3>
+                        <p data-spw-slot="body">Because prime wheels never fold to zero, every non-zero residue has a multiplicative inverse — turning clock arithmetic into a full field.</p>
+                        <a href="/topics/math/field-theory/#prime-fields" data-spw-slot="actions">next: prime fields</a>
+                    </article>
                 </div>
             </section>
 
