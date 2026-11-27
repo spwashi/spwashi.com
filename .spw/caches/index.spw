@@ -169,6 +169,8 @@
 @expression_stagnation_and_variety_2026_11: ~"./expression-stagnation-and-variety-2026-11.spw"  # cache: 1,030-expression stagnation census (94% flat abc[def]{ghi}<jkl>), five false container implications, 32-shape live spw-seed 0.3.0 parse matrix, expression-query.js and lexer ceilings, and 7-family variety direction (#esv-001..#esv-005)
 @model_metacognition_and_elemental_tasks_2026_11: ~"./model-metacognition-and-elemental-tasks-2026-11.spw"  # cache: cross-model metacognitive calibration protocol (4 fixed wedges, pre-registered ~#expect, consensus-vs-divergence rule), hydrogen/carbon/neon/argon elemental task router, and dated comparison ledger (#mmet-protocol..#mmet-ledger)
 @factshift_navigation_and_physics_2026_11: ~"./factshift-navigation-and-physics-2026-11.spw"  # cache: factshift.center as spatial fulcrum of the spw.quest / attention.productions / factshift.center triad — live bcf0da18 & attention-stage/dailies baseline, generalized arrival routing, eight-way navigation axes, canvas-vs-frame touch seam, five-grain scrub architecture (TREE/NODE/LINE vs. PART/CHAR), six-pair operator physics, orthogonal slot materials & sensory parity (#fnp-triad..#fnp-ecosystem)
+@factshift_aperture_rederivation_2026_11: ~"./factshift-aperture-rederivation-2026-11.spw"  # cache: evaluation of signed frame-brace scrub proposal (6 structural cracks), 6 distributed interaction principles, component re-derivation, and symmetric open <-> quiet <-> close grain aperture model
+@ecosystem_roundtrip_architecture_2026_11: ~"./ecosystem-roundtrip-architecture-2026-11.spw"  # cache: four-leg round-trip architecture (ecosystem -> factshift.center -> spw-workbench -> return into spwashi.com and peers) sequencing shared gesture kernel, per-frame clocks, upstream operator/grain/typed-reader asks, and site return-leg cleanup
 
 operation = "align"
 fixity = "tending"
@@ -278,6 +280,8 @@ fixity = "tending"
   expression_stagnation_and_variety_2026_11 = @expression_stagnation_and_variety_2026_11
   model_metacognition_and_elemental_tasks_2026_11 = @model_metacognition_and_elemental_tasks_2026_11
   factshift_navigation_and_physics_2026_11 = @factshift_navigation_and_physics_2026_11
+  factshift_aperture_rederivation_2026_11 = @factshift_aperture_rederivation_2026_11
+  ecosystem_roundtrip_architecture_2026_11 = @ecosystem_roundtrip_architecture_2026_11
 }[reg=facet]
 
 ^"cache_rules"{

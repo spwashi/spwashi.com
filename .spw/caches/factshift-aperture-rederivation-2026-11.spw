@@ -1,0 +1,159 @@
+# Factshift Aperture Re-derivation & Six Distributed Principles (2026-11-26) — cache
+#
+# Evaluates the proposed signed frame-brace charge/discharge scrub for
+# factshift.center against spw-workbench theory, live app code, and peer hosts,
+# then re-derives the canvas's components from six orthogonal principles and a
+# symmetric open <-> quiet <-> close grain aperture.
+# Judgment and architecture cache; no app code changed here.
+
+#>factshift_aperture_rederivation_2026_11
+#:cache #!factshift #!interaction #!aperture #!braces #!rederivation
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+expression = factshift[rederive]{aperture.principles.clocks.materials}<symmetry>
+
+summary = #[
+  `The signed frame-brace scrub instinct is right to put disclosure on a boundary rather than the focal handle, preserve zero-mutation preview (L0), and leave focal square, lens, where/how edges, and Shift+wheel charge untouched.`,
+  `As written it hits six structural cracks: a clamped [0,+] machine wearing a signed [-,+] metaphor; ephemeral receipt contradicting cross-zero = loosening; a fifth homonym for charge; four live horizontal stage collisions with no outer held-line frame; mutating an unmounted #frame-scrub rail and leaning slots toward movable chrome; and persistent post-release rungs (lean/hold/saturate) lacking distinct actions or rest clocks.`,
+  `Six orthogonal principles re-derive factshift.center cleanly: L0/L1/L2 effect-grade separation, one axis per host on one shared gesture kernel, four-way charge disambiguation, per-frame heat clocks with explicit rest, actionable thresholds with orthogonal slot materials before glyphs, and one canon operator/grain/kept-line contract.`,
+  `The salvaged interaction is a true symmetric bipolar Grain Aperture (open <-> quiet <-> close) unifying empty-seat potentiation on the open side with brace-folds.ts literal folding on the close side (preserving the ? no-fold invariant) over a non-colliding grain rim.`,
+][reg=set]
+
+contents = #[
+  ~"./factshift-aperture-rederivation-2026-11.spw#sound_kernel",
+  ~"./factshift-aperture-rederivation-2026-11.spw#six_cracks",
+  ~"./factshift-aperture-rederivation-2026-11.spw#six_principles",
+  ~"./factshift-aperture-rederivation-2026-11.spw#component_rederivation",
+  ~"./factshift-aperture-rederivation-2026-11.spw#symmetric_aperture",
+  ~"./factshift-aperture-rederivation-2026-11.spw#prerequisites",
+  ~"./factshift-aperture-rederivation-2026-11.spw#stream",
+][reg=set]
+
+^"sound_kernel"{
+  boundary_not_seat = `Potential belongs on a boundary rather than on #focal-square, matching @coupling_constructors (interface conditions couple interior and exterior) and relations.ts pairs ("the opener holds the charge of what sits between them and the closer gives it back").`
+  protected_owners = `Leaving #focal-square (carry/toggle), #tool-lens (left out / right primed), left/right page margins (where/how), and Shift+wheel + Reflex charge card untouched honors the surface boundaries settled across commits 1a4157a through b8e2222.`
+  epistemic_potentiation = `Discovering unnamed [mode], (scene), and <concept> seats with zero byte mutation honors @exhibit_floor (epistemic vs pragmatic action) and d_2026_10_29_empty in @factshift_surface ("empty regions should only be displayed when filled or potentiated").`
+  dead_zone_and_receipt = `Reusing edge-scrub.ts cancel dead zone (0.45 * stepPx) and clearing a single receipt on the next act respects swallowsTap and ephemeral.ts.`
+}[reg=facet]
+
+^"six_cracks"{
+  c1_asymmetric_sign = .{
+    claim = `Calling a clamped [0, saturate] potentiator "one signed potential" breaks opposite-edge symmetry (@theory_of_mind) and L8_orientation in @brace_physics (open/close is canonical; left/right is only a render profile).`
+    evidence = `"If the frame was already quiet, the scrub does nothing" leaves zero negative-side behavior except a special-case cross-zero toggle.`
+  }[reg=facet]
+
+  c2_receipt_vs_pin = .{
+    claim = `Saying "nothing is written" and "the receipt leaves when the next act starts" contradicts "crossing back through zero only loosens the last receipt, the same kept-or-loose act = already has on a node".`
+    evidence = `operator-tap.ts uses = to toggle node.placed (fx/fy); spw-kept.ts keeps lines; hash-gestures.ts keeps snapshots. Mixing ephemeral spoken receipts with persistent = pins collapses visit and browser memory planes (@cross_product).`
+  }[reg=facet]
+
+  c3_charge_homonym = .{
+    claim = `Calling the frame scrub "charge and discharge" adds a fifth meaning onto a word @charge_bridge (G6_discharge_homonym) already flags as overloaded.`
+    evidence = `Live senses: brace-physics polarity, runtime ChargePacket, valence pentad (boon..honk), factshift forces.charge + particles.ts +/-q dipoles, and spwashi.com charge-field.js (@audit#ontologies).`
+  }[reg=facet]
+
+  c4_missing_host_and_collisions = .{
+    claim = `No single outer held-line brace frame exists in line-anatomy.ts today, while horizontal stage drags are claimed by four live owners.`
+    evidence = `region-rects.ts (EDGE_PX=24 side resize), body-gestures.ts (<280ms flick frames sibling / steps parts), frame-refresh.ts (STEP_BAND=72px concept history even on g.region-group), and held-expressions.ts (corner horizontal swipe).`
+  }[reg=facet]
+
+  c5_invisible_rail_and_chrome_gravity = .{
+    claim = `Weighting the where-rail mutates an unmounted element, and leaning unnamed slots toward draggable #focal-square couples reading geometry to chrome placement.`
+    evidence = `#frame-scrub mounts only while dragging the left 44px margin (frame-refresh.ts), violating @exhibit_floor ("answers once, where it is seen"); empty bare brackets also fail image-model legibility (@brace_literal).`
+  }[reg=facet]
+
+  c6_sticky_rungs_without_acts = .{
+    claim = `Persistent post-release detents (lean, hold, saturate) with nothing written violate @depiction_frames rest state, @threshold_distance ("a distance is shown only if something can be done about it"), and @factshift_interaction sayability.`
+    evidence = `Global d3 alpha cools in ~2s and keeping global alpha > 0 drifts sibling ~ bodies 6px (@workbench_theory); without a distinct affordance and clock per rung, hold and saturate become sticky unsayable modes.`
+  }[reg=facet]
+}[reg=facet]
+
+^"six_principles"{
+  p1_effect_grades = `Separate L0 epistemic look (returns to rest, 0 bytes), L1 visit-local reading posture (local anchor/material bias, zero global heat, explicit exit or clock), and L2 pragmatic commit (rewrites line or URL with * receipt and inverse).`
+  p2_one_axis_one_kernel = `Every boundary owns one axis with true inverse directions, wired through one shared gesture kernel (@gesture_measure, claimedPointer, swallowsTap) carried in peer-kit.`
+  p3_four_names_for_charge = `Keep Aperture (disclosure), Sim Repulsion (forces.charge), Valence (boon..honk / scene-tune), and Portable Transfer (ChargePacket / #spw64=) strictly distinct in code, receipts, and ARIA.`
+  p4_per_frame_heat_and_clocks = `Scope simulation warmth per frame (proven in @quest_physics) so tending one grain never drifts siblings, and bind every transient to one declared clock (canvas seconds, site ~40s, address indefinite).`
+  p5_actionable_rungs_and_materials = `Every snapped detent unlocks a distinct user action (@threshold_distance), and every potentiated slot reads through orthogonal material (glass [mode] collar, matte {body} well, paper (scene) mat, threshold <concept> rim) rather than naked brackets.`
+  p6_one_canon_and_kept_line = `Consume one operator table, one grain ladder (token -> part -> row -> line -> construct -> block -> surface), and one visible kept line surfacing browser storage and forget verbs.`
+}[reg=facet]
+
+^"component_rederivation"{
+  grain_boundary = `Owns bipolar aperture disclosure (open <-> quiet <-> close) on a dedicated grain rim/tab; decoupled from corner-only resize and retired #held-expressions horizontal swipe.`
+  seats_and_slots = `Material receptacles anchored to the grain itself (never pulled toward #focal-square); hidden at quiet rest; open to tap-to-name, free-drop, or candidate pivot when held.`
+  focal_handle_and_lens = `Pure tool carriage (#focal-square) and 3-level primed execution (#tool-lens); zero coupling to SVG reading-plane forces.`
+  edge_rails = `Left=where (thread/places), Right=how (acts/parts) on vertical SIDE_BAND=44 only; never mutated while unmounted; persistent place weight sits on visible #tree-trail or grain rim.`
+  physics_field = `Per-frame warm/cool clocks, local operator laws (local-forces.ts), scene-tune multipliers (scene-tune.ts), and restLine balance; Shift+wheel/Reflex exclusively own forces.charge.`
+  memory_and_receipts = `Two clean channels: ephemeral status notes (L0/L1, --ephemeral-hold) vs * <line> byte-commit receipts and one inspectable kept line (L2 / browser plane); = remains node/word pinning.`
+}[reg=facet]
+
+^"symmetric_aperture"{
+  axis = `open (objective invitation) <-> 0 (quiet rest) <-> close (subjective synthesis)`
+  canonical_name = `aperture (open/close canonical per @brace_physics L8_orientation; left/right only as horizontal render direction)`
+  open_side = `Potentiates unnamed seats of the current grain ([mode], (scene), <concept>, or next empty body slot) as orthogonal material targets anchored around the grain itself; weights the visible grain rim / #tree-trail place cue.`
+  quiet_zero = `Written parts at rest balance (restLine, alpha = 0); empty seats hidden; cancel deadzone 0.45 * stepPx commits nothing.`
+  close_side = `Walks open seats back to quiet; past zero into close, settles motion and folds written parts inward toward literal brace form (brace-folds.ts stratum 1 -> 0), honoring the ? no-fold invariant (@brace_literal). Drops cross-zero = loosening entirely.`
+  actionable_rungs = .{
+    quiet = `0: read at rest (L0, alpha = 0).`
+    lean = `transient preview while finger is down (L0): snaps back to quiet on lift unless crossed into hold, avoiding accidental sticky bias.`
+    hold = `latched visit-local reading posture (L1, zero global heat): open side keeps empty material seats open for tap/drop; close side keeps body folded as editable literal card; clears on action, Esc, empty-canvas tap, or scrubbing back.`
+    saturate = `optional 4th rung only if it unlocks a 4th act: open side populates empty seats with ghosted 1-edit candidate pivots (line-joints.ts / pivotsOf); close side condenses to fractal summary (line-summary.ts) + outward <projection>.`
+  }[reg=facet]
+  accessibility = `Focusable grain-rim slider (role="slider", aria-valuetext announcing brace and rung sentence) mirroring horizontal touch scrub, wired into claimedPointer and swallowsTap.`
+}[reg=facet]
+
+^"prerequisites"{
+  p0_gesture_partition = `Move body resize to corners only in region-rects.ts, bound body-gestures.ts flicks off the grain rim, and retire legacy horizontal thread swipe in held-expressions.ts (superseded by b8e2222 left rail + arrow stepper).`
+  p1_per_frame_heat = `Port per-frame warm/cool clocks from @quest_physics into factshift forces.ts so open/close transitions and rest warms never drift sibling ~ bodies.`
+  p2_slot_materials = `Give [mode], (scene), and <concept> distinct slot materials beside the {body} well so potentiated seats read cleanly with container labels hidden.`
+  p3_aperture_slice = `Prototype symmetric open <-> quiet <-> close grain aperture behind a browser demo at 390x844 and 1366x900 before promoting.`
+}[reg=facet]
+
+#>wonder_aperture_close_fold
+?["Should scrubbing past quiet on the close side drive literal brace folding (brace-folds.ts), or should aperture stay unipolar [0..hold] on the open side alone?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @factshift_plan @brace_literal
+  ~#hypothesis: "Binding close-past-zero to brace-folds.ts (stratum 1 -> 0, never folding ?) makes open and close genuine physical inverses (invite unnamed seats vs condense written seats) without overloading = pinning."
+  ~#expect: "brace-folds.ts already stores per-body strata 0/1/2 with foldsAway = !word.startsWith('?'), so wiring close-past-zero reuses existing visit state cleanly."
+  ~#probe(read)
+  !probe{ "rg -n 'foldsAway|setBodyStratum' workers/factshift-center/app/src/js/modes/spw/brace-folds.ts" }
+  $%[aperture.bipolar_fold, aperture.unipolar_open, aperture.panel_only]
+}
+
+#>wonder_aperture_saturate_pivots
+?["Does a fourth rung (saturate) earn its keep by populating potentiated seats with 1-edit candidate pivots from line-joints.ts, or is a three-rung ladder (quiet, lean, hold) cleaner?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @threshold_distance @factshift_interaction
+  ~#hypothesis: "Under threshold-distance, a fourth detent is honest only when it unlocks a fourth distinct affordance; ghosted 1-edit candidate pivots on open seats (and fractal summary on close) justify saturate, otherwise stop at three rungs."
+  ~#expect: "jointsOf in line-joints.ts already enumerates empty room opens and turns for the held line."
+  ~#probe(read)
+  !probe{ "rg -n 'export function jointsOf' workers/factshift-center/app/src/js/modes/spw/line-joints.ts" }
+  $%[rungs.four_with_pivots, rungs.three_quiet_lean_hold, rungs.two_rest_open]
+}
+
+^"stream"{
+ >>[2026-11-26 22:08] cache — evaluated the signed frame-brace scrub proposal against spw-workbench theory, live app code (HEAD b8e2222 + WIP scene-tune/side-marks), and peer hosts; recorded six structural cracks, six distributed principles, component re-derivation, and the symmetric open <-> quiet <-> close grain aperture model.
+}
+
+# Handles, declared last.
+@audit: ~"../audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
+@charge_bridge: ~"../_workbench/docs/theory/spw/charge-valence-brace-bridge.spw"
+@brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+@depiction_frames: ~"../_workbench/docs/theory/spw/depiction-frames.spw"
+@exhibit_floor: ~"../_workbench/docs/theory/spw/exhibit-floor.spw"
+@threshold_distance: ~"../_workbench/docs/theory/spw/threshold-distance.spw"
+@coupling_constructors: ~"../_workbench/docs/theory/spw/coupling-constructors.spw"
+@brace_hysteresis: ~"./brace-hysteresis-crease-2026-09.spw"
+@brace_literal: ~"./brace-literal-local-law-2026-11.spw"
+@control_alignment: ~"./factshift-control-alignment-2026-11.spw"
+@theory_of_mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@cross_product: ~"./cross-product-rederivation-2026-11.spw"
+@workbench_theory: ~"./workbench-interaction-theory-2026-11.spw"
+@factshift_surface: ~"../surfaces/factshift-center.spw"
+@factshift_interaction: ~"../../.agents/plans/factshift-center/INTERACTION.md"
+@factshift_plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@quest_physics: ~"../../workers/spw-quest/src/physics.js"
+@gesture_measure: ~"../../public/js/kernel/gesture-measure.js"

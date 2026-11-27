@@ -1,0 +1,138 @@
+# Ecosystem Round-Trip Architecture: Cluster -> factshift.center -> Workbench -> Return (2026-11-26) — cache
+#
+# Sequences architectural improvements across four linked legs so each layer
+# solves what belongs at its altitude without duplicating tables, scrubbers,
+# heat clocks, or homonyms. Nothing here edits .spw/_workbench directly.
+
+#>ecosystem_roundtrip_architecture_2026_11
+#:cache #!architecture #!ecosystem #!factshift #!workbench #!roundtrip
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+expression = architecture[roundtrip]{ecosystem.factshift.workbench.return}<cohere>
+
+summary = #[
+  `Leg 1 (Across the ecosystem): promote gesture-measure.js + swallowsTap into peer-kit beside pinch-text-scale, unify six slot scrubbers onto one {stepPx:28, edge, commit} contract with visible prime cues, land S4a spw-highlight sharing, and close lossy from= return legs across hosts.`,
+  `Leg 2 (Within factshift.center): partition horizontal touch ownership (corner-only resize, retire #held-expressions swipe), port per-frame warm/cool clocks from spw.quest/physics.js, give all four container slots orthogonal materials, prototype symmetric open <-> quiet <-> close grain aperture, expose a single kept-line memory surface, and retire the March workbench submodule once typed releases land.`,
+  `Leg 3 (Up to spw-workbench): file and track the exact consumer asks that eliminate downstream forks — one exported operator_table with host alias columns, grainsAt/stepFrom/addressOf + reversible edit_verbs, typed .d.ts reader + spw.pivots/1 release artifacts, canonical bracket stay rules, ChargePacket vs aperture/valence disambiguation, and cache_registry kept-line schema.`,
+  `Leg 4 (Back around into spwashi.com & peers): delete parallel operator tables in favor of the upstream export, unify spwashi.com's three data-spw-charge writers and close the brace-gestures -> charge-field and achievement -> effect-ledger bus gaps, activate unconsumed reader exports (spokenLine, pairSound, readNumberForm), and land ungated homonym-renaming + brace-semantics cleanup slices.`,
+][reg=set]
+
+contents = #[
+  ~"./ecosystem-roundtrip-architecture-2026-11.spw#leg_1_ecosystem",
+  ~"./ecosystem-roundtrip-architecture-2026-11.spw#leg_2_factshift",
+  ~"./ecosystem-roundtrip-architecture-2026-11.spw#leg_3_workbench",
+  ~"./ecosystem-roundtrip-architecture-2026-11.spw#leg_4_return",
+  ~"./ecosystem-roundtrip-architecture-2026-11.spw#sequencing_matrix",
+  ~"./ecosystem-roundtrip-architecture-2026-11.spw#stream",
+][reg=set]
+
+^"leg_1_ecosystem"{
+  owner_plans = #[@ecosystem_plan, @workers_kit_plan, @quest_plan][reg=set]
+  moves = #[
+    `Promote public/js/kernel/gesture-measure.js (GESTURE_MEASURE, PINCH_MEASURE, pinchThresholdOf, scrubStepDelta, swallowsTap) into build-peer-kit.mjs so workers/lib/pinch.js and factshift scale-cue.ts stop duplicating thresholds`,
+    `Define one pure slot-scrub controller contract {stepPx: 28, edge: clamp|wrap, commit: live|on-lift|prime-then-keep} with shared visual states (data-scrubbing, dashed data-primed) across <spw-expression>, spw.quest/pivot, attention.productions, texture.website, tealstripesvibes, and factshift`,
+    `Standardize cross-host return provenance: carry from= (and specimen id where applicable) beside ?spw= and #spw64= so spw.quest <-> factshift.center and lore.land <-> factshift.center close round trips losslessly`,
+    `Land S4a (one spw-highlight paint shared with spw.quest file-reader.js) and S2 kinship drift check in check:workers once creator clears wonder_site_starter_first_portable`,
+    `Keep workers/lib/hold.js as single writer for mutex.buzz / tealstripesvibes and add a theme-record lookup beside set-ring.js (workers-wonder-kit S5) without copying host drawing code`,
+  ][reg=set]
+}[reg=facet]
+
+^"leg_2_factshift"{
+  owner_plans = #[@factshift_plan, @planes_plan][reg=set]
+  moves = #[
+    `P0 Gesture Partition: make region-rects.ts resize corner-only, keep body-gestures.ts flicks off the grain rim, retire horizontal thread swipe in held-expressions.ts (superseded by b8e2222 left rail + stepper), and route every boundary scrub through claimedPointer + swallowsTap`,
+    `P1 Per-Frame Heat Clocks: port per-body warm/cool clocks from spw.quest/src/physics.js into forces.ts so warming one body or aperture transition never drifts sibling ~ bodies, while keeping restLine convergence`,
+    `P2 Orthogonal Slot Materials: pair the {body} recessed well with distinct materials for [mode] (glass collar), (scene) (paper mat), and <concept> (threshold rim) so potentiated empty seats stay legible with container labels hidden`,
+    `P3 Symmetric Grain Aperture: prototype open <-> quiet <-> close on a dedicated grain rim (open potentiates unnamed seats; close settles and folds written parts via brace-folds.ts, never folding ?; drops = loosening overload; weights visible #tree-trail/rim, never unmounted #frame-scrub)`,
+    `P4 Kept-Line Memory & Physics Cohesion: expose the ~18 factshift.* storage keys as one inspectable read-only kept line with a forget verb; reconcile working-tree scene-tune.ts and before/after mark seats with local-forces.ts and parseable node[select] rail crumbs`,
+    `P5 Reader Parity (Slice 5): retire the March 2026 workbench submodule once upstream releases typed .d.ts variants + spw.pivots/1`,
+  ][reg=set]
+}[reg=facet]
+
+^"leg_3_workbench"{
+  owner_surfaces = #[@upstream_hub, @stage_asks, @gesture_asks, @inquiry_plan][reg=set]
+  grounded_in = #[@journal_scales, @journal_address, @workbench_theory][reg=set]
+  asks = #[
+    `Single exported operator_table in spw-seed: glyph, workbench word, reader name, body-law sentence (LAW_SAYS), highlight role, container slot names, and declared host alias columns — eliminating 4 parallel copies`,
+    `Shared grain & address kit (grainsAt, stepFrom, addressOf, resolveAddress) plus reversible edit_verbs (returning edits, inverse, delta) so editors, spw.quest, and factshift.center step the same ladder (token -> part -> row -> line -> construct -> block -> surface)`,
+    `Typed parser release bundles (.d.ts typed_variants beside reader.min.js + spw.pivots/1 + balanced recursive slot parsing + stack-aware digraph closure for >>, <<, ((, <=, //)`,
+    `Canonical bracket stay/room table bridging lore.land rooms.spw and factshift free-drop.ts, plus explicit separation of open/close aperture disclosure from ChargePacket, Coulomb forces.charge, and valence`,
+    `Unified cache_registry & kept_line schema (key, clock, tiers, invalidation, plane, until-when) and one_distance weighted for memory, index, and stage`,
+  ][reg=set]
+}[reg=facet]
+
+^"leg_4_return"{
+  owner_plans = #[@brace_plan, @interaction_plan, @homonym_plan, @ecosystem_plan, @inquiry_plan][reg=set]
+  moves = #[
+    `Consume upstream operator_table in public/js/kernel/operator-detection.js, workers/spw-quest/src/guide.js, and factshift operators.ts; eliminate 145 unknown data-spw-operator="state" occurrences and align boon/bane/bone sigil tables`,
+    `Unify spwashi.com's three data-spw-charge writers (brace-gestures.js, haptics.js, brace-pivots.js) onto one canonical 4-rung ladder (quiet -> lean -> hold -> commit/discharge), bridge brace arming/preview into charge-field.js, and wire spw:achievement-unlocked + math diagrams into effect-ledger.js`,
+    `Adopt upstream grainsAt/addressOf in <spw-expression> (rail-crumb.js), spw.quest /pivot, and factshift #tree-trail so navigating a page, a line, and a canvas uses one address model`,
+    `Activate already-shipped unconsumed reader exports (spokenLine, pairSound, TEXTURES, readNumberForm) in spwashi.com copy/accessibility/math surfaces without adding new runtime weight`,
+    `Land ungated semantic hygiene: word-sets.spw homonym/echo entries (homonym-renaming Slices 1-2), pin expression retention & boon/bane wall alias removal (brace-semantics Slices 2a-3.5), and settings "do this / expect this" gesture table (interaction-grammar Slice 1)`,
+  ][reg=set]
+}[reg=facet]
+
+^"sequencing_matrix"{
+  now_ungated = #[
+    `Audit + cache + plan + ontology alignment (this campaign)`,
+    `homonym-renaming Slices 1-2 (word-sets.spw entries)`,
+    `brace-semantics Slices 2a, 2b, 3a, 3b, 3.5 (pins, no cauldron write-back, scene fallback, boon/bane wall alias removal, element pair)`,
+    `interaction-grammar Slice 1 (settings gesture contract table from census)`,
+    `peer-kit promotion of gesture-measure.js + swallowsTap + check:workers drift tests`,
+  ][reg=set]
+  demo_or_creator_gated = #[
+    `factshift P0-P3 (corner-only resize, per-frame heat, slot materials, symmetric grain aperture demo at 390x844)`,
+    `ecosystem S4a (spw-highlight peer carry) and S5 (declared CSS layer order)`,
+    `homonym-renaming Slice 3 (tempo="settle" rename at 3 altitudes)`,
+    `interaction-grammar Slices 2-4 (math diagram bus emit, achievement ledger flourish, unified hold clock)`,
+  ][reg=set]
+  upstream_gated = #[
+    `operator_table export -> delete parallel host tables`,
+    `typed .d.ts reader + spw.pivots/1 -> factshift Slice 5 submodule retirement`,
+    `grainsAt/stepFrom/addressOf + edit_verbs -> unified cross-host navigation`,
+    `cache_registry kept_line -> visible browser memory line across hosts`,
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_roundtrip_first_shared_kernel
+?["Which single shared module yields the highest reduction in cross-host drift first: promoting gesture-measure.js into peer-kit, or moving operator_table upstream into spw-seed?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @peer_kit @operator_namespace @journal_scales
+  ~#hypothesis: "gesture-measure.js is entirely site-local and eliminates 3 PINCH_MEASURE copies + 6 scrub step drifts immediately without waiting on an upstream release; operator_table has wider downstream leverage once spw-seed exports it."
+  ~#expect: "gesture-measure.js lands first inside this repo, while operator_table stays rank-1 on the upstream workbench queue."
+  ~#probe(read)
+  !probe{ "rg -n 'PINCH_MEASURE|scrubStep' public/js/kernel/gesture-measure.js workers/lib/pinch.js" }
+  $%[first.gesture_measure, first.operator_table, first.both_parallel]
+}
+
+^"stream"{
+ >>[2026-11-26 22:08] cache — synthesized the four-leg round-trip architecture (ecosystem -> factshift.center -> spw-workbench -> return into spwashi.com and peers) grounded in the 2026-11-26 audit, the 2026-11-11 workbench journal replies, and current worker/site plans.
+}
+
+# Handles, declared last.
+@audit: ~"../audits/ecosystem-planes-pivots-ontologies-2026-11.spw"
+@aperture_cache: ~"./factshift-aperture-rederivation-2026-11.spw"
+@workbench_theory: ~"./workbench-interaction-theory-2026-11.spw"
+@cross_product: ~"./cross-product-rederivation-2026-11.spw"
+@journal_scales: ~"../_workbench/.spw/caches/journal/2026-11-11-one-table-many-scales.spw"
+@journal_address: ~"../_workbench/.spw/caches/journal/2026-11-11-address-grain-edit.spw"
+@upstream_hub: ~"../reviews/upstream-workbench-recommendations.spw"
+@stage_asks: ~"../reviews/upstream-workbench-recommendations/stage-and-physics.spw"
+@gesture_asks: ~"../reviews/upstream-workbench-recommendations/gestures.spw"
+@site_cluster: ~"../surfaces/site-cluster.spw"
+@ecosystem_plan: ~"../../.agents/plans/ecosystem-architecture/PLAN.md"
+@factshift_plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@workers_kit_plan: ~"../../.agents/plans/workers-wonder-kit/PLAN.md"
+@quest_plan: ~"../../.agents/plans/spw-quest/PLAN.md"
+@planes_plan: ~"../../.agents/plans/spw-planes/PLAN.md"
+@brace_plan: ~"../../.agents/plans/brace-semantics/PLAN.md"
+@interaction_plan: ~"../../.agents/plans/interaction-grammar/PLAN.md"
+@inquiry_plan: ~"../../.agents/plans/spw-inquiry-loop/PLAN.md"
+@homonym_plan: ~"../../.agents/plans/homonym-renaming/PLAN.md"
+@gesture_measure: ~"../../public/js/kernel/gesture-measure.js"
+@peer_kit: ~"../../scripts/build-peer-kit.mjs"
+@operator_namespace: ~"../language/operator-namespace-alignment.spw"
