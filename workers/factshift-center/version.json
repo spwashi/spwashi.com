@@ -4,7 +4,7 @@
   "script": "factshift-center",
   "host": "factshift.center",
   "snapshot": "2026-11-27",
-  "revision": "113a807",
+  "revision": "fcd21f0",
   "checkout": "workers/factshift-center/app",
   "reader": {
     "release": "2026.11.16-pre.1",
@@ -41,6 +41,7 @@
     "perspective",
     "r",
     "reset",
+    "scene",
     "size",
     "spw",
     "story",

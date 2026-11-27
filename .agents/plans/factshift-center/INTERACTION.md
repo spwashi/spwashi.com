@@ -4,12 +4,13 @@ Companion to [PLAN.md](./PLAN.md); the whole canvas model is [.spw/surfaces/fact
 
 A behavior either primes a concept or actualizes it. In the tools, the primed act is `primedAction` and actualizing it is `performPrimed` (`workers/factshift-center/app/src/js/ui/tool-primed.ts`). Actualizing writes the line, or changes the simulation in a way the line or the address can say back. A behavior that cannot say what it did is outside the examination.
 
-## Three constants
+## Four constants
 
-A surface chooses its own acts. Three things stay the same from one surface to the next, and each has one owner in the app. A new gesture names all three before it lands.
+A surface chooses its own acts. Four things stay the same from one surface to the next, and each has one owner in the app. A new gesture names all four before it lands.
 
 - **Direction, the compass** (`ui/compass.ts`). On the reading plane, which is the frame and the held line's bodies, a direction means one thing everywhere. Breadth: the content follows the finger, so rightward brings what came before (the part, the body, the line, the concept). Depth: as a scroll moves a page, up goes in and toward more (a nested body, the next stratum), and down comes out and toward the line as written. A diagonal's vertical half keeps depth's sign, so on a body ↗ goes in a level and ↙ comes out. That diagonal was reversed until 2026-11-27 (app hash in PLAN.md pins). The keys follow the scroll: ↓ and Shift+↓ go in. Chrome handles (`gestures.ts`: handle, lens, tile) keep their own verbs. The canvas ring is a radial picker. It places choices around the finger and does not read a direction.
 - **Ownership.** One touch is one gesture. Once a gesture crosses its line, no sibling listener answers that pointer (`claimedPointer` in `frame-refresh.ts`, `swallowsTap` in `gesture-claim.ts`). P0 carries the same rule to the horizontal owners that remain.
+- **Saying.** Words go where nothing on screen shows the result. A landmark that shows it answers instead (Accessibility and annotation, below).
 - **Grade.** Every act is a lean (L0, gone on lift), a hold (L1, kept for this visit), or a keep (L2, which writes the line or the address). The act says which one (Grain aperture, below).
 
 ## Behaviors
@@ -74,7 +75,7 @@ The canvas does not read pointer pressure. The magnitudes it already has are dis
 
 ## Accessibility and annotation
 
-Every primed act and every actualized act has one sentence. The card says it, or the note beside the handle does. That sentence is the accessible name. Hue does not carry it. The relation table, the runtime card (parse, normalize, interpret, register), and the link card are the annotations already on the canvas. A node's picture and label take no touches. The circle does. Anatomy nodes are named by word, slot, and frame. Enter and Space reach a node only while that node holds focus.
+Every primed act and every actualized act has one sentence. The card says it, or the note beside the handle does. When a landmark already shows the result, the landmark answers: the node that acted, the body the camera framed, the part stepped to, the hash, a mode's panel. It is lit for the ephemeral hold, and the sentence goes to the live region only. Each kind of landmark shows its words the first two times it answers in a browser (`handle-said.ts` `landmarkAnswers`, key `factshift.landmarks-taught`), and the touch tag shares that count. A note with nothing to point at (an edge, a refusal, the whole stage) always speaks. A cue under a moving finger holds its words still and lets its armed style say that a release would land. That sentence is the accessible name. Hue does not carry it. The relation table, the runtime card (parse, normalize, interpret, register), and the link card are the annotations already on the canvas. A node's picture and label take no touches. The circle does. Anatomy nodes are named by word, slot, and frame. Enter and Space reach a node only while that node holds focus.
 
 Still unnamed:
 
