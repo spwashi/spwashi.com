@@ -1,7 +1,8 @@
 # factshift.center
 
 **Status 2026-11-26.**
-- **The site carries the app as of `dbdb3364`** (thread on the left, its parts on the right, menu clear of `[...]`, carrying the app's latest build recorded in the pins below), following the 2026-11-16/17 run (`9d079e58`, `3681aca2`, `845ea9fe`, `f4d44391`, `84740905`, `50493681`). In the app checkout, uncommitted WIP also introduces `scene-tune.ts` and side mark seats on regions.
+- **2026-11-27:** the site carries the one-compass build (app hash in the pins), built from a clean worktree so the checkout's uncommitted scene-tune work stays out. [INTERACTION.md](./INTERACTION.md) Three constants.
+- **The site carried the app as of `dbdb3364`** (thread on the left, its parts on the right, menu clear of `[...]`, carrying the app's latest build recorded in the pins below), following the 2026-11-16/17 run (`9d079e58`, `3681aca2`, `845ea9fe`, `f4d44391`, `84740905`, `50493681`). In the app checkout, uncommitted WIP also introduces `scene-tune.ts` and side mark seats on regions.
 - **2026-11-26 re-derivation & audit:** Evaluating a horizontal signed frame-brace charge/discharge scrub against `spw-workbench` theory (`charge-valence-brace-bridge.spw`, `2026-11-11-address-grain-edit.spw`, `2026-11-11-one-table-many-scales.spw`), live code, and sibling peers revealed six structural cracks: a 5-way `charge` homonym, an unmounted `#frame-scrub` rail beside two live horizontal collisions (`body-gestures.ts` edge resize and `#held-expressions` swipe), global `alpha` heat leaking into settled frames, one-sided `=` node pinning vs receipt loosening, unsurfaced kept-line storage, and unbuilt orthogonal slot materials for `( )` / `< >` / `[ ]`. The full diagnosis, six distributed principles, and symmetric `open <-> quiet <-> close` grain aperture live in [factshift-aperture-rederivation](../../../.spw/caches/factshift-aperture-rederivation-2026-11.spw), sequenced in the 4-leg ecosystem loop ([ecosystem-roundtrip-architecture](../../../.spw/caches/ecosystem-roundtrip-architecture-2026-11.spw)) and measured in [ecosystem-planes-pivots-ontologies](../../../.spw/audits/ecosystem-planes-pivots-ontologies-2026-11.spw).
 - **2026-11-17 trajectory refinement:** `factshift.center` operates concurrently as a **brace-pair representation** (wells, dipoles, bonded collars, sleeves, overlapping `{_A ... }_A` scopes) and as an **interstitial delimiter/separator representation** (`. , ; ~> -> || :` joints inside lines and `~ ^ & @` between lines), while serving as the spatial bridge across `spw.quest`, `attention.productions`, `texture.website`, `mutex.buzz`, and `lore.land`. Next app/upstream milestones target P0 gesture arbitration (`claimedPointer`), P1 per-frame heat clocks (`spw.quest/src/physics.js` parity), P2 orthogonal slot materials, P3 symmetric grain aperture, P4 kept-line memory surface, and P5 dated `.d.ts` `typed_variants` + `spw.pivots/1` upgrades (Slice 5).
 - **The canvas's side of the set is [hub.spw](./hub.spw).** [HUB.md](./HUB.md) is only the door. The set itself (the ring, both pinches, what each site changes and shows) is [workers-wonder-kit](../workers-wonder-kit/PLAN.md)'s.
@@ -26,8 +27,8 @@ A waiting shell is now offered (`A new canvas is saved`, `Reload to use it`) rat
 
 ```text
 pins (2026-11-26; app hashes resolve in workers/factshift-center/app, deploy versions outside the repository)
-app carried    b8e2222 (carried in site dbdb3364: thread left, parts right, menu clear of [...])
-app compass    5a3e03f (2026-11-27, local, not carried: ui/compass.ts, body ↗ in and ↙ out)
+app carried    5a3e03f (2026-11-27, one compass: ui/compass.ts, body ↗ in and ↙ out; built from a clean worktree)
+               b8e2222 (carried in site dbdb3364: thread left, parts right, menu clear of [...])
 app history    f06caf5 -> 8de4f19 (edge-history), 8fbfef2 (wip/other-session-2026-11-06),
                961a57c (walk/keep/compare, carried in 2459ac3c),
                dbb44f8 (body laws & folds), 76ad8b4 (particles/molecule/well, carried in 525e3613),
