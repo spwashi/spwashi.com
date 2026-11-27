@@ -493,7 +493,44 @@ test('the card can be read and copied as text with script off', async () => {
     assert.match(card, /<pre id="slip"># Broken for spw\.quest/);
     assert.doesNotMatch(card, /id="slip" hidden/);
     // A button that needs script waits for it, like Save image and Share.
-    assert.match(card, /<button type="button" class="door" data-copy="slip" hidden>/);
+    assert.match(card, /<button type="button" class="keep" data-copy="slip" hidden>Copy text<\/button>/);
+  } finally {
+    restore();
+  }
+});
+
+test('the card leads with the words, keeps its postmark at the foot, and sends before it posts', async () => {
+  const restore = stubFetch({
+    'wap.mom': { schema: 'autonomous-feedback.client.v0', host: 'wap.mom', name: 'Wap', from: 'optional', contact: { bluesky: 'wap.mom' }, routes: [{ name: 'Cabinet', path: '/cabinet' }] },
+  });
+  try {
+    const html = await page('/wap.mom/appreciation', form({ note: 'The cabinet opened like a book.', from: 'Ana', path: '/cabinet' }));
+    const card = html.slice(html.indexOf('<article class="card" id="card"'), html.indexOf('</article>', html.indexOf('<article class="card" id="card"')));
+    // The words come before the postmark, and the postmark holds the site, the page and the day.
+    assert.ok(card.indexOf('class="card-note"') < card.indexOf('class="card-postmark"'));
+    const postmark = card.slice(card.indexOf('<footer class="card-postmark">'));
+    assert.match(postmark, /class="card-site">Wap</);
+    assert.match(postmark, /class="card-address">wap\.mom\/cabinet</);
+    assert.match(postmark, /<time datetime="[^"]+">\d{4}-\d{2}-\d{2}<\/time>/);
+    // What the saved image is drawn from: the words and the writer apart, and what the card is about.
+    assert.match(card, /data-note="The cabinet opened like a book\."/);
+    assert.match(card, /data-from="Ana"/);
+    assert.match(card, /data-about="Cabinet · \/cabinet"/);
+    // A message comes before a post.
+    assert.ok(html.indexOf('id="send-title"') < html.indexOf('class="post-links"'));
+    assert.ok(html.indexOf('class="keep-row"') < html.indexOf('id="send-title"'));
+  } finally {
+    restore();
+  }
+});
+
+test('the home page shows a finished card before asking which site', async () => {
+  const restore = stubFetch();
+  try {
+    const home = await page('/');
+    assert.match(home, /<article class="card sample"[^>]*aria-label="An example card"/);
+    assert.ok(home.indexOf('class="card sample"') < home.indexOf('class="site-doors"'));
+    assert.doesNotMatch(home.slice(home.indexOf('class="card sample"'), home.indexOf('class="site-doors"')), /data-note=|data-stamp/, 'the example is not a card to save');
   } finally {
     restore();
   }

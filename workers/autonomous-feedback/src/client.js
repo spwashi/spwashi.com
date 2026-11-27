@@ -55,6 +55,11 @@ function clientMain() {
   // Write: the form is the card. One choice fills its header; the note is written on the card itself.
   const write = document.getElementById("write");
   if (write) {
+    // On a phone the choices scroll sideways, a row each; a row opens on its chosen chip, not past it.
+    write.querySelectorAll("fieldset.chips .row").forEach((row) => {
+      const chosen = row.querySelector("label.chip:has(input:checked)");
+      if (chosen && row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, chosen.offsetLeft - row.offsetLeft - 16);
+    });
     const note = write.querySelector("#note");
     const card = write.querySelector("[data-live-card]");
     const kindLabel = write.querySelector('[data-live="kind"]');
@@ -235,6 +240,12 @@ function clientMain() {
       say(how);
     };
 
+    /**
+     * The card as a picture, 1080 by 1350 (4:5, a post's own shape), laid out
+     * as the page lays it out: the kind and what it is about at the top, the
+     * words large in the middle (their size fitted to the space), the writer
+     * under them, and the postmark at the foot: site, page, day, expression.
+     */
     const drawCard = async () => {
       const root = getComputedStyle(document.documentElement);
       const token = (name, fallback) => root.getPropertyValue(name).trim() || fallback;
@@ -246,15 +257,20 @@ function clientMain() {
         accent: token("--accent", "#5eead4"),
       };
       const family = token("--font", "system-ui, sans-serif");
+      const mono = "ui-monospace, SFMono-Regular, Menlo, monospace";
       const width = 1080;
-      const pad = 88;
+      const height = 1350;
+      const edge = 40;
+      const pad = 104;
       const inner = width - pad * 2;
       const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
       const ctx = canvas.getContext("2d");
       const wrap = (text, font, limit) => {
         ctx.font = font;
         const lines = [];
-        for (const paragraph of text.split(/\n/)) {
+        for (const paragraph of String(text).split(/\n/)) {
           let line = "";
           for (const word of paragraph.split(/\s+/).filter(Boolean)) {
             const trial = line ? `${line} ${word}` : word;
@@ -268,61 +284,94 @@ function clientMain() {
         }
         return lines;
       };
-      const noteText = card.dataset.note;
-      let size = 46;
-      let lines = wrap(noteText, `${size}px ${family}`, inner - 32);
-      while (lines.length * size * 1.45 > 1200 && size > 28) {
-        size -= 2;
-        lines = wrap(noteText, `${size}px ${family}`, inner - 32);
-      }
-      const maxLines = Math.floor(1300 / (size * 1.45));
-      if (lines.length > maxLines) lines = [...lines.slice(0, maxLines - 1), `${lines[maxLines - 1]}…`];
-      const siteLines = wrap(card.dataset.site, `650 64px ${family}`, inner);
-      const height = Math.max(1080, pad + 40 + 30 + siteLines.length * 76 + 50 + lines.length * size * 1.45 + 60 + 50 + pad);
-      canvas.width = width;
-      canvas.height = Math.ceil(height);
+      const data = card.dataset;
 
+      // The ground and the card.
       ctx.fillStyle = colors.bg;
-      ctx.fillRect(0, 0, width, canvas.height);
-      const radius = 40;
+      ctx.fillRect(0, 0, width, height);
       ctx.beginPath();
-      ctx.roundRect ? ctx.roundRect(36, 36, width - 72, canvas.height - 72, radius) : ctx.rect(36, 36, width - 72, canvas.height - 72);
+      if (ctx.roundRect) ctx.roundRect(edge, edge, width - edge * 2, height - edge * 2, 44);
+      else ctx.rect(edge, edge, width - edge * 2, height - edge * 2);
       ctx.fillStyle = colors.surface;
       ctx.fill();
       ctx.lineWidth = 3;
       ctx.strokeStyle = colors.accent;
       ctx.stroke();
-
-      let y = pad + 40;
       ctx.textBaseline = "alphabetic";
+
+      // Top: the kind, and what it is about.
+      let y = pad + 34;
       ctx.fillStyle = colors.accent;
-      ctx.font = `600 28px ${family}`;
-      ctx.fillText(card.dataset.kind.toUpperCase(), pad, y);
-      y += 30;
-      ctx.fillStyle = colors.fg;
-      ctx.font = `650 64px ${family}`;
-      for (const line of siteLines) {
-        y += 76;
+      ctx.font = `600 30px ${family}`;
+      ctx.fillText(String(data.kind || "").toUpperCase(), pad, y);
+      const aboutLines = data.about ? wrap(data.about, `32px ${family}`, inner).slice(0, 2) : [];
+      ctx.fillStyle = colors.muted;
+      ctx.font = `32px ${family}`;
+      for (const line of aboutLines) {
+        y += 46;
         ctx.fillText(line, pad, y);
       }
-      y += 50;
+      const top = y + 40;
+
+      // Foot: the postmark, from the bottom up.
+      const footBase = height - pad;
+      const postmark = [];
+      if (data.expression) postmark.push({ text: data.expression, font: `24px ${mono}`, color: colors.muted, gap: 40 });
+      postmark.push({ text: data.address || "", font: `30px ${mono}`, color: colors.fg, gap: 48, day: data.day || "" });
+      postmark.push({ text: data.site || "", font: `650 36px ${family}`, color: colors.fg, gap: 52 });
+      let footY = footBase;
+      for (const row of postmark) {
+        ctx.font = row.font;
+        ctx.fillStyle = row.color;
+        ctx.fillText(row.text, pad, footY);
+        if (row.day) {
+          ctx.textAlign = "right";
+          ctx.fillStyle = colors.muted;
+          ctx.fillText(row.day, width - pad, footY);
+          ctx.textAlign = "left";
+        }
+        footY -= row.gap;
+      }
+      const rule = footY - 8;
+      ctx.strokeStyle = colors.muted;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([10, 10]);
+      ctx.beginPath();
+      ctx.moveTo(pad, rule);
+      ctx.lineTo(width - pad, rule);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Middle: the words, as large as the space between holds, then the writer,
+      // the whole block centered between the top line and the postmark.
+      const fromLine = data.from ? `— ${data.from}` : "";
+      const areaTop = top;
+      const areaBottom = rule - 56;
+      const blockOf = (count, px) => px * 0.8 + count * px * 1.28 + (fromLine ? 86 : 0);
+      let size = 92;
+      let lines = wrap(data.note || "", `${size}px ${family}`, inner);
+      while (blockOf(lines.length, size) > areaBottom - areaTop && size > 30) {
+        size -= 2;
+        lines = wrap(data.note || "", `${size}px ${family}`, inner);
+      }
+      const fits = Math.max(1, Math.floor((areaBottom - areaTop - size * 0.8 - (fromLine ? 86 : 0)) / (size * 1.28)));
+      if (lines.length > fits) lines = [...lines.slice(0, fits - 1), `${lines[fits - 1]}…`];
+      let cursor = areaTop + Math.max(0, (areaBottom - areaTop - blockOf(lines.length, size)) / 2);
       ctx.fillStyle = colors.accent;
-      ctx.fillRect(pad, y, 5, lines.length * size * 1.45);
+      ctx.font = `${Math.round(size * 1.9)}px ${family}`;
+      ctx.fillText("\u201C", pad - 4, cursor + size * 1.35);
+      cursor += size * 0.8;
       ctx.fillStyle = colors.fg;
       ctx.font = `${size}px ${family}`;
       for (const line of lines) {
-        y += size * 1.45;
-        ctx.fillText(line, pad + 32, y - size * 0.35);
+        cursor += size * 1.28;
+        ctx.fillText(line, pad, cursor);
       }
-      const footY = canvas.height - pad;
-      ctx.fillStyle = colors.muted;
-      ctx.fillRect(pad, footY - 62, inner, 2);
-      ctx.font = `28px ui-monospace, SFMono-Regular, Menlo, monospace`;
-      ctx.fillText(card.dataset.day, pad, footY);
-      ctx.fillStyle = colors.fg;
-      ctx.textAlign = "right";
-      ctx.fillText(card.dataset.address, width - pad, footY);
-      ctx.textAlign = "left";
+      if (fromLine) {
+        ctx.fillStyle = colors.muted;
+        ctx.font = `38px ${family}`;
+        ctx.fillText(fromLine, pad, cursor + 76);
+      }
       return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
     };
 

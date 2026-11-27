@@ -12,6 +12,54 @@ import { defaultConfig, siteKinds, subjectFor, themeCss } from "./config.js";
 
 const ORIGIN = "https://autonomous.feedback";
 
+/**
+ * autonomous.feedback's own finish, laid over the shared shell
+ * (workers/lib/shell.js) on every page, so the shell spw.quest carries is
+ * untouched. The card is the object: the reader's words lead, large; what
+ * kind of note and what it is about sit above them in one quiet line; the
+ * site, the page, the day and the Spw expression are a postmark at its foot.
+ * After a card is made, sending it to the site comes first, keeping it is
+ * one row, and posting it is two plain links. On a phone the choices above
+ * the card scroll sideways in a row each, so the card is on the first screen.
+ */
+const FINISH = `
+body.quiet .card header { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .6rem; padding-right: 0; }
+body.quiet .card header .card-subject, body.quiet .card header .card-route { color: var(--muted); font-size: .92rem; }
+body.quiet .card header .card-subject + .card-route::before { content: "— " / ""; }
+body.quiet .card .card-note { margin: 1rem 0 .8rem; padding: 0; border: 0; font-size: clamp(1.3rem, 5.2vw, 1.75rem); line-height: 1.3; letter-spacing: -.01em; text-wrap: pretty; }
+body.quiet .card .card-note::before { content: "\\201C" / ""; display: block; height: .5em; margin: 0 0 .15em -.04em; color: var(--accent); font-size: 2.4em; line-height: 1; }
+body.quiet .card .card-count { margin: 1rem 0 .8rem; font-size: 1.25rem; }
+body.quiet .card .card-from { margin: 0 0 1.1rem; font-size: 1rem; }
+body.quiet .card .card-postmark { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .15rem 1rem; align-items: baseline; padding-top: .8rem; border-top: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--line)); }
+body.quiet .card .card-postmark .card-site { grid-column: 1; font: 650 1rem/1.3 var(--font); letter-spacing: 0; color: var(--fg); }
+body.quiet .card .card-postmark .card-address { grid-column: 1; overflow-wrap: anywhere; }
+body.quiet .card .card-postmark time { grid-column: 2; grid-row: 1; justify-self: end; }
+body.quiet .card .card-postmark .card-expression { grid-column: 1 / -1; font-size: .72rem; opacity: .85; }
+body.quiet .write .card.live textarea.card-write { font-size: clamp(1.2rem, 4.8vw, 1.55rem); line-height: 1.3; min-height: 6.5rem; }
+body.quiet .share { margin: 1.2rem 0 .4rem; }
+body.quiet .keep-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+body.quiet .keep-row:not(:has(button:not([hidden]))) { display: none; }
+body.quiet button.keep { min-height: 44px; padding: .45rem 1.05rem; border: 1px solid var(--line); border-radius: 999px; background: var(--field); color: var(--fg); font: inherit; cursor: pointer; }
+body.quiet button.keep:hover { border-color: var(--accent); }
+body.quiet button.keep:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+body.quiet button.keep[aria-busy="true"] { opacity: .6; }
+body.quiet .share .send-to { margin: 1.4rem 0 0; padding-top: 1.1rem; }
+body.quiet .share .send-to .actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: .5rem; margin: .5rem 0 0; }
+body.quiet .share .send-to .door { margin: 0; border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); }
+body.quiet .share .send-to .note { margin: .6rem 0 0; }
+body.quiet .post-links { margin: 1.1rem 0 0; color: var(--muted); font-size: .95rem; }
+body.quiet .card.sample { max-width: 30rem; margin: 1.5rem 0 2rem; }
+body.quiet .site-doors { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr)); gap: .5rem; margin: .6rem 0 1.2rem; }
+body.quiet .site-doors .door strong { overflow-wrap: normal; word-break: normal; }
+@media (max-width: 40rem) {
+  body.quiet .write fieldset.chips .row { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; padding: .1rem 2.4rem .35rem 0; margin-right: -1.25rem; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.6rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 2.6rem), transparent); }
+  body.quiet .write fieldset.chips .row::-webkit-scrollbar { display: none; }
+  body.quiet .write label.chip { flex: none; scroll-snap-align: start; }
+}
+`;
+/** A page's own CSS (a site's theme, a form's subject rules) with the finish after it. */
+const finish = (css = "") => `${css}\n${FINISH}`;
+
 function kicker() {
   return `<p class="kicker"><a href="/">autonomous.feedback</a></p>`;
 }
@@ -23,28 +71,34 @@ function fieldError(id, message) {
 /** The page a card is about, as its address line reads: the site and, when known, the path. */
 export const aboutAddress = (host, path = "") => `${host}${path && path !== "/" ? path : ""}`;
 
-/** The card the card page renders. Its address is the work it is about, so a stranger who sees it reaches the work, not this form. */
-function cardMarkup({ context, host, note, issued, id = "", name = "", from = "", path = "", routeName = "", subject = "", thread = "", asks = [], worded = true }) {
+/**
+ * The card the card page renders. The reader's words lead; what kind of note
+ * and what it is about sit above them in one quiet line; the site, the page
+ * and the day are its postmark. Its address is the work it is about, so a
+ * stranger who sees it reaches the work, not this form.
+ */
+function cardMarkup({ context, host, note, issued, id = "", name = "", from = "", path = "", routeName = "", subject = "", thread = "", asks = [], worded = true, sample = false }) {
   const day = issued.slice(0, 10);
   const address = aboutAddress(host, path);
   const site = name || host;
-  const data = ` data-kind="${escapeHtml(context.title)}" data-site="${escapeHtml(site)}" data-host="${escapeHtml(host)}" data-note="${escapeHtml(from ? `${note}\n\n— ${from}` : note)}" data-day="${escapeHtml(day)}" data-address="${escapeHtml(address)}"`;
-  return `<article class="card"${id ? ` id="${id}"` : ""} data-spw-kind="frame" data-spw-operator="${escapeHtml(context.operator)}" data-spw-semantic-expression="${escapeHtml(context.expression)}"${data}>
+  const aboutLine = [subject ? (thread ? `${subject} · ${thread}` : subject) : "", path ? (routeName ? `${routeName} · ${path}` : path) : ""].filter(Boolean).join(" — ");
+  const data = sample ? "" : ` data-kind="${escapeHtml(context.title)}" data-site="${escapeHtml(site)}" data-host="${escapeHtml(host)}" data-note="${escapeHtml(note)}" data-from="${escapeHtml(from)}" data-about="${escapeHtml(aboutLine)}" data-expression="${escapeHtml(context.expression || "")}" data-day="${escapeHtml(day)}" data-address="${escapeHtml(address)}"`;
+  return `<article class="card${sample ? " sample" : ""}"${id ? ` id="${id}"` : ""} data-spw-kind="frame" data-spw-operator="${escapeHtml(context.operator)}" data-spw-semantic-expression="${escapeHtml(context.expression)}"${data}${sample ? ' aria-label="An example card"' : ""}>
   <header>
     <span class="card-kind">${escapeHtml(context.title)}</span>
-    <span class="card-site">${escapeHtml(site)}</span>
     ${subject ? `<span class="card-subject">${escapeHtml(thread ? `${subject} · ${thread}` : subject)}</span>` : ""}
     ${path ? `<span class="card-route">${escapeHtml(routeName ? `${routeName} · ${path}` : path)}</span>` : ""}
   </header>
   ${worded ? `<blockquote class="card-note">${escapeHtml(note)}</blockquote>` : `<p class="card-count">${escapeHtml(note)}</p>`}
   ${asks.length ? `<dl class="card-asks">${asks.map((a) => `<dt>${escapeHtml(a.question)}</dt><dd>${escapeHtml(a.answer)}</dd>`).join("")}</dl>` : ""}
   ${from ? `<p class="card-from">— ${escapeHtml(from)}</p>` : ""}
-  <footer>
+  <footer class="card-postmark">
+    <span class="card-site">${escapeHtml(site)}</span>
+    <span class="card-address">${escapeHtml(address)}</span>
     <time datetime="${escapeHtml(issued)}">${escapeHtml(day)}</time>
     <span class="card-expression">${escapeHtml(context.expression || "")}</span>
-    <span class="card-address">${escapeHtml(address)}</span>
   </footer>
-  <p class="card-stamp" data-stamp></p>
+  ${sample ? "" : `<p class="card-stamp" data-stamp></p>`}
 </article>`;
 }
 
@@ -91,10 +145,13 @@ function routeField(routes, path) {
 
 /** The doors to the sites that link here. */
 function siteDoors() {
-  return `<p class="actions">
+  return `<nav class="site-doors" aria-label="Write a note for">
   ${LISTED.map((host) => `<a class="door" href="/${escapeHtml(host)}"><strong>${escapeHtml(host)}</strong><span>Write a note</span></a>`).join("\n  ")}
-</p>`;
+</nav>`;
 }
+
+/** What a finished card looks like, shown before anyone writes one. */
+const EXAMPLE = Object.freeze({ host: "spwashi.com", path: "/contact/", routeName: "Contact", note: "The contact page answered my question before I asked it.", from: "a reader" });
 
 export function renderHome() {
   return layout({
@@ -102,9 +159,11 @@ export function renderHome() {
     description: "Say what happened on a page, in a tap or a few words. You get a card to keep and send if you like. Nothing is stored.",
     canonical: `${ORIGIN}/`,
     quiet: true,
+    themeCss: finish(),
     body: `<p class="kicker">autonomous.feedback</p>
 <h1>A note about a page</h1>
-<p class="lede">Say what happened, in a tap or a few words. You get a card to keep, and send it if you like. Nothing is stored. A reply is not promised.</p>
+<p class="lede">Say what happened, in a tap or a few words. You get a card like this one to keep, and send it if you like. Nothing is stored. A reply is not promised.</p>
+${cardMarkup({ context: contextBySlug("appreciation"), host: EXAMPLE.host, note: EXAMPLE.note, issued: new Date().toISOString(), from: EXAMPLE.from, path: EXAMPLE.path, routeName: EXAMPLE.routeName, sample: true })}
 <h2>Which site?</h2>
 ${siteDoors()}
 <p class="note"><a href="/privacy">What happens to a note</a></p>`,
@@ -118,6 +177,7 @@ export function renderPrivacy() {
     description: "Nothing you write is stored. The card is yours.",
     canonical: `${ORIGIN}/privacy`,
     quiet: true,
+    themeCss: finish(),
     body: `${kicker()}
 <h1>What happens to a note</h1>
 <p class="lede">Nothing you write is stored. The card exists on the page you get after making it, and in whatever you save or send.</p>
@@ -140,6 +200,7 @@ export function renderElsewhere(host) {
     description: "This form takes notes for a few sites only.",
     canonical: `${ORIGIN}/`,
     quiet: true,
+    themeCss: finish(),
     body: `${kicker()}
 <h1>No form for ${escapeHtml(host)}</h1>
 <p class="lede">This form takes notes for a few sites only. Nothing was stored.</p>
@@ -249,7 +310,7 @@ export function renderWrite({ context, host, values = {}, errors = {}, config = 
     canonical,
     quiet: true,
     script: CLIENT_SCRIPT,
-    themeCss: `${themeCss(site.theme)}\n${subjectCss}`,
+    themeCss: finish(`${themeCss(site.theme)}\n${subjectCss}`),
     body: `<p class="kicker"><a href="/">autonomous.feedback</a> · <a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a></p>
 <h1 class="write-title">${escapeHtml(heading)}</h1>
 ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
@@ -276,15 +337,15 @@ ${summary}
   <article class="card live" data-live-card aria-label="Your card">
     <header>
       <span class="card-kind" data-live="kind">${escapeHtml(cardKind)}</span>
-      <span class="card-expression" data-live="expression"${selected ? "" : " hidden"}>${escapeHtml(selected ? context.expression : "")}</span>
-      <span class="card-site">${escapeHtml(display || "your site")}</span>
       <span class="card-subject" data-live="about"${cardAbout ? "" : " hidden"}>${escapeHtml(cardAbout)}</span>
     </header>
     <textarea class="card-write" id="note" name="note" rows="3" maxlength="${site.note.max}" placeholder="${escapeHtml(placeholder)}" data-placeholder="${escapeHtml(exampleText || "")}" aria-describedby="${noteDescribed}" aria-keyshortcuts="Control+Enter Meta+Enter"${errors.note ? ` aria-invalid="true"` : ""}${chosenSubject?.threads.length || selected ? "" : " autofocus"}>${escapeHtml(note)}</textarea>
     ${fromLine}
-    <footer>
-      <time datetime="${today}">${today}</time>
+    <footer class="card-postmark">
+      <span class="card-site">${escapeHtml(display || "your site")}</span>
       <span class="card-address">${escapeHtml(aboutAddress(host, cleanPath(values.path ?? "")))}</span>
+      <time datetime="${today}">${today}</time>
+      <span class="card-expression" data-live="expression"${selected ? "" : " hidden"}>${escapeHtml(selected ? context.expression : "")}</span>
     </footer>
   </article>
   <p class="sr-only" id="note-hint">${exampleText ? `For example: ${escapeHtml(exampleText)}. ` : ""}Optional once you pick something above. Control or Command and Enter sends.</p>
@@ -320,13 +381,14 @@ export function renderCard(filing, config = null) {
     contact.bluesky ? `<a class="door" data-share="dm" target="_blank" rel="noopener" href="https://bsky.app/profile/${encodeURIComponent(contact.bluesky)}"><strong>Message on Bluesky</strong><span>@${escapeHtml(contact.bluesky)}</span></a>` : "",
     contact.x ? `<a class="door" data-share="dm" target="_blank" rel="noopener" href="https://x.com/${encodeURIComponent(contact.x)}"><strong>Message on X</strong><span>@${escapeHtml(contact.x)}</span></a>` : "",
   ].filter(Boolean);
+  // A message comes before a post: the card goes to the site first, and in public only if the writer chooses.
   const sendTo = dms.length
     ? `<section class="send-to" aria-labelledby="send-title">
   <h2 id="send-title">Send it to ${escapeHtml(display)}</h2>
-  <p class="note">Save or screenshot the card first. Each button opens ${escapeHtml(display)}'s profile: start a message there and attach the card, or paste its text.</p>
   <div class="actions">
     ${dms.join("\n    ")}
   </div>
+  <p class="note">Each opens ${escapeHtml(display)}'s profile. Start a message there and attach the card, or paste its text.</p>
 </section>`
     : "";
   return layout({
@@ -335,13 +397,13 @@ export function renderCard(filing, config = null) {
     canonical: `${ORIGIN}${back}`,
     quiet: true,
     script: CLIENT_SCRIPT,
-    themeCss: themeCss(site.theme),
+    themeCss: finish(themeCss(site.theme)),
     body: `${kicker()}
 <h1>Your card is ready</h1>
 ${site.thanks ? `<p class="owner-thanks"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(site.thanks)}</p>` : ""}
 <p class="lede">${filing.worded === false ? "No written detail: the card says what you picked. " : ""}${dms.length
-    ? `Screenshot the card or save it as an image, then message it to ${escapeHtml(display)} below. Or post it and mention them.`
-    : `Screenshot the card or save it as an image, then message it to whoever runs ${escapeHtml(display)}, or post it and name the site.`}</p>
+    ? `Save it or screenshot it, then message it to ${escapeHtml(display)}.`
+    : `Save it or screenshot it, then send it to whoever runs ${escapeHtml(display)}.`}</p>
 ${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from, path: filing.path, routeName: filing.route, subject: filing.subject?.name || "", thread: filing.thread?.name || "", asks: filing.asks || [], worded: filing.worded !== false })}
 ${filing.thread?.stance ? `<section class="stance-reply" aria-labelledby="stance-title">
   <h2 id="stance-title">${escapeHtml(display)} has said about this</h2>
@@ -349,14 +411,15 @@ ${filing.thread?.stance ? `<section class="stance-reply" aria-labelledby="stance
   <blockquote>${escapeHtml(filing.thread.stance)}</blockquote>
   ${filing.thread.link ? `<p><a href="https://${escapeHtml(filing.host)}${escapeHtml(filing.thread.link)}">Read more on ${escapeHtml(filing.host)}</a></p>` : ""}
 </section>` : ""}
-<div class="actions share" data-share-text="${escapeHtml(post)}" data-share-url="https://${escapeHtml(address)}" data-file-name="feedback-${escapeHtml(filing.host)}-${escapeHtml(filing.issued.slice(0, 10))}.png">
-  <button type="button" class="door" data-save-image hidden><strong>Save image</strong><span>PNG, made on this device</span></button>
-  <button type="button" class="door" data-share="native" hidden><strong>Share</strong><span>from this device</span></button>
-  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://bsky.app/intent/compose?text=${encodeURIComponent(bskyPost)}"><strong>Post</strong><span>on Bluesky${contact.bluesky ? `, mentioning @${escapeHtml(contact.bluesky)}` : ""}</span></a>
-  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${encodeURIComponent(xPost)}"><strong>Post</strong><span>on X${contact.x ? `, mentioning @${escapeHtml(contact.x)}` : ""}</span></a>
-  <button type="button" class="door" data-copy="slip" hidden><strong>Copy text</strong><span>as Markdown</span></button>
+<div class="share" data-share-text="${escapeHtml(post)}" data-share-url="https://${escapeHtml(address)}" data-file-name="feedback-${escapeHtml(filing.host)}-${escapeHtml(filing.issued.slice(0, 10))}.png">
+  <div class="keep-row" role="group" aria-label="Keep the card">
+    <button type="button" class="keep" data-save-image hidden>Save image</button>
+    <button type="button" class="keep" data-share="native" hidden>Share</button>
+    <button type="button" class="keep" data-copy="slip" hidden>Copy text</button>
+  </div>
+  ${sendTo}
+  <p class="post-links">Or post it: <a data-share="post" target="_blank" rel="noopener" href="https://bsky.app/intent/compose?text=${encodeURIComponent(bskyPost)}">on Bluesky${contact.bluesky ? `, mentioning @${escapeHtml(contact.bluesky)}` : ""}</a> · <a data-share="post" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${encodeURIComponent(xPost)}">on X${contact.x ? `, mentioning @${escapeHtml(contact.x)}` : ""}</a></p>
 </div>
-${sendTo}
 <p class="note">Nothing was stored. The card lives on this page and in whatever you save or send.</p>
 <details class="slip">
   <summary>The card as text</summary>
@@ -375,6 +438,7 @@ export function renderNotFound(message = "There is nothing at this address.") {
     description: message,
     canonical: `${ORIGIN}/`,
     quiet: true,
+    themeCss: finish(),
     body: `${kicker()}
 <h1>Not found</h1>
 <p class="lede">${escapeHtml(message)}</p>
