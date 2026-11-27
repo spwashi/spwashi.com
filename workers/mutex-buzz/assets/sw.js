@@ -1,9 +1,10 @@
 // Written by workers/mutex-buzz/carry.mjs. The lock works out "now" in the page, so with these kept it keeps time offline.
-const CACHE = "mutex-310551882e3f";
-const SHELL = ["/","/now/","/mutex.css","/mutex.js","/visit-head.js","/lock.js","/lock.spw","/lib/hold.js","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/peer/pinch-text-scale.c898b03dd8.js","/now.json","/favicon.svg","/manifest.webmanifest","/folios/lined-stage-facade.webp","/folios/teal-stripes-vibes-wash.webp","/folios/factshift-cabinet.webp","/icons/icon-192.png","/icons/icon-512.png","/icons/icon-maskable-512.png","/icons/apple-touch-icon.png"];
+const CACHE = "mutex-b0f6f018ef25";
+const SHELL = ["/","/now/","/mutex.css","/mutex.js","/visit-head.js","/lock.js","/lock.spw","/lib/hold.js","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/peer/pinch-text-scale.1c2ad61442.js","/now.json","/favicon.svg","/manifest.webmanifest","/folios/lined-stage-facade.webp","/folios/teal-stripes-vibes-wash.webp","/folios/factshift-cabinet.webp","/icons/icon-192.png","/icons/icon-512.png","/icons/icon-maskable-512.png","/icons/apple-touch-icon.png"];
+const CODE = /\.(?:js|css|json|spw)$/;
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL.map((path) => new Request(path, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
@@ -20,6 +21,13 @@ self.addEventListener("fetch", (event) => {
       if (response.ok) caches.open(CACHE).then((cache) => cache.put(request, copy));
       return response;
     }).catch(() => caches.match(request).then((hit) => hit ?? caches.match(url.pathname.startsWith("/now") ? "/now/" : "/"))));
+    return;
+  }
+  if (CODE.test(url.pathname) && !url.pathname.startsWith("/peer/")) {
+    event.respondWith(fetch(request).then((response) => {
+      if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy)); }
+      return response;
+    }).catch(() => caches.match(request)));
     return;
   }
   event.respondWith(caches.match(request).then((hit) => {

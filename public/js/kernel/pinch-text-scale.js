@@ -15,8 +15,10 @@
  * gesture before the step lands. All of it clears when the fingers lift.
  */
 
+import { PINCH_MEASURE } from './gesture-measure.js';
+
 /** One step per this much change in log2 of the finger distance. */
-export const PINCH_STEP = 0.12;
+export const PINCH_STEP = PINCH_MEASURE.textStepLog2;
 
 /** Contacts on these never start a pinch: their own gestures come first. */
 export const PINCH_IGNORE = 'a, button, input, select, textarea, label, summary, details, video, audio, iframe';

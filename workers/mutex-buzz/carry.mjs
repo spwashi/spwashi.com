@@ -430,9 +430,10 @@ function serviceWorker(version) {
   return `// Written by workers/mutex-buzz/carry.mjs. The lock works out "now" in the page, so with these kept it keeps time offline.
 const CACHE = "mutex-${version}";
 const SHELL = ${JSON.stringify(SHELL)};
+const CODE = /\\.(?:js|css|json|spw)$/;
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL.map((path) => new Request(path, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
@@ -449,6 +450,13 @@ self.addEventListener("fetch", (event) => {
       if (response.ok) caches.open(CACHE).then((cache) => cache.put(request, copy));
       return response;
     }).catch(() => caches.match(request).then((hit) => hit ?? caches.match(url.pathname.startsWith("/now") ? "/now/" : "/"))));
+    return;
+  }
+  if (CODE.test(url.pathname) && !url.pathname.startsWith("/peer/")) {
+    event.respondWith(fetch(request).then((response) => {
+      if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy)); }
+      return response;
+    }).catch(() => caches.match(request)));
     return;
   }
   event.respondWith(caches.match(request).then((hit) => {

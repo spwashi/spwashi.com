@@ -8,18 +8,32 @@
  * stepping, and two-stage pinch arming.
  */
 
-export const GESTURE_MEASURE = Object.freeze({
+export const GESTURE_MEASURE = /* @__PURE__ */ Object.freeze({
   holdMs: 420,
   swipeMinPx: 48,
   swipeDominance: 1.45,
   scrubStepPx: 28,
+  scrubDeadZonePx: 6,
+  tapSwallowMs: 360,
 });
+
+/**
+ * When a horizontal slot scrub commits: each step as it lands (texture.website,
+ * <spw-expression>), on lift (attention.productions), or primed for an explicit
+ * keep (tealstripesvibes.com). workers/lib/slot-scrub.js carries the same list.
+ * Pure annotations let a bundle that reads one measure leave the others behind.
+ */
+export const SLOT_SCRUB_COMMIT_MODES = /* @__PURE__ */ Object.freeze([
+  'live',
+  'on-lift',
+  'prime-then-keep',
+]);
 
 /**
  * Shared pinch thresholds across reading text scale (pinch-text-scale.js) and
  * spatial/optical depth planes (factshift.center, workers/lib/pinch.js).
  */
-export const PINCH_MEASURE = Object.freeze({
+export const PINCH_MEASURE = /* @__PURE__ */ Object.freeze({
   enter: 1.35,
   keep: 1.16,
   near: 0.82,
@@ -58,4 +72,56 @@ export function pinchThresholdOf(scale, inward = null, outward = null) {
   if (outward && scale <= PINCH_MEASURE.up) return { direction: 'out', action: `^up · ${outward}`, armed: true };
   if (outward && scale <= PINCH_MEASURE.near) return { direction: 'out', action: `^near · ${outward}`, armed: false };
   return { direction: null, action: '', armed: false };
+}
+
+/** Format the Spw depth-pinch status line: `@plane · ×1.24 → #>keep · close-up`. */
+export function pinchCueOf(plane, scale, action = '') {
+  const safeScale = Number.isFinite(scale) ? scale : 1;
+  return `@${plane} · ×${safeScale.toFixed(2)}${action ? ` → ${action}` : ''}`;
+}
+
+/**
+ * Suppress the ghost click that follows a horizontal slot scrub, hold, or swipe release.
+ * Installs a one-shot capture-phase click blocker on `host` for `windowMs`. The
+ * returned predicate answers true once, for a click that reaches a host's own
+ * handler inside the window before the blocker has taken one (a host without
+ * EventTarget methods relies on it alone); after the blocker swallows the ghost
+ * click, or the window closes, it answers false, so the next real tap lands.
+ */
+export function swallowsTap(host = globalThis, windowMs = GESTURE_MEASURE.tapSwallowMs) {
+  const duration = Number.isFinite(windowMs) && windowMs > 0 ? windowMs : GESTURE_MEASURE.tapSwallowMs;
+  const now = () => (typeof performance !== 'undefined' && typeof performance.now === 'function' ? performance.now() : Date.now());
+  const until = now() + duration;
+  let spent = false;
+  let timer = 0;
+
+  const detach = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+    if (host && typeof host.removeEventListener === 'function') {
+      host.removeEventListener('click', onClick, true);
+    }
+  };
+
+  function onClick(event) {
+    detach();
+    if (spent || now() > until) return;
+    spent = true;
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
+  }
+
+  if (host && typeof host.addEventListener === 'function') {
+    host.addEventListener('click', onClick, true);
+    timer = setTimeout(detach, duration);
+  }
+
+  return () => {
+    if (spent || now() > until) return false;
+    spent = true;
+    detach();
+    return true;
+  };
 }

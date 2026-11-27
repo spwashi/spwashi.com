@@ -1,7 +1,7 @@
 // Written by workers/attention-productions/carry.mjs.
 const ROOT = "attention-productions-";
-const CACHE = ROOT + "f1a667e9dcb9";
-const SHELL = new Set(["/vocabulary.js","/compose.js","/materials.js","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/clean-still.js","/clean-still.css","/","/favicon.svg","/manifest.webmanifest","/lights.css","/attention.js","/attention.css","/peer/pinch-text-scale.c898b03dd8.js","/icon-180.png","/icon-192.png","/icon-512.png","/icon-maskable-512.png"]);
+const CACHE = ROOT + "5bfcdaea24f6";
+const SHELL = new Set(["/vocabulary.js","/compose.js","/materials.js","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/clean-still.js","/clean-still.css","/slot-scrub.js","/slot-scrub.css","/","/favicon.svg","/manifest.webmanifest","/lights.css","/attention.js","/attention.css","/peer/pinch-text-scale.1c2ad61442.js","/icon-180.png","/icon-192.png","/icon-512.png","/icon-maskable-512.png"]);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => {
@@ -27,6 +27,20 @@ self.addEventListener("fetch", (event) => {
       return (await cache.match("/")) ?? Response.error();
     }));
   } else if (!url.search && SHELL.has(url.pathname)) {
+    const isMutableCode = /\.(?:js|css|json)$/.test(url.pathname) && !url.pathname.startsWith("/peer/");
+    if (isMutableCode) {
+      event.respondWith(fetch(request).then(async (response) => {
+        if (response.ok) {
+          const cache = await caches.open(CACHE);
+          await cache.put(request, response.clone());
+        }
+        return response;
+      }).catch(async () => {
+        const cache = await caches.open(CACHE);
+        return (await cache.match(request)) ?? Response.error();
+      }));
+      return;
+    }
     event.respondWith(caches.open(CACHE).then(async (cache) => {
       return (await cache.match(request)) ?? fetch(request);
     }));

@@ -1,0 +1,126 @@
+# Multi-Modality Focal Range, Worker Ethos, and Browser-Memory Navigation
+#
+# Records how attention.productions generalizes beyond laminated folios into a
+# multi-modality focal-range compiler, maps its technical/theoretical/social/
+# business value, and defines how embedded ecosystem worker surfaces interact
+# with local browser memory across spwashi.com navigation.
+
+#>attention_focal_range_modalities_2026_11
+#:layer #!pragmatics
+#:operation #!cache
+#:fixity #!tending
+
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@cms_cache: ~"./spw-cms-mirrors-cauldron-2026-11.spw"
+@roundtrip_cache: ~"./ecosystem-roundtrip-architecture-2026-11.spw"
+@attention_vocabulary: ~"../../workers/attention-productions/src/vocabulary.js"
+@attention_compose: ~"../../workers/attention-productions/src/compose.js"
+@image_metaphysics: ~"../../public/js/media/image-metaphysics.js"
+@accent_palette: ~"../../public/js/semantic/accent-palette.js"
+@wonder_memory: ~"../../public/js/runtime/memory/wonder-memory.js"
+@component_collection: ~"../../public/js/runtime/memory/component-collection.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"value_dimensions"{
+  technical = .{
+    claim = `Deterministic, zero-dependency bidirectional compiler between URLs (/subject?shot=...&lens=...&return=...), Spw notation (!shot[framing]{subject}(light)<lens> + ^frame{...}), 4-band quantized SVG depth-of-field geometry (b0..b3), and model-ready prompts (plain + Midjourney --ar / --sref).`
+    worker_ethos = `Served as pre-rendered static edge assets (files tier) with network-first service-worker freshness, shared workers/lib/slot-scrub.{js,css} (28px step, 6px dead zone, commit: on-lift), and zero server database.`
+    roundtrip = `Proposed, not built: a media surface on spwashi.com opens attention.productions with ?return=<route>&surface=<key>&modality=<kind>, and the shot comes back as ?spw-shot=...&spw-lens=... into browser-local spw-image-prompt-memory. Today the leg runs one way: spwashi.com's theater links carry a subject and ladder words, and attention.productions reads each word or its nearest rung.`
+  }[reg=facet]
+  theoretical = .{
+    claim = `Unifies optical focal range with cognitive and attentional focal range.`
+    dimensions = #{
+      framing_scale = `shot ladder (extreme close-up 1.7x -> close-up 1.3x -> medium 0.95x -> wide 0.62x -> establishing 0.42x | overhead 0.8x flat | low angle -9deg tilt) — how much surrounding world enters the aperture.`
+      depth_of_field = `lens ladder (24mm blur 0.3 deep field -> 35mm 0.55 -> 50mm 0.8 -> 85mm 1.25 shallow -> macro 1.7 razor-thin -> anamorphic 1.0 + horizontal flare) — how rapidly peripheral sheets (b1..b3) fall away from the sharp subject sheet (b0).`
+      light_vector = `light + from ladders (key/fill hex pair + directional incidence [u, v] or backlit rim) — what reveals texture tooth versus silhouette.`
+      attentional_plane = `focus + ratio ladders (thirds grid [ax, ay] inside 1:1, 4:5, 3:2, 16:9, 2.39:1, or 9:16 gate) — where the observer's eye lands before scanning.`
+      temporal_cadence = `move + tempo (still, dolly-in, handheld, rack focus oscillating b0 between depth 0 and depth 2 at 2400ms * tempo, long exposure) — how focus shifts over time.`
+    }
+  }[reg=facet]
+  social = .{
+    claim = `Gives collaborators — directors, illustrators, cinematographers, writers, game masters, and engineers — a shared 1-line "shot call" they can scrub, compare across 6 in-memory Takes, and pass by URL instead of opaque 200-word prompt blobs.`
+    beat_continuity = `beatScriptOf(shot) locks subject, light, lens, ratio, and material across a 3-shot sequence (establishing -> medium -> close-up) that opens whole on factshift.center.`
+  }[reg=facet]
+  business = .{
+    claim = `Turns static portfolio, culinary, architectural, and editorial surfaces on spwashi.com into a live art-direction and pre-visualization workbench for clients, producers, and creative directors (/services/, /tools/midjourney/, /design/slots/).`
+    proof = `Demonstrates prompt engineering held to a vocabulary, pages that are files and keep answering when no script runs, and persistence that stays on the visitor's device.`
+  }[reg=facet]
+}[reg=facet]
+
+^"media_modalities"{
+  note = `Six modalities beyond laminated folios that share the !shot[framing]{subject}(light)<lens> focal-range grammar.`
+  diagram = .{
+    modality = `vector-diagram`
+    hosts = `/design/slots/, /design/runtime/, .spw-svg-figure`
+    subject = `an addressable SVG slot diagram on dark glass`
+    default_shot = `!shot[medium]{an addressable SVG slot diagram on dark glass}(window_light)<35mm>`
+    meaning = `Framing selects architectural abstraction level (establishing module graph -> medium component slot stack -> macro single operator sigil); lens blur de-emphasizes non-addressed sibling nodes.`
+  }[reg=facet]
+  kitchen = .{
+    modality = `culinary-plate`
+    hosts = `/recipes/, /design/materials/, texture.website`
+    subject = `a beet-stained cedar board and glossy pan emulsion`
+    default_shot = `!shot[overhead]{a beet-stained cedar board and glossy pan emulsion}(window_light)<50mm>`
+    meaning = `Overhead 35mm/50mm reads mise-en-place ratios; macro 100mm reads starch-fat emulsion sheen and salt crystal grain paired with texture.website --sref surfaces.`
+  }[reg=facet]
+  tabletop = .{
+    modality = `tabletop-scene`
+    hosts = `/play/rpg-wednesday/, lore.land`
+    subject = `six chairs around a paper map and brass dice`
+    default_shot = `!shot[wide]{six chairs around a paper map and brass dice}(candlelight)<24mm>`
+    meaning = `24mm deep focus holds the whole table and map; dolly-in or 3-shot beat transitions from campaign room geography to a single character's stake.`
+  }[reg=facet]
+  syntax = .{
+    modality = `syntax-specimen`
+    hosts = `/topics/software/spw/, /tools/spw-parser/, spw.quest, factshift.center`
+    subject = `a brass nib over a glowing brace lattice`
+    default_shot = `!shot[extreme_close-up]{a brass nib over a glowing brace lattice}(lamplight)<macro>`
+    meaning = `Macro razor-thin focus isolates one brace pair's local operator law (b0) while outer containers sit in soft peripheral context (b2..b3).`
+  }[reg=facet]
+  portrait = .{
+    modality = `editorial-study`
+    hosts = `/about/, /services/, /design/palettes/, tealstripesvibes.com`
+    subject = `a software builder at a lit drafting table`
+    default_shot = `!shot[close-up]{a software builder at a lit drafting table}(golden_hour)<85mm>`
+    meaning = `85mm shallow depth separates creator presence from studio ground, mapping key light color directly to the nearest tealstripesvibes.com stripe seed.`
+  }[reg=facet]
+  folio = .{
+    modality = `studio-folio`
+    hosts = `/, /design/folios/, wap.mom, mutex.buzz`
+    subject = `a laminated folio`
+    default_shot = `!shot[close-up]{a laminated folio}(lamplight)<85mm>`
+    meaning = `Raking lamplight on cut paper and washi tape, bridging physical bench artifacts to digital routes.`
+  }[reg=facet]
+}[reg=facet]
+
+^"ecosystem_navigation_memory"{
+  claim = `Ecosystem worker surfaces are distributed across a set of spwashi.com pages so visitors can encounter each component in context and observe how four local browser-memory layers respond as they navigate.`
+  component_trail = #{
+    home = `/ — #home-attention-theater (attention.productions multi-modality viewfinder) + #home-paste doors (factshift.center & spw.quest/pivot) + .home-seat-line (cauldron carried words).`
+    spw_atlas = `/topics/software/spw/ — #spw-attention-theater (syntax, diagram, and AST constellation stage) + CMS triptych carry links (!parse, ?pivot, @stage).`
+    domains = `/about/domains/ — the domain ledger, with links into the home and Spw attention theaters.`
+    website_design = `/design/website/ — #ecosystem-questions, where browser-local state meets navigation.`
+  }
+  proposed_trail = #{
+    recipes = `/recipes/ — an attention.productions x texture.website culinary and material theater (not built).`
+    composition = `/design/composition/ — the peer kit's road from compose.css and compose.js into workers/lib (not built as a section).`
+  }
+  memory_layers = #{
+    focal_prompt_memory = `spw-image-prompt-memory (IMAGE_PROMPT_MEMORY in image-metaphysics.js) — stores tuned focal-range dimensions (shot, lens, light, from, move, ratio, focus, depthBand, spw, prompt, modality) per media surface or CMS theater endpoint, written by spwashi.com's own surfaces; hydrating it from attention.productions waits on the return leg above.`
+    recent_path_resonance = `spw-palette-trace (PALETTE_TRACE in accent-palette.js + wonder-memory.js) — persists the last clicked operator, route tokens, and wonder type across page loads with exponential decay sigma(dt) = sigma_0 * exp(-dt / tau), lighting matching cards and chips on the next page with data-spw-wonder-state="resonant|accented" and data-spw-memory-match.`
+    component_collection = `spw-component-collection (COMPONENT_COLLECTION in component-collection.js + reward-ui.js) — records every distinct data-spw-kind and route visited across the session in the docked ◇ collection window.`
+    carried_intent_and_cauldron = `spw-cauldron + visit-intent (lens-intent.js + home-seat-line.js) — holding a lens seat carries its operator across routes (.is-carried), while collected cauldron tokens reappear inside Home's seat lines.`
+  }
+}[reg=facet]
+
+#>wonder_attention_focal_return_2026_11
+?["When a visitor tunes a diagram, recipe plate, or folio on attention.productions and returns to spwashi.com with ?spw-shot=..., how does persisting focal-range dimensions in local browser memory change the way subsequent pages feel?"]{
+  #:depth #!experiential
+  #:lens #!focal_memory
+  ~#expect: "Returning from attention.productions updates the originating surface's focal readout in spw-image-prompt-memory and seeds recent-path tokens (shot, lens, light, modality) into spw-palette-trace, so neighboring pages resonate with that focal posture during the decay window."
+  !probe{ "Once the return leg exists: click a theater preset, tune shot/lens/light on attention.productions, follow the return link back to spwashi.com, and inspect data-spw-image-prompt, .spw-image-memory, and data-spw-memory-match across navigation." }
+  $%[runtime.stage, memory.focalRange, wonder.fieldBalance]
+}

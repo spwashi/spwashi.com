@@ -11,6 +11,7 @@
 
 @cms_cache: ~"../caches/spw-cms-mirrors-cauldron-2026-11.spw"
 @curiosity_physics: ~"../caches/curiosity-physics-wonder-2026-11.spw"
+@focal_modalities: ~"../caches/attention-focal-range-modalities-2026-11.spw"
 @copy_accessor: ~"../conventions/copy-accessor.spw"
 @home_issue: ~"./home-issue.spw"
 @recipes_ledger: ~"./recipes-ledger.spw"

@@ -1,0 +1,16 @@
+/* Shared horizontal slot-scrub affordances (workers/lib/slot-scrub.js).
+   Each host keeps its own palette, typography and target sizes (slots sit
+   inline in a line of words); this sheet sets only the shared sideways-drag
+   posture. Copied into each visual unit's assets. */
+
+:where(.slot, .spw-slot, [data-slot-scrub]) {
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+:where(.slot, .spw-slot)[data-scrubbing="true"],
+:where(.slot, .spw-slot).scrubbing {
+  cursor: grabbing;
+}

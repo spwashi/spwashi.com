@@ -9,6 +9,7 @@ import { hasSetRing, mountSetRing, nearestLight, openSetRing, slug as pathWord, 
 import { attachPinch, wasPinch } from "/pinch.js";
 import { mountTextScale } from "/text-scale.js";
 import { mountCleanStill } from "/clean-still.js";
+import { SCRUB_MEASURE, bindSlotScrub } from "/slot-scrub.js";
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
@@ -345,66 +346,34 @@ function letGo() {
 }
 
 function wireSlots() {
-  let scrubbedSlot = false;
-  $("expr").addEventListener("pointerdown", (event) => {
-    const button = event.target.closest?.("button.slot");
-    if (!button || (event.button && event.button !== 0)) return;
-    const slotName = button.dataset.slot;
-    let lastX = event.clientX;
-    let acc = 0;
-    let moved = false;
-    const onMove = (ev) => {
-      const dx = ev.clientX - lastX;
-      lastX = ev.clientX;
-      acc += dx;
-      while (Math.abs(acc) >= 24) {
-        const dir = acc > 0 ? 1 : -1;
-        acc -= dir * 24;
-        moved = true;
-        scrubbedSlot = true;
-        if (held?.slot !== slotName) {
-          trying = null;
-          held = { slot: slotName };
-        }
-        scan(dir);
-        $("expr").querySelector(`button.slot[data-slot="${slotName}"]`)?.classList.add("scrubbing");
+  const expr = $("expr");
+  bindSlotScrub(expr, {
+    selector: "button.slot",
+    commit: "prime-then-keep",
+    keyOf: (el) => el?.dataset?.slot || "",
+    findSlot: (k) => expr.querySelector(`button.slot[data-slot="${k}"]`),
+    onStep: (slotName, dir) => {
+      if (held?.slot !== slotName) {
+        trying = null;
+        held = { slot: slotName };
       }
-    };
-    const onUp = () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-      window.removeEventListener("pointercancel", onUp);
-      if (moved) {
-        const active = $("expr").querySelector(`button.slot[data-slot="${slotName}"]`);
-        active?.classList.remove("scrubbing");
-        active?.focus();
-        say(`Scrubbing ${slotName}: Enter or Keep saves, Escape lets go.`);
-        setTimeout(() => { scrubbedSlot = false; }, 0);
+      scan(dir);
+    },
+    onRelease: (slotName, { slot }) => {
+      slot?.focus();
+      say(`Scrubbing ${slotName}: Enter or Keep saves, Escape lets go.`);
+    },
+    onTap: (slotName) => {
+      holdSlot(slotName);
+    },
+    onKey: (slotName, dir) => {
+      if (held?.slot !== slotName) {
+        trying = null;
+        held = { slot: slotName };
       }
-    };
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-    window.addEventListener("pointercancel", onUp);
-  });
-  $("expr").addEventListener("keydown", (event) => {
-    const button = event.target.closest?.("button.slot");
-    if (!button) return;
-    const dir = event.key === "ArrowRight" || event.key === "ArrowUp" ? 1 : event.key === "ArrowLeft" || event.key === "ArrowDown" ? -1 : 0;
-    if (!dir) return;
-    event.preventDefault();
-    event.stopPropagation();
-    const slotName = button.dataset.slot;
-    if (held?.slot !== slotName) {
-      trying = null;
-      held = { slot: slotName };
-    }
-    scan(dir);
-    $("expr").querySelector(`button.slot[data-slot="${slotName}"]`)?.focus();
-  });
-  $("expr").addEventListener("click", (event) => {
-    if (scrubbedSlot) { scrubbedSlot = false; return; }
-    const button = event.target.closest?.("button.slot");
-    if (button) holdSlot(button.dataset.slot);
+      scan(dir);
+      expr.querySelector(`button.slot[data-slot="${slotName}"]`)?.focus();
+    },
   });
   $("held-prev").addEventListener("click", () => scan(-1));
   $("held-next").addEventListener("click", () => scan(1));
@@ -418,7 +387,7 @@ function wireSlots() {
     if (!start || !held || wasPinch()) { start = null; return; }
     const dx = event.clientX - start.x, dy = event.clientY - start.y;
     start = null;
-    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) scan(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > SCRUB_MEASURE.swipeMinPx && Math.abs(dx) > Math.abs(dy) * SCRUB_MEASURE.swipeDominance) scan(dx < 0 ? 1 : -1);
   });
 }
 

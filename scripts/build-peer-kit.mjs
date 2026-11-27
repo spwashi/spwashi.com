@@ -177,12 +177,65 @@ function closure(wanted, light) {
   return seen;
 }
 
-/** Sigils and their operator types, from the site's registry. */
-async function sigilTypes() {
+/** Sigils and their operator types, plus canonical gesture/pinch measures, from the site's kernel. */
+async function kernelContracts() {
   await import(pathToFileURL(path.join(ROOT, 'scripts/lib/register-public-imports.mjs')).href);
-  // Workbench relation: mutation, via the kernel. PEER_SIGILS and PEER_BRACES are generated from it unchanged.
+  // Workbench relation: mutation, via the kernel. PEER_SIGILS, PEER_BRACES, PEER_GESTURES, and PEER_PINCH are generated from it unchanged.
   const { OPERATOR_DEFINITIONS } = await import('/public/js/kernel/operator-detection.js');
-  return OPERATOR_DEFINITIONS.map((def) => ({ sigil: def.prefix, type: def.type }));
+  const {
+    GESTURE_MEASURE,
+    PINCH_MEASURE,
+    SLOT_SCRUB_COMMIT_MODES,
+    pinchCueOf,
+    pinchThresholdOf,
+    scrubStepDelta,
+    stepLadderIndex,
+  } = await import('/public/js/kernel/gesture-measure.js');
+  const { PINCH, cueOf, thresholdOf } = await import(pathToFileURL(path.join(ROOT, 'workers/lib/pinch.js')).href);
+  const {
+    SCRUB_MEASURE,
+    SLOT_SCRUB_COMMIT_MODES: WORKER_COMMIT_MODES,
+    scrubStepDelta: workerScrubDelta,
+    stepLadderIndex: workerStepLadder,
+  } = await import(pathToFileURL(path.join(ROOT, 'workers/lib/slot-scrub.js')).href);
+
+  // Verify workers/lib/pinch.js and workers/lib/slot-scrub.js stay in lockstep with public/js/kernel/gesture-measure.js.
+  for (const key of ['enter', 'keep', 'near', 'up', 'wheel']) {
+    if (PINCH[key] !== PINCH_MEASURE[key]) {
+      fail(`workers/lib/pinch.js PINCH.${key} (${PINCH[key]}) drifted from PINCH_MEASURE.${key} (${PINCH_MEASURE[key]})`);
+    }
+  }
+  for (const scale of [0.6, 0.8, 1.0, 1.2, 1.35]) {
+    if (JSON.stringify(thresholdOf(scale, 'in', 'out')) !== JSON.stringify(pinchThresholdOf(scale, 'in', 'out'))) {
+      fail(`workers/lib/pinch.js thresholdOf(${scale}) drifted from gesture-measure.js pinchThresholdOf`);
+    }
+    if (cueOf('shot', scale, '#>keep · in') !== pinchCueOf('shot', scale, '#>keep · in')) {
+      fail(`workers/lib/pinch.js cueOf(${scale}) drifted from gesture-measure.js pinchCueOf`);
+    }
+  }
+  if (
+    SCRUB_MEASURE.stepPx !== GESTURE_MEASURE.scrubStepPx
+    || SCRUB_MEASURE.deadZonePx !== GESTURE_MEASURE.scrubDeadZonePx
+    || SCRUB_MEASURE.holdMs !== GESTURE_MEASURE.holdMs
+    || SCRUB_MEASURE.swipeMinPx !== GESTURE_MEASURE.swipeMinPx
+    || SCRUB_MEASURE.swipeDominance !== GESTURE_MEASURE.swipeDominance
+    || SCRUB_MEASURE.tapSwallowMs !== GESTURE_MEASURE.tapSwallowMs
+  ) {
+    fail('workers/lib/slot-scrub.js SCRUB_MEASURE drifted from public/js/kernel/gesture-measure.js GESTURE_MEASURE');
+  }
+  if (JSON.stringify(WORKER_COMMIT_MODES) !== JSON.stringify(SLOT_SCRUB_COMMIT_MODES)) {
+    fail('workers/lib/slot-scrub.js SLOT_SCRUB_COMMIT_MODES drifted from public/js/kernel/gesture-measure.js');
+  }
+  if (workerScrubDelta(58) !== scrubStepDelta(58) || workerStepLadder(0, 4, -1, { wrap: true }) !== stepLadderIndex(0, 4, -1, { wrap: true })) {
+    fail('workers/lib/slot-scrub.js stepping functions drifted from public/js/kernel/gesture-measure.js');
+  }
+
+  return {
+    types: OPERATOR_DEFINITIONS.map((def) => ({ sigil: def.prefix, type: def.type })),
+    gestures: GESTURE_MEASURE,
+    pinchMeasure: PINCH_MEASURE,
+    scrubCommitModes: SLOT_SCRUB_COMMIT_MODES,
+  };
 }
 
 /** @font-face rules in fonts.css, by family, style and file. */
@@ -205,7 +258,7 @@ function readFaces() {
 function build() {
   return (async () => {
     const { light, dark, order } = readCore();
-    const types = await sigilTypes();
+    const { types, gestures, pinchMeasure, scrubCommitModes } = await kernelContracts();
     const colorTokens = [...new Set([...types.map((t) => t.type), ...Object.values(BRACE_TYPES)])]
       .map((type) => `--op-${type}-color`)
       .filter((name) => light.has(name));
@@ -286,6 +339,15 @@ export const PEER_SIGILS = Object.freeze(${JSON.stringify(sigils, null, 2)});
 /** Each brace pair's color. */
 export const PEER_BRACES = Object.freeze(${JSON.stringify(braces, null, 2)});
 
+/** Canonical gesture measures (hold, swipe, 28px slot scrub, 6px dead zone, tap swallow window). */
+export const PEER_GESTURES = Object.freeze(${JSON.stringify(gestures, null, 2)});
+
+/** Canonical two-stage depth and text-scale pinch thresholds. */
+export const PEER_PINCH = Object.freeze(${JSON.stringify(pinchMeasure, null, 2)});
+
+/** Canonical horizontal slot-scrub commit modes across hosts. */
+export const PEER_SCRUB_COMMIT_MODES = Object.freeze(${JSON.stringify(scrubCommitModes, null, 2)});
+
 /** Faces a peer serves from its own origin, named by content hash. */
 export const PEER_FONTS = Object.freeze(${JSON.stringify(fonts, null, 2)});
 
@@ -327,16 +389,21 @@ export function peerFontPreloads(base = "/fonts/") {
       aliases: Object.fromEntries(ALIASES),
       sigils,
       braces,
+      gestures,
+      pinch: pinchMeasure,
+      scrubCommitModes,
       faces: fonts.map(({ family, style, weight }) => ({ family, style, weight })),
     }, null, 2)}\n`;
     const pinch = [...scriptFiles.values()].find((file) => file.file.startsWith('pinch-text-scale.'));
     if (!pinch) fail('the pinch bundle was not built');
     const carriedFile = (name) => fs.readFileSync(path.join(ROOT, 'workers/lib', name), 'utf8');
     const carried = `// Generated by scripts/build-peer-kit.mjs — do not edit.
-// A script worker serves these bytes itself. A file unit copies the text-scale files from workers/lib and the pinch from assets/peer.
+// A script worker serves these bytes itself. A file unit copies the text-scale and slot-scrub files from workers/lib and the pinch from assets/peer.
 export const CARRIED_TEXT_SCALE_HEAD = ${JSON.stringify(carriedFile('text-scale-head.js'))};
 export const CARRIED_TEXT_SCALE = ${JSON.stringify(carriedFile('text-scale.js'))};
 export const CARRIED_TEXT_SCALE_CSS = ${JSON.stringify(carriedFile('text-scale.css'))};
+export const CARRIED_SLOT_SCRUB = ${JSON.stringify(carriedFile('slot-scrub.js'))};
+export const CARRIED_SLOT_SCRUB_CSS = ${JSON.stringify(carriedFile('slot-scrub.css'))};
 export const CARRIED_PINCH = ${JSON.stringify(pinch.bytes.toString('utf8'))};
 `;
     return { module, json, fontFiles, scriptFiles, undarkened, carried };

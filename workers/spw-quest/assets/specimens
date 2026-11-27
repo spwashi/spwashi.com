@@ -1253,11 +1253,11 @@
       <dl class="slots"><div><dt>subject</dt><dd><code>!dispatch</code></dd></div><div><dt>body</dt><dd><code> arrival; lenses; parser </code></dd></div><div><dt>projection</dt><dd><code>now</code></dd></div><div><dt>scope</dt><dd><code>nov_19</code></dd></div></dl>
       <p class="moves"><a href="https://spwashi.com/now/#current-sprint">spwashi.com/now/#current-sprint</a><span aria-hidden="true"> · </span><a href="/build?script=!dispatch(nov_19)%7B%20arrival%3B%20lenses%3B%20parser%20%7D%3Cnow%3E#build">Edit</a><span aria-hidden="true"> · </span><a href="/pivot?s=r-72ca08ed">Pivot</a><span aria-hidden="true"> · </span><a href="/canvas?s=r-72ca08ed">Canvas</a><span aria-hidden="true"> · </span><a href="/specimens?a=r-72ca08ed#compare">Compare</a></p>
     </li>
-      <li class="specimen" id="s-r-dc00e71f">
+      <li class="specimen" id="s-r-faacd542">
       <p class="name">/now/</p>
-      <p class="line"><code><span data-t="integration">^</span>receipt<span data-t="b-scene">(</span>nov_19<span data-t="b-scene">)</span><span data-t="b-direction">{</span> before ~&gt; after <span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>live<span data-t="b-concept">&gt;</span></code></p>
-      <dl class="slots"><div><dt>subject</dt><dd><code>^receipt</code></dd></div><div><dt>body</dt><dd><code> before ~&gt; after </code></dd></div><div><dt>projection</dt><dd><code>live</code></dd></div><div><dt>scope</dt><dd><code>nov_19</code></dd></div></dl>
-      <p class="moves"><a href="https://spwashi.com/now/#current-sprint">spwashi.com/now/#current-sprint</a><span aria-hidden="true"> · </span><a href="/build?script=%5Ereceipt(nov_19)%7B%20before%20~%3E%20after%20%7D%3Clive%3E#build">Edit</a><span aria-hidden="true"> · </span><a href="/pivot?s=r-dc00e71f">Pivot</a><span aria-hidden="true"> · </span><a href="/canvas?s=r-dc00e71f">Canvas</a><span aria-hidden="true"> · </span><a href="/specimens?a=r-dc00e71f#compare">Compare</a></p>
+      <p class="line"><code><span data-t="integration">^</span>receipt<span data-t="b-scene">(</span>nov_27<span data-t="b-scene">)</span><span data-t="b-direction">{</span> before ~&gt; after <span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>live<span data-t="b-concept">&gt;</span></code></p>
+      <dl class="slots"><div><dt>subject</dt><dd><code>^receipt</code></dd></div><div><dt>body</dt><dd><code> before ~&gt; after </code></dd></div><div><dt>projection</dt><dd><code>live</code></dd></div><div><dt>scope</dt><dd><code>nov_27</code></dd></div></dl>
+      <p class="moves"><a href="https://spwashi.com/now/#current-sprint">spwashi.com/now/#current-sprint</a><span aria-hidden="true"> · </span><a href="/build?script=%5Ereceipt(nov_27)%7B%20before%20~%3E%20after%20%7D%3Clive%3E#build">Edit</a><span aria-hidden="true"> · </span><a href="/pivot?s=r-faacd542">Pivot</a><span aria-hidden="true"> · </span><a href="/canvas?s=r-faacd542">Canvas</a><span aria-hidden="true"> · </span><a href="/specimens?a=r-faacd542#compare">Compare</a></p>
     </li>
       <li class="specimen" id="s-r-6403f1e4">
       <p class="name">/now/</p>

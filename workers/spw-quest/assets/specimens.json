@@ -2144,9 +2144,9 @@
       "line": "(production)season{ oct; nov; close }<tradition>"
     },
     {
-      "id": "r-dc00e71f",
+      "id": "r-faacd542",
       "source": "routes",
-      "line": "^receipt(nov_19){ before ~> after }<live>"
+      "line": "^receipt(nov_27){ before ~> after }<live>"
     },
     {
       "id": "r-6403f1e4",

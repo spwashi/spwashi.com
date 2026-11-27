@@ -8,6 +8,7 @@ import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, s
 import { attachPinch, wasPinch } from "/pinch.js";
 import { mountTextScale } from "/text-scale.js";
 import { mountCleanStill } from "/clean-still.js";
+import { bindSlotScrub } from "/slot-scrub.js";
 import { MATERIALS } from "/materials.js";
 
 const svg = document.getElementById("viewfinder");
@@ -25,9 +26,6 @@ let dragging = "";
 let dragged = false;
 /** A scrub across a bracket in the expression: the ladder it holds, where the hand started, and how many words it has crossed. */
 let scrub = null;
-let scrubbed = false;
-/** One word of travel per this many pixels, the same kind of step the lamp takes. */
-const SCRUB_PX = 28;
 /** Up to six recent takes kept in memory for one-tap A/B comparison. */
 const MAX_TAKES = 6;
 let takes = [];
@@ -181,60 +179,37 @@ function paintExpr() {
 }
 
 /**
- * The brackets. A drag sideways steps that ladder, one word per SCRUB_PX, and
- * the frame follows; letting go keeps the word. A tap, or the arrow keys, steps
- * once. The link underneath is the next word, for when scripts are off.
+ * The brackets. A drag sideways steps that ladder, one word per 28px (slot-scrub.js),
+ * and the frame follows; letting go keeps the word (commit: "on-lift"). A tap, or
+ * the arrow keys, steps once. The link underneath is the next word, for when scripts are off.
  */
 function wireExpr() {
   const expr = $("expr");
   if (!expr) return;
-  const end = (event) => {
-    if (!scrub) return;
-    const slot = expr.querySelector(`[data-key="${scrub.key}"]`);
-    slot?.classList.remove("scrubbing");
-    const done = scrub;
-    scrub = null;
-    if (!done.moved) return;
-    scrubbed = true;
-    commit(stepKey(done.base, done.key, done.delta));
-    if (event?.pointerId != null) slot?.releasePointerCapture?.(event.pointerId);
-  };
-  expr.addEventListener("pointerdown", (event) => {
-    const slot = event.target.closest?.(".slot");
-    if (!slot || event.button !== 0) return;
-    event.preventDefault();
-    scrub = { key: slot.dataset.key, x: event.clientX, base: shot, delta: 0, moved: false };
-    slot.classList.add("scrubbing");
-    slot.setPointerCapture(event.pointerId);
-  });
-  expr.addEventListener("pointermove", (event) => {
-    if (!scrub) return;
-    const delta = Math.round((event.clientX - scrub.x) / SCRUB_PX);
-    if (!scrub.moved && Math.abs(event.clientX - scrub.x) < 6) return;
-    if (delta === scrub.delta && scrub.moved) return;
-    scrub.moved = true;
-    scrub.delta = delta;
-    shot = { ...scrub.base, ...stepKey(scrub.base, scrub.key, delta) };
-    render();
-    expr.querySelector(`[data-key="${scrub.key}"]`)?.classList.add("scrubbing");
-  });
-  expr.addEventListener("pointerup", end);
-  expr.addEventListener("pointercancel", end);
-  expr.addEventListener("click", (event) => {
-    const slot = event.target.closest?.(".slot");
-    if (!slot || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
-    event.preventDefault();
-    if (scrubbed) { scrubbed = false; return; }
-    commit(stepKey(shot, slot.dataset.key, 1));
-  });
-  expr.addEventListener("keydown", (event) => {
-    const slot = event.target.closest?.(".slot");
-    if (!slot) return;
-    const by = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[event.key];
-    if (!by) return;
-    event.preventDefault();
-    event.stopPropagation();
-    commit(stepKey(shot, slot.dataset.key, by));
+  bindSlotScrub(expr, {
+    selector: ".slot",
+    commit: "on-lift",
+    onStart: (key) => {
+      scrub = { key, base: shot };
+      return shot;
+    },
+    onStep: (key, _dir, { delta, base }) => {
+      scrub = { key, base };
+      shot = { ...base, ...stepKey(base, key, delta) };
+      render();
+    },
+    onRelease: (key, { delta, base }) => {
+      scrub = null;
+      commit(stepKey(base, key, delta));
+    },
+    onTap: (key) => {
+      scrub = null;
+      commit(stepKey(shot, key, 1));
+    },
+    onKey: (key, by) => {
+      scrub = null;
+      commit(stepKey(shot, key, by));
+    },
   });
 }
 

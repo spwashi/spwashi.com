@@ -104,6 +104,7 @@ const PAGE = `<!doctype html>
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/texture.css">
   <link rel="stylesheet" href="/clean-still.css">
+  <link rel="stylesheet" href="/slot-scrub.css">
   <script type="module" src="/texture.js"></script>
 </head>
 <body>
@@ -176,15 +177,16 @@ const MANIFEST = `${JSON.stringify({
 }, null, 2)}\n`;
 
 /** The shell the service worker keeps. Pictures are cached when a reader opens them, not all at once. */
-const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/clean-still.js", "/clean-still.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
+const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/clean-still.js", "/clean-still.css", "/slot-scrub.js", "/slot-scrub.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
 
 function serviceWorker(version) {
   return `// Written by workers/texture-website/carry.mjs. The day's picture is chosen in the page, so this shell opens it with no network.
 const CACHE = "texture-${version}";
 const SHELL = ${JSON.stringify(SHELL)};
+const CODE = /\\.(?:js|css|json)$/;
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL.map((path) => new Request(path, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
@@ -201,6 +203,13 @@ self.addEventListener("fetch", (event) => {
       if (response.ok) caches.open(CACHE).then((cache) => cache.put("/", copy));
       return response;
     }).catch(() => caches.match("/")));
+    return;
+  }
+  if (CODE.test(url.pathname)) {
+    event.respondWith(fetch(request).then((response) => {
+      if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy)); }
+      return response;
+    }).catch(() => caches.match(request)));
     return;
   }
   event.respondWith(caches.match(request).then((hit) => {
@@ -250,7 +259,7 @@ export function iconPng(size = 192) {
 
 export async function carried() {
   const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
-  const shared = await Promise.all(["clean-still.js", "clean-still.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
+  const shared = await Promise.all(["clean-still.js", "clean-still.css", "slot-scrub.js", "slot-scrub.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
     ...MATERIALS.flatMap((m) => [[`${m.slug}.txt`, starter(m)], [`${m.slug}.spw`, line(m)]]),
     ...shared,

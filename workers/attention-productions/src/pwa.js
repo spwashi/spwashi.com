@@ -54,6 +54,20 @@ self.addEventListener("fetch", (event) => {
       return (await cache.match("/")) ?? Response.error();
     }));
   } else if (!url.search && SHELL.has(url.pathname)) {
+    const isMutableCode = /\\.(?:js|css|json)$/.test(url.pathname) && !url.pathname.startsWith("/peer/");
+    if (isMutableCode) {
+      event.respondWith(fetch(request).then(async (response) => {
+        if (response.ok) {
+          const cache = await caches.open(CACHE);
+          await cache.put(request, response.clone());
+        }
+        return response;
+      }).catch(async () => {
+        const cache = await caches.open(CACHE);
+        return (await cache.match(request)) ?? Response.error();
+      }));
+      return;
+    }
     event.respondWith(caches.open(CACHE).then(async (cache) => {
       return (await cache.match(request)) ?? fetch(request);
     }));

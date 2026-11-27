@@ -150,7 +150,14 @@ function parseCssImports(source) {
   return imports;
 }
 
-function parseJsExports(source) {
+export function resolveComposeSpecifier(sourceModule, fromFile = COMPOSE_JS) {
+  const normalized = sourceModule.startsWith('/')
+    ? sourceModule.slice(1)
+    : path.join(path.dirname(fromFile), sourceModule);
+  return toPosix(path.normalize(normalized));
+}
+
+export function parseJsExports(source, fromFile = COMPOSE_JS) {
   const namedExports = new Set();
   const sourceModules = new Set();
   const constRe = /export\s+const\s+([A-Za-z0-9_]+)/g;
@@ -163,7 +170,7 @@ function parseJsExports(source) {
 
   while ((match = blockRe.exec(source)) !== null) {
     const [, block, sourceModule] = match;
-    sourceModules.add(toPosix(path.normalize(path.join(path.dirname(COMPOSE_JS), sourceModule))));
+    sourceModules.add(resolveComposeSpecifier(sourceModule, fromFile));
 
     block
       .split(',')
@@ -181,6 +188,45 @@ function parseJsExports(source) {
     sources: Array.from(sourceModules).sort(),
   };
 }
+
+const TRAVELLING_PIECES = [
+  {
+    id: 'gesture-measure',
+    path: 'public/js/kernel/gesture-measure.js',
+    road: 'peer-kit (PEER_GESTURES, PEER_PINCH, PEER_SCRUB_COMMIT_MODES) + workers/lib/slot-scrub.js + workers/lib/pinch.js',
+    consumers: ['spwashi.com', 'attention.productions', 'texture.website', 'tealstripesvibes.com', 'mutex.buzz'],
+  },
+  {
+    id: 'pinch-text-scale',
+    path: 'public/js/kernel/pinch-text-scale.js',
+    road: 'build:peer-kit (/peer/pinch-text-scale.<hash>.js) + workers/lib/text-scale.{js,css}',
+    consumers: ['spwashi.com', 'spw.quest', 'attention.productions', 'mutex.buzz', 'tealstripesvibes.com', 'wap.mom', 'smut.today'],
+  },
+  {
+    id: 'spw-expression',
+    path: 'public/js/interface/spw-expression.js',
+    road: 'custom element (<spw-expression>) consuming gesture-measure.js',
+    consumers: ['spwashi.com'],
+  },
+  {
+    id: 'spw-workbench-reader',
+    path: 'public/js/semantic/spw-workbench-reader.js',
+    road: 'build:spw-parser + spw.quest pinned reader release',
+    consumers: ['spwashi.com', 'spw.quest', 'mutex.buzz', 'factshift.center'],
+  },
+  {
+    id: 'texture-slice',
+    path: 'public/js/media/texture-slice.js',
+    road: 'runtime/orchestration/host.js (mountPortableModule) + public/css/effects/texture-slice.css',
+    consumers: ['spwashi.com', 'external portable hosts'],
+  },
+  {
+    id: 'peer-kit',
+    path: 'workers/lib/peer-kit.js',
+    road: 'scripts/build-peer-kit.mjs -> workers/lib/peer-kit.js + public/data/peer-kit.json',
+    consumers: ['spw.quest', 'attention.productions', 'mutex.buzz', 'tealstripesvibes.com', 'wap.mom', 'smut.today'],
+  },
+];
 
 function countOccurrences(source, pattern) {
   return (source.match(pattern) ?? []).length;
@@ -266,6 +312,14 @@ async function buildInventory() {
     if (!doc.exists) missing.push(doc.path);
   }
 
+  const travellingPieces = await Promise.all(
+    TRAVELLING_PIECES.map(async (piece) => {
+      const exists = await pathExists(piece.path);
+      if (!exists) missing.push(piece.path);
+      return { ...piece, exists };
+    }),
+  );
+
   return {
     generatedAt: new Date().toISOString(),
     purpose: 'Map portable Spwashi composition files for new-site starters and component design.',
@@ -283,6 +337,7 @@ async function buildInventory() {
         sources: jsExports.sources,
       },
     ],
+    travellingPieces,
     componentDesignSurfaces: componentDocs,
     componentCssFiles,
     siteSpecificBoundaries: SITE_BOUNDARY_FILES,
@@ -308,6 +363,9 @@ function renderText(inventory) {
     'Entrypoints:',
     `- ${COMPOSE_CSS}`,
     `- ${COMPOSE_JS}`,
+    '',
+    'Travelling pieces:',
+    ...inventory.travellingPieces.map((piece) => `- ${piece.id} (${piece.path}) -> ${piece.road} [${piece.consumers.join(', ')}]`),
     '',
     'Design surfaces:',
     ...inventory.componentDesignSurfaces.map((doc) => `- ${doc.path}${doc.title ? ` - ${doc.title}` : ''}`),
@@ -348,7 +406,11 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exitCode = 1;
-});
+export { buildInventory };
+
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
+  });
+}

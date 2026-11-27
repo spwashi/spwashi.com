@@ -226,6 +226,33 @@ export const PEER_BRACES = Object.freeze([
   }
 ]);
 
+/** Canonical gesture measures (hold, swipe, 28px slot scrub, 6px dead zone, tap swallow window). */
+export const PEER_GESTURES = Object.freeze({
+  "holdMs": 420,
+  "swipeMinPx": 48,
+  "swipeDominance": 1.45,
+  "scrubStepPx": 28,
+  "scrubDeadZonePx": 6,
+  "tapSwallowMs": 360
+});
+
+/** Canonical two-stage depth and text-scale pinch thresholds. */
+export const PEER_PINCH = Object.freeze({
+  "enter": 1.35,
+  "keep": 1.16,
+  "near": 0.82,
+  "up": 0.65,
+  "wheel": 200,
+  "textStepLog2": 0.12
+});
+
+/** Canonical horizontal slot-scrub commit modes across hosts. */
+export const PEER_SCRUB_COMMIT_MODES = Object.freeze([
+  "live",
+  "on-lift",
+  "prime-then-keep"
+]);
+
 /** Faces a peer serves from its own origin, named by content hash. */
 export const PEER_FONTS = Object.freeze([
   {
@@ -256,9 +283,9 @@ export const PEER_FONTS = Object.freeze([
 export const PEER_SCRIPTS = Object.freeze([
   {
     "name": "pinch-text-scale",
-    "file": "pinch-text-scale.c898b03dd8.js",
-    "bytes": 3662,
-    "sha256": "c898b03dd84f7d6d4d863cd0b4640305987326d097726c5fa3be3de22274e9b7",
+    "file": "pinch-text-scale.1c2ad61442.js",
+    "bytes": 3758,
+    "sha256": "1c2ad61442f279a1e38a54b09773f18e3f3b3487043cb1078c52ec2be0bccca6",
     "source": "public/js/kernel/pinch-text-scale.js"
   }
 ]);

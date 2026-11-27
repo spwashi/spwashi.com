@@ -222,6 +222,27 @@
       "color": "--op-direction-color"
     }
   ],
+  "gestures": {
+    "holdMs": 420,
+    "swipeMinPx": 48,
+    "swipeDominance": 1.45,
+    "scrubStepPx": 28,
+    "scrubDeadZonePx": 6,
+    "tapSwallowMs": 360
+  },
+  "pinch": {
+    "enter": 1.35,
+    "keep": 1.16,
+    "near": 0.82,
+    "up": 0.65,
+    "wheel": 200,
+    "textStepLog2": 0.12
+  },
+  "scrubCommitModes": [
+    "live",
+    "on-lift",
+    "prime-then-keep"
+  ],
   "faces": [
     {
       "family": "Newsreader",

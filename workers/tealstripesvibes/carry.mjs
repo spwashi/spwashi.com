@@ -67,6 +67,7 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
 <link rel="stylesheet" href="/pinch.css">
 <link rel="stylesheet" href="/text-scale.css">
 <link rel="stylesheet" href="/clean-still.css">
+<link rel="stylesheet" href="/slot-scrub.css">
 <script src="/text-scale-head.js"></script>
 <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
 <style id="vibe-style">${vibeCss(v)}</style>
@@ -151,16 +152,17 @@ function manifest() {
 }
 
 /** Every file a vibe needs; with these kept, any address paints offline, since the shell reads it in the page. */
-const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/lib/hold.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", "/clean-still.js", "/clean-still.css", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
+const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/lib/hold.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", "/clean-still.js", "/clean-still.css", "/slot-scrub.js", "/slot-scrub.css", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
 
 function serviceWorker(version) {
   return `// Written by workers/tealstripesvibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
 const CACHE = "tealstripes-${version}";
 const SHELL = ${JSON.stringify(SHELL)};
 const SCRIPTED = /^\\/(m|stamp|og)\\/|^\\/tuple$|\\.json$/;
+const CODE = /\\.(?:js|css)$/;
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL.map((path) => new Request(path, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
@@ -173,6 +175,13 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || url.origin !== self.location.origin || SCRIPTED.test(url.pathname)) return;
   if (request.mode === "navigate") {
     event.respondWith(fetch(request).catch(() => caches.match(request).then((hit) => hit ?? caches.match("/index.html"))));
+    return;
+  }
+  if (CODE.test(url.pathname) && !url.pathname.startsWith("/peer/")) {
+    event.respondWith(fetch(request).then((response) => {
+      if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy)); }
+      return response;
+    }).catch(() => caches.match(request)));
     return;
   }
   event.respondWith(caches.match(request).then((hit) => {
@@ -232,6 +241,8 @@ export async function carried() {
     ["text-scale-head.js", await readFile(path.join(HERE, "../lib/text-scale-head.js"), "utf8")],
     ["clean-still.js", await readFile(path.join(HERE, "../lib/clean-still.js"), "utf8")],
     ["clean-still.css", await readFile(path.join(HERE, "../lib/clean-still.css"), "utf8")],
+    ["slot-scrub.js", await readFile(path.join(HERE, "../lib/slot-scrub.js"), "utf8")],
+    ["slot-scrub.css", await readFile(path.join(HERE, "../lib/slot-scrub.css"), "utf8")],
     ["index.html", shell({ seed: Object.keys(SEEDS)[0], mask: "", filters: [], title: "Teal Stripes Vibes", mood: "teal stripes", canonical: `${ORIGIN}/`, ground: true })],
     ...Object.keys(SEEDS).map((seed) => [`${seed}.html`, seedPage(seed)]),
     ["favicon.svg", FAVICON],

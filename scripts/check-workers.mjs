@@ -4,17 +4,40 @@
  * worker's test/ is run, so a new file is in the gate without being listed.
  */
 import { execFileSync } from 'node:child_process';
-import { readdirSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const WORKERS = path.join(ROOT, 'workers');
+const LIB = path.join(WORKERS, 'lib');
 const INVENTORY = path.join(WORKERS, 'cluster.json');
 const BANNED = [
   [/wet\s+ass\s+pussy/i, 'banned expansion'],
   [/pussy/i, 'banned lemma'],
+];
+
+/** Shared browser/asset files in workers/lib/ that units copy into assets/ byte for byte. */
+const SHARED_ASSET_FILES = [
+  ['set-ring.js', 'set-ring.js'],
+  ['set-ring.css', 'set-ring.css'],
+  ['pinch.js', 'pinch.js'],
+  ['pinch.css', 'pinch.css'],
+  ['text-scale.js', 'text-scale.js'],
+  ['text-scale.css', 'text-scale.css'],
+  ['text-scale-head.js', 'text-scale-head.js'],
+  ['clean-still.js', 'clean-still.js'],
+  ['clean-still.css', 'clean-still.css'],
+  ['slot-scrub.js', 'slot-scrub.js'],
+  ['slot-scrub.css', 'slot-scrub.css'],
+  ['hold.js', 'lib/hold.js'],
+];
+
+/** Shared exports in workers/lib/ that no worker unit may duplicate locally. */
+const FORBIDDEN_LOCAL_COPIES = [
+  [/\bfunction\s+escapeHtml\s*\(|\bconst\s+escapeHtml\s*=\s*\(/, 'local escapeHtml copy (import from workers/lib/http.js or shell.js)'],
+  [/\bfunction\s+holdLines\s*\(|\bconst\s+holdLines\s*=\s*\(/, 'local holdLines copy (import from workers/lib/hold.js)'],
 ];
 
 function fail(message) {
@@ -46,6 +69,80 @@ function isIgnored(rel) {
     if (error.status === 1) return false;
     throw error;
   }
+}
+
+/** Collect all JS/MJS source files under unitDir/src and top-level carry*.mjs. */
+async function unitSourceTexts(unitDir) {
+  const texts = [];
+  const srcDir = path.join(unitDir, 'src');
+  if (existsSync(srcDir)) {
+    for (const entry of await readdir(srcDir, { withFileTypes: true })) {
+      if (entry.isFile() && /\.(?:js|mjs)$/.test(entry.name)) {
+        const abs = path.join(srcDir, entry.name);
+        texts.push({ rel: path.relative(ROOT, abs), text: await readFile(abs, 'utf8') });
+      }
+    }
+  }
+  for (const entry of await readdir(unitDir, { withFileTypes: true })) {
+    if (entry.isFile() && /^carry.*\.mjs$/.test(entry.name)) {
+      const abs = path.join(unitDir, entry.name);
+      texts.push({ rel: path.relative(ROOT, abs), text: await readFile(abs, 'utf8') });
+    }
+  }
+  return texts;
+}
+
+/**
+ * Audit a unit's kinship with workers/lib/ and the peer kit:
+ * - rejects local copies of shared workers/lib exports (escapeHtml, holdLines)
+ * - verifies every carried workers/lib asset in assets/ matches workers/lib byte-for-byte
+ * - returns a concise kinship summary of what the unit takes, copies, and keeps.
+ */
+async function auditUnitKinship(unit, libBytes) {
+  const unitDir = path.join(ROOT, unit.dir);
+  const sources = await unitSourceTexts(unitDir);
+  const takes = new Set();
+  const keeps = new Set();
+
+  for (const { rel, text } of sources) {
+    const isBrowserShared = existsSync(path.join(unitDir, 'assets', path.basename(rel)));
+    if (isBrowserShared) keeps.add(`dual:${path.basename(rel)}`);
+    for (const [pattern, reason] of FORBIDDEN_LOCAL_COPIES) {
+      if (isBrowserShared && reason.includes('escapeHtml')) continue;
+      if (pattern.test(text)) fail(`${unit.id} (${rel}): ${reason}`);
+    }
+    for (const match of text.matchAll(/from\s+['"](?:\.\.\/)+lib\/([a-z0-9-]+\.js)['"]/g)) {
+      takes.add(match[1].replace(/\.js$/, ''));
+    }
+    if (/\bexport\s+const\s+BASE_SECURITY\b|\bconst\s+BASE_SECURITY\b/.test(text)) keeps.add('BASE_SECURITY');
+    if (/\bexport\s+const\s+FAVICON\b|\bconst\s+FAVICON\b/.test(text)) keeps.add('FAVICON');
+    if (/\bexport\s+function\s+layout\b|\bexport\s+function\s+page\b/.test(text)) keeps.add('layout');
+  }
+
+  const assetsDir = path.join(unitDir, 'assets');
+  const copies = [];
+  if (existsSync(assetsDir)) {
+    for (const [libName, assetRel] of SHARED_ASSET_FILES) {
+      const assetPath = path.join(assetsDir, assetRel);
+      if (!existsSync(assetPath)) continue;
+      const actual = await readFile(assetPath, 'utf8');
+      if (actual !== libBytes.get(libName)) {
+        fail(`${unit.id}: assets/${assetRel} drifted from workers/lib/${libName}`);
+      }
+      copies.push(libName.replace(/\.(?:js|css)$/, ''));
+    }
+    const peerDir = path.join(assetsDir, 'peer');
+    if (existsSync(peerDir) && readdirSync(peerDir).some((n) => n.endsWith('.js'))) {
+      copies.push('peer-kit');
+    }
+  }
+
+  return {
+    id: unit.id,
+    takes: [...takes].sort(),
+    copies: [...new Set(copies)],
+    keeps: [...keeps].sort(),
+  };
 }
 
 async function main() {
@@ -154,10 +251,34 @@ async function main() {
   ];
   for (const args of carried) run(args);
 
+  // Verify shared workers/lib/ kinship and byte-for-byte asset copies across all units.
+  const libBytes = new Map();
+  for (const [libName] of SHARED_ASSET_FILES) {
+    libBytes.set(libName, await readFile(path.join(LIB, libName), 'utf8'));
+  }
+  const kinshipRows = [];
+  let doorCount = 0;
+  for (const unit of inventory.units) {
+    const kinship = await auditUnitKinship(unit, libBytes);
+    if (!kinship.takes.length && !kinship.copies.length && !kinship.keeps.length) {
+      doorCount += 1;
+      continue;
+    }
+    const parts = [];
+    if (kinship.takes.length) parts.push(`takes ${kinship.takes.join(', ')}`);
+    if (kinship.copies.length) parts.push(`copies ${kinship.copies.join(', ')}`);
+    if (kinship.keeps.length) parts.push(`keeps ${kinship.keeps.join(', ')}`);
+    kinshipRows.push(`  ${kinship.id.padEnd(22)} ${parts.join(' · ')}`);
+  }
+  if (doorCount > 0) {
+    kinshipRows.push(`  ${`doors (${doorCount})`.padEnd(22)} carried by site-hub-next/carry-doors.mjs (http, carry)`);
+  }
+
   for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/smut-today/test', 'workers/wap-mom/test', 'workers/texture-website/test', 'workers/attention-productions/test', 'workers/mutex-buzz/test', 'workers/tealstripesvibes/test']) {
     run(['--test', ...testFiles(dir)]);
   }
   const serving = ['files', 'mixed', 'script'].map((tier) => `${servingCount[tier] ?? 0} ${tier}`).join(', ');
+  console.log(`[check:workers] kinship:\n${kinshipRows.join('\n')}`);
   console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts (${serving}); quest and feedback routing verified`);
 }
 

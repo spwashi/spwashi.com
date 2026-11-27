@@ -17,9 +17,12 @@ import { PHASE_ARC } from './arc-taxonomy.js';
 export {
   GESTURE_MEASURE,
   PINCH_MEASURE,
+  SLOT_SCRUB_COMMIT_MODES,
+  pinchCueOf,
   pinchThresholdOf,
   scrubStepDelta,
   stepLadderIndex,
+  swallowsTap,
 } from '/public/js/kernel/gesture-measure.js';
 
 export const INTERACTION_PHASES = PHASE_ARC.states;

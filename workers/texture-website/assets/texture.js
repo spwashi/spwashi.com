@@ -1,5 +1,6 @@
 // texture.website: a studio for building material prompts. The address is the
 import { mountCleanStill } from "/clean-still.js";
+import { bindSlotScrub } from "/slot-scrub.js";
 import { DAY_KEYS, MODE_KEYS, daily, dayNumber, isoOf, laddersFor, lineOf, mix, slug } from "/daily.js";
 // prompt. Each word in the path is a material, bottom first; a mark before a word
 // is how it meets the one before (~ drifting through, * heavy with). Each ladder
@@ -175,52 +176,13 @@ function spwSlotButton(vocab, state, key, onStep) {
     "aria-valuetext": current,
     title: `${key}: drag sideways, or click to step`,
   }, [slug(current)]);
-  let moved = false;
-  btn.addEventListener("pointerdown", (e) => {
-    if (e.button && e.button !== 0) return;
-    if (e.pointerType === "mouse") e.preventDefault();
-    let lastX = e.clientX;
-    let acc = 0;
-    moved = false;
-    try { btn.setPointerCapture(e.pointerId); } catch { /* a pointer the button cannot hold still steps on click */ }
-    const onMove = (ev) => {
-      if (ev.pointerId !== e.pointerId) return;
-      const dx = ev.clientX - lastX;
-      lastX = ev.clientX;
-      acc += dx;
-      while (Math.abs(acc) >= 28) {
-        const dir = acc > 0 ? 1 : -1;
-        acc -= dir * 28;
-        moved = true;
-        onStep(key, dir, true);
-      }
-    };
-    const onUp = (ev) => {
-      if (ev.pointerId !== e.pointerId) return;
-      btn.removeEventListener("pointermove", onMove);
-      btn.removeEventListener("pointerup", onUp);
-      btn.removeEventListener("pointercancel", onUp);
-      if (moved) {
-        const swallow = (click) => {
-          click.preventDefault();
-          click.stopPropagation();
-          window.removeEventListener("click", swallow, true);
-        };
-        window.addEventListener("click", swallow, true);
-        onStep(key, 0, false);
-      }
-    };
-    btn.addEventListener("pointermove", onMove);
-    btn.addEventListener("pointerup", onUp);
-    btn.addEventListener("pointercancel", onUp);
-  });
-  btn.addEventListener("click", (e) => {
-    if (moved) { moved = false; return; }
-    onStep(key, e.shiftKey ? -1 : 1, false);
-  });
-  btn.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); onStep(key, 1, false); }
-    else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); onStep(key, -1, false); }
+  bindSlotScrub(btn, {
+    selector: ".spw-slot",
+    commit: "live",
+    onStep: (k, dir) => onStep(k, dir, true),
+    onRelease: (k) => onStep(k, 0, false),
+    onTap: (k, e) => onStep(k, e.shiftKey ? -1 : 1, false),
+    onKey: (k, dir) => onStep(k, dir, false),
   });
   return btn;
 }
