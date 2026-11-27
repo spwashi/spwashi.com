@@ -671,7 +671,7 @@
       <li><a href="/specimens?q=garden#found"><code>garden</code></a> garden, in any slot</li>
     </ul>
   </form>
-<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">27 pressed forms</a> · <a href="#pages">1035 lines the pages carry</a> · <a href="#gallery">18 files from the parser's gallery</a> · <a href="#plans">53 plans, each in one line</a></nav>
+<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">27 pressed forms</a> · <a href="#pages">1037 lines the pages carry</a> · <a href="#gallery">21 files from the parser's gallery</a> · <a href="#plans">53 plans, each in one line</a></nav>
 
 <section id="pressed" class="band" aria-labelledby="pressed-title">
   <h2 id="pressed-title">Pressed forms</h2>
@@ -909,7 +909,7 @@
 
 <section id="pages" class="band" aria-labelledby="pages-title">
   <h2 id="pages-title">Lines the pages carry</h2>
-  <p>spwashi.com's pages carry 1035 of these, each on the section it names. Most are a word, a lens and what it holds. These are the rarer ones; the search above reads all 1035.</p>
+  <p>spwashi.com's pages carry 1037 of these, each on the section it names. Most are a word, a lens and what it holds. These are the rarer ones; the search above reads all 1037.</p>
   <details class="kind" id="pages-charged" open>
     <summary>With a charge in front <span class="count">17</span></summary>
     <ol class="shelf">
@@ -1296,7 +1296,7 @@
       <p class="moves"><a href="https://spwashi.com/play/rpg-wednesday/#rpg-wednesday">spwashi.com/play/rpg-wednesday/#rpg-wednesday</a><span aria-hidden="true"> · </span><a href="/build?script=%3Forientation%7Bkin%7D%3Clearn%3E#build">Edit</a><span aria-hidden="true"> · </span><a href="/pivot?s=r-7e2e5e80">Pivot</a><span aria-hidden="true"> · </span><a href="/canvas?s=r-7e2e5e80">Canvas</a><span aria-hidden="true"> · </span><a href="/specimens?a=r-7e2e5e80#compare">Compare</a></p>
     </li>
     </ol>
-    <p class="kind-more">Showing 24 of 34 lines — use <a href="#q">Find above</a> to search all 1035 route expressions or fetch <a href="/specimens.json">specimens.json</a>.</p>
+    <p class="kind-more">Showing 24 of 34 lines — use <a href="#q">Find above</a> to search all 1037 route expressions or fetch <a href="/specimens.json">specimens.json</a>.</p>
   </details>
   <details class="kind" id="pages-scened">
     <summary>Held in a scene <span class="count">74</span></summary>
@@ -1446,7 +1446,7 @@
       <p class="moves"><a href="https://spwashi.com/design/folios/#folios-release-lede">spwashi.com/design/folios/#folios-release-lede</a><span aria-hidden="true"> · </span><a href="/build?script=folio%5Brelease%5D%7Bscan.open.ask%7D(stack)%3Ccard%3E#build">Edit</a><span aria-hidden="true"> · </span><a href="/pivot?s=r-8b174320">Pivot</a><span aria-hidden="true"> · </span><a href="/canvas?s=r-8b174320">Canvas</a><span aria-hidden="true"> · </span><a href="/specimens?a=r-8b174320#compare">Compare</a></p>
     </li>
     </ol>
-    <p class="kind-more">Showing 24 of 74 lines — use <a href="#q">Find above</a> to search all 1035 route expressions or fetch <a href="/specimens.json">specimens.json</a>.</p>
+    <p class="kind-more">Showing 24 of 74 lines — use <a href="#q">Find above</a> to search all 1037 route expressions or fetch <a href="/specimens.json">specimens.json</a>.</p>
   </details>
 </section>
 
@@ -1598,6 +1598,42 @@ season<span data-t="b-mode">[</span>boundary<span data-t="b-mode">]</span><span 
 beat<span data-t="b-mode">[</span>pair<span data-t="b-mode">]</span><span data-t="b-direction">{</span>pieces<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>compose<span data-t="b-concept">&gt;</span>
 beat<span data-t="b-mode">[</span>season<span data-t="b-mode">]</span><span data-t="b-direction">{</span>portfolio<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>dwell<span data-t="b-concept">&gt;</span></code></pre>
       <p class="moves"><a href="https://spwashi.com/tools/spw-parser/?spw_sample=beat#literal-parser">Open in spwashi.com's parser</a><span aria-hidden="true"> · </span><a href="/build?script=beat%5Bunary%5D%7Bclose%7D%3Coffer%3E%0Abeat%5Bpair%5D%7Bpieces%7D%3Ccompose%3E%0Abeat%5Bseason%5D%7Bportfolio%7D%3Cdwell%3E#build">Edit</a></p>
+    </li>
+    <li class="specimen" id="s-g-curiosity_physics">
+      <p class="name">curiosity physics</p>
+      <pre class="line"><code><span data-t="frame">#&gt;curiosity_arc</span>
+<span data-t="ground">.</span>ground<span data-t="b-direction">{</span> beet_stain, modular_clock <span data-t="b-direction">}</span>
+<span data-t="potential">~</span>gap<span data-t="b-direction">{</span> <span data-t="s">&quot;8 cups stock simmered down to 1 cup&quot;</span> <span data-t="b-direction">}</span>
+<span data-t="a">~#expect</span>: <span data-t="s">&quot;zero salt evaporates with steam -&gt; 8x salinity&quot;</span>
+reduction<span data-t="b-mode">[</span>kitchen<span data-t="b-mode">]</span><span data-t="b-direction">{</span>volume_loss<span data-t="b-direction">}</span> ~&gt; bundle<span data-t="b-mode">[</span>css<span data-t="b-mode">]</span><span data-t="b-direction">{</span>unused_rules<span data-t="b-direction">}</span>
+<span data-t="action">!</span>probe<span data-t="b-direction">{</span> simmer_to_glace <span data-t="b-direction">}</span> -&gt; <span data-t="value">*</span>precipitate<span data-t="b-mode">[</span>8x_salinity<span data-t="b-mode">]</span>
+<span data-t="wonder">?</span><span data-t="b-mode">[</span><span data-t="s">&quot;Why do acid and bitter herbs shift non-linearly on the same curve?&quot;</span><span data-t="b-mode">]</span><span data-t="b-direction">{</span><span data-t="b-direction">}</span></code></pre>
+      <p class="moves"><a href="https://spwashi.com/tools/spw-parser/?spw_sample=curiosity_physics#literal-parser">Open in spwashi.com's parser</a><span aria-hidden="true"> · </span><a href="/build?script=%23%3Ecuriosity_arc%0A.ground%7B%20beet_stain%2C%20modular_clock%20%7D%0A~gap%7B%20%228%20cups%20stock%20simmered%20down%20to%201%20cup%22%20%7D%0A~%23expect%3A%20%22zero%20salt%20evaporates%20with%20steam%20-%3E%208x%20salinity%22%0Areduction%5Bkitchen%5D%7Bvolume_loss%7D%20~%3E%20bundle%5Bcss%5D%7Bunused_rules%7D%0A!probe%7B%20simmer_to_glace%20%7D%20-%3E%20*precipitate%5B8x_salinity%5D%0A%3F%5B%22Why%20do%20acid%20and%20bitter%20herbs%20shift%20non-linearly%20on%20the%20same%20curve%3F%22%5D%7B%7D#build">Edit</a></p>
+    </li>
+    <li class="specimen" id="s-g-cms_seed">
+      <p class="name">CMS seed</p>
+      <pre class="line"><code><span data-t="integration">^</span><span data-t="s">&quot;cms_single_seed_specimen&quot;</span><span data-t="b-direction">{</span>
+  kind <span data-t="binding">=</span> <span data-t="s">&quot;dispatch&quot;</span>
+  expression <span data-t="binding">=</span> <span data-t="s">&quot;cms[syntax]{seed.compile.project}&lt;spw&gt;&quot;</span>
+  lens_reading <span data-t="binding">=</span> <span data-t="s">&quot;One .spw block holds prose, lens variants, scan, and carry links.&quot;</span>
+  lens_systems <span data-t="binding">=</span> <span data-t="s">&quot;Compiled at build time via spw-workbench-reader.js into static HTML.&quot;</span>
+  hinge_label <span data-t="binding">=</span> <span data-t="s">&quot;~&gt;about_domains&quot;</span>
+  scan_src <span data-t="binding">=</span> <span data-t="s">&quot;/public/images/assets/folios/folio-babbling-noodling-play-display.webp&quot;</span>
+<span data-t="b-direction">}</span><span data-t="b-mode">[</span>reg<span data-t="binding">=</span>facet<span data-t="b-mode">]</span></code></pre>
+      <p class="moves"><a href="https://spwashi.com/tools/spw-parser/?spw_sample=cms_seed#literal-parser">Open in spwashi.com's parser</a><span aria-hidden="true"> · </span><a href="/build?script=%5E%22cms_single_seed_specimen%22%7B%0A%20%20kind%20%3D%20%22dispatch%22%0A%20%20expression%20%3D%20%22cms%5Bsyntax%5D%7Bseed.compile.project%7D%3Cspw%3E%22%0A%20%20lens_reading%20%3D%20%22One%20.spw%20block%20holds%20prose%2C%20lens%20variants%2C%20scan%2C%20and%20carry%20links.%22%0A%20%20lens_systems%20%3D%20%22Compiled%20at%20build%20time%20via%20spw-workbench-reader.js%20into%20static%20HTML.%22%0A%20%20hinge_label%20%3D%20%22~%3Eabout_domains%22%0A%20%20scan_src%20%3D%20%22%2Fpublic%2Fimages%2Fassets%2Ffolios%2Ffolio-babbling-noodling-play-display.webp%22%0A%7D%5Breg%3Dfacet%5D#build">Edit</a></p>
+    </li>
+    <li class="specimen" id="s-g-attention_shot">
+      <p class="name">attention shot</p>
+      <pre class="line"><code><span data-t="action">!</span>shot<span data-t="b-mode">[</span>close-up<span data-t="b-mode">]</span><span data-t="b-direction">{</span>laminated folio on workbench<span data-t="b-direction">}</span><span data-t="b-scene">(</span>lamplight<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>85mm<span data-t="b-concept">&gt;</span>
+<span data-t="integration">^</span>frame<span data-t="b-direction">{</span>
+  <span data-t="binding">=</span>ratio<span data-t="b-mode">[</span>scope<span data-t="b-mode">]</span>
+  <span data-t="binding">=</span>focus<span data-t="b-mode">[</span>left_third<span data-t="b-mode">]</span>
+  <span data-t="binding">=</span>light_from<span data-t="b-mode">[</span>right<span data-t="b-mode">]</span>
+  <span data-t="potential">~</span>move<span data-t="b-mode">[</span>still<span data-t="b-mode">]</span>
+  <span data-t="normalize">%</span>tempo<span data-t="b-mode">[</span>1<span data-t="b-mode">]</span>
+<span data-t="b-direction">}</span>
+…</code></pre>
+      <p class="moves"><a href="https://spwashi.com/tools/spw-parser/?spw_sample=attention_shot#literal-parser">Open in spwashi.com's parser</a><span aria-hidden="true"> · </span><a href="/build?script=!shot%5Bclose-up%5D%7Blaminated%20folio%20on%20workbench%7D(lamplight)%3C85mm%3E%0A%5Eframe%7B%0A%20%20%3Dratio%5Bscope%5D%0A%20%20%3Dfocus%5Bleft_third%5D%0A%20%20%3Dlight_from%5Bright%5D%0A%20%20~move%5Bstill%5D%0A%20%20%25tempo%5B1%5D%0A%7D%0A%40material%3A%20~%22texture.website%2Flinen.spw%22#build">Edit</a></p>
     </li>
   </ol>
 </section>

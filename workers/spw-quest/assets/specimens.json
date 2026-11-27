@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "schema": "specimens.v1",
-  "count": 1133,
+  "count": 1138,
   "specimens": [
     {
       "id": "h-capsule",
@@ -349,6 +349,24 @@
       "source": "gallery",
       "name": "beat",
       "line": "beat[unary]{close}<offer>\nbeat[pair]{pieces}<compose>\nbeat[season]{portfolio}<dwell>"
+    },
+    {
+      "id": "g-curiosity_physics",
+      "source": "gallery",
+      "name": "curiosity physics",
+      "line": "#>curiosity_arc\n.ground{ beet_stain, modular_clock }\n~gap{ \"8 cups stock simmered down to 1 cup\" }\n~#expect: \"zero salt evaporates with steam -> 8x salinity\"\nreduction[kitchen]{volume_loss} ~> bundle[css]{unused_rules}\n!probe{ simmer_to_glace } -> *precipitate[8x_salinity]\n?[\"Why do acid and bitter herbs shift non-linearly on the same curve?\"]{}"
+    },
+    {
+      "id": "g-cms_seed",
+      "source": "gallery",
+      "name": "CMS seed",
+      "line": "^\"cms_single_seed_specimen\"{\n  kind = \"dispatch\"\n  expression = \"cms[syntax]{seed.compile.project}<spw>\"\n  lens_reading = \"One .spw block holds prose, lens variants, scan, and carry links.\"\n  lens_systems = \"Compiled at build time via spw-workbench-reader.js into static HTML.\"\n  hinge_label = \"~>about_domains\"\n  scan_src = \"/public/images/assets/folios/folio-babbling-noodling-play-display.webp\"\n}[reg=facet]"
+    },
+    {
+      "id": "g-attention_shot",
+      "source": "gallery",
+      "name": "attention shot",
+      "line": "!shot[close-up]{laminated folio on workbench}(lamplight)<85mm>\n^frame{\n  =ratio[scope]\n  =focus[left_third]\n  =light_from[right]\n  ~move[still]\n  %tempo[1]\n}\n@material: ~\"texture.website/linen.spw\""
     },
     {
       "id": "r-9930db65",
@@ -5336,6 +5354,11 @@
       "line": "brace{transform}"
     },
     {
+      "id": "r-54953373",
+      "source": "routes",
+      "line": "cauldron[lens]{terms}<projection>"
+    },
+    {
       "id": "r-5c85e1f3",
       "source": "routes",
       "line": "cauldron[mounted]{experiment.elaborate}"
@@ -5424,6 +5447,11 @@
       "id": "r-e1556474",
       "source": "routes",
       "line": "sigil[prefix]{postfix}"
+    },
+    {
+      "id": "r-bd1b4731",
+      "source": "routes",
+      "line": "spw[reading]{open.sit}"
     },
     {
       "id": "r-36e42976",
