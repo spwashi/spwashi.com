@@ -4,7 +4,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: no-referrer
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
-  Content-Security-Policy: default-src 'none'; img-src 'self' https://texture.website; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src https://mutex.buzz; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'none'; img-src 'self' https://texture.website; style-src 'self'; script-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; frame-src https://mutex.buzz; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
 /*.txt
   Cache-Control: public, max-age=300
@@ -20,6 +20,10 @@
   Content-Type: text/javascript; charset=UTF-8
 
 /*.css
+  Cache-Control: public, max-age=300
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json; charset=UTF-8
   Cache-Control: public, max-age=300
 
 /favicon.svg

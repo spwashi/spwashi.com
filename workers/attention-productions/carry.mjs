@@ -9,6 +9,7 @@
 //   and its first prompt written, so it reads with scripts off;
 // - the files the host answered under site-hub-next: favicon.svg, robots.txt,
 //   ecosystem.json, registry.json; and llms.txt, vocabulary.json, _headers.
+// - manifest.webmanifest and sw.js: install metadata and a fixed offline shell.
 // --check fails when a carried file differs from what this would write.
 import { readFile } from "node:fs/promises";
 import { peerScriptPath } from "../lib/peer-kit.js";
@@ -20,6 +21,8 @@ import { MATERIALS as TEXTURE_MATERIALS } from "../texture-website/src/vocabular
 import { ATTENTION_FAVICON } from "../site-hub-next/src/hosts/attention.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { neighborLine } from "../site-hub-next/src/set.js";
+
+import { APPLE_ICON, THEME, appManifest, serviceWorker } from "./src/pwa.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(HERE, "assets");
@@ -35,7 +38,7 @@ export const MATERIALS = Object.freeze(${JSON.stringify(TEXTURE_MATERIALS.map(({
 /** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
 const PINCH_TEXT = peerScriptPath("pinch-text-scale");
 
-const CSP = "default-src 'none'; img-src 'self' https://texture.website; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src https://mutex.buzz; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
+const CSP = "default-src 'none'; img-src 'self' https://texture.website; style-src 'self'; script-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; frame-src https://mutex.buzz; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
 
 function headersFile() {
   const rules = ["# Written by workers/attention-productions/carry.mjs.", "/*", ...Object.entries(securityHeaders({ csp: CSP })).map(([n, v]) => `  ${n}: ${v}`), ""];
@@ -44,6 +47,7 @@ function headersFile() {
   rule("/*.json", "Cache-Control: public, max-age=300", "Access-Control-Allow-Origin: *");
   rule("/*.js", "Cache-Control: public, max-age=300", "Content-Type: text/javascript; charset=UTF-8");
   rule("/*.css", "Cache-Control: public, max-age=300");
+  rule("/manifest.webmanifest", "Content-Type: application/manifest+json; charset=UTF-8", "Cache-Control: public, max-age=300");
   rule("/favicon.svg", "Cache-Control: public, max-age=86400");
   return rules.join("\n");
 }
@@ -120,6 +124,9 @@ async function page(c, v) {
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${ORIGIN}/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="${APPLE_ICON}">
+  <meta name="theme-color" content="${THEME}">
   <meta property="og:title" content="Attention Productions">
   <meta property="og:description" content="${BLURB}">
   <link rel="stylesheet" href="/attention.css">
@@ -224,10 +231,11 @@ export async function carried() {
   const shared = await Promise.all(SHARED.map(async (file) => [file, await readFile(path.join(HERE, "src", file), "utf8")]));
   // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
   for (const file of ["set-ring.js", "set-ring.css", "pinch.js", "pinch.css", "text-scale.js", "text-scale.css", "text-scale-head.js", "clean-still.js", "clean-still.css"]) shared.push([file, await readFile(path.join(HERE, "../lib", file), "utf8")]);
-  return [
+  const files = [
     ...shared,
     ["index.html", await page(helpers, v)],
     ["favicon.svg", ATTENTION_FAVICON],
+    ["manifest.webmanifest", appManifest(BLURB)],
     ["robots.txt", "User-agent: *\nAllow: /\n"],
     ["ecosystem.json", JSON.stringify(ecosystemJson, null, 2)],
     ["registry.json", JSON.stringify(ecosystemJson, null, 2)],
@@ -236,6 +244,15 @@ export async function carried() {
     ["lights.css", lightsCss(c, v)],
     ["_headers", headersFile()],
   ];
+  const shell = files.filter(([name]) =>
+    /\.(?:css|js|svg|webmanifest)$/.test(name) || name === "index.html"
+  );
+  const local = [
+    "attention.js", "attention.css", PINCH_TEXT.slice(1),
+    APPLE_ICON.slice(1), "icon-192.png", "icon-512.png", "icon-maskable-512.png",
+  ];
+  for (const name of local) shell.push([name, await readFile(path.join(ASSETS, name))]);
+  return [...files, ["sw.js", serviceWorker(shell)]];
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {

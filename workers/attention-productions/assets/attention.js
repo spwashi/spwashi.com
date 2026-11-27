@@ -503,3 +503,7 @@ if (svg) {
 // spwashi.com's pinch on the words sizes them; the viewfinder keeps its own pinch (text-scale.js).
 mountTextScale(document.querySelector("main"), { ignore: ".pinchable" });
 mountCleanStill({ key: "p", idleMs: 4500 });
+
+if ("serviceWorker" in navigator && window.top === window) {
+  navigator.serviceWorker.register("/sw.js").catch(() => {});
+}
