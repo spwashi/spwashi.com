@@ -39,7 +39,7 @@ contents = #[^"roles", ^"carries", ^"releases", ^"loops", wonders][reg=set]
 
 ^"releases"{
   pages = `spwashi.com ships when main is pushed, from the commit the push sends; scripts/check-pushed.mjs runs the local gate on that commit first.`
-  workers = `each worker ships by hand, by the creator: dry run, then the creator's deploy (workers/README.md); the deployed version id is recorded in the owning plan's wip.spw.`
+  workers = `each worker ships by hand, by the creator, from its own config: dry run, then deploy (workers/README.md); the deployed version id is recorded in the owning plan's wip.spw.`
   parser = `dated releases with prereleases beside them (workers/spw-quest/assets/parser/index.json); a consumer names the release and the workbench revision it carries, as factshift.center's version.json does.`
   snapshot = `factshift.center ships a build of its own repository (workers/factshift-center/app, gitignored here) copied into workers/factshift-center/assets with version.json naming the app revision; the app's history stays in its repository.`
   pin = `the site moves its workbench pin, its reader and its expression manifest together, in one commit (spw-inquiry-loop, Workbench consumer pin).`

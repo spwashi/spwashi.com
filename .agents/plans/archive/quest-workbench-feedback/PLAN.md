@@ -49,8 +49,8 @@ using existing dependencies, then doctor. Live Claude URL discovery requires the
 updated Worker to be deployed and the agent to have tool permissions.
 
 Verified: four route tests; init + doctor in a temporary Git consumer with a linked
-existing workbench/dependency tree; repeat init preserved the index. A deploy
-dry run bundled successfully (no bindings). Fresh dependency installation and live
+existing workbench/dependency tree; repeat init preserved the index. A deploy dry
+run bundled successfully (no bindings). Fresh dependency installation and live
 Claude discovery were not exercised. Deployment is the creator's.
 
 ## Site page follows the live remote — 2026-09-28

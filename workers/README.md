@@ -102,17 +102,13 @@ filing; the public page does not describe that routing. Source:
 `src/pages.js` (rendering), `src/client.js` (progressive enhancement),
 `src/index.js` (routes).
 
-Quest and feedback deploy as separate Workers. The creator dry-runs, then deploys, each config:
-
-the creator's deploy
-
-the creator's deploy
-
-Neither config lists domain routes. After the first split, point the existing
-domains at the new script names and leave the old combined script unused.
-The feedback Worker binds D1 as `DB` (migrations from `migrations/`, applied by the creator), reads `DESK_HOSTS` from
-its vars, and needs its read secret set before any inbox
-can be read. The five-minute cron stays on `autonomous-feedback`.
+Quest and feedback deploy as separate workers, each from its own config, dry
+run first; deploy is the creator's. Neither config lists domain routes. After
+the first split, point the existing domains at the new script names and leave
+the old combined script unused. The feedback worker keeps its notes in a
+database migrated from `migrations/`, reads `DESK_HOSTS` from its vars, and
+opens no inbox until its read secret is set. The five-minute cron stays on
+`autonomous-feedback`.
 
 ## Local secrets
 

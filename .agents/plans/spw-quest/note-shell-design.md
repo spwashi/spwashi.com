@@ -21,13 +21,7 @@ This design lands one device note first, then a shell around it. The note is one
 
 ### What the worker is today
 
-`workers/spw-quest/wrangler.jsonc` names the script `spw-quest`, points `main` at `src/index.js`, sets `workers_dev` and `preview_urls` to false, and lists no routes. Deploy remains:
-
-```
-the creator's deploy
-```
-
-A successful upload can still print "No targets deployed". Do not add routes to fix that sentence. `assets.run_worker_first` is true. The worker returns its own `Response` on every path. Parser files and fonts become public only because `handleParser` and `servePeerFont` call `env.ASSETS.fetch` and set headers. A file dropped in `assets/` is not on the internet until a branch does that.
+`workers/spw-quest/wrangler.jsonc` names the script `spw-quest`, points `main` at `src/index.js`, sets `workers_dev` and `preview_urls` to false, and lists no routes. Deploy remains the creator's (workers/README.md). Do not add routes to the config. `assets.run_worker_first` is true. The worker returns its own `Response` on every path. Parser files and fonts become public only because `handleParser` and `servePeerFont` call `env.ASSETS.fetch` and set headers. A file dropped in `assets/` is not on the internet until a branch does that.
 
 `handleQuest` in `src/index.js` paints `/` from `renderGuide`. `?example=` selects a member of `EXAMPLES` (`notebook`, `question`, `decision`, `reading`, `commit`). An unknown id falls through to `EXAMPLES[0]`. Measured on 2026-10-14 with no assets binding, `GET /` and `GET /?note` are the same 85,180-byte document: the server ignores `note`. `GET /?example=commit` is 85,308 bytes. `GET /learn` is 77,231. `GET /build` is 85,581 and is cached `public, max-age=300`. `POST /build` and `GET`/`POST /script.spw` are `no-store`. `GET /` varies on `Accept`. `routes.test.mjs` requires `text/plain` and `quest.v2` JSON for the same path. `*/*` still renders HTML today because `wantsJson` requires `application/json` and the plain-text branch requires `text/plain` or `text/markdown`. That is an accident of `handleQuest`, not a cache contract.
 
@@ -87,7 +81,7 @@ On the five `EXAMPLES`, `parse` from the site bundle, from `reader.min.js`, and 
 - Treating `/parser/latest.js` or an immutable URL as the current pin.
 - An install button, `share_target`, or `file_handlers`. The site manifest at `manifest.webmanifest` is a different origin and a different product. Do not copy those fields.
 - Editing `workers/lib/shell.js` `layout`, or putting quest directives on `BASE_SECURITY`. autonomous.feedback uses that shell. Quest policy stays in `page.js`. The boot script is the `script` argument quest already passes into `layout`.
-- A new npm package. A new route. A dependency on the live version id `5e870c3b`.
+- A new npm package. A new route. A dependency on a live version id.
 - Forking `?parser=` so the notice loads `reader.min.js`. The existing switch stays.
 
 ## Proposed Design
@@ -345,7 +339,7 @@ export const PINNED_READER_SHA256 = "9928ec7f51a0416ee39857dc3a3b236d071051f484e
 export const PINNED_READER_BYTES = 87605;
 ```
 
-Those three reader values are copied from `assets/parser/2026.10.13/manifest.json` (`path` `reader.min.js`). A test fails if they drift from that manifest entry. The same constants are duplicated as literals at the top of `assets/sw.js`, including `SHELL_VERSION`. A test fails if the served script does not contain the same release, path, sha256, and version. Duplication is the cost of not executing the worker script in its own runtime under test and not adding a text-import rule to the deploy. The deploy tool is not a dependency of this repo.
+Those three reader values are copied from `assets/parser/2026.10.13/manifest.json` (`path` `reader.min.js`). A test fails if they drift from that manifest entry. The same constants are duplicated as literals at the top of `assets/sw.js`, including `SHELL_VERSION`. A test fails if the served script does not contain the same release, path, sha256, and version. Duplication is the cost of not running the worker script in its own runtime under test and not adding a text-import rule to the deploy. The deploy tool is not a dependency of this repo.
 
 Changing the pin is a deliberate edit of both files, and it increments `SHELL_VERSION` in both files in that same edit. Cache names are `spw-quest-shell-vN` and `spw-quest-pages-vN`. `activate` deletes every cache whose name starts with `spw-quest-` and is not those two. The same cache name plus a new reader URL would leave the old entry. A new release name is not applied by `latest.js`. `sw.js` bytes also change, so browsers treat it as a new worker.
 
@@ -713,7 +707,7 @@ There is no feature-flag service on this worker. Order is the flag.
 3. Ship `assets/sw.js`, the route, and the full registration script. Do not remove `script-src 'self'`. Visit `/`, confirm the controller, confirm a note written before the worker still restores, confirm `POST /build` is not cached, confirm a failed `/?example=commit` does not replay `/`. `node --check` of `assets/sw.js` is in `shell.test.mjs`.
 4. Ship the manifest, `manifest-src 'self'` on `PAGE_CSP`, and the icons. Installability appears when a browser decides to offer it. No in-page prompt to turn on. Confirm the document can fetch the manifest. Check icon requests as the installability section says.
 
-Deploy stays the creator's. Do not add `routes` to `wrangler.jsonc`. "No targets deployed" can still print.
+Deploy stays the creator's. Do not add `routes` to `wrangler.jsonc`.
 
 Rollback of step 1 is a redeploy of the previous script. Stored notes remain in browsers and are ignored by the old page. That is safe. Rollback of step 3 is the previous `sw.js` or the kill-switch script. The kill switch does not reload controlled clients, so reload the open tab once after that deploy. Rollback of step 2 is restoring `import { parse } from "/parser.js"` on the guide and removing `connect-src 'self'` from `LIVE_CSP`. The pinned file can stay on the origin; it is already a published release.
 
