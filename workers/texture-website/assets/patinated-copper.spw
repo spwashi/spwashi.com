@@ -3,5 +3,8 @@
 
 ~patinated-copper[metal]{brushed direction, hammered dimples, patina}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~patinated-copper[close, overcast, handled, as-found](wall)<tile>
+
 word: "patinated copper"
 science: "Crystals of metal, worked by hammer, roller or brush; the surface keeps every tool's direction, and air adds its own colour as patina."

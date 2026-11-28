@@ -1,5 +1,5 @@
 // Written by workers/texture-website/carry.mjs. The day's picture is chosen in the page, so this shell opens it with no network.
-const CACHE = "texture-c5d6d8f830ee";
+const CACHE = "texture-ccf037c7c8f7";
 // The materials' pictures, named for their hashes (images.json): a deploy that leaves them alone keeps them.
 const PICTURES = "texture-pictures-e9070412fff6";
 const SHELL = ["/","/texture.css","/texture.js","/daily.js","/lib/near-word.js","/set-ring.js","/set-ring.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/clean-still.js","/clean-still.css","/slot-scrub.js","/slot-scrub.css","/peer/pinch-text-scale.1c2ad61442.js","/vocabulary.json","/favicon.svg","/manifest.webmanifest","/icon-192.png","/icon-512.png","/icon-maskable-512.png"];

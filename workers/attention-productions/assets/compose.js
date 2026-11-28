@@ -187,6 +187,15 @@ export function slotText(shot, key) {
   return under(shot[key]);
 }
 
+/** The widest word a slot can show, in characters, so a scrub never moves what follows it. */
+export function slotWidth(key) {
+  const words = key === "tempo" ? [String(TEMPO.max), String(TEMPO.min)]
+    : key === "material" ? [...MATERIAL_RING.map((m) => m?.slug ?? "none")]
+    : SURFACE_KEYS.includes(key) ? ["none", ...SURFACE[key].map(under)]
+    : (LADDERS[key] ?? []).map(under);
+  return Math.max(1, ...words.map((w) => w.length));
+}
+
 /**
  * Step one ladder from the shot's current word. Every slot is a ring, including
  * the tempo and the surfaces, so a scrub past the end comes back in the other side.
@@ -244,7 +253,7 @@ export function expressionHtml(shot) {
     const href = addressOf({ ...shot, ...stepKey(shot, part.key, 1) });
     const brOp = BRACKET_OP[part.key] || "";
     const brAttr = brOp ? ` data-op="${brOp}"` : "";
-    const brackets = `${open ? `<span class="br"${brAttr}>${esc(open)}</span>` : ""}<span class="word">${esc(part.text)}</span>${close ? `<span class="br"${brAttr}>${esc(close)}</span>` : ""}`;
+    const brackets = `${open ? `<span class="br"${brAttr}>${esc(open)}</span>` : ""}<span class="word" data-w="${slotWidth(part.key)}">${esc(part.text)}</span>${close ? `<span class="br"${brAttr}>${esc(close)}</span>` : ""}`;
     return `<a class="slot" data-key="${part.key}" href="${esc(href)}">${brackets}</a>`;
   };
   const group = (item) => `<span class="${item.glue ? "glue" : "free"}">${item.parts.map(one).join("")}</span>`;

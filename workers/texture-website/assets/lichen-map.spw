@@ -3,5 +3,8 @@
 
 ~lichen-map[phenomenon]{branching, concentric rings, iridescence}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~lichen-map[close, overcast, handled, as-found](wall)<tile>
+
 word: "lichen map"
 science: "Patterns no one made: water, salt, frost and oxidation arranging themselves as they move, dry or grow, each by a rule a student can name."

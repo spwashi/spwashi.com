@@ -154,6 +154,9 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.35rem); line-height: 0.95; letter-spacing
 .expr .mark[data-op="direction"] { color: #34d399; }
 .slot { display: inline-flex; align-items: baseline; margin: 0 0.02rem; padding: 0 0.12rem; color: var(--ink); text-decoration: none; border-radius: 4px; cursor: ew-resize; touch-action: pan-y; }
 .slot .br { color: var(--lime); }
+/* Each word holds its ladder's widest width (data-w, in ch), so a scrub never shifts the expression. */
+.slot .word { display: inline-block; text-align: center; }
+.slot .word[data-w="3"]{min-inline-size:3ch} .slot .word[data-w="4"]{min-inline-size:4ch} .slot .word[data-w="5"]{min-inline-size:5ch} .slot .word[data-w="6"]{min-inline-size:6ch} .slot .word[data-w="7"]{min-inline-size:7ch} .slot .word[data-w="8"]{min-inline-size:8ch} .slot .word[data-w="9"]{min-inline-size:9ch} .slot .word[data-w="10"]{min-inline-size:10ch} .slot .word[data-w="11"]{min-inline-size:11ch} .slot .word[data-w="12"]{min-inline-size:12ch} .slot .word[data-w="13"]{min-inline-size:13ch} .slot .word[data-w="14"]{min-inline-size:14ch} .slot .word[data-w="15"]{min-inline-size:15ch} .slot .word[data-w="16"]{min-inline-size:16ch} .slot .word[data-w="17"]{min-inline-size:17ch} .slot .word[data-w="18"]{min-inline-size:18ch} .slot .word[data-w="19"]{min-inline-size:19ch} .slot .word[data-w="20"]{min-inline-size:20ch} .slot .word[data-w="21"]{min-inline-size:21ch} .slot .word[data-w="22"]{min-inline-size:22ch} .slot .word[data-w="23"]{min-inline-size:23ch} .slot .word[data-w="24"]{min-inline-size:24ch}
 .slot .br[data-op="scene"] { color: #fbbf24; }
 .slot .br[data-op="concept"] { color: #38bdf8; }
 .slot:hover { background: color-mix(in srgb, var(--lime) 16%, transparent); }

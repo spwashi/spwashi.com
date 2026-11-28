@@ -207,6 +207,8 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
   text-decoration: underline dashed color-mix(in srgb, var(--accent) 55%, var(--rule)) 1.5px; text-underline-offset: 0.24em;
   padding: 0.1em 0.25em; margin: 0 0.05em; border-radius: 0.2rem;
   cursor: ew-resize; touch-action: pan-y; min-height: 28px;
+  /* min-inline-size (in ch, set from the ladder) keeps the line still while a drag changes the word. */
+  text-align: center; box-sizing: content-box;
 }
 .spw-slot:hover, .spw-slot.scrubbing {
   background: color-mix(in srgb, var(--accent) 12%, transparent);

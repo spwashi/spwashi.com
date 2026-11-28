@@ -2,7 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { LADDERS, MATERIALS } from "../src/vocabulary.js";
-import { DAY_KEYS, DAY_MARKS, DEFAULTS, daily, dayNumber, isoOf, laddersFor, lineOf } from "../assets/daily.js";
+import { DAY_KEYS, DAY_MARKS, DAY_RUNGS, DEFAULTS, daily, dayNumber, isoOf, laddersFor, lineOf } from "../assets/daily.js";
 
 const vocab = { materials: MATERIALS, ladders: LADDERS };
 const look = (iso, query = "", byDay = true) => laddersFor(vocab, {
@@ -46,7 +46,9 @@ test("a cycle of mornings visits every material once, and tomorrow is not today'
     }
   }
   assert.equal(firsts.size, MATERIALS.length);
-  for (const key of DAY_KEYS) assert.equal(seen[key].size, LADDERS[key].length, key);
+  for (const key of DAY_KEYS) assert.equal(seen[key].size, (DAY_RUNGS[key] ?? LADDERS[key]).length, key);
+  // A morning never opens on a room, a ruin, a night or a sky: those stay one tap away.
+  for (const [key, word] of [["scale", "far"], ["wear", "ruined"], ["light", "sodium night"], ["scene", "sky"]]) assert.ok(!seen[key].has(word), `${key} opens on ${word}`);
 });
 
 test("an empty path takes its look from the date, and a query word wins", () => {

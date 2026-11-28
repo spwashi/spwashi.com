@@ -3,5 +3,8 @@
 
 ~cork[wood]{open grain, end grain, oiled sheen}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~cork[close, overcast, handled, as-found](wall)<tile>
+
 word: "cork"
 science: "Cellulose fibres laid down in yearly rings; cutting across, along or around the rings shows end grain, straight grain or figure."

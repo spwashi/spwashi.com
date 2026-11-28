@@ -13,6 +13,7 @@ import { securityHeaders, escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { peerScriptPath } from "../lib/peer-kit.js";
 import { CLASSES, FORMATS, LADDERS, LIGHT_FROM, MATERIALS, NEAR, PALETTES, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS } from "./src/vocabulary.js";
+import { DEFAULTS } from "./assets/daily.js";
 import { TILE, materialPng } from "./src/raster.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -46,10 +47,14 @@ Composed and tuned on the page:
 `;
 };
 
+const STANDING = DEFAULTS;
 const line = (m) => `#>texture_${m.slug.replaceAll("-", "_")}
 #:material #!${m.cls}
 
 ~${m.slug}[${m.cls}]{${CLASSES[m.cls].qualities.slice(0, 3).join(", ")}}
+
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~${m.slug}[${STANDING.scale}, ${STANDING.light}, ${STANDING.wear}, ${STANDING.process.replaceAll(" ", "-")}](${STANDING.scene})<${STANDING.format}>
 
 word: "${m.word}"
 science: "${CLASSES[m.cls].science}"

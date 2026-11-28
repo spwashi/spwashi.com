@@ -3,5 +3,8 @@
 
 ~marbled-endpaper[paper]{deckled edges, visible fibre, soft tooth}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~marbled-endpaper[close, overcast, handled, as-found](wall)<tile>
+
 word: "marbled endpaper"
 science: "Plant fibres felted into a sheet; how long the fibres are and how the sheet is pressed decide its tooth, its translucency and how it takes ink."

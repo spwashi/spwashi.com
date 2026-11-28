@@ -3,5 +3,8 @@
 
 ~chrome[metal]{brushed direction, hammered dimples, patina}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~chrome[close, overcast, handled, as-found](wall)<tile>
+
 word: "chrome"
 science: "Crystals of metal, worked by hammer, roller or brush; the surface keeps every tool's direction, and air adds its own colour as patina."

@@ -3,5 +3,8 @@
 
 ~verdigris-paint[pigment]{granulation, bloom edges, misregistration}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~verdigris-paint[close, overcast, handled, as-found](wall)<tile>
+
 word: "verdigris paint"
 science: "Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation."

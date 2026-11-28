@@ -15,6 +15,18 @@
 import { nearWord } from "../../lib/near-word.js";
 
 export const DAY_KEYS = ["scale", "light", "wear", "process", "scene", "format"];
+/**
+ * The rungs a morning may open on. Every rung is still one tap away, but the
+ * day's picture should read as a material: not a speck (macro stays) nor a
+ * room, not ruined, not at night, not a sky. A ladder not named here is free.
+ */
+export const DAY_RUNGS = Object.freeze({
+  scale: ["macro", "close", "arm's length"],
+  light: ["raking dawn", "overcast", "noon", "lamplight"],
+  wear: ["pristine", "handled", "worn", "weathered"],
+  process: ["as found", "riso", "engraving", "relief"],
+  scene: ["wall", "floor", "table", "page"],
+});
 /** The four mode words, in the order the line is read: distance, then light, wear, process. */
 export const MODE_KEYS = ["scale", "light", "wear", "process"];
 /** Marks that read as a meeting of two materials. `?` has to be escaped in a path. */
@@ -87,7 +99,7 @@ export function laddersFor(vocab, { day, roll, query, byDay, reads = null }) {
     if (near && near.how !== "exact") reads?.push({ key, ...near });
     const asked = near?.word ?? undefined;
     const rolled = Number.isFinite(roll) ? words[mix(roll + i * 97) % words.length] : null;
-    const fromDay = byDay && DAY_KEYS.includes(key) ? pickAt(words, dayN, 100 + i) : null;
+    const fromDay = byDay && DAY_KEYS.includes(key) ? pickAt(DAY_RUNGS[key]?.filter((w) => words.includes(w)) ?? words, dayN, 100 + i) : null;
     ladders[key] = asked ?? rolled ?? fromDay ?? DEFAULTS[key];
   });
   return ladders;

@@ -3,5 +3,8 @@
 
 ~linen[textile]{tight weave, raised pile, slubbed yarn}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~linen[close, overcast, handled, as-found](wall)<tile>
+
 word: "linen"
 science: "Yarns interlaced or looped; the weave or knit, not only the fibre, sets how a cloth drapes, catches light and wears."

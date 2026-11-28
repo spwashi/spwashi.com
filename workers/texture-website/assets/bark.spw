@@ -3,5 +3,8 @@
 
 ~bark[organic]{growth rings, cells, crumb}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~bark[close, overcast, handled, as-found](wall)<tile>
+
 word: "bark"
 science: "Material a living thing made: cells and fibres arranged for a job, which is why bark, crust and honeycomb pattern themselves."

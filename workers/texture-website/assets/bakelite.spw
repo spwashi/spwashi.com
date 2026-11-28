@@ -3,5 +3,8 @@
 
 ~bakelite[polymer]{moulded studs, satin gloss, embossed grain}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~bakelite[close, overcast, handled, as-found](wall)<tile>
+
 word: "bakelite"
 science: "Long chain molecules, moulded or cast; the mould's surface is copied exactly, so studs, grain and gloss are all made on purpose."

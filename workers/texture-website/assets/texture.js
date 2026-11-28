@@ -195,6 +195,8 @@ function spwSlotButton(vocab, state, key, onStep) {
     "aria-valuetext": current,
     title: `${key}: drag sideways, or click to step`,
   }, [slug(current)]);
+  // Hold the width of the ladder's longest word, so scrubbing through words of different lengths never shifts the line.
+  btn.style.minInlineSize = `${Math.max(...words.map((w) => slug(w).length))}ch`;
   bindSlotScrub(btn, {
     selector: ".spw-slot",
     commit: "live",

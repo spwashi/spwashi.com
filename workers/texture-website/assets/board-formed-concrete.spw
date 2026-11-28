@@ -3,5 +3,8 @@
 
 ~board-formed-concrete[stone]{polished face, honed matte, veining}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~board-formed-concrete[close, overcast, handled, as-found](wall)<tile>
+
 word: "board-formed concrete"
 science: "Minerals bound by heat, pressure or cement; the grain size and what fills the gaps between grains decide its pattern and polish."

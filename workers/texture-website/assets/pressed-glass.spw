@@ -3,5 +3,8 @@
 
 ~pressed-glass[glass]{frosted, bubbled, rain beads}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~pressed-glass[close, overcast, handled, as-found](wall)<tile>
+
 word: "pressed glass"
 science: "A cooled liquid with no crystal order; it bends light at every surface, so texture in glass is mostly what it does to what lies behind it."

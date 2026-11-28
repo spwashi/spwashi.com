@@ -3,5 +3,8 @@
 
 ~terracotta[ceramic]{crackle glaze, grout lines, speckled body}
 
+// the studio's standing look, so the file opens on texture.website as the line it would make
+~terracotta[close, overcast, handled, as-found](wall)<tile>
+
 word: "terracotta"
 science: "Clay fired until its grains fuse; a glaze is glass melted on top, and the crackle is the glaze and body shrinking by different amounts."
