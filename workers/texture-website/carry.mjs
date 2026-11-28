@@ -141,7 +141,8 @@ ${Object.entries(CLASSES).map(([cls, c]) => `      <article class="class" data-c
 </html>
 `;
 
-const CSP = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
+// manifest-src and worker-src are named: with default-src 'none' a browser will not fetch the manifest, and the page never installs.
+const CSP = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
 
 function headersFile() {
   const rules = [`# Written by workers/texture-website/carry.mjs.`, `/*`, ...Object.entries(securityHeaders({ csp: CSP })).map(([n, v]) => `  ${n}: ${v}`), ""];

@@ -35,6 +35,10 @@ test("the manifest installs with a maskable mark, shortcuts to the day, the cata
   for (const shortcut of manifest.shortcuts) assert.ok(shortcut.name && shortcut.short_name.length <= 16 && shortcut.icons?.length, shortcut.url);
   assert.deepEqual(manifest.share_target, { action: "/share", method: "GET", enctype: "application/x-www-form-urlencoded", params: { title: "title", text: "text", url: "url" } });
   assert.ok(read("texture.js").includes('url.pathname === "/share"'), "the page reads what was shared");
+  // With default-src 'none', a policy that does not name the manifest blocks it, and the page never installs.
+  const policy = read("_headers").match(/Content-Security-Policy: (.+)/)[1];
+  assert.match(policy, /manifest-src 'self'/);
+  assert.match(policy, /worker-src 'self'/);
 });
 
 test("the maskable mark keeps its band inside the middle circle and its weave to every edge", () => {
