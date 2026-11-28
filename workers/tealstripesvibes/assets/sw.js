@@ -1,5 +1,5 @@
 // Written by workers/tealstripesvibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
-const CACHE = "tealstripes-32a906248b84";
+const CACHE = "tealstripes-c9bb53d5f6dc";
 const SHELL = ["/","/index.html","/harbor","/ledger","/lantern","/tealstripes.js","/vibe.js","/lib/hold.js","/tealstripes.css","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/clean-still.js","/clean-still.css","/slot-scrub.js","/slot-scrub.css","/peer/pinch-text-scale.1c2ad61442.js","/favicon.svg","/manifest.webmanifest","/icons/icon-192.png","/icons/icon-512.png","/icons/icon-maskable-512.png","/icons/apple-touch-icon.png"];
 const SCRIPTED = /^\/(m|stamp|og)\/|^\/tuple$|\.json$/;
 const CODE = /\.(?:js|css)$/;

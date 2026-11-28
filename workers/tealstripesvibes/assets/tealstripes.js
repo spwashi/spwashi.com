@@ -171,6 +171,8 @@ if (place.kind === "unknown") {
       "factshift.center": { href: `https://factshift.center/?spw=${encodeURIComponent(expression)}`, says: "this vibe's line, held on the canvas" },
       "mutex.buzz": { href: "https://mutex.buzz/", says: "the lock that /@lock here follows" },
       "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(expression)}`, says: "this vibe's line, taken apart a slot at a time" },
+      // texture.website reads attention's light words as its own nearest light.
+      "texture.website": { href: `https://texture.website/?light=${pathWord(light)}&scale=room&format=tile`, says: `today's two surfaces under ${light}, as a tile` },
     };
   }, { corner: "top" });
   // The set's pinch: in, one more of the seed's facets comes through (in their order); out, the last one goes back to the ground; out past the ground is the set.

@@ -20,4 +20,11 @@
 .set-ring-says { grid-column: 2; color: rgba(244, 240, 246, 0.72); font-size: 12px; }
 @media (prefers-reduced-motion: reduce) { .set-ring-dot { transition: none; } }
 .set-ring.top { bottom: auto; top: max(14px, env(safe-area-inset-top)); }
+/* One corner, one row: where the ring sits at the bottom, a page's still bar (clean-still.css) moves beside it, centred on the ring's 44px. */
+:root:has(.set-ring.bottom) .still-bar { left: calc(max(14px, env(safe-area-inset-left)) + var(--set-ring-w, 112px) + 8px); bottom: calc(max(14px, env(safe-area-inset-bottom)) + 3px); }
+@media (pointer: coarse) { :root:has(.set-ring.bottom) .still-bar { bottom: calc(max(14px, env(safe-area-inset-bottom)) - 3px); } }
+/* Reading downward tucks the corner (set-ring.js); it returns on the way back up, at the end, or after a rest. */
+.set-ring { transition: opacity 0.3s ease, transform 0.3s ease; }
+:root[data-set-dock="tucked"] .set-ring:not(.open), :root[data-set-dock="tucked"] .still-bar { opacity: 0; transform: translateY(12px); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { :root[data-set-dock="tucked"] .set-ring:not(.open), :root[data-set-dock="tucked"] .still-bar { transform: none; } }
 .set-ring.top .set-ring-list { bottom: auto; top: 54px; }

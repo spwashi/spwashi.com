@@ -152,6 +152,7 @@ if (dial) {
     "tealstripesvibes.com": { href: "https://tealstripesvibes.com/@lock", says: "the stripes this hold fills in, an hour at a time" },
     "attention.productions": { href: `https://attention.productions/${pathWord(holder.title)}?shot=close-up&light=lamplight&focus=center`, says: `${holder.title}, as a shot` },
     "spw.quest": { href: `https://spw.quest/build#spw64=${spw64($("lock-spw")?.textContent ?? "")}`, says: "the rule, taken apart a slot at a time" },
+    "texture.website": { href: `https://texture.website/${pathWord(holder.title)}?scale=close&light=lamplight&wear=handled&format=sheet`, says: `${holder.title}, as a surface under the lamp` },
   }));
   // The set's pinch: in is the holder, filling the frame; out is the set.
   attachPinch(dial, {

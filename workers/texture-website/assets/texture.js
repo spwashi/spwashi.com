@@ -3,6 +3,8 @@ import { mountCleanStill } from "/clean-still.js";
 import { bindSlotScrub } from "/slot-scrub.js";
 import { DAY_KEYS, MODE_KEYS, daily, dayNumber, isoOf, laddersFor, lineOf, mix, slug } from "/daily.js";
 import { nearWord, readNote } from "/lib/near-word.js";
+import { mountSetRing, spw64 } from "/set-ring.js";
+import { mountTextScale } from "/text-scale.js";
 // prompt. Each word in the path is a material, bottom first; a mark before a word
 // is how it meets the one before (~ drifting through, * heavy with). Each ladder
 // (scale, light, wear, process, scene, format) is a row of words written into the
@@ -727,6 +729,44 @@ function drawStyleCard(vocab, state) {
   return square;
 }
 
+/**
+ * The composition framed on attention.productions. It reads these in texture's
+ * words (scale as its shot, format as its frame) as its nearest rungs; light,
+ * wear and process are words it holds as they are, so the look arrives whole.
+ */
+function shotHrefOf(state) {
+  const primary = state.layers.find(({ material }) => material.cls)?.material ?? null;
+  const query = [["shot", "scale"], ["light", "light"], ["ratio", "format"], ["wear", "wear"], ["process", "process"]]
+    .map(([theirs, ours]) => `${theirs}=${slug(state.ladders[ours])}`).join("&");
+  return primary ? `https://attention.productions/${primary.slug}?material=${primary.slug}&${query}` : `https://attention.productions/?${query}`;
+}
+
+/** Teal Stripes Vibes' seed for a light: a lamp through teal glass, a harbor at dusk, ink on a ledger line. */
+const SEED_BY_LIGHT = { lamplight: "lantern", "raking dawn": "lantern", "sodium night": "harbor", overcast: "harbor", noon: "ledger" };
+
+/**
+ * The set's ring and the set's pinch on words. The ring asks what to carry when
+ * it opens, so each site receives the composition as it stands: framed as a
+ * shot, held on the canvas, taken apart on spw.quest, captioned on the stripes.
+ */
+function joinTheSet(vocab, url) {
+  mountSetRing("texture.website", () => {
+    if (!vocab) return {};
+    const state = stateOf(url, vocab);
+    const line = spwLine(state);
+    const words = state.layers.map(({ material }) => material.word).join(" · ");
+    const seed = SEED_BY_LIGHT[state.ladders.light] ?? "ledger";
+    return {
+      "attention.productions": { href: shotHrefOf(state), says: `${words}, framed as a shot at this distance and light` },
+      "factshift.center": { href: `https://factshift.center/?spw=${encodeURIComponent(line)}`, says: "this composition's line, held on the canvas" },
+      "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(line)}`, says: "this line, taken apart a slot at a time" },
+      "tealstripesvibes.com": { href: `https://tealstripesvibes.com/${seed}?say=${encodeURIComponent(words.slice(0, 60))}`, says: `${seed}'s stripes, captioned "${words}"` },
+    };
+  });
+  // Two fingers on the words size them, as on every site in the set; the stage keeps the browser's own zoom.
+  mountTextScale(document.querySelector("main"), { ignore: ".stage" });
+}
+
 function drawCard(vocab, state, address, onStep, onCycleView) {
   const { midjourney, plain } = prompts(vocab, state);
   const line = spwLine(state);
@@ -741,13 +781,7 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
   const cssSnippet = primaryListed
     ? `background-image: url("${imageOf(primaryListed)}");\nbackground-size: ${PERIOD[state.ladders.scale] * 8}px ${PERIOD[state.ladders.scale] * 8}px;\nbackground-repeat: repeat;`
     : "";
-  // attention.productions reads these in texture's words (scale as its shot, format as its frame) as its nearest rungs;
-  // light, wear and process are words it holds as they are, so the look arrives whole.
-  const shotQuery = [["shot", "scale"], ["light", "light"], ["ratio", "format"], ["wear", "wear"], ["process", "process"]]
-    .map(([theirs, ours]) => `${theirs}=${slug(state.ladders[ours])}`).join("&");
-  const shotHref = primaryListed
-    ? `https://attention.productions/${primaryListed.slug}?material=${primaryListed.slug}&${shotQuery}`
-    : `https://attention.productions/?${shotQuery}`;
+  const shotHref = shotHrefOf(state);
   const canvasHref = `https://factshift.center/?spw=${encodeURIComponent(line)}`;
   const questHref = `https://spw.quest/build?script=${encodeURIComponent(line)}`;
   const thumb = node("div", { class: "thumb", "aria-hidden": "true" }, [$(".layers").cloneNode(true)]);
@@ -862,7 +896,7 @@ async function main() {
   document.body.classList.add("composed");
   const url = new URL(location.href);
   if (url.pathname === "/share") readShare(url);
-  if (url.pathname === "/catalog" || url.pathname === "/catalog/") { $(".slide").hidden = true; $(".card").hidden = true; keepOffline(); return; }
+  if (url.pathname === "/catalog" || url.pathname === "/catalog/") { $(".slide").hidden = true; $(".card").hidden = true; joinTheSet(null, url); keepOffline(); return; }
   sayArrival(vocab, url);
   const render = (focusKey) => {
     const state = stateOf(url, vocab);
@@ -966,6 +1000,7 @@ async function main() {
   });
   render();
   mountCleanStill({ key: "p", idleMs: 4500 });
+  joinTheSet(vocab, url);
   keepOffline();
 }
 

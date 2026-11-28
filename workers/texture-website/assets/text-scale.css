@@ -1,0 +1,9 @@
+/* The set's text size (text-scale.js): spwashi.com's ladder as <html>'s font size, and as --text-scale for a surface built in px. Copied into each unit's assets. */
+html[data-text-scale="70"] { font-size: 70%; --text-scale: 0.7; }
+html[data-text-scale="80"] { font-size: 80%; --text-scale: 0.8; }
+html[data-text-scale="90"] { font-size: 90%; --text-scale: 0.9; }
+html[data-text-scale="110"] { font-size: 110%; --text-scale: 1.1; }
+html[data-text-scale="120"] { font-size: 120%; --text-scale: 1.2; }
+.text-scale-badge { position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top)); z-index: 60; margin: 0; padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.22); background: rgba(10, 8, 12, 0.82); color: #f4f0f6; font: 600 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; transform: translateX(-50%); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.text-scale-badge.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .text-scale-badge { transition: none; } }

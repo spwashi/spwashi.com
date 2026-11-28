@@ -106,6 +106,25 @@ export function mountSetRing(here, carry = () => ({}), { corner = "bottom" } = {
   list.hidden = true;
   box.append(list, button);
   document.body.append(box);
+  // The corner is shared: a page's still bar (clean-still.js) sits beside the ring, never under it.
+  if (corner !== "top") document.documentElement.style.setProperty("--set-ring-w", `${Math.ceil(button.getBoundingClientRect().width) || 112}px`);
+  // While a hand reads downward the corner steps aside, so it never sits on the line being read; scrolling
+  // back up, reaching the end, or resting brings it back. Opacity and a short slide only: nothing reflows.
+  const root = document.documentElement;
+  let lastY = window.scrollY;
+  let rest = 0;
+  const show = () => { if (root.dataset.setDock) delete root.dataset.setDock; };
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
+    const atEnd = y + window.innerHeight >= document.documentElement.scrollHeight - 24;
+    if (!box.classList.contains("open")) {
+      if (y > lastY + 4 && y > 120 && !atEnd) { if (root.dataset.setDock !== "tucked") root.dataset.setDock = "tucked"; }
+      else if (y < lastY - 4 || atEnd) show();
+    }
+    lastY = y;
+    clearTimeout(rest);
+    rest = setTimeout(show, 1400);
+  }, { passive: true });
 
   const draw = () => {
     const carried = carry() ?? {};

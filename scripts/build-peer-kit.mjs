@@ -87,6 +87,7 @@ const SCRIPTS = Object.freeze({
   'mutex-buzz': [PINCH_TEXT_SCALE],
   'tealstripesvibes': [PINCH_TEXT_SCALE],
   'wap-mom': [PINCH_TEXT_SCALE],
+  'texture-website': [PINCH_TEXT_SCALE],
 });
 const ESBUILD = path.join(ROOT, '.spw/_workbench/node_modules/esbuild/lib/main.js');
 

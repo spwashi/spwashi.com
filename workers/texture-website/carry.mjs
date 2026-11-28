@@ -11,6 +11,7 @@ import { deflateSync } from "node:zlib";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { securityHeaders, escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
+import { peerScriptPath } from "../lib/peer-kit.js";
 import { CLASSES, FORMATS, LADDERS, MATERIALS, NEAR, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS } from "./src/vocabulary.js";
 import { TILE, materialPng } from "./src/raster.js";
 
@@ -91,6 +92,11 @@ const PIVOT_FALLBACK_HREF = {
   lens: "/?lens=risograph-botanica",
 };
 
+/** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
+const PINCH_TEXT = peerScriptPath("pinch-text-scale");
+/** The set's files texture.website carries from workers/lib: the ring, the still bar, the scrub, the text size. */
+const SET_FILES = ["set-ring.js", "set-ring.css", "text-scale.js", "text-scale.css", "text-scale-head.js", "clean-still.js", "clean-still.css", "slot-scrub.js", "slot-scrub.css"];
+
 const PAGE = `<!doctype html>
 <html lang="en">
 <head>
@@ -103,8 +109,12 @@ const PAGE = `<!doctype html>
   <link rel="apple-touch-icon" href="/icon-512.png">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/texture.css">
+  <link rel="stylesheet" href="/set-ring.css">
+  <link rel="stylesheet" href="/text-scale.css">
   <link rel="stylesheet" href="/clean-still.css">
   <link rel="stylesheet" href="/slot-scrub.css">
+  <script src="/text-scale-head.js"></script>
+  <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
   <script type="module" src="/texture.js"></script>
 </head>
 <body>
@@ -194,7 +204,7 @@ const MANIFEST = `${JSON.stringify({
  * cache named for their own hashes, so a deploy that leaves the images alone
  * leaves the kept copies alone; the page asks for all of them once it is idle.
  */
-const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/lib/near-word.js", "/clean-still.js", "/clean-still.css", "/slot-scrub.js", "/slot-scrub.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/icon-maskable-512.png"];
+const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/lib/near-word.js", ...SET_FILES.map((file) => `/${file}`), PINCH_TEXT, "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/icon-maskable-512.png"];
 
 function serviceWorker(version, picturesVersion) {
   return `// Written by workers/texture-website/carry.mjs. The day's picture is chosen in the page, so this shell opens it with no network.
@@ -333,7 +343,7 @@ export function iconPng(size = 192, { maskable = false } = {}) {
 
 export async function carried() {
   const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, near: NEAR, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
-  const shared = await Promise.all(["clean-still.js", "clean-still.css", "slot-scrub.js", "slot-scrub.css", "near-word.js"].map(async (file) => [file === "near-word.js" ? `lib/${file}` : file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
+  const shared = await Promise.all([...SET_FILES, "near-word.js"].map(async (file) => [file === "near-word.js" ? `lib/${file}` : file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
     ...MATERIALS.flatMap((m) => [[`${m.slug}.txt`, starter(m)], [`${m.slug}.spw`, line(m)]]),
     ...shared,
