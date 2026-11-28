@@ -5,7 +5,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CSP_HOME, CSP_NOW, FOLIO_SOURCES, SCHEDULE, carried, carriedWithWorker, paintLock } from '../carry.mjs';
-import { ICONS, iconPng, sameIconPng } from '../src/icon.js';
+import { ICONS } from '../src/icon.js';
+import { assertIconPng } from '../../lib/png.js';
 import { CYCLES, DIAL, FOLIOS, TURN_MS, clockLine, countdown, cycleFor, dayOf, dialOf, holderFor, isoWeek, nextTurnIn, nowLine, seenAt, sinceWords, turnLine, turnOf } from '../src/lock.js';
 import * as served from '../../site-hub-next/src/mutex.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
@@ -167,7 +168,7 @@ test('mutex.buzz installs: a manifest with its icons and a shortcut, and a worke
     const png = readFileSync(path.join(assets, 'icons', name));
     assert.ok(png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), `${name} is a PNG`);
     assert.equal(png.readUInt32BE(16), icon.size, `${name} is ${icon.size} wide`);
-    assert.ok(sameIconPng(png, iconPng(icon.size, icon)), `${name} is what src/icon.js draws`);
+    assertIconPng(png, icon.size, name);
   }
   // The worker keeps every file the lock needs, each one real, and names its cache for them.
   const sw = readFileSync(path.join(assets, 'sw.js'), 'utf8');

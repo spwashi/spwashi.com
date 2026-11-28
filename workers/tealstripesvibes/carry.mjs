@@ -19,7 +19,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
-import { iconLight, rgbOf, squarePng } from "../lib/png.js";
+import { assertIconPng } from "../lib/png.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, facetChips, maskLabel, moodOf, vibe, vibeCss } from "./src/vibe.js";
 
@@ -119,30 +119,17 @@ ${["angle", "drift", "breath", "grain", "beats", "steps"].map((key) => `      <l
 
 const seedPage = (seed) => shell({ seed, mask: ALL, filters: [], title: `${seed} · ${moodOf(seed)} — Teal Stripes Vibes`, mood: SEEDS[seed].mood, canonical: `${ORIGIN}${canonicalPath({ seed, mask: ALL, filters: [] })}` });
 
-/** The icons: the ground's stripes at forty-five degrees, edge to edge, so a launcher's mask can take any shape from them. */
+/** Full-bleed bitmap exports for the installed app. */
 export const ICONS = Object.freeze({
   "icon-192.png": { size: 192 },
   "icon-512.png": { size: 512 },
   "icon-maskable-512.png": { size: 512, purpose: "maskable" },
   "apple-touch-icon.png": { size: 180 },
 });
-const stripes = (size) => {
-  const colours = GROUND.palette.map(rgbOf);
-  const band = size / 5.5;
-  return squarePng(size, (x, y) => {
-    const position = (x + y) / band;
-    const base = colours[[0, 1, 0, 2][Math.floor(position) % 4]];
-    const across = position % 1;
-    const sheen = across < 0.045 ? 0.17 : 0.09 * Math.sin(Math.PI * across);
-    const ribbon = base.map((channel) => channel + (255 - channel) * sheen);
-    return iconLight(ribbon, x / size, y / size, 0.32);
-  });
-};
-
 function manifest() {
   return `${JSON.stringify({
     name: "Teal Stripes Vibes",
-    short_name: "Teal Stripes",
+    short_name: "tsv",
     description: "A proof card you can link to: a named look of stripes, masked and filtered by its address.",
     id: "/",
     start_url: "/",
@@ -152,7 +139,6 @@ function manifest() {
     theme_color: GROUND.palette[0],
     icons: [
       ...Object.entries(ICONS).filter(([name]) => name.startsWith("icon-")).map(([name, icon]) => ({ src: `/icons/${name}`, sizes: `${icon.size}x${icon.size}`, type: "image/png", purpose: icon.purpose ?? "any" })),
-      { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
     ],
     shortcuts: Object.entries(SEEDS).map(([seed, s]) => ({ name: seed, description: s.mood, url: `/${seed}` })),
   }, null, 2)}\n`;
@@ -270,29 +256,16 @@ export async function carriedWithWorker() {
   const hash = createHash("sha256");
   for (const [name, body] of files) hash.update(name).update(body);
   for (const name of ["tealstripes.js", "tealstripes.css"]) hash.update(name).update(await readFile(path.join(ASSETS, name)));
-  for (const [name, icon] of Object.entries(ICONS)) hash.update(name).update(stripes(icon.size));
-  return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12))]];
-}
-
-async function icons(check) {
-  let drift = 0;
-  for (const [name, icon] of Object.entries(ICONS)) {
-    const want = stripes(icon.size);
-    const target = path.join(ASSETS, "icons", name);
-    if (check) {
-      const have = await readFile(target).catch(() => null);
-      if (!have || sha(have) !== sha(want)) { drift += 1; console.error(`[tealstripes-carry] assets/icons/${name} differs from what carry.mjs draws`); }
-      continue;
-    }
-    await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, want);
+  for (const [name, { size }] of Object.entries(ICONS)) {
+    const bytes = await readFile(path.join(ASSETS, "icons", name));
+    hash.update(name).update(assertIconPng(bytes, size, name));
   }
-  return drift;
+  return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12))]];
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const drift = (await writeOrCheck(ASSETS, await carriedWithWorker(), { check, label: "tealstripes-carry", hint: "run node workers/tealstripesvibes/carry.mjs" })) + (await icons(check));
+  const drift = (await writeOrCheck(ASSETS, await carriedWithWorker(), { check, label: "tealstripes-carry", hint: "run node workers/tealstripesvibes/carry.mjs" }));
   if (check && drift) process.exit(1);
   if (!check) console.log("[tealstripes-carry] wrote the shell, the seeds, the host's files and the app into workers/tealstripesvibes/assets");
 }

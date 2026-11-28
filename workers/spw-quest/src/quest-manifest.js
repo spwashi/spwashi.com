@@ -6,7 +6,7 @@
 // Safari's Add to Home Screen). The browser's own install prompt also wants a
 // service worker with a fetch handler: the shell, assets/sw.js (PR 3).
 // Colors are PAPER_THEME in paper.js. Icons are committed PNGs under
-// assets/icons/, drawn from assets/icons/quest.svg (its comment has the render line).
+// assets/icons/, as authored bitmap exports.
 import { PAPER_THEME } from "./paper.js";
 
 export const MANIFEST_PATH = "/manifest.webmanifest";

@@ -152,3 +152,7 @@ From [ecosystem-planes-pivots-ontologies](../../../.spw/audits/ecosystem-planes-
 The seven install marks use upper-left light with material-specific shading. Keep each site's silhouette, icon sizes and launcher safe area. The existing carries or SVG sources own the renders. Review regular and maskable icons at launcher size and run the worker contracts.
 
 At smaller launcher sizes, give the Attention reticle and Factshift plus more weight. Texture's maskable red band sits entirely within the safe circle, which the pixel check verifies across its full width.
+
+The follow-up restores the finer Attention reticle and lighter Factshift plus. Texture uses a full-width cloth hem and tests that the hem stays visible under the mask. Review the full row against the main site's Spwashi app and its separate creator signature before changing the Quest or Spwashi artwork.
+
+The final native bitmap exports are source artwork. The carries check the PNG dimensions and opacity and use the served bytes for cache revisions. Spwashi wears the signature, Quest keeps the frame operator, and Teal Stripes Vibes uses tsv in the launcher. Lore.Land carries its leaf PNGs through its own Pages repository.

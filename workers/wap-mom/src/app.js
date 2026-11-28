@@ -1,7 +1,7 @@
 // wap.mom as an app: its manifest, the small script every page loads to keep
 // it on a device, and the service worker that keeps the periodical readable
 // offline. The worker prints all three, and carry-pages.mjs carries them with
-// the pages; the icons are drawn by src/icon.js at carry time.
+// the pages and the authored bitmap icons.
 import { numbered, printed } from "./catalog.js";
 import { PINCH_TEXT, VERSION } from "./layout.js";
 import { SERIES } from "./room.js";
@@ -22,7 +22,6 @@ export const MANIFEST = Object.freeze({
     { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
     { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
     { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
-    { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
   ],
   shortcuts: [
     { name: "Contents", url: "/contents/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
@@ -63,7 +62,7 @@ export const KEPT = Object.freeze([
 
 /** The service worker: instant stale-while-revalidate on kept issues & offline assets, bypassing cabinet and drawn figures cleanly. */
 export const SW_JS = `// Printed by wap.mom's worker (src/app.js). Each printing lists its issues here, so a new one reaches an installed reader.
-const CACHE = "wapmom-pages-${VERSION}";
+const CACHE = "wapmom-pages-${VERSION}-bitmap-icons";
 const KEPT = ${JSON.stringify(KEPT)};
 const LIVE = /^\\/cabinet|\\/draw$/;
 
@@ -133,7 +132,7 @@ const CURIOSITIES = {
 
 /** The script every page loads: pinch-to-scale, PWA install & offline readiness, dog-ears, Uses concordance, ruled proof slips, and Pocket π/e Apparatus. */
 export const APP_JS = `(() => {
-  const CACHE_NAME = "wapmom-pages-${VERSION}";
+  const CACHE_NAME = "wapmom-pages-${VERSION}-bitmap-icons";
   const DOGEAR_KEY = "set.wap-dogear/1";
   const MARGIN_KEY = "set.wap-margin/1";
   const ISSUES = ${JSON.stringify(ISSUE_META)};

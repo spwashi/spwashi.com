@@ -1,6 +1,6 @@
 {
   "name": "Teal Stripes Vibes",
-  "short_name": "Teal Stripes",
+  "short_name": "tsv",
   "description": "A proof card you can link to: a named look of stripes, masked and filtered by its address.",
   "id": "/",
   "start_url": "/",
@@ -26,12 +26,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    },
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
     }
   ],
   "shortcuts": [

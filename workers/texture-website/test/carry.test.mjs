@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { carriedShell, iconPng } from '../carry.mjs';
+import { carriedShell } from '../carry.mjs';
+import { assertIconPng } from '../../lib/png.js';
 import { CLASSES, FORMATS, LADDERS, MATERIALS, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS, slug } from '../src/vocabulary.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 
@@ -79,8 +80,7 @@ test('the page installs: a manifest, a home-screen mark, and a shell that keeps 
   assert.ok(manifest.icons.some((icon) => icon.src === '/icon-512.png' && icon.sizes === '512x512'));
   for (const size of [192, 512]) {
     const icon = readFileSync(path.join(assets, `icon-${size}.png`));
-    assert.deepEqual([...icon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-    assert.ok(icon.equals(iconPng(size)));
+    assertIconPng(icon, size, `icon-${size}.png`);
   }
   const sw = readFileSync(path.join(assets, 'sw.js'), 'utf8');
   assert.match(sw, /const CACHE = "texture-[0-9a-f]{12}";/);

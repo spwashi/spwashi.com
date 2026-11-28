@@ -4,6 +4,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import { readFileSync } from 'node:fs';
+import { assertIconPng } from '../../lib/png.js';
 import worker from '../src/index.js';
 import { DEFAULT_SPW_PRESETS, evalSpwDynamics, highlightSpw, parseSpw } from '../src/spw.js';
 
@@ -104,8 +106,8 @@ test('smut.today installs as a private PWA with PNG icons, manifest, pre-cached 
   assert.equal(manifest.start_url, '/');
   assert.ok(manifest.icons.some((i) => i.purpose === 'maskable' && i.sizes === '512x512'));
   for (const icon of manifest.icons.filter((i) => i.type === 'image/png')) {
-    const png = Buffer.from(await (await get(icon.src)).arrayBuffer());
-    assert.deepEqual([...png.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], icon.src);
+    const png = readFileSync(new URL(`../assets${icon.src}`, import.meta.url));
+    assertIconPng(png, Number.parseInt(icon.sizes, 10), icon.src);
   }
 
   for (const jsPath of ['/app.js', '/sw.js', '/text-scale-head.js']) {

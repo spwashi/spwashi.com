@@ -1,0 +1,4 @@
+/icons/*
+  Cache-Control: public, max-age=86400
+  X-Content-Type-Options: nosniff
+  Cross-Origin-Resource-Policy: same-origin

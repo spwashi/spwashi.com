@@ -23,7 +23,8 @@ import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { CYCLES, DIAL, FOLIOS, QUEUE, dialOf, scheduleBetween } from "./src/lock.js";
-import { ICONS, iconPng, sameIconPng } from "./src/icon.js";
+import { ICONS } from "./src/icon.js";
+import { assertIconPng } from "../lib/png.js";
 import { parse } from "../../public/js/semantic/spw-workbench-reader.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -412,7 +413,7 @@ function manifest() {
     display: "standalone",
     background_color: "#120d07",
     theme_color: "#120d07",
-    icons: [...icons, { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" }],
+    icons,
     shortcuts: [{ name: "What holds now", short_name: "Now", url: "/now/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] }],
   }, null, 2)}\n`;
 }
@@ -529,33 +530,18 @@ async function folios(check) {
   return drift;
 }
 
-/** Keep valid icon bytes when zlib encodes the same pixels differently. */
+/** Read the artwork as served and check its launcher dimensions. */
 async function carriedIcons() {
-  return Promise.all(Object.entries(ICONS).map(async ([name, icon]) => {
-    const target = path.join(ASSETS, "icons", name);
-    const want = iconPng(icon.size, icon);
-    const have = await readFile(target).catch((error) => {
-      if (error.code !== "ENOENT") throw error;
-      return null;
-    });
-    return { name, target, bytes: sameIconPng(have, want) ? have : want, have };
-  }));
+  return Promise.all(Object.entries(ICONS).map(async ([name, { size }]) => ({
+    name,
+    bytes: assertIconPng(await readFile(path.join(ASSETS, "icons", name)), size, name),
+  })));
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
   const icons = await carriedIcons();
   let drift = (await writeOrCheck(ASSETS, await serviceWorkerCarry(icons), { check, label: "mutex-carry", hint: "run node workers/mutex-buzz/carry.mjs" })) + (await folios(check));
-  for (const { name, target, bytes, have } of icons) {
-    if (bytes === have) continue;
-    if (check) {
-      drift += 1;
-      console.error(`[mutex-carry] assets/icons/${name} differs from src/icon.js`);
-      continue;
-    }
-    await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, bytes);
-  }
   if (check && drift) process.exit(1);
   if (!check) console.log("[mutex-carry] wrote the lock, both pages, the schedule and the folios into workers/mutex-buzz/assets");
 }

@@ -7,7 +7,7 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { deflateSync } from "node:zlib";
+import { assertIconPng } from "../lib/png.js";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { securityHeaders, escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
@@ -192,7 +192,6 @@ const MANIFEST = `${JSON.stringify({
   theme_color: "#1d1d1b",
   categories: ["design", "productivity"],
   icons: [
-    { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
     { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
     { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
     { src: "/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
@@ -306,56 +305,6 @@ self.addEventListener("message", (event) => {
 `;
 }
 
-const CRC = Array.from({ length: 256 }, (_, n) => { let c = n; for (let k = 0; k < 8; k += 1) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
-const crc32 = (buf) => { let c = 0xffffffff; for (const b of buf) c = CRC[(c ^ b) & 0xff] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
-function pngChunk(type, data) {
-  const out = Buffer.alloc(12 + data.length);
-  out.writeUInt32BE(data.length, 0);
-  out.write(type, 4, "ascii");
-  data.copy(out, 8);
-  out.writeUInt32BE(crc32(out.subarray(4, 8 + data.length)), 8 + data.length);
-  return out;
-}
-
-/**
- * An interlaced textile and red band, scaled for the home screen. Same bytes every run. Maskable,
- * the weave runs to every edge and the red band sits inside the circle a
- * launcher may cut to (the middle 80%), so no mask clips the mark.
- */
-export function iconPng(size = 192, { maskable = false } = {}) {
-  const raw = Buffer.alloc((size * 4 + 1) * size);
-  for (let y = 0; y < size; y += 1) {
-    const row = y * (size * 4 + 1);
-    raw[row] = 0;
-    for (let x = 0; x < size; x += 1) {
-      const u = (x + 0.5) / size, v = (y + 0.5) / size;
-      // Round the ends of the maskable band so the whole accent fits the safe circle.
-      const band = maskable
-        ? Math.hypot(Math.max(Math.abs(u - 0.5) - 0.22, 0), v - 0.66) < 0.06
-        : v >= 26 / 32;
-      const warp = (u * 4 % 1) - 0.5, weft = (v * 4 % 1) - 0.5;
-      const vertical = Math.abs(warp) < 0.27, horizontal = Math.abs(weft) < 0.27;
-      const over = (Math.floor(u * 4) + Math.floor(v * 4)) % 2 === 0;
-      const warpOnTop = vertical && (!horizontal || over);
-      const thread = warpOnTop ? warp : horizontal ? weft : null;
-      const lamp = 14 * (1 - u - v);
-      const rib = thread === null ? 0 : 3 * Math.cos(thread * Math.PI * 42);
-      const curve = thread === null ? 0 : 24 * Math.cos((thread + 0.09) * Math.PI / 0.68);
-      const shade = Math.round(lamp + rib + curve);
-      const color = thread === null ? [0xc5, 0xba, 0xa8] : warpOnTop ? [0x3c, 0x49, 0x40] : [0xa9, 0x8f, 0x70];
-      const o = row + 1 + x * 4;
-      raw[o] = band ? 0xc8 : color[0] + shade;
-      raw[o + 1] = band ? 0x40 : color[1] + shade;
-      raw[o + 2] = band ? 0x2a : color[2] + shade;
-      raw[o + 3] = 255;
-    }
-  }
-  const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(size, 0); ihdr.writeUInt32BE(size, 4);
-  ihdr[8] = 8; ihdr[9] = 6;
-  return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), pngChunk("IHDR", ihdr), pngChunk("IDAT", deflateSync(raw, { level: 9 })), pngChunk("IEND", Buffer.alloc(0))]);
-}
-
 export async function carried() {
   const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, near: NEAR, palettes: PALETTES, lightFrom: LIGHT_FROM, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
   const shared = await Promise.all([...SET_FILES, "near-word.js"].map(async (file) => [file === "near-word.js" ? `lib/${file}` : file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
@@ -378,9 +327,10 @@ export async function carriedShell() {
   const pictures = createHash("sha256").update(await readFile(path.join(ASSETS, "images.json"))).digest("hex").slice(0, 12);
   const hash = createHash("sha256");
   for (const [name, body] of files) hash.update(name).update(typeof body === "string" ? body : body);
-  for (const size of [192, 512]) hash.update(iconPng(size));
+  for (const [name, size] of [["icon-192.png", 192], ["icon-512.png", 512], ["icon-maskable-512.png", 512]]) {
+    hash.update(assertIconPng(await readFile(path.join(ASSETS, name)), size, name));
+  }
   for (const name of ["texture.css", "texture.js", "daily.js"]) hash.update(await readFile(path.join(ASSETS, name)));
-  hash.update(iconPng(512, { maskable: true }));
   return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12), pictures)]];
 }
 
@@ -420,20 +370,9 @@ async function images(check) {
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const icons = [["192", iconPng(192)], ["512", iconPng(512)], ["maskable-512", iconPng(512, { maskable: true })]];
   // The images first: the service worker names its picture cache for images.json.
   let drift = await images(check);
   drift += await writeOrCheck(ASSETS, await carriedShell(), { check, label: "texture-carry", hint: "run node workers/texture-website/carry.mjs" });
-  for (const [size, icon] of icons) {
-    const iconFile = path.join(ASSETS, `icon-${size}.png`);
-    if (check) {
-      const current = await readFile(iconFile).catch(() => Buffer.alloc(0));
-      if (!current.equals(icon)) { drift += 1; console.error(`[texture-carry] assets/icon-${size}.png differs; run node workers/texture-website/carry.mjs`); }
-    } else {
-      await mkdir(ASSETS, { recursive: true });
-      await writeFile(iconFile, icon);
-    }
-  }
   if (check && drift) process.exit(1);
   if (!check) console.log(`[texture-carry] wrote ${MATERIALS.length} materials in ${Object.keys(CLASSES).length} classes into workers/texture-website/assets`);
 }

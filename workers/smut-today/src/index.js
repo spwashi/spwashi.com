@@ -8,7 +8,6 @@
  */
 
 import { escapeHtml, securityHeaders } from "../../lib/http.js";
-import { rgbOf, squarePng } from "../../lib/png.js";
 import { peerScriptPath } from "../../lib/peer-kit.js";
 import {
   CARRIED_PINCH,
@@ -337,29 +336,6 @@ const BASE_SECURITY = securityHeaders({
   csp: "default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
 });
 
-const SMUT_BG = rgbOf("#11090c");
-const SMUT_CRIMSON = rgbOf("#d85a73");
-const SMUT_RING_SOFT = rgbOf("#572330");
-
-function smutIconPng(size, { scale = 1 } = {}) {
-  return squarePng(size, (x, y) => {
-    const u = (x / size - 0.5) / scale;
-    const v = (y / size - 0.5) / scale;
-    const d = Math.hypot(u, v);
-    if (d <= 0.085) return SMUT_CRIMSON;
-    if (d >= 0.23 && d <= 0.30) return SMUT_CRIMSON;
-    if (d >= 0.36 && d <= 0.39) return SMUT_RING_SOFT;
-    return SMUT_BG;
-  });
-}
-
-const ICONS = Object.freeze({
-  "icon-192.png": { size: 192 },
-  "icon-512.png": { size: 512 },
-  "icon-maskable-512.png": { size: 512, scale: 0.78 },
-  "apple-touch-icon.png": { size: 180 },
-});
-
 const MANIFEST = Object.freeze({
   name: "smut.today",
   short_name: "smut.today",
@@ -374,7 +350,6 @@ const MANIFEST = Object.freeze({
     { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
     { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
     { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
-    { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
   ],
   shortcuts: [
     { name: "Today", url: "/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
@@ -384,7 +359,7 @@ const MANIFEST = Object.freeze({
 });
 
 const STORY_SLUGS = STORIES.map((s) => `/${s.slug}/`);
-const SW_JS = `const CACHE = "smut-today-${VERSION}";
+const SW_JS = `const CACHE = "smut-today-${VERSION}-bitmap-icons";
 const KEPT = ${JSON.stringify([
   "/",
   "/to-you/",
@@ -399,6 +374,7 @@ const KEPT = ${JSON.stringify([
   "/manifest.webmanifest",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
+  "/icons/icon-maskable-512.png",
   "/icons/apple-touch-icon.png",
 ])};
 
@@ -2118,17 +2094,6 @@ export default {
           ...BASE_SECURITY,
           "Content-Type": "text/javascript; charset=UTF-8",
           "Cache-Control": "no-cache",
-        },
-      });
-    }
-
-    const iconName = url.pathname.startsWith("/icons/") ? url.pathname.slice(7) : "";
-    if (iconName && ICONS[iconName]) {
-      return new Response(smutIconPng(ICONS[iconName].size, ICONS[iconName]), {
-        headers: {
-          ...BASE_SECURITY,
-          "Content-Type": "image/png",
-          "Cache-Control": "public, max-age=86400",
         },
       });
     }

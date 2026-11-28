@@ -43,12 +43,13 @@ test('a figure posts its controls to the issue\'s /draw, which the worker draws 
 });
 
 test('wap.mom installs as an app and keeps every printed issue for reading offline', async () => {
-  const { ICONS, iconPng } = await import('../src/icon.js');
+  const { ICONS } = await import('../src/icon.js');
+  const { assertIconPng } = await import('../../lib/png.js');
   const { KEPT } = await import('../src/app.js');
   const manifest = JSON.parse(readFileSync(path.join(root, 'assets', 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.display, 'standalone');
   assert.ok(manifest.icons.some((i) => i.purpose === 'maskable' && i.sizes === '512x512'));
-  for (const [name, icon] of Object.entries(ICONS)) assert.ok(readFileSync(path.join(root, 'assets', 'icons', name)).equals(iconPng(icon.size, icon)), name);
+  for (const [name, icon] of Object.entries(ICONS)) assertIconPng(readFileSync(path.join(root, 'assets', 'icons', name)), icon.size, name);
   // Every kept address is a file the assets layer has, and every printed issue is kept.
   for (const issue of printed) assert.ok(KEPT.includes(`/${issue.slug}/`), issue.slug);
   const sw = readFileSync(path.join(root, 'assets', 'sw.js'), 'utf8');

@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "_spwashi",
-  "short_name": "_spwashi",
+  "name": "Spwashi",
+  "short_name": "Spwashi",
   "description": "I'm Spwashi. I build software and make art. This app keeps the work, tools, and learning surfaces close at hand.",
   "start_url": "/",
   "scope": "/",

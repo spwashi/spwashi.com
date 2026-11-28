@@ -11,8 +11,9 @@ import worker from "./src/index.js";
 import { printed } from "./src/catalog.js";
 import { BASE_SECURITY } from "./src/layout.js";
 import { headersFile, render, writeOrCheck } from "../lib/carry.js";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { ICONS, iconPng } from "./src/icon.js";
+import { readFile } from "node:fs/promises";
+import { ICONS } from "./src/icon.js";
+import { assertIconPng } from "../lib/png.js";
 
 const ASSETS = path.join(path.dirname(fileURLToPath(import.meta.url)), "assets");
 const ORIGIN = "https://wap.mom";
@@ -52,26 +53,17 @@ export async function carried() {
   ];
 }
 
-/** The app icons, drawn by src/icon.js, compared as bytes: they are not text the worker prints. */
-async function icons(check) {
-  let drift = 0;
-  for (const [name, icon] of Object.entries(ICONS)) {
-    const want = iconPng(icon.size, icon);
-    const target = path.join(ASSETS, "icons", name);
-    if (check) {
-      const have = await readFile(target).catch(() => null);
-      if (!have || !have.equals(want)) { drift += 1; console.error(`[carry-pages] assets/icons/${name} differs from src/icon.js`); }
-      continue;
-    }
-    await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, want);
+async function checkIcons() {
+  for (const [name, { size }] of Object.entries(ICONS)) {
+    const bytes = await readFile(path.join(ASSETS, "icons", name));
+    assertIconPng(bytes, size, name);
   }
-  return drift;
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const drift = (await writeOrCheck(ASSETS, await carried(), { check, label: "carry-pages", hint: "run node workers/wap-mom/carry-pages.mjs" })) + (await icons(check));
+  await checkIcons();
+  const drift = await writeOrCheck(ASSETS, await carried(), { check, label: "carry-pages", hint: "run node workers/wap-mom/carry-pages.mjs" });
   if (check && drift) process.exit(1);
   if (!check) console.log(`[carry-pages] wrote ${addresses().length} pages, 404.html and _headers into workers/wap-mom/assets`);
 }
