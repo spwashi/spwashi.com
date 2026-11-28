@@ -107,7 +107,7 @@ function surfaceSelect(shot) {
 
 /** Each ladder as a row of links; each link is the address of the shot with that word. */
 function ladders(c, v, shot) {
-  const row = (key, words, label = key, note = "") => `<div class="ladder" data-key="${key}"><span class="key">${escapeHtml(label)}</span>${words.map(([word, value, href]) => `<a href="${escapeHtml(href)}" data-word="${escapeHtml(value)}"${value === (key === "material" ? shot.material?.slug ?? "" : shot[key] ?? "") ? ' aria-current="true"' : ""}>${escapeHtml(word)}</a>`).join("")}${note}</div>`;
+  const row = (key, words, label = key, note = "") => `<div class="ladder" data-key="${key}"><span class="key">${escapeHtml(label)}</span>${words.map(([word, value, href]) => `<a href="${escapeHtml(href)}" data-word="${escapeHtml(value)}"${value === (key === "material" ? shot.material?.slug ?? "" : shot[key] ?? "") ? ' aria-current="true"' : ""}>${escapeHtml(word)}</a>`).join("")}</div>${note ? `<div class="ladder-note">${note}</div>` : ""}`;
   const rows = Object.entries(v.LADDERS).map(([key, words]) => row(key, words.map((word) => [word, word, c.addressOf({ ...shot, [key]: word })])));
   const offer = v.MATERIAL_OFFER.map((s) => c.MATERIAL_BY_SLUG_FOR_CARRY(s));
   rows.push(row("material", [["none", "", c.addressOf({ ...shot, material: null })], ...offer.map((m) => [m.word, m.slug, c.addressOf({ ...shot, material: m })])], "surface", `${surfaceSelect(shot)}<a class="out" id="texture-link" href="https://texture.website/">texture ↗</a>`));
@@ -168,12 +168,20 @@ async function page(c, v) {
           <p class="prompt"><code id="prompt">${escapeHtml(midjourney)}</code></p>
           <div class="expr" id="expr">${c.expressionHtml(shot)}</div>
           <div class="slip-actions">
-            <button type="button" id="copy-mj">Copy Midjourney</button>
-            <button type="button" id="copy-plain">Copy Plain</button>
-            <button type="button" id="copy-spw">Copy Spw</button>
-            <button type="button" id="roll-shot">Roll</button>
-            <button type="button" id="today-shot">Today</button>
-            <a class="action-link" id="beat-canvas" href="${escapeHtml(c.beatHrefOf(shot))}">3-shot beat ↗</a>
+            <div class="act-group" role="group" aria-labelledby="act-copy"><span class="act-label" id="act-copy">copy</span>
+              <button type="button" id="copy-mj">Midjourney</button>
+              <button type="button" id="copy-plain">Plain</button>
+              <button type="button" id="copy-spw">Spw</button>
+            </div>
+            <div class="act-group" role="group" aria-labelledby="act-shot"><span class="act-label" id="act-shot">shot</span>
+              <button type="button" id="undo-shot" aria-keyshortcuts="Meta+Z Control+Z" title="The shot before this one (⌘Z)" disabled>↶ undo</button>
+              <button type="button" id="redo-shot" aria-keyshortcuts="Meta+Shift+Z Control+Y" title="The shot after this one (⇧⌘Z)" disabled>↷ redo</button>
+              <button type="button" id="roll-shot" title="Every ladder to another word">roll</button>
+              <button type="button" id="today-shot" title="The day's own words, keeping the subject and the surface">today</button>
+            </div>
+            <div class="act-group act-out" role="group" aria-labelledby="act-open"><span class="act-label" id="act-open">open</span>
+              <a class="action-link" id="beat-canvas" href="${escapeHtml(c.beatHrefOf(shot))}">3-shot beat ↗</a>
+            </div>
           </div>
         </div>
         <details class="more"><summary>Plain</summary><p><code id="plain">${escapeHtml(plain)}</code></p></details>

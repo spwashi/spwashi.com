@@ -31,6 +31,16 @@ let scrub = null;
 let cameVia = "";
 /** The texture.website address the reader left (back=), kept so the way back changes only what was tuned here. */
 let cameBack = "";
+/** The last kept shot. A scrub or a drag previews in `shot`; only a kept change moves this, so undo never lands mid-gesture. */
+let committed = FIRST_SHOT;
+/** Kept shots before and after this one, for undo and redo. */
+const past = [];
+const future = [];
+const UNDO_DEPTH = 40;
+/** The last change's group and time, so a burst of typing is one undo step. */
+let lastGroup = { key: "", at: 0 };
+/** This tab's takes and the way back to the site that sent the reader, kept across a reload (sessionStorage). */
+const SESSION = "attention.session/1";
 /** Up to six recent takes kept in memory for one-tap A/B comparison. */
 const MAX_TAKES = 6;
 let takes = [];
@@ -153,6 +163,9 @@ function render() {
   if (scrub) { cancelAnimationFrame(tweenFrame); drawn = target; apply(target); }
   else moveTo(target);
   rackFocus();
+  const undoButton = $("undo-shot"), redoButton = $("redo-shot");
+  if (undoButton) undoButton.disabled = !past.length;
+  if (redoButton) redoButton.disabled = !future.length;
   for (const row of document.querySelectorAll(".ladder")) {
     const key = row.dataset.key;
     for (const link of row.querySelectorAll("a[data-word]")) {
@@ -165,6 +178,17 @@ function render() {
       if (current) link.setAttribute("aria-current", "true");
       else link.removeAttribute("aria-current");
     }
+  }
+  centreLadders();
+}
+
+/** On a phone a ladder is one row that scrolls sideways: bring each row's word to the middle, past its pinned name. */
+function centreLadders() {
+  for (const row of document.querySelectorAll(".ladder")) {
+    if (row.scrollWidth <= row.clientWidth + 1) continue;
+    const on = row.querySelector("a[aria-current]");
+    const name = row.querySelector(".key")?.offsetWidth ?? 0;
+    if (on) row.scrollLeft = on.offsetLeft - name - (row.clientWidth - name - on.offsetWidth) / 2;
   }
 }
 
@@ -231,6 +255,17 @@ function rememberTake(entry) {
   takes = [{ ...entry, addr }, ...takes.filter((t) => t.addr !== addr)].slice(0, MAX_TAKES);
 }
 
+/** The words where a take differs from a shot, subject first, in the order the page shows its ladders. */
+function takeDifference(take, from) {
+  const words = [];
+  if (take.subject !== from.subject) words.push(take.subject);
+  for (const key of Object.keys(LADDERS)) if (take[key] !== from[key]) words.push(take[key]);
+  if ((take.material?.slug ?? "") !== (from.material?.slug ?? "")) words.push(take.material?.word ?? "no surface");
+  for (const key of ["wear", "process"]) if ((take[key] ?? null) !== (from[key] ?? null)) words.push(take[key] ?? `no ${key}`);
+  if (take.tempo !== from.tempo) words.push(`tempo ${take.tempo}`);
+  return words.length ? words : ["the same words"];
+}
+
 /** Paint the recent-take strip once more than one take exists. */
 function paintTakes() {
   const box = $("takes");
@@ -247,13 +282,15 @@ function paintTakes() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "take-chip";
-    btn.textContent = `${entry.shot} · ${entry.lens} · ${entry.light}`;
-    if (entry.addr === currentAddr) btn.setAttribute("aria-current", "true");
+    // A take is named by what it would change: the words where it differs from the shot on screen.
+    const here = entry.addr === currentAddr;
+    const differs = takeDifference(entry, shot);
+    btn.textContent = here ? "this shot" : `${differs.slice(0, 3).join(" · ")}${differs.length > 3 ? ` +${differs.length - 3}` : ""}`;
+    btn.title = `${entry.subject} · ${entry.shot} · ${entry.lens} · ${entry.light}${entry.material ? ` · ${entry.material.word}` : ""}`;
+    if (here) btn.setAttribute("aria-current", "true");
     btn.addEventListener("click", () => {
       const { addr: _addr, ...rest } = entry;
-      shot = { ...rest };
-      window.history.replaceState(null, "", addressOf(shot));
-      render();
+      setShot({ ...rest }, { record: false });
     });
     box.append(btn);
   }
@@ -277,12 +314,78 @@ async function copyWithReceipt(button, text) {
   }, 1400);
 }
 
-/** Keep a change: the address becomes the shot's, so a reload or a shared link is this shot. */
-function commit(change, { record = true } = {}) {
-  shot = { ...shot, ...change, named: true };
+/**
+ * The one way the shot changes. The last kept shot goes on the undo stack (a
+ * change to the same address adds nothing, and a burst in one `group`, such as
+ * typing the subject, is one step), the address becomes the new shot's, so a
+ * reload or a shared link is this shot, the take is remembered, this tab's
+ * session is kept, and the page is drawn.
+ */
+function setShot(next, { record = true, group = "" } = {}) {
+  const now = Date.now();
+  const sameBurst = Boolean(group) && lastGroup.key === group && now - lastGroup.at < 1500;
+  lastGroup = { key: group, at: now };
+  if (addressOf(next) !== addressOf(committed) && !sameBurst) {
+    past.push(committed);
+    if (past.length > UNDO_DEPTH) past.shift();
+    future.length = 0;
+  }
+  shot = committed = next;
   if (record) rememberTake(shot);
+  settle();
+}
+
+/** Keep a change to some of the shot's words. */
+function commit(change, options) {
+  setShot({ ...shot, ...change, named: true }, options);
+}
+
+/** Write the kept shot to the address and this tab's session, and draw it. */
+function settle() {
   window.history.replaceState(null, "", addressOf(shot));
+  keepSession();
   render();
+}
+
+/** Step back to the shot kept before this one, or forward again. */
+function undo() {
+  if (!past.length) return;
+  future.push(committed);
+  shot = committed = past.pop();
+  lastGroup = { key: "", at: 0 };
+  settle();
+}
+function redo() {
+  if (!future.length) return;
+  past.push(committed);
+  shot = committed = future.pop();
+  lastGroup = { key: "", at: 0 };
+  settle();
+}
+
+function keepSession() {
+  try {
+    sessionStorage.setItem(SESSION, JSON.stringify({ takes: takes.map((t) => t.addr), via: cameVia, back: cameBack }));
+  } catch {
+    // Storage refused: the session lives in the page.
+  }
+}
+
+/** On a reload or a return to this page, bring back this tab's takes and the way back. A new arrival starts fresh. */
+function restoreSession() {
+  const how = performance.getEntriesByType?.("navigation")?.[0]?.type;
+  if (how !== "reload" && how !== "back_forward") return;
+  try {
+    const kept = JSON.parse(sessionStorage.getItem(SESSION) ?? "null");
+    if (!kept) return;
+    if (!cameVia && kept.via) { cameVia = kept.via; cameBack = kept.back ?? ""; }
+    takes = (kept.takes ?? []).slice(0, MAX_TAKES).map((addr) => {
+      const at = new URL(addr, window.location.origin);
+      return { ...readShot(at.pathname, at.search, today()), addr };
+    });
+  } catch {
+    // Nothing kept, or kept by an older page: start fresh.
+  }
 }
 
 /** A place on the screen, in the viewfinder's own units. */
@@ -415,7 +518,7 @@ function wire() {
   const subjectInput = $("subject-input");
   subjectInput?.addEventListener("input", () => {
     const clean = subjectInput.value.replace(/\s+/g, " ").trim().slice(0, 80);
-    commit({ subject: clean || DEFAULT_SUBJECT }, { record: false });
+    commit({ subject: clean || DEFAULT_SUBJECT }, { record: false, group: "subject" });
   });
   subjectInput?.addEventListener("change", () => rememberTake(shot));
   $("expr")?.addEventListener("click", (event) => {
@@ -441,10 +544,17 @@ function wire() {
   });
   $("today-shot")?.addEventListener("click", () => {
     const d = today();
-    shot = { ...shot, ...dayShot(d), day: d, named: shot.subject !== DEFAULT_SUBJECT };
-    rememberTake(shot);
-    window.history.replaceState(null, "", addressOf(shot));
-    render();
+    setShot({ ...shot, ...dayShot(d), day: d, named: shot.subject !== DEFAULT_SUBJECT });
+  });
+  $("undo-shot")?.addEventListener("click", undo);
+  $("redo-shot")?.addEventListener("click", redo);
+  // ⌘Z / Ctrl+Z steps back, with Shift (or Ctrl+Y) forward; a text field keeps its own undo.
+  document.addEventListener("keydown", (event) => {
+    if (!(event.metaKey || event.ctrlKey) || event.altKey) return;
+    if (event.target.closest?.("input, textarea, select, [contenteditable]")) return;
+    const key = event.key.toLowerCase();
+    if (key === "z") { event.preventDefault(); if (event.shiftKey) redo(); else undo(); }
+    else if (key === "y" && event.ctrlKey) { event.preventDefault(); redo(); }
   });
   const prompt = $("prompt");
   prompt?.closest(".prompt")?.addEventListener("click", async () => {
@@ -467,13 +577,15 @@ function wire() {
 if (svg) {
   cameVia = new URLSearchParams(window.location.search).get("via") ?? "";
   cameBack = cameVia === "texture.website" ? new URLSearchParams(window.location.search).get("back") ?? "" : "";
+  restoreSession();
   if (cameVia === "texture.website" && $("return-note")) $("return-note").hidden = false;
-  shot = readShot(window.location.pathname, window.location.search, today());
+  shot = committed = readShot(window.location.pathname, window.location.search, today());
   // A link from a neighbour may speak its own words: say once how they were read.
   const readLine = readNote(shot.read);
   const readEl = $("read-note");
   if (readEl && readLine) { readEl.textContent = readLine; readEl.hidden = false; }
   rememberTake(shot);
+  keepSession();
   wire();
   render();
   // The set's ring: what this shot becomes on each of the other sites.
@@ -496,6 +608,9 @@ if (svg) {
     go: (direction) => { const next = stepShot(shot, direction); if (next) commit({ shot: next }); else openSetRing(); },
   });
 }
+
+let centring = 0;
+window.addEventListener("resize", () => { cancelAnimationFrame(centring); centring = requestAnimationFrame(centreLadders); }, { passive: true });
 
 // spwashi.com's pinch on the words sizes them; the viewfinder keeps its own pinch (text-scale.js).
 mountTextScale(document.querySelector("main"), { ignore: ".pinchable" });
