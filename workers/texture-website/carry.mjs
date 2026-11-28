@@ -322,16 +322,20 @@ export function iconPng(size = 192, { maskable = false } = {}) {
     for (let x = 0; x < size; x += 1) {
       const band = maskable ? y >= Math.round(size * 0.6) && y < Math.round(size * 0.72) : y >= Math.round(size * 26 / 32);
       const u = (x + 0.5) / size, v = (y + 0.5) / size;
-      const warp = Math.abs((u * 4 % 1) - 0.5), weft = Math.abs((v * 4 % 1) - 0.5);
-      const vertical = warp < 0.27, horizontal = weft < 0.27;
+      const warp = (u * 4 % 1) - 0.5, weft = (v * 4 % 1) - 0.5;
+      const vertical = Math.abs(warp) < 0.27, horizontal = Math.abs(weft) < 0.27;
       const over = (Math.floor(u * 4) + Math.floor(v * 4)) % 2 === 0;
-      const thread = vertical && (!horizontal || over) ? warp : horizontal ? weft : null;
-      const shade = thread === null ? 0 : Math.round(15 * (1 - thread / 0.27));
-      const color = thread === null ? [0xd9, 0xd2, 0xc3] : vertical && (!horizontal || over) ? [0x46 + shade, 0x50 + shade, 0x48 + shade] : [0xb0 + shade, 0x9a + shade, 0x7f + shade];
+      const warpOnTop = vertical && (!horizontal || over);
+      const thread = warpOnTop ? warp : horizontal ? weft : null;
+      const lamp = 14 * (1 - u - v);
+      const rib = thread === null ? 0 : 3 * Math.cos(thread * Math.PI * 42);
+      const curve = thread === null ? 0 : 24 * Math.cos((thread + 0.09) * Math.PI / 0.68);
+      const shade = Math.round(lamp + rib + curve);
+      const color = thread === null ? [0xc5, 0xba, 0xa8] : warpOnTop ? [0x3c, 0x49, 0x40] : [0xa9, 0x8f, 0x70];
       const o = row + 1 + x * 4;
-      raw[o] = band ? 0xc8 : color[0];
-      raw[o + 1] = band ? 0x40 : color[1];
-      raw[o + 2] = band ? 0x2a : color[2];
+      raw[o] = band ? 0xc8 : color[0] + shade;
+      raw[o + 1] = band ? 0x40 : color[1] + shade;
+      raw[o + 2] = band ? 0x2a : color[2] + shade;
       raw[o + 3] = 255;
     }
   }

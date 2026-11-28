@@ -146,3 +146,7 @@ From [ecosystem-planes-pivots-ontologies](../../../.spw/audits/ecosystem-planes-
 - **smut.today:** consent and adulthood as frame, not banner; pacing over count (3cda8290). Its direction belongs to smut-today-crew.
 - **autonomous.feedback:** `/for/{host}` retired 2026-09-22; the desk model lives in `.spw/caches/feedback-product-2026-09.spw`.
 - **The canvas's forces and brace matrix** stay inside factshift.center (hub.spw `field`).
+
+## Worker app icon lighting
+
+The seven install marks use upper-left light with material-specific shading. Keep each site's silhouette, icon sizes and launcher safe area. The existing carries or SVG sources own the renders. Review regular and maskable icons at launcher size and run the worker contracts.

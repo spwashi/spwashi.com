@@ -2,7 +2,7 @@
 // leg, and a leg with a small foot) in ink on the paper, at the sizes an
 // installed app asks for. A maskable icon draws the π smaller, inside the
 // middle of the square where every launcher's mask leaves it whole.
-import { rgbOf, squarePng } from "../../lib/png.js";
+import { iconLight, rgbOf, squarePng } from "../../lib/png.js";
 
 const PAPER = rgbOf("#f4efe4");
 const INK = rgbOf("#1c1916");
@@ -23,7 +23,10 @@ export function iconPng(size, { scale = 1 } = {}) {
   return squarePng(size, (x, y) => {
     const u = 0.5 + (x / size - 0.5) / scale;
     const v = 0.5 + (y / size - 0.5) / scale;
-    return inPi(u, v) ? INK : PAPER;
+    if (inPi(u, v)) return iconLight(INK, x / size, y / size, 0.11);
+    const paper = iconLight(PAPER, x / size, y / size, 0.34);
+    if (inPi(u - 0.012, v - 0.018)) return paper.map((channel) => channel * 0.78);
+    return paper;
   });
 }
 

@@ -3,6 +3,7 @@
 // the sizes an installed app asks for. A maskable icon keeps the cell inside
 // the middle 80%, where every launcher's mask leaves it whole.
 import { deflateSync, inflateSync } from "node:zlib";
+import { iconLight } from "../../lib/png.js";
 
 const GROUND = [0x12, 0x0d, 0x07];
 const HONEY = [0xff, 0xc5, 0x3d];
@@ -46,10 +47,15 @@ export function iconPng(size, { share = 0.42, rounded = false } = {}) {
         // The ground: a full square, or a rounded one for the apple icon's own mask to soften.
         const qx = Math.max(corner - px, px - (size - corner), 0), qy = Math.max(corner - py, py - (size - corner), 0);
         if (corner && Math.hypot(qx, qy) > corner) continue;
-        let col = GROUND;
+        const u = px / size, v = py / size;
+        let col = iconLight(GROUND, u, v, 0.14);
+        if (inHexagon(px, py, c, c + r * 0.05, r)) col = INK;
         if (inHexagon(px, py, c, c, r)) {
           const band = py - c;
-          col = Math.abs(band + r * 0.18) < stripe / 2 || Math.abs(band - r * 0.28) < stripe / 2 ? INK : HONEY;
+          const cut = Math.abs(band + r * 0.18) < stripe / 2 || Math.abs(band - r * 0.28) < stripe / 2;
+          const inset = inHexagon(px, py, c, c, r * 0.94);
+          const gold = inset ? HONEY : band < 0 ? [255, 222, 140] : [189, 102, 21];
+          col = cut ? INK : iconLight(gold, u, v, 0.42);
         }
         rr += col[0]; gg += col[1]; bb += col[2]; aa += 255;
       }

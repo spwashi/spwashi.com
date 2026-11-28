@@ -3,9 +3,22 @@
        Full bleed; the mark sits inside the maskable safe circle (radius 205 around the center).
        Render: for s in 180 192 512; do rsvg-convert -w $s -h $s quest.svg -o quest-$s.png; done; cp quest-512.png quest-mask-512.png -->
   <title id="title">spw.quest</title>
-  <rect width="512" height="512" fill="#1b5c5d"/>
-  <g fill="none" stroke="#eee9dd" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <radialGradient id="ground" cx="23%" cy="18%" r="105%">
+      <stop stop-color="#488c88"/>
+      <stop offset=".54" stop-color="#1b5c5d"/>
+      <stop offset="1" stop-color="#103437"/>
+    </radialGradient>
+    <linearGradient id="paper" x2=".4" y2="1">
+      <stop stop-color="#fff8df"/>
+      <stop offset="1" stop-color="#d4d3b8"/>
+    </linearGradient>
+    <g id="mark" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke-width="25" d="M177 151v210M243 151v210M137 220h139M137 292h139"/>
     <path stroke-width="29" d="m304 194 69 62-69 62"/>
-  </g>
+    </g>
+  </defs>
+  <rect width="512" height="512" fill="url(#ground)"/>
+  <use href="#mark" transform="translate(4 7)" stroke="#103437" opacity=".7"/>
+  <use href="#mark" stroke="url(#paper)"/>
 </svg>

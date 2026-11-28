@@ -19,7 +19,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
-import { rgbOf, squarePng } from "../lib/png.js";
+import { iconLight, rgbOf, squarePng } from "../lib/png.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, facetChips, maskLabel, moodOf, vibe, vibeCss } from "./src/vibe.js";
 
@@ -129,7 +129,14 @@ export const ICONS = Object.freeze({
 const stripes = (size) => {
   const colours = GROUND.palette.map(rgbOf);
   const band = size / 5.5;
-  return squarePng(size, (x, y) => colours[[0, 1, 0, 2][Math.floor((x + y) / band) % 4]]);
+  return squarePng(size, (x, y) => {
+    const position = (x + y) / band;
+    const base = colours[[0, 1, 0, 2][Math.floor(position) % 4]];
+    const across = position % 1;
+    const sheen = across < 0.045 ? 0.17 : 0.09 * Math.sin(Math.PI * across);
+    const ribbon = base.map((channel) => channel + (255 - channel) * sheen);
+    return iconLight(ribbon, x / size, y / size, 0.32);
+  });
 };
 
 function manifest() {

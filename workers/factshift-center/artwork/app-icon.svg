@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Render with rsvg-convert at 32, 96, 180, 192 and 512.
+       The same full-bleed composition serves the 512px maskable icon. -->
+  <defs>
+    <radialGradient id="ground" cx="24%" cy="15%" r="90%">
+      <stop stop-color="#7d3b33"/>
+      <stop offset="1" stop-color="#331013"/>
+    </radialGradient>
+    <linearGradient id="tile" x2=".5" y2="1">
+      <stop stop-color="#a69a8d"/>
+      <stop offset="1" stop-color="#645953"/>
+    </linearGradient>
+    <linearGradient id="ink" x2=".4" y2="1">
+      <stop stop-color="#fff3d4"/>
+      <stop offset="1" stop-color="#edc588"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#ground)"/>
+  <rect x="105" y="115" width="302" height="302" rx="44" fill="#39181a"/>
+  <rect x="105" y="105" width="302" height="302" rx="44" fill="url(#tile)" stroke="#d9bc9c" stroke-width="4"/>
+  <rect x="155" y="155" width="202" height="202" rx="31" fill="#5a4239" stroke="url(#ink)" stroke-width="20"/>
+  <path d="M222 256h68m-34-34v68" fill="none" stroke="url(#ink)" stroke-width="19" stroke-linecap="round"/>
+</svg>

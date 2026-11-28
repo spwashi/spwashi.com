@@ -41,3 +41,12 @@ export function squarePng(size, colourAt, samples = 4) {
 
 /** A colour as written, "#0b3b3a", as [r, g, b]. */
 export const rgbOf = (hex) => [1, 3, 5].map((i) => Number.parseInt(hex.slice(i, i + 2), 16));
+
+/** A broad upper-left light over an icon, in normalized coordinates. */
+export function iconLight(rgb, u, v, strength) {
+  const distance = Math.hypot(u - 0.23, v - 0.18);
+  const exposure = strength * (0.7 - distance);
+  return rgb.map((channel) => exposure > 0
+    ? channel + (255 - channel) * exposure
+    : channel * (1 + exposure));
+}

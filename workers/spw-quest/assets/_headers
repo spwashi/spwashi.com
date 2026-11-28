@@ -23,7 +23,7 @@
 /sw.js
   Cache-Control: public, max-age=60
   X-Content-Type-Options: nosniff
-  X-Spw-Shell: 2
+  X-Spw-Shell: 3
 
 /robots.txt
   Cache-Control: public, max-age=3600
