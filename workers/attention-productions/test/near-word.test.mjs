@@ -6,7 +6,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { editDistance, measureOf, nearWord, readNote } from "../../lib/near-word.js";
 import { LADDERS, NEAR } from "../src/vocabulary.js";
-import { readShot, textureHrefOf } from "../src/compose.js";
+import { SURFACE, promptOf, readShot, spwOf, textureHrefOf } from "../src/compose.js";
 import { LADDERS as TEXTURE_LADDERS, NEAR as TEXTURE_NEAR } from "../../texture-website/src/vocabulary.js";
 import { laddersFor } from "../../texture-website/assets/daily.js";
 
@@ -34,7 +34,7 @@ test("the reader goes exact, alias, measure, shared, prefix, slip, and leaves th
 });
 
 test("every alias names a rung of its own ladder, on both hosts", () => {
-  for (const [hostLadders, near] of [[LADDERS, NEAR], [TEXTURE_LADDERS, TEXTURE_NEAR]]) {
+  for (const [hostLadders, near] of [[{ ...LADDERS, ...SURFACE }, NEAR], [TEXTURE_LADDERS, TEXTURE_NEAR]]) {
     for (const [key, { aliases = {}, measures = {} }] of Object.entries(near)) {
       for (const [alias, word] of Object.entries(aliases)) assert.ok(hostLadders[key].includes(word), `${key}: ${alias} -> ${word}`);
       for (const word of Object.keys(measures)) assert.ok(hostLadders[key].includes(word), `${key}: measure ${word}`);
@@ -59,10 +59,12 @@ test("spwashi.com's theater links land on rungs, and say what had none", () => {
     for (const key of Object.keys(LADDERS)) if (params.has(key)) assert.ok(LADDERS[key].includes(shot[key]), `${p} ${key}`);
     const unread = shot.read.filter((r) => r.how === "unread").map((r) => `${r.key}=${r.asked}`);
     // Words with no rung here: a camera move and a light source attention.productions does not draw.
-    for (const word of unread) assert.ok(/^(move=(orbit|drift)|from=practical|light=backlight)$/.test(word), `${p}: ${word} should have a rung`);
+    // Camera moves attention.productions does not draw, and a practical as a direction (a lamp inside the frame).
+    // A light named by its direction (backlight) is read as from= unless the link says from itself.
+    for (const word of unread) assert.ok(/^(move=(orbit|drift)|from=practical)$/.test(word), `${p}: ${word} should have a rung`);
   }
   const nib = readShot("/brass-nib-over-brace-lattice", "?shot=macro&lens=100mm&light=raking_sun&from=left&move=still&ratio=square&focus=near", "2026-11-27");
-  assert.deepEqual([nib.shot, nib.lens, nib.light, nib.focus], ["extreme close-up", "macro", "golden hour", "lower third"]);
+  assert.deepEqual([nib.shot, nib.lens, nib.light, nib.focus], ["extreme close-up", "macro", "raking dawn", "lower third"]);
 });
 
 test("texture.website and attention.productions read each other's words: scale is the shot's distance", () => {
@@ -70,7 +72,8 @@ test("texture.website and attention.productions read each other's words: scale i
   const pairs = { macro: "extreme close-up", close: "close-up", "arm-s-length": "medium", room: "wide", far: "establishing" };
   for (const [scale, shot] of Object.entries(pairs)) assert.equal(readShot("/vellum", `?shot=${scale}`, "2026-11-27").shot, shot);
   assert.equal(readShot("/vellum", "?ratio=plate", "2026-11-27").ratio, "widescreen");
-  assert.equal(readShot("/vellum", "?light=raking-dawn", "2026-11-27").light, "golden hour");
+  // texture.website's five lights are attention's own words now.
+  for (const light of TEXTURE_LADDERS.light) assert.equal(readShot("/vellum", `?light=${encodeURIComponent(light)}`, "2026-11-27").light, light);
   // attention.productions -> texture.website, in attention's words, and back to the same distance.
   const shot = { ...readShot("/vellum", "?shot=wide&light=golden-hour&ratio=scope", "2026-11-27"), material: { slug: "vellum" } };
   const href = new URL(textureHrefOf(shot));
@@ -85,4 +88,30 @@ test("texture.website and attention.productions read each other's words: scale i
     const back = laddersFor({ ladders: TEXTURE_LADDERS, near: TEXTURE_NEAR }, { day: "2026-11-27", roll: Number.NaN, query: new URLSearchParams({ scale: there }), byDay: false });
     assert.equal(back.scale, scale, `${scale} -> ${there} -> ${back.scale}`);
   }
+});
+
+test("texture.website's surface (wear and process) arrives whole, writes the prompt and the Spw, and goes back", () => {
+  const shot = readShot("/vellum", "?material=vellum&wear=weathered&process=riso&light=noon", "2026-11-27");
+  assert.deepEqual([shot.material.slug, shot.wear, shot.process, shot.light], ["vellum", "weathered", "riso", "noon"]);
+  const { plain } = promptOf(shot);
+  assert.match(plain, /hard noon sun, short black shadows/);
+  assert.match(plain, /weathered vellum surfaces, printed as a two-colour risograph/);
+  assert.match(spwOf(shot), /\^surface\{ =wear\[weathered\] =process\[riso\] \}/);
+  const back = new URL(textureHrefOf(shot));
+  assert.equal(back.searchParams.get("wear"), "weathered");
+  assert.equal(back.searchParams.get("process"), "riso");
+  // Unnamed, the surface says nothing: no wear, no process, and the day never picks them.
+  const plainShot = readShot("/vellum", "", "2026-11-27");
+  assert.equal(plainShot.wear, null);
+  assert.equal(plainShot.process, null);
+  assert.doesNotMatch(spwOf(plainShot), /\^surface/);
+  // A light named by its direction sets where it falls from, and yields to the address's own from=.
+  const rim = readShot("/x", "?light=backlight", "2026-11-27");
+  assert.equal(rim.from, "behind");
+  assert.deepEqual(rim.read.map((r) => [r.key, r.word]), [["from", "behind"]]);
+  assert.equal(readShot("/x", "?light=backlight&from=left", "2026-11-27").from, "left");
+  assert.ok(readShot("/x", "?light=backlight&from=back", "2026-11-27").read.every((r) => r.how !== "unread"), "agreeing with the address's from is read, not left");
+  // A neighbour's word for a surface reads as texture's own.
+  assert.equal(readShot("/x", "?wear=distressed&process=risograph", "2026-11-27").wear, "weathered");
+  assert.equal(readShot("/x", "?process=risograph", "2026-11-27").process, "riso");
 });

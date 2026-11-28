@@ -3,7 +3,7 @@
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
 import { readNote } from "/lib/near-word.js";
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf, textureHrefOf } from "/compose.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf, textureHrefOf, SURFACE_KEYS } from "/compose.js";
 import { DEFAULT_SUBJECT, LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
 import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
@@ -148,9 +148,10 @@ function render() {
     for (const link of row.querySelectorAll("a[data-word]")) {
       const word = link.dataset.word;
       const material = key === "material" ? MATERIALS.find((m) => m.slug === word) ?? null : shot.material;
-      const next = key === "material" ? { ...shot, material } : { ...shot, [key]: word };
+      // A surface row's "none" is no word: the prompt says nothing of wear or process.
+      const next = key === "material" ? { ...shot, material } : { ...shot, [key]: SURFACE_KEYS.includes(key) ? word || null : word };
       link.setAttribute("href", addressOf(next));
-      const current = key === "material" ? (shot.material?.slug ?? "") === word : shot[key] === word;
+      const current = key === "material" ? (shot.material?.slug ?? "") === word : (shot[key] ?? "") === word;
       if (current) link.setAttribute("aria-current", "true");
       else link.removeAttribute("aria-current");
     }
@@ -397,6 +398,7 @@ function wire() {
     event.preventDefault();
     const key = link.closest(".ladder").dataset.key;
     if (key === "material") commit({ material: MATERIALS.find((m) => m.slug === link.dataset.word) ?? null });
+    else if (SURFACE_KEYS.includes(key)) commit({ [key]: link.dataset.word || null });
     else commit({ [key]: link.dataset.word });
   });
   wireExpr();

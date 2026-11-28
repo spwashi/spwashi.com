@@ -17,7 +17,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { escapeHtml, securityHeaders } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
-import { MATERIALS as TEXTURE_MATERIALS } from "../texture-website/src/vocabulary.js";
+import { LADDERS as TEXTURE_LADDERS, MATERIALS as TEXTURE_MATERIALS, PHRASES as TEXTURE_PHRASES } from "../texture-website/src/vocabulary.js";
 import { ATTENTION_FAVICON } from "../site-hub-next/src/hosts/attention.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { neighborLine } from "../site-hub-next/src/set.js";
@@ -33,6 +33,9 @@ const SHARED = ["vocabulary.js", "compose.js", "materials.js"];
 const MATERIALS_MODULE = `// Written by workers/attention-productions/carry.mjs from texture.website's vocabulary; do not edit.
 // A material= in an address is one of these, so its --sref is an image texture.website serves.
 export const MATERIALS = Object.freeze(${JSON.stringify(TEXTURE_MATERIALS.map(({ slug, word, cls }) => ({ slug, word, cls })))});
+// wear= and process= are texture.website's own ladders and phrases, so a look made there reads here word for word.
+export const SURFACE = Object.freeze(${JSON.stringify({ wear: TEXTURE_LADDERS.wear, process: TEXTURE_LADDERS.process })});
+export const SURFACE_PHRASES = Object.freeze(${JSON.stringify({ wear: TEXTURE_PHRASES.wear, process: TEXTURE_PHRASES.process })});
 `;
 
 /** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
@@ -104,10 +107,12 @@ function surfaceSelect(shot) {
 
 /** Each ladder as a row of links; each link is the address of the shot with that word. */
 function ladders(c, v, shot) {
-  const row = (key, words, label = key, note = "") => `<div class="ladder" data-key="${key}"><span class="key">${escapeHtml(label)}</span>${words.map(([word, value, href]) => `<a href="${escapeHtml(href)}" data-word="${escapeHtml(value)}"${value === (key === "material" ? shot.material?.slug ?? "" : shot[key]) ? ' aria-current="true"' : ""}>${escapeHtml(word)}</a>`).join("")}${note}</div>`;
+  const row = (key, words, label = key, note = "") => `<div class="ladder" data-key="${key}"><span class="key">${escapeHtml(label)}</span>${words.map(([word, value, href]) => `<a href="${escapeHtml(href)}" data-word="${escapeHtml(value)}"${value === (key === "material" ? shot.material?.slug ?? "" : shot[key] ?? "") ? ' aria-current="true"' : ""}>${escapeHtml(word)}</a>`).join("")}${note}</div>`;
   const rows = Object.entries(v.LADDERS).map(([key, words]) => row(key, words.map((word) => [word, word, c.addressOf({ ...shot, [key]: word })])));
   const offer = v.MATERIAL_OFFER.map((s) => c.MATERIAL_BY_SLUG_FOR_CARRY(s));
   rows.push(row("material", [["none", "", c.addressOf({ ...shot, material: null })], ...offer.map((m) => [m.word, m.slug, c.addressOf({ ...shot, material: m })])], "surface", `${surfaceSelect(shot)}<a class="out" id="texture-link" href="https://texture.website/">texture ↗</a>`));
+  // texture.website's wear and process, as its own words: how handled the surface is, and how it is printed.
+  for (const key of ["wear", "process"]) rows.push(row(key, [["none", "", c.addressOf({ ...shot, [key]: null })], ...c.SURFACE[key].map((word) => [word, word, c.addressOf({ ...shot, [key]: word })])]));
   return rows.join("\n        ");
 }
 
@@ -198,7 +203,7 @@ ${Object.entries(v.SHAPES.light).map(([word, l]) => `.viewfinder[data-light="${c
 `;
 }
 
-function llms(v) {
+function llms(v, c) {
   return `# attention.productions
 
 ${BLURB}
@@ -208,6 +213,8 @@ The path is the subject, a hyphen is a space, and each ladder is a query key who
 ${Object.entries(v.LADDERS).map(([key, words]) => `- ${key}: ${words.join(", ")}`).join("\n")}
 - tempo: ${v.TEMPO.min} to ${v.TEMPO.max} in steps of ${v.TEMPO.step} (default ${v.TEMPO.rest}; drawn on the viewfinder bar and written as %tempo[n] in Spw)
 - material: any of texture.website's ${TEXTURE_MATERIALS.length} listed material words (its /vocabulary.json); the prompt then carries --sref with that material's image from texture.website and ${v.STYLE_WEIGHT}.
+- wear, process: texture.website's own surface words (wear: ${c.SURFACE.wear.join(", ")}; process: ${c.SURFACE.process.join(", ")}); left out, the prompt says nothing of either.
+- A neighbour's word is read as the nearest word here (raking sun as raking dawn, 100mm as macro, near as the lower third); light=backlight is from=behind.
 
 The page supports inline subject editing, draggable viewfinder handles (focus ring, lamp, tempo bar), horizontal bracket scrubbing across the Spw expression, a six-take A/B comparison strip, and a three-shot storyboard beat (establishing, medium, close-up) that opens directly on factshift.center via #spw64=.
 
@@ -244,7 +251,7 @@ export async function carried() {
     ["ecosystem.json", JSON.stringify(ecosystemJson, null, 2)],
     ["registry.json", JSON.stringify(ecosystemJson, null, 2)],
     ["vocabulary.json", `${JSON.stringify(vocabulary, null, 2)}\n`],
-    ["llms.txt", llms(v)],
+    ["llms.txt", llms(v, c)],
     ["lights.css", lightsCss(c, v)],
     ["_headers", headersFile()],
   ];

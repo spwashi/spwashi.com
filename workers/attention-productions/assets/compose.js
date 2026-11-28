@@ -3,18 +3,21 @@
 // the viewfinder draws. Pure, with no DOM: the carry renders the page's first
 // frame with it, the page (assets/attention.js) redraws with it, and the tests
 // read it. Copied byte for byte into assets/ by carry.mjs.
-import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, NEAR, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
-import { MATERIALS } from "./materials.js";
+import { DEFAULT_SUBJECT, LADDERS, LIGHT_DIRECTIONS, MATERIAL_OFFER, NEAR, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
+import { MATERIALS, SURFACE, SURFACE_PHRASES } from "./materials.js";
 import { nearWord } from "../../lib/near-word.js";
 
 /** A word as a path segment: lower case, hyphens for spaces. */
 export const slug = (word) => String(word ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 const MATERIAL_BY_SLUG = new Map(MATERIALS.map((m) => [m.slug, m]));
+/** texture.website's surface ladders (wear, process), carried from its vocabulary; optional, like the material, and never picked by the day. */
+export { SURFACE };
+export const SURFACE_KEYS = Object.freeze(["wear", "process"]);
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
 /** The shot the page draws before it reads an address, and with scripts off. */
-export const FIRST_SHOT = Object.freeze({ subject: DEFAULT_SUBJECT, shot: "close-up", lens: "85mm", light: "lamplight", from: "right", move: "still", ratio: "scope", focus: "left third", tempo: TEMPO.rest, material: null, named: false, day: "" });
+export const FIRST_SHOT = Object.freeze({ subject: DEFAULT_SUBJECT, shot: "close-up", lens: "85mm", light: "lamplight", from: "right", move: "still", ratio: "scope", focus: "left third", tempo: TEMPO.rest, material: null, wear: null, process: null, named: false, day: "" });
 
 /** A word from each ladder, picked by the date, so each day of the season opens on its own shot. */
 export function dayShot(day) {
@@ -41,8 +44,9 @@ export function tempoOf(value) {
  * Read an address as a shot. The path is the subject (a hyphen is a space);
  * each ladder is a query key whose value is one of its words, or a neighbour's
  * word read as its nearest rung (NEAR, workers/lib/near-word.js); material= is
- * one of texture.website's listed words. What the address leaves out, or says
- * with nothing near, the day picks. `read` lists each word taken as another,
+ * one of texture.website's listed words, and wear= and process= its surface
+ * words. What the address leaves out, or says with nothing near, the day
+ * picks; the surface stays as it was unless named. `read` lists each word taken as another,
  * so the page can say how it read the link.
  */
 export function readShot(pathname, search, today) {
@@ -59,6 +63,21 @@ export function readShot(pathname, search, today) {
     if (near && near.how !== "exact") shot.read.push({ key, ...near, word: near.word ?? picked[key] });
     shot[key] = near?.word ?? picked[key];
   }
+  // A light named by its direction is where the light falls from; the address's own from= wins, and agreeing with it is read too.
+  const way = LIGHT_DIRECTIONS[slug(params.get("light"))];
+  const ownFrom = nearWord(params.get("from"), LADDERS.from, NEAR.from)?.word;
+  if (way && (!ownFrom || ownFrom === way)) {
+    shot.read = shot.read.filter((r) => r.key !== "light");
+    shot.read.push({ key: "from", how: "alias", asked: params.get("light"), word: way });
+    shot.from = way;
+    shot.named = true;
+  }
+  for (const key of SURFACE_KEYS) {
+    const near = nearWord(params.get(key), SURFACE[key], NEAR[key]);
+    if (near?.word) shot.named = true;
+    if (near && near.how !== "exact") shot.read.push({ key, ...near });
+    shot[key] = near?.word ?? null;
+  }
   return shot;
 }
 
@@ -66,9 +85,17 @@ export function readShot(pathname, search, today) {
 export function addressOf(shot) {
   const query = Object.keys(LADDERS).map((key) => `${key}=${slug(shot[key])}`);
   if (shot.material) query.push(`material=${shot.material.slug}`);
+  for (const key of SURFACE_KEYS) if (shot[key]) query.push(`${key}=${slug(shot[key])}`);
   if (shot.tempo !== TEMPO.rest) query.push(`tempo=${shot.tempo}`);
   const path = shot.subject === DEFAULT_SUBJECT ? "" : slug(shot.subject);
   return `/${path}?${query.join("&")}`;
+}
+
+/** The surfaces, in texture.website's words: "weathered vellum surfaces", or "worn surfaces" with no material named. */
+function surfaceOf(shot) {
+  const wear = shot.wear ? SURFACE_PHRASES.wear[shot.wear] : "";
+  if (!shot.material && !wear) return "";
+  return `${[wear, shot.material?.word].filter(Boolean).join(" ")} surfaces`;
 }
 
 /** The prompt as a sentence, for any model, and with Midjourney's parameters. */
@@ -80,7 +107,8 @@ export function promptOf(shot) {
     PHRASES.light[shot.light],
     PHRASES.from[shot.from],
     PHRASES.move[shot.move],
-    shot.material ? `${shot.material.word} surfaces` : "",
+    surfaceOf(shot),
+    shot.process ? SURFACE_PHRASES.process[shot.process] : "",
     "cinematic film still",
   ].filter(Boolean).join(", ");
   const sref = shot.material ? ` --sref https://texture.website/${shot.material.slug}.png ${STYLE_WEIGHT}` : "";
@@ -95,13 +123,14 @@ const MATERIAL_RING = [null, ...MATERIAL_OFFER.map((s) => MATERIAL_BY_SLUG.get(s
 const BRACKET = Object.freeze({
   shot: ["[", "]"], light: ["(", ")"], lens: ["<", ">"],
   ratio: ["[", "]"], focus: ["[", "]"], from: ["[", "]"], move: ["[", "]"], tempo: ["[", "]"],
-  material: ["[", "]"],
+  material: ["[", "]"], wear: ["[", "]"], process: ["[", "]"],
 });
 
 /** The word a slot shows. A space is an underscore, as in the Spw. */
 export function slotText(shot, key) {
   if (key === "tempo") return String(shot.tempo);
   if (key === "material") return shot.material?.slug ?? "none";
+  if (SURFACE_KEYS.includes(key)) return shot[key] ? under(shot[key]) : "none";
   if (key === "ratio" || key === "from") return String(shot[key]);
   return under(shot[key]);
 }
@@ -120,6 +149,11 @@ export function stepKey(shot, key, by = 1) {
     const i = Math.max(0, MATERIAL_RING.findIndex((m) => (m?.slug ?? null) === (shot.material?.slug ?? null)));
     return { material: MATERIAL_RING[mod(i + by, MATERIAL_RING.length)] };
   }
+  if (SURFACE_KEYS.includes(key)) {
+    const ring = [null, ...SURFACE[key]];
+    const i = Math.max(0, ring.indexOf(shot[key] ?? null));
+    return { [key]: ring[mod(i + by, ring.length)] };
+  }
   const words = LADDERS[key];
   if (!words) return {};
   const i = Math.max(0, words.indexOf(shot[key]));
@@ -130,7 +164,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 /** The shot as Spw, with each ladder's word a link to the next word on that ladder. */
 const MARK_OP = { "!": "action", "^": "integration", "=": "configuration", "~": "potential", "%": "measure", "@": "perspective" };
-const BRACKET_OP = { shot: "action", light: "scene", lens: "concept", ratio: "mode", focus: "mode", from: "mode", move: "mode", tempo: "mode", material: "concept" };
+const BRACKET_OP = { shot: "action", light: "scene", lens: "concept", ratio: "mode", focus: "mode", from: "mode", move: "mode", tempo: "mode", material: "concept", wear: "mode", process: "mode" };
 
 /**
  * The interactive Spw expression inside the card: each slot is an <a class="slot">
@@ -150,7 +184,7 @@ export function expressionHtml(shot) {
   const lines = [
     [glue(mark("!shot"), slot("shot")), free(mark(`{${shot.subject}}`, "subject")), glue(slot("light")), glue(slot("lens"))],
     [free(mark("^frame{")), glue(mark(" =ratio"), slot("ratio")), glue(mark(" =focus"), slot("focus")), glue(mark(" =light_from"), slot("from")), glue(mark(" ~move"), slot("move")), glue(mark(" %tempo"), slot("tempo")), free(mark(" }"))],
-    [glue(mark("@material"), slot("material"))],
+    [glue(mark("@material"), slot("material")), glue(mark(" =wear"), slot("wear")), glue(mark(" =process"), slot("process"))],
   ];
   const one = (part) => {
     if (!part.key) return `<span class="mark${part.cls ? ` ${part.cls}` : ""}"${part.op ? ` data-op="${part.op}"` : ""}>${esc(part.text)}</span>`;
@@ -169,13 +203,19 @@ export function expressionHtml(shot) {
  * The shot as Spw: the mark acts, the mode is the shot, the body the subject,
  * the scene its light and the concept its lens; the frame's settings follow,
  * and a material is a path to texture.website's own line for it (written
- * without a scheme, since // would open a comment).
+ * without a scheme, since // would open a comment); its wear and process,
+ * texture.website's words, are the surface's settings.
  */
+const surfaceLines = (shot) => [
+  ...(shot.material ? [`@material: ~"texture.website/${shot.material.slug}.spw"`] : []),
+  ...(shot.wear || shot.process ? [`^surface{ ${SURFACE_KEYS.filter((key) => shot[key]).map((key) => `=${key}[${under(shot[key])}]`).join(" ")} }`] : []),
+];
+
 export function spwOf(shot) {
   return [
     `!shot[${under(shot.shot)}]{${shot.subject}}(${under(shot.light)})<${under(shot.lens)}>`,
     `^frame{ =ratio[${shot.ratio}] =focus[${under(shot.focus)}] =light_from[${shot.from}] ~move[${under(shot.move)}] %tempo[${shot.tempo}] }`,
-    ...(shot.material ? [`@material: ~"texture.website/${shot.material.slug}.spw"`] : []),
+    ...surfaceLines(shot),
   ].join("\n");
 }
 
@@ -201,22 +241,23 @@ export function beatScriptOf(shot) {
   return [
     ...frames,
     `^frame{ =ratio[${shot.ratio}] =focus[${under(shot.focus)}] =light_from[${shot.from}] ~move[${under(shot.move)}] %tempo[${shot.tempo}] }`,
-    ...(shot.material ? [`@material: ~"texture.website/${shot.material.slug}.spw"`] : []),
+    ...surfaceLines(shot),
     `prompt = \`${promptOf(shot).midjourney}\``,
   ].join("\n");
 }
 
-/** The three-shot beat opened on factshift.center as a multi-line storyboard script. */
 /**
  * The same surface on texture.website, carrying this shot's distance, light and
- * frame in attention's own words; texture.website reads each as its nearest rung
- * (close-up as close, golden hour as raking dawn, widescreen as plate).
+ * frame in attention's own words and its wear and process in texture's;
+ * texture.website reads each as its nearest rung (close-up as close, golden
+ * hour as raking dawn, widescreen as plate).
  */
 export function textureHrefOf(shot) {
-  const query = `scale=${slug(shot.shot)}&light=${slug(shot.light)}&format=${slug(shot.ratio)}`;
+  const query = [`scale=${slug(shot.shot)}`, `light=${slug(shot.light)}`, `format=${slug(shot.ratio)}`, ...SURFACE_KEYS.filter((key) => shot[key]).map((key) => `${key}=${slug(shot[key])}`)].join("&");
   return `https://texture.website/${shot.material ? shot.material.slug : ""}?${query}`;
 }
 
+/** The three-shot beat opened on factshift.center as a multi-line storyboard script. */
 export const beatHrefOf = (shot) => `https://factshift.center/#spw64=${base64url(beatScriptOf(shot))}`;
 
 /** The viewfinder's canvas, in its own units. */

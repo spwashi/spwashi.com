@@ -19,7 +19,7 @@ export const SET = Object.freeze([
 ]);
 
 /** attention.productions' lights, by their key colour (its src/vocabulary.js SHAPES.light). */
-export const LIGHTS = Object.freeze({ "golden hour": "#f4b45c", overcast: "#c9d0d8", lamplight: "#ffb36b", "window light": "#f2efe6", "sodium night": "#ff9930", neon: "#ff5ad9", candlelight: "#ffce78" });
+export const LIGHTS = Object.freeze({ "golden hour": "#f4b45c", "raking dawn": "#ffc4a0", noon: "#fffbef", overcast: "#c9d0d8", "window light": "#f2efe6", lamplight: "#ffb36b", candlelight: "#ffce78", "sodium night": "#ff9930", neon: "#ff5ad9" });
 
 /** Teal Stripes Vibes' seeds, by their middle colour and mood (its src/vibe.js SEEDS). */
 export const SEEDS = Object.freeze({ harbor: { accent: "#0f766e", mood: "harbor at dusk" }, ledger: { accent: "#2dd4bf", mood: "ink on a ledger line" }, lantern: { accent: "#f5b041", mood: "a lamp through teal glass" } });

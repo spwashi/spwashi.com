@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CSP, MATERIALS_MODULE, carried } from '../carry.mjs';
 import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, PHRASES, RATIOS, SHAPES, TEMPO } from '../src/vocabulary.js';
-import { MATERIALS } from '../src/materials.js';
+import { MATERIALS, SURFACE } from '../src/materials.js';
 import { FIRST_SHOT, addressOf, beatHrefOf, beatScriptOf, canvasHrefOf, canvasTextOf, dayShot, expressionHtml, geometryOf, nearestFocus, nearestFrom, promptOf, readShot, slug, spwOf, stepKey, tempoAt } from '../src/compose.js';
 import { MATERIALS as TEXTURE_MATERIALS } from '../../texture-website/src/vocabulary.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
@@ -112,7 +112,8 @@ test('the page reads with scripts off: the first prompt is written, and nothing 
   assert.match(CSP, /img-src 'self' https:\/\/texture\.website/);
   assert.match(CSP, /frame-src https:\/\/mutex\.buzz/);
   const words = [...page.matchAll(/<a href="([^"]+)" data-word=/g)].map((m) => m[1]);
-  assert.equal(words.length, Object.values(LADDERS).flat().length + 1 + MATERIAL_OFFER.length, 'each word is a link to its address');
+  // Each ladder's words, the surface row (none and the offer), and texture.website's wear and process rows (none and each word).
+  assert.equal(words.length, Object.values(LADDERS).flat().length + 1 + MATERIAL_OFFER.length + Object.values(SURFACE).reduce((n, list) => n + list.length + 1, 0), 'each word is a link to its address');
 });
 
 test('the handles move the drawing as a hand drags them, and let go on a word or a tempo the address keeps', () => {

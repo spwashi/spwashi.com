@@ -9,7 +9,7 @@
 export const LADDERS = Object.freeze({
   shot: ["extreme close-up", "close-up", "medium", "wide", "establishing", "overhead", "low angle"],
   lens: ["24mm", "35mm", "50mm", "85mm", "macro", "anamorphic"],
-  light: ["golden hour", "overcast", "lamplight", "window light", "sodium night", "neon", "candlelight"],
+  light: ["golden hour", "raking dawn", "noon", "overcast", "window light", "lamplight", "candlelight", "sodium night", "neon"],
   from: ["above", "left", "right", "below", "behind"],
   move: ["still", "dolly-in", "handheld", "rack focus", "long exposure"],
   ratio: ["square", "portrait", "photo", "widescreen", "scope", "vertical"],
@@ -21,9 +21,9 @@ export const LADDERS = Object.freeze({
  * link from texture.website, spwashi.com or a hand lands on the rung it means.
  * Shot holds texture.website's scale (its focal radius, macro to far). Focus
  * holds depth: what is near sits low in a frame, what is far sits high, so
- * foreground reads as the lower third and background as the upper. A word with
- * no rung here (orbit, drift, a practical) is left for the day to pick, and
- * the page says so.
+ * foreground reads as the lower third and background as the upper. Light
+ * holds texture.website's five lights as its own words. A word with no rung
+ * here (orbit, drift) is left for the day to pick, and the page says so.
  */
 export const NEAR = Object.freeze({
   shot: {
@@ -40,8 +40,9 @@ export const NEAR = Object.freeze({
   },
   light: {
     aliases: {
-      "raking-dawn": "golden hour", "raking-sun": "golden hour", dawn: "golden hour", dusk: "golden hour", sunset: "golden hour", sunrise: "golden hour", "magic-hour": "golden hour",
-      cloudy: "overcast", diffuse: "overcast", soft: "overcast", tungsten: "lamplight", lamp: "lamplight", incandescent: "lamplight",
+      dusk: "golden hour", sunset: "golden hour", "magic-hour": "golden hour", "raking-sun": "raking dawn", raking: "raking dawn", dawn: "raking dawn", sunrise: "raking dawn", grazing: "raking dawn",
+      midday: "noon", "high-sun": "noon", harsh: "noon", "hard-sun": "noon", cloudy: "overcast", diffuse: "overcast", soft: "overcast",
+      tungsten: "lamplight", lamp: "lamplight", incandescent: "lamplight", practical: "lamplight",
       daylight: "window light", window: "window light", streetlight: "sodium night", sodium: "sodium night", candle: "candlelight",
     },
   },
@@ -61,6 +62,8 @@ export const NEAR = Object.freeze({
     },
     measures: { square: 1, portrait: 0.8, photo: 1.5, widescreen: 16 / 9, scope: 2.39, vertical: 9 / 16 },
   },
+  wear: { aliases: { new: "pristine", mint: "pristine", clean: "pristine", used: "handled", aged: "weathered", distressed: "weathered", broken: "ruined", wrecked: "ruined" } },
+  process: { aliases: { none: "as found", raw: "as found", natural: "as found", engraved: "engraving", etching: "engraving", etched: "engraving", embossed: "relief", blueprint: "cyanotype", "sun-print": "cyanotype" } },
   focus: {
     aliases: {
       near: "lower third", foreground: "lower third", fg: "lower third", far: "upper third", deep: "upper third", background: "upper third",
@@ -69,12 +72,15 @@ export const NEAR = Object.freeze({
   },
 });
 
+/** Lights named by where they fall from. light=backlight is from=behind, unless the address names its own from. */
+export const LIGHT_DIRECTIONS = Object.freeze({ backlight: "behind", backlit: "behind", rim: "behind", "rim-light": "behind", toplight: "above", "top-light": "above", underlight: "below", uplight: "below", sidelight: "left", "side-light": "left" });
+
 /** What each word adds to the prompt. An empty phrase leaves the prompt as it was. */
 export const PHRASES = Object.freeze({
   shot: { "extreme close-up": "extreme close-up", "close-up": "close-up shot", medium: "medium shot", wide: "wide shot", establishing: "establishing shot", overhead: "overhead shot looking straight down", "low angle": "low-angle shot looking up" },
   lens: { "24mm": "24mm wide lens, deep focus", "35mm": "35mm lens", "50mm": "50mm lens", "85mm": "85mm lens, shallow depth of field", macro: "macro lens, razor-thin focus", anamorphic: "anamorphic lens, oval bokeh, horizontal flare" },
   from: { above: "lit from above", left: "key light from the left", right: "key light from the right", below: "lit from below", behind: "backlit, rim light" },
-  light: { "golden hour": "golden hour backlight", overcast: "soft overcast light", lamplight: "warm practical lamplight", "window light": "single window light", "sodium night": "sodium streetlight at night", neon: "neon signage glow", candlelight: "candlelight" },
+  light: { "golden hour": "golden hour backlight", "raking dawn": "low raking dawn light grazing every surface", noon: "hard noon sun, short black shadows", overcast: "soft overcast light", lamplight: "warm practical lamplight", "window light": "single window light", "sodium night": "sodium streetlight at night", neon: "neon signage glow", candlelight: "candlelight" },
   move: { still: "", "dolly-in": "slow dolly-in", handheld: "handheld, slight motion", "rack focus": "rack focus", "long exposure": "long exposure motion blur" },
   ratio: { square: "", portrait: "", photo: "", widescreen: "", scope: "", vertical: "" },
   focus: { center: "subject centered", "left third": "subject on the left third", "right third": "subject on the right third", "upper third": "subject on the upper third", "lower third": "subject on the lower third" },
@@ -105,6 +111,8 @@ export const SHAPES = Object.freeze({
   lens: { "24mm": { blur: 0.3 }, "35mm": { blur: 0.55 }, "50mm": { blur: 0.8 }, "85mm": { blur: 1.25 }, macro: { blur: 1.7 }, anamorphic: { blur: 1, flare: true } },
   light: {
     "golden hour": { key: "#f4b45c", fill: "#2c1a24" },
+    "raking dawn": { key: "#ffc4a0", fill: "#1d1a2a" },
+    noon: { key: "#fffbef", fill: "#2a3140" },
     overcast: { key: "#c9d0d8", fill: "#22252c" },
     lamplight: { key: "#ffb36b", fill: "#20151a" },
     "window light": { key: "#f2efe6", fill: "#1a1d24" },

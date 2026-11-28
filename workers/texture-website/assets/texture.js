@@ -741,8 +741,10 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
   const cssSnippet = primaryListed
     ? `background-image: url("${imageOf(primaryListed)}");\nbackground-size: ${PERIOD[state.ladders.scale] * 8}px ${PERIOD[state.ladders.scale] * 8}px;\nbackground-repeat: repeat;`
     : "";
-  // attention.productions reads these in texture's words (scale as its shot, format as its frame) as its nearest rungs.
-  const shotQuery = `shot=${slug(state.ladders.scale)}&light=${slug(state.ladders.light)}&ratio=${slug(state.ladders.format)}`;
+  // attention.productions reads these in texture's words (scale as its shot, format as its frame) as its nearest rungs;
+  // light, wear and process are words it holds as they are, so the look arrives whole.
+  const shotQuery = [["shot", "scale"], ["light", "light"], ["ratio", "format"], ["wear", "wear"], ["process", "process"]]
+    .map(([theirs, ours]) => `${theirs}=${slug(state.ladders[ours])}`).join("&");
   const shotHref = primaryListed
     ? `https://attention.productions/${primaryListed.slug}?material=${primaryListed.slug}&${shotQuery}`
     : `https://attention.productions/?${shotQuery}`;

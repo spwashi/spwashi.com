@@ -6,13 +6,15 @@ The path is the subject, a hyphen is a space, and each ladder is a query key who
 
 - shot: extreme close-up, close-up, medium, wide, establishing, overhead, low angle
 - lens: 24mm, 35mm, 50mm, 85mm, macro, anamorphic
-- light: golden hour, overcast, lamplight, window light, sodium night, neon, candlelight
+- light: golden hour, raking dawn, noon, overcast, window light, lamplight, candlelight, sodium night, neon
 - from: above, left, right, below, behind
 - move: still, dolly-in, handheld, rack focus, long exposure
 - ratio: square, portrait, photo, widescreen, scope, vertical
 - focus: center, left third, right third, upper third, lower third
 - tempo: 0.5 to 2 in steps of 0.1 (default 1; drawn on the viewfinder bar and written as %tempo[n] in Spw)
 - material: any of texture.website's 91 listed material words (its /vocabulary.json); the prompt then carries --sref with that material's image from texture.website and --sw 250.
+- wear, process: texture.website's own surface words (wear: pristine, handled, worn, weathered, ruined; process: as found, riso, engraving, relief, posterized, cyanotype); left out, the prompt says nothing of either.
+- A neighbour's word is read as the nearest word here (raking sun as raking dawn, 100mm as macro, near as the lower third); light=backlight is from=behind.
 
 The page supports inline subject editing, draggable viewfinder handles (focus ring, lamp, tempo bar), horizontal bracket scrubbing across the Spw expression, a six-take A/B comparison strip, and a three-shot storyboard beat (establishing, medium, close-up) that opens directly on factshift.center via #spw64=.
 

@@ -21,12 +21,14 @@
     ],
     "light": [
       "golden hour",
+      "raking dawn",
+      "noon",
       "overcast",
-      "lamplight",
       "window light",
+      "lamplight",
+      "candlelight",
       "sodium night",
-      "neon",
-      "candlelight"
+      "neon"
     ],
     "from": [
       "above",
@@ -85,6 +87,8 @@
     },
     "light": {
       "golden hour": "golden hour backlight",
+      "raking dawn": "low raking dawn light grazing every surface",
+      "noon": "hard noon sun, short black shadows",
       "overcast": "soft overcast light",
       "lamplight": "warm practical lamplight",
       "window light": "single window light",
