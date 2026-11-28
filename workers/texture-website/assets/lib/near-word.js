@@ -18,6 +18,9 @@
 
 export const slug = (word) => String(word ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+/** What a link carries when its sender wrote out a missing value: read as no word at all. */
+export const ABSENT = new Set(["undefined", "null", "nan"]);
+
 /** Words that name a ladder's kind rather than a rung, so sharing one says nothing. */
 const GENERIC = new Set(["light", "shot", "lens", "focus", "third", "angle", "hour", "night", "with", "from"]);
 
@@ -67,7 +70,8 @@ export function measureOf(raw) {
 export function nearWord(raw, words, { aliases = {}, measures = null } = {}) {
   const asked = String(raw ?? "").trim();
   const key = slug(asked);
-  if (!key) return null;
+  // A sender that wrote out a missing value ("undefined", "null", "NaN") said nothing.
+  if (!key || ABSENT.has(key)) return null;
   const bySlug = new Map(words.map((word) => [slug(word), word]));
   const read = (word, how) => ({ word, how, asked });
 

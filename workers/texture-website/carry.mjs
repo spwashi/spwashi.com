@@ -115,6 +115,9 @@ const PAGE = `<!doctype html>
   <link rel="stylesheet" href="/slot-scrub.css">
   <script src="/text-scale-head.js"></script>
   <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
+  <!-- The studio's module graph and its vocabulary, asked for with the page instead of one after another (the picture waits on both). -->
+  ${["/texture.js", "/daily.js", "/lib/near-word.js", "/clean-still.js", "/slot-scrub.js", "/set-ring.js", "/text-scale.js"].map((href) => `<link rel="modulepreload" href="${href}">`).join("\n  ")}
+  <link rel="preload" href="/vocabulary.json" as="fetch" crossorigin>
   <script type="module" src="/texture.js"></script>
 </head>
 <body>

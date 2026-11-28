@@ -4,8 +4,8 @@
 // frame with it, the page (assets/attention.js) redraws with it, and the tests
 // read it. Copied byte for byte into assets/ by carry.mjs.
 import { DEFAULT_SUBJECT, LADDERS, LIGHT_DIRECTIONS, MATERIAL_OFFER, NEAR, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
-import { MATERIALS, SURFACE, SURFACE_PHRASES } from "./materials.js";
-import { nearWord } from "../../lib/near-word.js";
+import { MATERIALS, PALETTES, RELATIONS, SURFACE, SURFACE_PHRASES } from "./materials.js";
+import { ABSENT, nearWord } from "../../lib/near-word.js";
 
 /** A word as a path segment: lower case, hyphens for spaces. */
 export const slug = (word) => String(word ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -13,7 +13,47 @@ export const slug = (word) => String(word ?? "").toLowerCase().replace(/[^a-z0-9
 const MATERIAL_BY_SLUG = new Map(MATERIALS.map((m) => [m.slug, m]));
 /** texture.website's surface ladders (wear, process), carried from its vocabulary; optional, like the material, and never picked by the day. */
 export { SURFACE };
-export const SURFACE_KEYS = Object.freeze(["wear", "process"]);
+export const SURFACE_KEYS = Object.freeze(["wear", "process", "palette"]);
+
+/** texture.website's marks: the first character of a path word that says how it meets the one before. */
+const MARKS = ".^*~=@?!%";
+
+/**
+ * A path as layers, texture.website's way: each word a material or a thing,
+ * bottom first, a mark before a word saying how it meets the one before
+ * (/vellum/~moss is vellum drifting through moss). A word a sender wrote out
+ * as missing ("undefined") is no word.
+ */
+export function layersOf(pathname) {
+  return String(pathname ?? "").split("/").map(decode).filter(Boolean).map((part) => {
+    const mark = MARKS.includes(part[0]) ? part[0] : "";
+    return { mark, word: slug(mark ? part.slice(1) : part).replace(/-/g, " ") };
+  }).filter(({ word }) => word && !ABSENT.has(slug(word)));
+}
+
+/** Layers as a subject: "vellum drifting through moss, heavy with rust". */
+export const sentenceOf = (layers) => layers.map(({ mark, word }, i) => (i ? `${RELATIONS[mark] ?? "with"} ${word}` : word)).join(" ");
+
+/** Layers as a path texture.website reads back as the same layers. */
+const layerPath = (layers) => `/${layers.map(({ mark, word }) => `${mark === "?" ? "%3F" : mark}${slug(word)}`).join("/")}`;
+
+/** The layers a shot still stands for: only while its subject is their sentence (an edited subject is the reader's own). */
+const layersStanding = (shot) => (shot.layers?.length > 1 && sentenceOf(shot.layers) === shot.subject ? shot.layers : null);
+
+/**
+ * A palette as a gradient map: the frame to luminance, stretched to reach both
+ * ends, then each channel read across the palette's stops from dark to light,
+ * as texture.website prints its stage. Empty for no palette.
+ */
+export function paletteFilterOf(word) {
+  const stops = PALETTES[word];
+  if (!stops?.length) return "";
+  const luma = "0.2126 0.7152 0.0722 0 0";
+  const channel = (i) => stops.map((hex) => (Number.parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16) / 255).toFixed(3)).join(" ");
+  return `<feColorMatrix type="matrix" values="${luma} ${luma} ${luma} 0 0 0 1 0"/>`
+    + `<feComponentTransfer>${["R", "G", "B"].map((c) => `<feFunc${c} type="linear" slope="1.45" intercept="-0.2"/>`).join("")}</feComponentTransfer>`
+    + `<feComponentTransfer>${["R", "G", "B"].map((c, i) => `<feFunc${c} type="table" tableValues="${channel(i)}"/>`).join("")}</feComponentTransfer>`;
+}
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
 /** The shot the page draws before it reads an address, and with scripts off. */
@@ -52,10 +92,15 @@ export function tempoOf(value) {
 export function readShot(pathname, search, today) {
   const params = new URLSearchParams(search);
   const day = DAY.test(params.get("day") ?? "") ? params.get("day") : today;
-  const words = String(pathname ?? "").split("/").map(decode).map(slug).filter(Boolean);
-  const subject = words.join(" ").replace(/-/g, " ").slice(0, 80).trim();
+  // One path word is the subject (a hyphen is a space); several, or a marked one, are layers read as a sentence.
+  const layers = layersOf(pathname);
+  const composite = layers.length > 1;
+  // subject= says the subject as written (capitals, commas, apostrophes) and wins over the path, which is slugged.
+  const said = String(params.get("subject") ?? "").replace(/\s+/g, " ").trim().slice(0, 140);
+  const told = said && !ABSENT.has(slug(said)) ? said : "";
+  const subject = told || (composite ? sentenceOf(layers) : layers.map(({ word }) => word).join(" ")).slice(0, composite ? 140 : 80).trim();
   const picked = dayShot(day);
-  const shot = { subject: subject || DEFAULT_SUBJECT, material: MATERIAL_BY_SLUG.get(slug(params.get("material"))) ?? null, tempo: tempoOf(params.get("tempo")), named: Boolean(subject), day, read: [] };
+  const shot = { subject: subject || DEFAULT_SUBJECT, layers: composite ? layers : null, material: MATERIAL_BY_SLUG.get(slug(params.get("material"))) ?? null, tempo: tempoOf(params.get("tempo")), named: Boolean(subject), day, read: [] };
   if (params.has("tempo")) shot.named = true;
   for (const key of Object.keys(LADDERS)) {
     const near = nearWord(params.get(key), LADDERS[key], NEAR[key]);
@@ -73,6 +118,8 @@ export function readShot(pathname, search, today) {
     shot.named = true;
   }
   for (const key of SURFACE_KEYS) {
+    // texture.website's "as drawn" palette is no palette.
+    if (key === "palette" && slug(params.get(key)) === "as-drawn") { shot[key] = null; continue; }
     const near = nearWord(params.get(key), SURFACE[key], NEAR[key]);
     if (near?.word) shot.named = true;
     if (near && near.how !== "exact") shot.read.push({ key, ...near });
@@ -83,11 +130,15 @@ export function readShot(pathname, search, today) {
 
 /** The address that reads back as this shot. */
 export function addressOf(shot) {
-  const query = Object.keys(LADDERS).map((key) => `${key}=${slug(shot[key])}`);
+  const query = Object.keys(LADDERS).filter((key) => slug(shot[key])).map((key) => `${key}=${slug(shot[key])}`);
   if (shot.material) query.push(`material=${shot.material.slug}`);
   for (const key of SURFACE_KEYS) if (shot[key]) query.push(`${key}=${slug(shot[key])}`);
   if (shot.tempo !== TEMPO.rest) query.push(`tempo=${shot.tempo}`);
+  const layers = layersStanding(shot);
+  if (layers) return `${layerPath(layers)}?${query.join("&")}`;
   const path = shot.subject === DEFAULT_SUBJECT ? "" : slug(shot.subject);
+  // A subject the path cannot hold as written also travels as subject=, so a link keeps it exactly.
+  if (path && path.replace(/-/g, " ") !== shot.subject) query.push(`subject=${encodeURIComponent(shot.subject)}`);
   return `/${path}?${query.join("&")}`;
 }
 
@@ -109,6 +160,7 @@ export function promptOf(shot) {
     PHRASES.move[shot.move],
     surfaceOf(shot),
     shot.process ? SURFACE_PHRASES.process[shot.process] : "",
+    shot.palette ? SURFACE_PHRASES.palette[shot.palette] : "",
     "cinematic film still",
   ].filter(Boolean).join(", ");
   const sref = shot.material ? ` --sref https://texture.website/${shot.material.slug}.png ${STYLE_WEIGHT}` : "";
@@ -123,7 +175,7 @@ const MATERIAL_RING = [null, ...MATERIAL_OFFER.map((s) => MATERIAL_BY_SLUG.get(s
 const BRACKET = Object.freeze({
   shot: ["[", "]"], light: ["(", ")"], lens: ["<", ">"],
   ratio: ["[", "]"], focus: ["[", "]"], from: ["[", "]"], move: ["[", "]"], tempo: ["[", "]"],
-  material: ["[", "]"], wear: ["[", "]"], process: ["[", "]"],
+  material: ["[", "]"], wear: ["[", "]"], process: ["[", "]"], palette: ["[", "]"],
 });
 
 /** The word a slot shows. A space is an underscore, as in the Spw. */
@@ -164,7 +216,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 /** The shot as Spw, with each ladder's word a link to the next word on that ladder. */
 const MARK_OP = { "!": "action", "^": "integration", "=": "configuration", "~": "potential", "%": "measure", "@": "perspective" };
-const BRACKET_OP = { shot: "action", light: "scene", lens: "concept", ratio: "mode", focus: "mode", from: "mode", move: "mode", tempo: "mode", material: "concept", wear: "mode", process: "mode" };
+const BRACKET_OP = { shot: "action", light: "scene", lens: "concept", ratio: "mode", focus: "mode", from: "mode", move: "mode", tempo: "mode", material: "concept", wear: "mode", process: "mode", palette: "mode" };
 
 /**
  * The interactive Spw expression inside the card: each slot is an <a class="slot">
@@ -184,7 +236,7 @@ export function expressionHtml(shot) {
   const lines = [
     [glue(mark("!shot"), slot("shot")), free(mark(`{${shot.subject}}`, "subject")), glue(slot("light")), glue(slot("lens"))],
     [free(mark("^frame{")), glue(mark(" =ratio"), slot("ratio")), glue(mark(" =focus"), slot("focus")), glue(mark(" =light_from"), slot("from")), glue(mark(" ~move"), slot("move")), glue(mark(" %tempo"), slot("tempo")), free(mark(" }"))],
-    [glue(mark("@material"), slot("material")), glue(mark(" =wear"), slot("wear")), glue(mark(" =process"), slot("process"))],
+    [glue(mark("@material"), slot("material")), glue(mark(" =wear"), slot("wear")), glue(mark(" =process"), slot("process")), glue(mark(" =palette"), slot("palette"))],
   ];
   const one = (part) => {
     if (!part.key) return `<span class="mark${part.cls ? ` ${part.cls}` : ""}"${part.op ? ` data-op="${part.op}"` : ""}>${esc(part.text)}</span>`;
@@ -208,7 +260,7 @@ export function expressionHtml(shot) {
  */
 const surfaceLines = (shot) => [
   ...(shot.material ? [`@material: ~"texture.website/${shot.material.slug}.spw"`] : []),
-  ...(shot.wear || shot.process ? [`^surface{ ${SURFACE_KEYS.filter((key) => shot[key]).map((key) => `=${key}[${under(shot[key])}]`).join(" ")} }`] : []),
+  ...(SURFACE_KEYS.some((key) => shot[key]) ? [`^surface{ ${SURFACE_KEYS.filter((key) => shot[key]).map((key) => `=${key}[${under(shot[key])}]`).join(" ")} }`] : []),
 ];
 
 export function spwOf(shot) {
@@ -255,7 +307,8 @@ export function beatScriptOf(shot) {
 export function textureHrefOf(shot) {
   // from= is the lamp: texture.website turns its light to fall from the same side.
   const query = [`scale=${slug(shot.shot)}`, `light=${slug(shot.light)}`, `from=${shot.from}`, `format=${slug(shot.ratio)}`, ...SURFACE_KEYS.filter((key) => shot[key]).map((key) => `${key}=${slug(shot[key])}`)].join("&");
-  return `https://texture.website/${shot.material ? shot.material.slug : ""}?${query}`;
+  const layers = layersStanding(shot);
+  return `https://texture.website${layers ? layerPath(layers) : `/${shot.material ? shot.material.slug : ""}`}?${query}`;
 }
 
 /**

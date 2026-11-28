@@ -1,7 +1,7 @@
 {
  "about": "Pictures the public pages show, newest first, each with the page that keeps it. Written by scripts/generate-image-tour.mjs.",
  "recentDays": 21,
- "count": 258,
+ "count": 254,
  "pieces": [
   {
    "src": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.webp",
@@ -266,11 +266,11 @@
   },
   {
    "src": "/public/images/assets/folios/folio-spwashi-design-and-development-thumb.webp",
-   "width": 202,
-   "height": 256,
-   "label": "Spwashi design and development",
+   "width": 404,
+   "height": 512,
+   "label": "Laminated folio, teal wash over faint lettering, MOVIES ARE EMOTIONS an…",
    "kind": "scan",
-   "href": "/design/folios/october-2026/#folio-1018-00",
+   "href": "/about/#about-hook",
    "added": "2026-10-31"
   },
   {
@@ -311,11 +311,11 @@
   },
   {
    "src": "/public/images/assets/folios/folio-web-presence-chapters-thumb.webp",
-   "width": 202,
-   "height": 256,
-   "label": "Web presence chapters",
+   "width": 404,
+   "height": 512,
+   "label": "Laminated folio, plum with grey hatching: a cutout maps SITE, WEBSITE,…",
    "kind": "scan",
-   "href": "/design/folios/october-2026/#folio-1021-00",
+   "href": "/about/website/#website-title",
    "added": "2026-10-31"
   },
   {
@@ -1030,6 +1030,24 @@
    "added": "2026-10-31"
   },
   {
+   "src": "/public/images/assets/primes/prime-artist-software-engineer-languages-thumb.webp",
+   "width": 299,
+   "height": 512,
+   "label": "Cutouts on a clear sheet: Spwashi, Artist, Software Engineer, fifteen/s…",
+   "kind": "scan",
+   "href": "/topics/software/#software-surface",
+   "added": "2026-09-28"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-year-one-two-three-logo-play-thumb.webp",
+   "width": 160,
+   "height": 256,
+   "label": "Cutouts on a clear sheet: Year 1 loose art, Year 2 laminated folios, Ye…",
+   "kind": "scan",
+   "href": "/design/logos/#logo-signature-mark-title",
+   "added": "2026-09-28"
+  },
+  {
    "src": "/public/images/assets/folios/folio-bean-green-tale-lore-thumb.webp",
    "width": 200,
    "height": 256,
@@ -1573,7 +1591,7 @@
    "src": "/public/images/assets/folios/folio-factshift-cabinet-thumb.webp",
    "width": 398,
    "height": 512,
-   "label": "A cabinet of ink drawers and slots washed in pink and sea green, with f…",
+   "label": "The factshift.com interface drawn as a folio: its name and a wide panel…",
    "kind": "scan",
    "href": "/care/#care-title",
    "added": "2026-09-25"
@@ -1894,15 +1912,6 @@
    "added": "2026-08-31"
   },
   {
-   "src": "/public/images/assets/motifs/texture-cream-ochre-wash-display.webp",
-   "width": 768,
-   "height": 430,
-   "label": "A cream-to-ochre wash with a quiet teal edge, like reduction settling o…",
-   "kind": "image",
-   "href": "/recipes/#cuisine-taxonomy-title",
-   "added": "2026-08-31"
-  },
-  {
    "src": "/public/images/assets/illustrations/math-fabric-local-curvature-thumb.webp",
    "width": 1024,
    "height": 1024,
@@ -2026,24 +2035,6 @@
    "label": "Translucent sheets of printed paper layered with cubes, discs and spher…",
    "kind": "render",
    "href": "/design/folios/#folio-growth-probe",
-   "added": "2026-08-13"
-  },
-  {
-   "src": "/public/images/home/luminous-geometry-study-0-thumb.webp",
-   "width": 512,
-   "height": 512,
-   "label": "Abstract luminous geometry study illustrating clear deterministic proje…",
-   "kind": "render",
-   "href": "/topics/software/#software-surface",
-   "added": "2026-08-13"
-  },
-  {
-   "src": "/public/images/home/luminous-geometry-study-1-thumb.webp",
-   "width": 512,
-   "height": 512,
-   "label": "Abstract luminous geometry study illustrating the creator kernel and st…",
-   "kind": "render",
-   "href": "/about/#about-hook",
    "added": "2026-08-13"
   },
   {
@@ -2200,15 +2191,6 @@
    "added": "2026-04-16"
   },
   {
-   "src": "/public/images/routes/website-field-instrument-hero.webp",
-   "width": 1600,
-   "height": 960,
-   "label": "A layered website instrument made of threshold light, orbital traces, a…",
-   "kind": "render",
-   "href": "/about/website/#website-title",
-   "added": "2026-04-16"
-  },
-  {
    "src": "/public/images/play/rpg-wednesday/sticker-canon-field-study.webp",
    "width": 1200,
    "height": 1200,
@@ -2248,9 +2230,9 @@
    "src": "/public/images/assets/scheduler-clockwork.png",
    "width": 1024,
    "height": 1024,
-   "label": "An intricate clockwork-like illustration of gears, timing structures, a…",
+   "label": "Complex clockwork mechanism representing priority queues and time-slice…",
    "kind": "image",
-   "href": "/topics/math/complexity/#complexity-title",
+   "href": "/topics/software/schedulers/#schedulers-title",
    "added": "2026-04-11"
   },
   {
@@ -2281,15 +2263,6 @@
    "added": "2026-04-11"
   },
   {
-   "src": "/public/images/renders/papergami/papergami-collage.webp",
-   "width": 1200,
-   "height": 800,
-   "label": "Collage panels with visible seams, reading like storyboard compartments.",
-   "kind": "render",
-   "href": "/topics/film/storyboard/#board-title",
-   "added": "2026-04-11"
-  },
-  {
    "src": "/public/images/renders/papergami/papergami-kinetic.webp",
    "width": 600,
    "height": 400,
@@ -2297,15 +2270,6 @@
    "kind": "render",
    "href": "/design/folios/#seed-studies-title",
    "added": "2026-04-11"
-  },
-  {
-   "src": "/public/images/home/abstract-wash-study-1.webp",
-   "width": 600,
-   "height": 600,
-   "label": "Abstract wash study suggesting liquid borders and fluid connections bet…",
-   "kind": "render",
-   "href": "/topics/#topics-register",
-   "added": "2026-04-10"
   },
   {
    "src": "/public/images/home/constellation-studio-1600.webp",

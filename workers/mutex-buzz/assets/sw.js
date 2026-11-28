@@ -1,5 +1,5 @@
 // Written by workers/mutex-buzz/carry.mjs. The lock works out "now" in the page, so with these kept it keeps time offline.
-const CACHE = "mutex-f56fd3740818";
+const CACHE = "mutex-76aca3e1f0a1";
 const SHELL = ["/","/now/","/mutex.css","/mutex.js","/visit-head.js","/lock.js","/lock.spw","/lib/hold.js","/set-ring.js","/set-ring.css","/pinch.js","/pinch.css","/text-scale.js","/text-scale.css","/text-scale-head.js","/peer/pinch-text-scale.1c2ad61442.js","/now.json","/favicon.svg","/manifest.webmanifest","/folios/lined-stage-facade.webp","/folios/teal-stripes-vibes-wash.webp","/folios/factshift-cabinet.webp","/icons/icon-192.png","/icons/icon-512.png","/icons/icon-maskable-512.png","/icons/apple-touch-icon.png"];
 const CODE = /\.(?:js|css|json|spw)$/;
 

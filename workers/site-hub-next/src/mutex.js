@@ -40,7 +40,7 @@ export const FOLIOS = Object.freeze({
     image: "https://spwashi.com/public/images/assets/folios/folio-factshift-cabinet-hero.webp",
     width: 795,
     height: 1024,
-    alt: "A cabinet of ink drawers and slots washed in pink and sea green, with factshift.com lettered small",
+    alt: "The factshift.com interface drawn as a folio: its name and a wide panel over a grid of keys, washed in sea green and pink",
     href: "https://spwashi.com/design/folios/#folio-17",
   },
 });

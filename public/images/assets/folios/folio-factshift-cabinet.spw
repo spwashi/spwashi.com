@@ -5,6 +5,7 @@
   whimsy_name: "folio-factshift-cabinet"
   title: "factshift cabinet"
   description: "Laminated folio, scanned for the September 26, 2026 release set."
+  echoes: "the factshift.com interface"
 }
 
 ^"source"{
@@ -14,6 +15,7 @@
   scan: { width: 2684, height: 3458, dpi: 300, orientation: "portrait" }
   scan_extent: "about 8.9 x 11.5 in at 300 dpi; the laminate edge, not a measured paper size"
   orientation_note: "lettering reads upside down as scanned"
+  upright_turn: 180
   record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
 }
 
@@ -21,11 +23,11 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
-  alt_text: "A cabinet of ink drawers and slots washed in pink and sea green, with factshift.com lettered small"
+  alt_text: "The factshift.com interface drawn as a folio: its name and a wide panel over a grid of keys, washed in sea green and pink"
   tiers: {
     thumb: { width: 199, height: 256, avif_kib: 6, webp_kib: 7 }
-    display: { width: 398, height: 512, avif_kib: 34, webp_kib: 33 }
-    hero: { width: 795, height: 1024, avif_kib: 110, webp_kib: 118 }
+    display: { width: 398, height: 512, avif_kib: 34, webp_kib: 34 }
+    hero: { width: 795, height: 1024, avif_kib: 102, webp_kib: 123 }
   }
 }
 

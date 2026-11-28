@@ -15,6 +15,7 @@
   scan: { width: 2690, height: 3458, dpi: 300, orientation: "portrait" }
   scan_extent: "about 9.0 x 11.5 in at 300 dpi; the laminate edge, not a measured size"
   orientation_note: "lettering reads upside down; kept as scanned"
+  upright_turn: 180
   record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
 }
 
@@ -25,8 +26,8 @@
   alt_text: "Pink paint over white, with a list from A to E beginning boon and bane and ending honk, lettered upside down"
   tiers: {
     thumb: { width: 199, height: 256, avif_kib: 5, webp_kib: 6 }
-    display: { width: 398, height: 512, avif_kib: 29, webp_kib: 26 }
-    hero: { width: 797, height: 1024, avif_kib: 110, webp_kib: 95 }
+    display: { width: 398, height: 512, avif_kib: 27, webp_kib: 26 }
+    hero: { width: 797, height: 1024, avif_kib: 109, webp_kib: 94 }
   }
 }
 

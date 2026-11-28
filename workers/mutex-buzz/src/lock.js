@@ -19,7 +19,7 @@ import { formatTurn, HOLD_MS, holdLines, holdTurn } from "../../lib/hold.js";
 export const FOLIOS = Object.freeze({
   A: { kind: "folio", title: "Lined stage facade", image: "/folios/lined-stage-facade.webp", width: 1024, height: 808, alt: "Pale yellow and violet wash over lined paper, a row of faint pencil cards above a wide stage-like facade" },
   B: { kind: "folio", title: "Teal Stripes Vibes wash", image: "/folios/teal-stripes-vibes-wash.webp", width: 803, height: 1024, alt: "Violet and teal wash over a small pink panel and a Teal Stripes Vibes label" },
-  C: { kind: "folio", title: "factshift cabinet", image: "/folios/factshift-cabinet.webp", width: 795, height: 1024, alt: "A cabinet of ink drawers and slots washed in pink and sea green, with factshift.com lettered small" },
+  C: { kind: "folio", title: "factshift cabinet", image: "/folios/factshift-cabinet.webp", width: 795, height: 1024, alt: "The factshift.com interface drawn as a folio: its name and a wide panel over a grid of keys, washed in sea green and pink" },
 });
 
 /**

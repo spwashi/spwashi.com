@@ -140,3 +140,53 @@ test("the way back to texture.website keeps what attention.productions does not 
   assert.equal(textureReturnOf(shot, "https://elsewhere.example/x"), textureHrefOf(shot));
   assert.equal(textureReturnOf(shot, "//elsewhere.example/x"), textureHrefOf(shot));
 });
+
+test("a sender's missing value is no word: undefined, null and NaN read as absent, in the path and the query", () => {
+  const shot = readShot("/undefined", "?shot=undefined&light=null&lens=NaN&wear=undefined&palette=null", "2026-11-27");
+  assert.equal(shot.read.length, 0, "nothing to say about a missing value");
+  assert.equal(shot.named, false, "the day's shot, as if nothing were asked");
+  assert.equal(shot.subject, "a laminated folio");
+  assert.equal(shot.wear, null);
+  assert.equal(shot.palette, null);
+  assert.equal(nearWord("undefined", ["undefined"]), null);
+});
+
+test("a composite path is one subject, read as a sentence, and its layers travel on", async () => {
+  const { addressOf, layersOf, sentenceOf } = await import("../src/compose.js");
+  const shot = readShot("/vellum/~moss/*rust", "?material=vellum&shot=close-up", "2026-11-27");
+  assert.equal(shot.subject, "vellum drifting through moss heavy with rust");
+  assert.match(promptOf(shot).plain, /^close-up shot of vellum drifting through moss heavy with rust,/);
+  assert.equal(new URL(addressOf(shot), "https://x").pathname, "/vellum/~moss/*rust", "the address keeps the layers");
+  assert.equal(new URL(textureHrefOf(shot)).pathname, "/vellum/~moss/*rust", "texture.website gets its layers back");
+  assert.equal(sentenceOf(layersOf("/glass/%3Fice")), "glass broken by ice");
+  // An edited subject is the reader's own: the layers no longer stand.
+  const edited = { ...shot, subject: "a brass nib" };
+  assert.equal(new URL(addressOf(edited), "https://x").pathname, "/a-brass-nib");
+});
+
+test("a link can set the subject as written with subject=, and every address keeps it", async () => {
+  const { addressOf } = await import("../src/compose.js");
+  const shot = readShot("/anything", "?subject=Sam%27s%20Brass%20Nib%2C%201920&shot=wide", "2026-11-27");
+  assert.equal(shot.subject, "Sam's Brass Nib, 1920");
+  assert.equal(shot.named, true);
+  const again = new URL(addressOf(shot), "https://x");
+  assert.equal(again.searchParams.get("subject"), "Sam's Brass Nib, 1920");
+  assert.equal(readShot(again.pathname, again.search, "2026-11-27").subject, "Sam's Brass Nib, 1920", "the address reads back as the same subject");
+  assert.equal(new URL(addressOf(readShot("/a-brass-nib", "", "2026-11-27")), "https://x").searchParams.has("subject"), false, "a plain subject needs only the path");
+});
+
+test("texture.website's palette arrives as a surface word, as drawn is none, and the frame is printed in its inks", async () => {
+  const { paletteFilterOf } = await import("../src/compose.js");
+  const { LADDERS: T } = await import("../../texture-website/src/vocabulary.js");
+  for (const word of T.palette.filter((w) => w !== "as drawn")) {
+    const shot = readShot("/vellum", `?palette=${encodeURIComponent(word)}`, "2026-11-27");
+    assert.equal(shot.palette, word);
+    assert.ok(paletteFilterOf(word).includes('type="table"'), `${word} draws`);
+  }
+  assert.equal(readShot("/vellum", "?palette=as-drawn", "2026-11-27").palette, null);
+  const teal = readShot("/vellum", "?palette=teal-stripes&material=vellum", "2026-11-27");
+  assert.match(promptOf(teal).plain, /in deep harbor teals up to sea foam/);
+  assert.match(spwOf(teal), /=palette\[teal_stripes\]/);
+  assert.equal(new URL(textureHrefOf(teal)).searchParams.get("palette"), "teal-stripes");
+  assert.equal(paletteFilterOf(null), "");
+});

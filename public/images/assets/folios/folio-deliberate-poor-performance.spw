@@ -14,6 +14,7 @@
   scan: { width: 2694, height: 3457, dpi: 300, orientation: "portrait" }
   scan_extent: "about 9.0 x 11.5 in at 300 dpi; the laminate edge, not a measured paper size"
   orientation_note: "lettering reads upside down as scanned"
+  upright_turn: 180
   record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
 }
 
@@ -24,8 +25,8 @@
   alt_text: "A grey page with a yellow card reading deliberate poor work performance, a dense ink drawing of a figure under a sweeping wave, and a ladder of courses from n to log n"
   tiers: {
     thumb: { width: 200, height: 256, avif_kib: 5, webp_kib: 6 }
-    display: { width: 399, height: 512, avif_kib: 30, webp_kib: 30 }
-    hero: { width: 798, height: 1024, avif_kib: 107, webp_kib: 118 }
+    display: { width: 399, height: 512, avif_kib: 26, webp_kib: 31 }
+    hero: { width: 798, height: 1024, avif_kib: 101, webp_kib: 117 }
   }
 }
 

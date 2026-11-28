@@ -3,7 +3,7 @@
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
 import { readNote } from "/lib/near-word.js";
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf, textureHrefOf, textureReturnOf, SURFACE_KEYS } from "/compose.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf, textureHrefOf, textureReturnOf, paletteFilterOf, SURFACE_KEYS } from "/compose.js";
 import { DEFAULT_SUBJECT, LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
 import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
@@ -130,6 +130,11 @@ function render() {
   svg.dataset.light = slug(shot.light);
   svg.dataset.move = slug(shot.move);
   svg.toggleAttribute("data-surface", Boolean(shot.material));
+  // A palette prints the whole frame in its inks, as texture.website prints its stage.
+  const palette = $("palette"), scene = $("gate-scene");
+  const inks = paletteFilterOf(shot.palette);
+  if (palette && palette.dataset.word !== (shot.palette ?? "")) { palette.innerHTML = inks; palette.dataset.word = shot.palette ?? ""; }
+  if (scene) { if (inks) scene.setAttribute("filter", "url(#palette)"); else scene.removeAttribute("filter"); }
   const image = $("surface-image");
   if (shot.material) image.setAttribute("href", `https://texture.website/${shot.material.slug}.png`);
   else image.removeAttribute("href");
@@ -261,7 +266,7 @@ function takeDifference(take, from) {
   if (take.subject !== from.subject) words.push(take.subject);
   for (const key of Object.keys(LADDERS)) if (take[key] !== from[key]) words.push(take[key]);
   if ((take.material?.slug ?? "") !== (from.material?.slug ?? "")) words.push(take.material?.word ?? "no surface");
-  for (const key of ["wear", "process"]) if ((take[key] ?? null) !== (from[key] ?? null)) words.push(take[key] ?? `no ${key}`);
+  for (const key of SURFACE_KEYS) if ((take[key] ?? null) !== (from[key] ?? null)) words.push(take[key] ?? `no ${key}`);
   if (take.tempo !== from.tempo) words.push(`tempo ${take.tempo}`);
   return words.length ? words : ["the same words"];
 }

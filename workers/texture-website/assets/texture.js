@@ -783,11 +783,13 @@ function drawStyleCard(vocab, state) {
  */
 function shotHrefOf(state) {
   const primary = state.layers.find(({ material }) => material.cls)?.material ?? null;
-  const query = [...[["shot", "scale"], ["light", "light"], ["ratio", "format"], ["wear", "wear"], ["process", "process"]]
+  // The layers as texture writes them (/vellum/~moss); attention.productions reads them as one composite subject.
+  const layers = state.layers.map(({ material, mark }) => `${mark === "?" ? "%3F" : mark}${material.slug}`).join("/");
+  const query = [...[["shot", "scale"], ["light", "light"], ["ratio", "format"], ["wear", "wear"], ["process", "process"], ["palette", "palette"]]
     .map(([theirs, ours]) => `${theirs}=${slug(state.ladders[ours])}`), ...(state.from ? [`from=${state.from}`] : []), "via=texture.website",
     // The address left behind, so attention.productions' way back changes only what was tuned there.
     `back=${encodeURIComponent(location.pathname + location.search)}`].join("&");
-  return primary ? `https://attention.productions/${primary.slug}?material=${primary.slug}&${query}` : `https://attention.productions/?${query}`;
+  return `https://attention.productions/${layers}?${primary ? `material=${primary.slug}&` : ""}${query}`;
 }
 
 /** Teal Stripes Vibes' seed for a light: a lamp through teal glass, a harbor at dusk, ink on a ledger line. */

@@ -14,6 +14,7 @@
   scan: { width: 2687, height: 3428, dpi: 300, orientation: "portrait" }
   scan_extent: "about 9.0 x 11.4 in at 300 dpi; the laminate edge, not a measured paper size"
   orientation_note: "lettering reads upside down as scanned"
+  upright_turn: 180
   record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
 }
 
@@ -24,8 +25,8 @@
   alt_text: "Violet and teal wash over a small pink panel and a Teal Stripes Vibes label"
   tiers: {
     thumb: { width: 201, height: 256, avif_kib: 4, webp_kib: 5 }
-    display: { width: 401, height: 512, avif_kib: 27, webp_kib: 25 }
-    hero: { width: 803, height: 1024, avif_kib: 118, webp_kib: 108 }
+    display: { width: 401, height: 512, avif_kib: 25, webp_kib: 26 }
+    hero: { width: 803, height: 1024, avif_kib: 106, webp_kib: 111 }
   }
 }
 

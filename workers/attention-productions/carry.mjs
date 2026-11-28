@@ -17,7 +17,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { escapeHtml, securityHeaders } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
-import { LADDERS as TEXTURE_LADDERS, MATERIALS as TEXTURE_MATERIALS, PHRASES as TEXTURE_PHRASES } from "../texture-website/src/vocabulary.js";
+import { LADDERS as TEXTURE_LADDERS, MATERIALS as TEXTURE_MATERIALS, PALETTES as TEXTURE_PALETTES, PHRASES as TEXTURE_PHRASES, RELATIONS as TEXTURE_RELATIONS } from "../texture-website/src/vocabulary.js";
 import { ATTENTION_FAVICON } from "../site-hub-next/src/hosts/attention.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { neighborLine } from "../site-hub-next/src/set.js";
@@ -33,9 +33,14 @@ const SHARED = ["vocabulary.js", "compose.js", "materials.js"];
 const MATERIALS_MODULE = `// Written by workers/attention-productions/carry.mjs from texture.website's vocabulary; do not edit.
 // A material= in an address is one of these, so its --sref is an image texture.website serves.
 export const MATERIALS = Object.freeze(${JSON.stringify(TEXTURE_MATERIALS.map(({ slug, word, cls }) => ({ slug, word, cls })))});
-// wear= and process= are texture.website's own ladders and phrases, so a look made there reads here word for word.
-export const SURFACE = Object.freeze(${JSON.stringify({ wear: TEXTURE_LADDERS.wear, process: TEXTURE_LADDERS.process })});
-export const SURFACE_PHRASES = Object.freeze(${JSON.stringify({ wear: TEXTURE_PHRASES.wear, process: TEXTURE_PHRASES.process })});
+// wear=, process= and palette= are texture.website's own ladders and phrases, so a look made there reads here word for word.
+// Its "as drawn" palette is no palette here, as "none" is no wear.
+export const SURFACE = Object.freeze(${JSON.stringify({ wear: TEXTURE_LADDERS.wear, process: TEXTURE_LADDERS.process, palette: TEXTURE_LADDERS.palette.filter((word) => word !== "as drawn") })});
+export const SURFACE_PHRASES = Object.freeze(${JSON.stringify({ wear: TEXTURE_PHRASES.wear, process: TEXTURE_PHRASES.process, palette: TEXTURE_PHRASES.palette })});
+// Each palette's inks, shadow to highlight, for the viewfinder's gradient map.
+export const PALETTES = Object.freeze(${JSON.stringify(TEXTURE_PALETTES)});
+// How a material meets the one before it in a composite path (/vellum/~moss): texture.website's marks and their words.
+export const RELATIONS = Object.freeze(${JSON.stringify(Object.fromEntries(Object.entries(TEXTURE_RELATIONS).map(([mark, r]) => [mark, r.says])))});
 `;
 
 /** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
@@ -71,11 +76,12 @@ function viewfinder(c, shot) {
           <filter id="b2" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="6"/></filter>
           <filter id="b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="11"/></filter>
           <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          <filter id="palette" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"></filter>
           <clipPath id="gate"><rect id="gate-rect" x="${frame.x}" y="${frame.y}" width="${frame.w}" height="${frame.h}"/></clipPath>
           <pattern id="surface" patternUnits="userSpaceOnUse" width="192" height="192"><image id="surface-image" width="192" height="192"/></pattern>
         </defs>
         <rect class="ground" width="${c.VIEW.w}" height="${c.VIEW.h}"/>
-        <g clip-path="url(#gate)">
+        <g id="gate-scene" clip-path="url(#gate)">
           <rect id="wash" class="wash" x="${frame.x}" y="${frame.y}" width="${frame.w}" height="${frame.h}"/>
           <g id="bokeh" class="bokeh b3">${g.bokeh.map((b) => `<ellipse cx="${b.x}" cy="${b.y}" rx="${b.rx}" ry="${b.ry}"${b.on ? "" : ' class="off"'}/>`).join("")}</g>
           <g id="sheets" class="sheets">${[...g.sheets].reverse().map(sheet).join("")}</g>
@@ -112,7 +118,7 @@ function ladders(c, v, shot) {
   const offer = v.MATERIAL_OFFER.map((s) => c.MATERIAL_BY_SLUG_FOR_CARRY(s));
   rows.push(row("material", [["none", "", c.addressOf({ ...shot, material: null })], ...offer.map((m) => [m.word, m.slug, c.addressOf({ ...shot, material: m })])], "surface", `${surfaceSelect(shot)}<a class="out" id="texture-link" href="https://texture.website/">texture ↗</a>`));
   // texture.website's wear and process, as its own words: how handled the surface is, and how it is printed.
-  for (const key of ["wear", "process"]) rows.push(row(key, [["none", "", c.addressOf({ ...shot, [key]: null })], ...c.SURFACE[key].map((word) => [word, word, c.addressOf({ ...shot, [key]: word })])]));
+  for (const key of c.SURFACE_KEYS) rows.push(row(key, [["none", "", c.addressOf({ ...shot, [key]: null })], ...c.SURFACE[key].map((word) => [word, word, c.addressOf({ ...shot, [key]: word })])]));
   return rows.join("\n        ");
 }
 
