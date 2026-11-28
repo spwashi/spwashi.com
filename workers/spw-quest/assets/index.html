@@ -731,6 +731,8 @@
     .sigils .sigil { grid-row: span 4; display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: calc(var(--radius) - 2px); background: color-mix(in srgb, currentColor 8%, var(--surface)); border: 1px solid color-mix(in srgb, currentColor 24%, var(--line)); font: 700 1.65rem/1 var(--mono); text-shadow: 0 0 10px color-mix(in srgb, currentColor 25%, transparent); transition: transform .22s cubic-bezier(.34, 1.56, .64, 1), filter .2s ease, border-color .2s ease, background-color .2s ease; }
     .sigils li:hover .sigil, .sigils li:focus-within .sigil, .sigils li:target .sigil { transform: scale(1.08); filter: drop-shadow(0 2px 8px color-mix(in srgb, currentColor 35%, transparent)); border-color: currentColor; background: color-mix(in srgb, currentColor 14%, var(--surface)); }
     .sigils p { margin: 0; }
+    /* Everything but the sigil sits in the second column: the sigil spans four rows, and a fifth child (Find on page) used to fall into its 2.5rem column and over the note. */
+    .sigils li > :not(.sigil) { grid-column: 2; min-width: 0; }
     .sigils .name { display: flex; align-items: baseline; gap: .35rem; font-weight: 700; font-size: .95rem; letter-spacing: -.01em; color: var(--fg); }
     .sigils .name code { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .sigils .reads { margin-top: .1rem; font-size: .88rem; line-height: 1.48; color: var(--fg); }
@@ -752,6 +754,25 @@
     .op-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .55rem; margin-top: .35rem; font-size: .8rem; }
     .title-spw-wrap { position: relative; width: min(100%, 42rem); }
     .title-spw-wrap .copy-expr { position: absolute; top: .5rem; right: .55rem; }
+    /* The Copy button sits over the box's corner, so the lines keep clear of it. */
+    .title-spw-wrap .title-spw { padding-right: 4.6rem; }
+    /* The quest's path: the page's four steps in order, a map for a long guide. */
+    .quest-path { margin: 1.3rem 0 0; }
+    .quest-path ol { display: flex; flex-wrap: wrap; gap: .4rem .5rem; margin: 0; padding: 0; list-style: none; }
+    .quest-path a { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.25rem; padding: .2rem .8rem .2rem .3rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--surface); color: var(--fg); font-size: .88rem; text-decoration: none; }
+    .quest-path a:hover, .quest-path a:focus-visible { border-color: var(--accent); color: var(--accent); }
+    .quest-path .step { display: inline-grid; place-items: center; width: 1.65rem; height: 1.65rem; border-radius: 50%; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); color: var(--accent); font: 700 .78rem/1 var(--mono); }
+    @media (max-width: 40rem) {
+      /* On a phone the opening lines wrap, so the whole expression is read without scrolling sideways under the Copy button. */
+      .title-spw-wrap .title-spw { white-space: pre-wrap; overflow-wrap: anywhere; }
+      .quest-path ol { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: .2rem; }
+      .quest-path ol::-webkit-scrollbar { display: none; }
+      .quest-path li { flex: none; }
+      /* Eight starters are one row that snaps a card at a time, not eight screens of scrolling. */
+      #start .doors { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: .7rem; padding: 0 1.2rem .4rem 0; margin-right: -1rem; scrollbar-width: none; }
+      #start .doors::-webkit-scrollbar { display: none; }
+      #start .door { flex: 0 0 min(84%, 20rem); scroll-snap-align: start; }
+    }
     .starter p { font-size: .9rem; }
     .starter strong { margin-right: .3rem; color: var(--fg); }
     .starter .starter-ways { margin-top: .35rem; font-size: .85rem; }
@@ -996,6 +1017,14 @@
     <article class="door"><h3><a href="/build">Engineer or editor</a></h3><p>Take a line apart, compare <a href="/forms/">forms side by side</a>, or mount <a href="/install#repository">.spw/_workbench</a>.</p></article>
     <article class="door"><h3><a href="/llms.txt">How to answer in Spw</a></h3><p>For language models and agents: the plain-text grammar, worked answers, <a href="/llms-full.txt">full corpus</a>, and <a href="/init">repo setup</a>.</p></article>
   </div>
+  <nav class="quest-path" aria-label="On this page">
+    <ol>
+      <li><a href="#start"><span class="step">1</span> Start from a line</a></li>
+      <li><a href="#try"><span class="step">2</span> Open a file</a></li>
+      <li><a href="#operators"><span class="step">3</span> Learn the marks</a></li>
+      <li><a href="#ways"><span class="step">4</span> Take it home</a></li>
+    </ol>
+  </nav>
 </section>
 <aside id="domain-lenses" class="lens-bar" aria-label="Domain lenses">
   <div class="lens-head">
@@ -1013,7 +1042,7 @@
   <div class="doors">
     <article class="door starter" id="start-marketing">
       <h3>Marketing</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr="~launch(soft)[beta]{waitlist, story, proof}&lt;audience&gt;"></code><button type="button" class="copy-expr" data-copy-line="~launch(soft)[beta]{waitlist, story, proof}&lt;audience&gt;" aria-label="Copy Marketing line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="~launch(soft)[beta]{waitlist, story, proof}&lt;audience&gt;"><span data-t="potential">~</span>launch<span data-t="b-scene">(</span>soft<span data-t="b-scene">)</span><span data-t="b-mode">[</span>beta<span data-t="b-mode">]</span><span data-t="b-direction">{</span>waitlist, story, proof<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>audience<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="~launch(soft)[beta]{waitlist, story, proof}&lt;audience&gt;" aria-label="Copy Marketing line">Copy</button></p>
       <p><strong>Ask</strong> Which of the three would you cut first?</p>
       <p><strong>Talk</strong> Change ~ to ! and soft to loud — say what each part has to become.</p>
       <p><strong>Build</strong> One line per launch you have run, so the next one starts from them.</p>
@@ -1021,7 +1050,7 @@
     </article>
     <article class="door starter" id="start-editorial">
       <h3>Editorial cut</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr="^cut(deadline)[rough]{pacing ~&gt; sound ~&gt; locked}&lt;reel&gt;"></code><button type="button" class="copy-expr" data-copy-line="^cut(deadline)[rough]{pacing ~&gt; sound ~&gt; locked}&lt;reel&gt;" aria-label="Copy Editorial cut line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="^cut(deadline)[rough]{pacing ~&gt; sound ~&gt; locked}&lt;reel&gt;"><span data-t="integration">^</span>cut<span data-t="b-scene">(</span>deadline<span data-t="b-scene">)</span><span data-t="b-mode">[</span>rough<span data-t="b-mode">]</span><span data-t="b-direction">{</span>pacing ~&gt; sound ~&gt; locked<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>reel<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="^cut(deadline)[rough]{pacing ~&gt; sound ~&gt; locked}&lt;reel&gt;" aria-label="Copy Editorial cut line">Copy</button></p>
       <p><strong>Ask</strong> What breaks the pacing between rough and locked?</p>
       <p><strong>Talk</strong> Change rough to fine and add the one cue that holds the cut together.</p>
       <p><strong>Build</strong> A scene sheet keeping cut stage, pacing notes, and sound cues together.</p>
@@ -1029,7 +1058,7 @@
     </article>
     <article class="door starter" id="start-growth">
       <h3>Growth</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr="%funnel(weekly)[cohort]{visit ~&gt; signup ~&gt; paid}&lt;growth&gt;"></code><button type="button" class="copy-expr" data-copy-line="%funnel(weekly)[cohort]{visit ~&gt; signup ~&gt; paid}&lt;growth&gt;" aria-label="Copy Growth line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="%funnel(weekly)[cohort]{visit ~&gt; signup ~&gt; paid}&lt;growth&gt;"><span data-t="normalize">%</span>funnel<span data-t="b-scene">(</span>weekly<span data-t="b-scene">)</span><span data-t="b-mode">[</span>cohort<span data-t="b-mode">]</span><span data-t="b-direction">{</span>visit ~&gt; signup ~&gt; paid<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>growth<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="%funnel(weekly)[cohort]{visit ~&gt; signup ~&gt; paid}&lt;growth&gt;" aria-label="Copy Growth line">Copy</button></p>
       <p><strong>Ask</strong> Where does this funnel leak most?</p>
       <p><strong>Talk</strong> Add a step between signup and paid, and say what it measures.</p>
       <p><strong>Build</strong> A pipeline that counts each step by cohort, week over week.</p>
@@ -1037,7 +1066,7 @@
     </article>
     <article class="door starter" id="start-frontend">
       <h3>Frontend</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr="bane page[slow]{bundle, images, fonts}&lt;phone&gt;"></code><button type="button" class="copy-expr" data-copy-line="bane page[slow]{bundle, images, fonts}&lt;phone&gt;" aria-label="Copy Frontend line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="bane page[slow]{bundle, images, fonts}&lt;phone&gt;">bane page<span data-t="b-mode">[</span>slow<span data-t="b-mode">]</span><span data-t="b-direction">{</span>bundle, images, fonts<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>phone<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="bane page[slow]{bundle, images, fonts}&lt;phone&gt;" aria-label="Copy Frontend line">Copy</button></p>
       <p><strong>Ask</strong> Which of these would you measure first?</p>
       <p><strong>Talk</strong> Change bane to boon and slow to crisp — say what made the difference.</p>
       <p><strong>Build</strong> A record of each fix: the metric, the diff, and the test run.</p>
@@ -1045,7 +1074,7 @@
     </article>
     <article class="door starter" id="start-hiring">
       <h3>Finding talent</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr="=role(team)[frontend]{react, a11y, design}&lt;hiring&gt;"></code><button type="button" class="copy-expr" data-copy-line="=role(team)[frontend]{react, a11y, design}&lt;hiring&gt;" aria-label="Copy Finding talent line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="=role(team)[frontend]{react, a11y, design}&lt;hiring&gt;"><span data-t="binding">=</span>role<span data-t="b-scene">(</span>team<span data-t="b-scene">)</span><span data-t="b-mode">[</span>frontend<span data-t="b-mode">]</span><span data-t="b-direction">{</span>react, a11y, design<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>hiring<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="=role(team)[frontend]{react, a11y, design}&lt;hiring&gt;" aria-label="Copy Finding talent line">Copy</button></p>
       <p><strong>Ask</strong> Which skill is this role really asking for?</p>
       <p><strong>Talk</strong> Write the same role at junior and at senior, and say which parts move.</p>
       <p><strong>Build</strong> A role card per person, pointing to the snippets they kept.</p>
@@ -1053,7 +1082,7 @@
     </article>
     <article class="door starter" id="start-search">
       <h3>Finding a company</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr=".search(senior)[open]{fit, pay, growth}&lt;company&gt;"></code><button type="button" class="copy-expr" data-copy-line=".search(senior)[open]{fit, pay, growth}&lt;company&gt;" aria-label="Copy Finding a company line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr=".search(senior)[open]{fit, pay, growth}&lt;company&gt;"><span data-t="ground">.</span>search<span data-t="b-scene">(</span>senior<span data-t="b-scene">)</span><span data-t="b-mode">[</span>open<span data-t="b-mode">]</span><span data-t="b-direction">{</span>fit, pay, growth<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>company<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line=".search(senior)[open]{fit, pay, growth}&lt;company&gt;" aria-label="Copy Finding a company line">Copy</button></p>
       <p><strong>Ask</strong> Which of the three would you trade first?</p>
       <p><strong>Talk</strong> Add a fourth part, and say what it costs the other three.</p>
       <p><strong>Build</strong> One line per company you talk to, compared two at a time.</p>
@@ -1061,7 +1090,7 @@
     </article>
     <article class="door starter" id="start-incident">
       <h3>Incident triage</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr="!outage(p1)[active]{triage ~&gt; isolate ~&gt; verify}&lt;checkout&gt;"></code><button type="button" class="copy-expr" data-copy-line="!outage(p1)[active]{triage ~&gt; isolate ~&gt; verify}&lt;checkout&gt;" aria-label="Copy Incident triage line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="!outage(p1)[active]{triage ~&gt; isolate ~&gt; verify}&lt;checkout&gt;"><span data-t="action">!</span>outage<span data-t="b-scene">(</span>p1<span data-t="b-scene">)</span><span data-t="b-mode">[</span>active<span data-t="b-mode">]</span><span data-t="b-direction">{</span>triage ~&gt; isolate ~&gt; verify<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>checkout<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="!outage(p1)[active]{triage ~&gt; isolate ~&gt; verify}&lt;checkout&gt;" aria-label="Copy Incident triage line">Copy</button></p>
       <p><strong>Ask</strong> Which signal tells you the blast radius stopped growing?</p>
       <p><strong>Talk</strong> Turn p1 to drill and add the exact smoke check you would automate.</p>
       <p><strong>Build</strong> A blameless postmortem keeping latency bounds, owners, and timeline together.</p>
@@ -1069,7 +1098,7 @@
     </article>
     <article class="door starter" id="start-community">
       <h3>Organizing a gathering</h3>
-      <p class="expr-row"><code class="spw-expr" data-spw-expr="*gathering(monthly)[open]{host, access, food}&lt;neighbors&gt;"></code><button type="button" class="copy-expr" data-copy-line="*gathering(monthly)[open]{host, access, food}&lt;neighbors&gt;" aria-label="Copy Organizing a gathering line">Copy</button></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="*gathering(monthly)[open]{host, access, food}&lt;neighbors&gt;"><span data-t="value">*</span>gathering<span data-t="b-scene">(</span>monthly<span data-t="b-scene">)</span><span data-t="b-mode">[</span>open<span data-t="b-mode">]</span><span data-t="b-direction">{</span>host, access, food<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>neighbors<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="*gathering(monthly)[open]{host, access, food}&lt;neighbors&gt;" aria-label="Copy Organizing a gathering line">Copy</button></p>
       <p><strong>Ask</strong> Who cannot participate if one default assumption stays unspoken?</p>
       <p><strong>Talk</strong> Change monthly to weekly and trim setup so one host can close in 15 minutes.</p>
       <p><strong>Build</strong> A lightweight charter naming access promises, shared roles, and cleanup steps.</p>
@@ -1492,7 +1521,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">potential <code>~</code></p>
       <p class="op-meta"><span class="op-valence">latent wave</span><span>Field ↔ Vantage</span><a class="op-partner" href="#op-perspective" title="Jump to dimensional symmetry partner">↔ @ perspective</a></p>
       <p class="reads">Holds an uncollapsed path across distance without taking it yet; sits opposite @ perspective, which names who is looking down that thread.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="~draft(studio){rough ~&gt; paced ~&gt; locked}&lt;reel&gt;"></code><button type="button" class="copy-expr" data-copy-line="~draft(studio){rough ~&gt; paced ~&gt; locked}&lt;reel&gt;" aria-label="Copy potential example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="~draft(studio){rough ~&gt; paced ~&gt; locked}&lt;reel&gt;"><span data-t="potential">~</span>draft<span data-t="b-scene">(</span>studio<span data-t="b-scene">)</span><span data-t="b-direction">{</span>rough ~&gt; paced ~&gt; locked<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>reel<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="~draft(studio){rough ~&gt; paced ~&gt; locked}&lt;reel&gt;" aria-label="Copy potential example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="potential" aria-pressed="false">Find on page</button><a href="/build?script=~draft(studio)%7Brough%20~%3E%20paced%20~%3E%20locked%7D%3Creel%3E#build">Edit</a> · <a href="https://factshift.center/?spw=~draft(studio)%7Brough%20~%3E%20paced%20~%3E%20locked%7D%3Creel%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Defers operand evaluation as a thunk, retaining the unreduced search space until demanded by an observer.</p>
       <p class="edges-in"><a href="/learn#act"><span class="n">2</span> act</a> <a href="/learn#point"><span class="n">5</span> point</a></p>
@@ -1503,7 +1532,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">wonder <code>?</code></p>
       <p class="op-meta"><span class="op-valence">open aperture</span><span>Aperture ↔ Impulse</span><a class="op-partner" href="#op-action" title="Jump to dimensional symmetry partner">↔ ! action</a></p>
       <p class="reads">Opens an inquiry or conditional gate without forcing closure; balances ! action, which collapses possibility into an observable move.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="?pacing[scene_3]{watch_muted; check_beat}&lt;cut&gt;"></code><button type="button" class="copy-expr" data-copy-line="?pacing[scene_3]{watch_muted; check_beat}&lt;cut&gt;" aria-label="Copy wonder example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="?pacing[scene_3]{watch_muted; check_beat}&lt;cut&gt;"><span data-t="wonder">?</span>pacing<span data-t="b-mode">[</span>scene_3<span data-t="b-mode">]</span><span data-t="b-direction">{</span>watch_muted; check_beat<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>cut<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="?pacing[scene_3]{watch_muted; check_beat}&lt;cut&gt;" aria-label="Copy wonder example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="wonder" aria-pressed="false">Find on page</button><a href="/build?script=%3Fpacing%5Bscene_3%5D%7Bwatch_muted%3B%20check_beat%7D%3Ccut%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%3Fpacing%5Bscene_3%5D%7Bwatch_muted%3B%20check_beat%7D%3Ccut%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Dispatches a conditional predicate, evaluating the contingent branch once the interrogative precondition holds.</p>
       <p class="edges-in"><a href="/learn#act"><span class="n">2</span> act</a> <a href="/learn#ask"><span class="n">6</span> ask</a></p>
@@ -1514,7 +1543,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">action <code>!</code></p>
       <p class="op-meta"><span class="op-valence">kinetic impulse</span><span>Aperture ↔ Impulse</span><a class="op-partner" href="#op-wonder" title="Jump to dimensional symmetry partner">↔ ? wonder</a></p>
       <p class="reads">Commits a state change so its consequence becomes observable; completes ? wonder by crossing from inquiry into effect.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="!render(final)[4k]{picture, mix ~&gt; master}&lt;delivery&gt;"></code><button type="button" class="copy-expr" data-copy-line="!render(final)[4k]{picture, mix ~&gt; master}&lt;delivery&gt;" aria-label="Copy action example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="!render(final)[4k]{picture, mix ~&gt; master}&lt;delivery&gt;"><span data-t="action">!</span>render<span data-t="b-scene">(</span>final<span data-t="b-scene">)</span><span data-t="b-mode">[</span>4k<span data-t="b-mode">]</span><span data-t="b-direction">{</span>picture, mix ~&gt; master<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>delivery<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="!render(final)[4k]{picture, mix ~&gt; master}&lt;delivery&gt;" aria-label="Copy action example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="action" aria-pressed="false">Find on page</button><a href="/build?script=!render(final)%5B4k%5D%7Bpicture%2C%20mix%20~%3E%20master%7D%3Cdelivery%3E#build">Edit</a> · <a href="https://factshift.center/?spw=!render(final)%5B4k%5D%7Bpicture%2C%20mix%20~%3E%20master%7D%3Cdelivery%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Forces eager evaluation of its operand, committing the state transformation and returning the actualized value.</p>
       <p class="edges-in"><a href="/learn#act"><span class="n">2</span> act</a> <a href="/learn#ask"><span class="n">6</span> ask</a></p>
@@ -1525,7 +1554,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">value <code>*</code></p>
       <p class="op-meta"><span class="op-valence">precipitated mass</span><span>Worth ↔ Carrier</span><a class="op-partner" href="#op-substrate" title="Jump to dimensional symmetry partner">↔ $ substrate</a></p>
       <p class="reads">Materializes what carries concrete worth or salience here; pairs with $ substrate, which names the physical cost or ground carrying it.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="*proof(print)[laminated]{front, back, colophon}&lt;folio&gt;"></code><button type="button" class="copy-expr" data-copy-line="*proof(print)[laminated]{front, back, colophon}&lt;folio&gt;" aria-label="Copy value example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="*proof(print)[laminated]{front, back, colophon}&lt;folio&gt;"><span data-t="value">*</span>proof<span data-t="b-scene">(</span>print<span data-t="b-scene">)</span><span data-t="b-mode">[</span>laminated<span data-t="b-mode">]</span><span data-t="b-direction">{</span>front, back, colophon<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>folio<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="*proof(print)[laminated]{front, back, colophon}&lt;folio&gt;" aria-label="Copy value example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="value" aria-pressed="false">Find on page</button><a href="/build?script=*proof(print)%5Blaminated%5D%7Bfront%2C%20back%2C%20colophon%7D%3Cfolio%3E#build">Edit</a> · <a href="https://factshift.center/?spw=*proof(print)%5Blaminated%5D%7Bfront%2C%20back%2C%20colophon%7D%3Cfolio%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Evaluates the operand to canonical normal form, recording the stabilized invariant into an addressable register.</p>
       <p class="in-file" data-in-file="value" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
@@ -1535,7 +1564,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">ground <code>.</code></p>
       <p class="op-meta"><span class="op-valence">noble baseline</span><span>Resonance ↔ Ground</span><a class="op-partner" href="#op-vibration" title="Jump to dimensional symmetry partner">↔ # vibration</a></p>
       <p class="reads">Settles attention back to the local default or center of gravity; anchors # vibration, which projects an address outward so others can find it.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr=".palette(neutral_paper)[daylight]{ink, ground, edge}&lt;surface&gt;"></code><button type="button" class="copy-expr" data-copy-line=".palette(neutral_paper)[daylight]{ink, ground, edge}&lt;surface&gt;" aria-label="Copy ground example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr=".palette(neutral_paper)[daylight]{ink, ground, edge}&lt;surface&gt;"><span data-t="ground">.</span>palette<span data-t="b-scene">(</span>neutral_paper<span data-t="b-scene">)</span><span data-t="b-mode">[</span>daylight<span data-t="b-mode">]</span><span data-t="b-direction">{</span>ink, ground, edge<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>surface<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line=".palette(neutral_paper)[daylight]{ink, ground, edge}&lt;surface&gt;" aria-label="Copy ground example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="ground" aria-pressed="false">Find on page</button><a href="/build?script=.palette(neutral_paper)%5Bdaylight%5D%7Bink%2C%20ground%2C%20edge%7D%3Csurface%3E#build">Edit</a> · <a href="https://factshift.center/?spw=.palette(neutral_paper)%5Bdaylight%5D%7Bink%2C%20ground%2C%20edge%7D%3Csurface%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Traverses a qualified property path or dereferences the scoped baseline context from the active lexical environment.</p>
       <p class="in-file" data-in-file="ground" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
@@ -1545,7 +1574,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">ascension <code>^</code></p>
       <p class="op-meta"><span class="op-valence">vertical synthesis</span><span>Lift ↔ Confluence</span><a class="op-partner" href="#op-subject" title="Jump to dimensional symmetry partner">↔ &amp; subject</a></p>
       <p class="reads">Lifts separate parts onto a higher register as one inspectable whole; complements &amp; subject, which binds parallel streams laterally.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="^sequence(episode_04){cold_open; turn; close}&lt;arc&gt;"></code><button type="button" class="copy-expr" data-copy-line="^sequence(episode_04){cold_open; turn; close}&lt;arc&gt;" aria-label="Copy ascension example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="^sequence(episode_04){cold_open; turn; close}&lt;arc&gt;"><span data-t="integration">^</span>sequence<span data-t="b-scene">(</span>episode_04<span data-t="b-scene">)</span><span data-t="b-direction">{</span>cold_open; turn; close<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>arc<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="^sequence(episode_04){cold_open; turn; close}&lt;arc&gt;" aria-label="Copy ascension example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="integration" aria-pressed="false">Find on page</button><a href="/build?script=%5Esequence(episode_04)%7Bcold_open%3B%20turn%3B%20close%7D%3Carc%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%5Esequence(episode_04)%7Bcold_open%3B%20turn%3B%20close%7D%3Carc%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Encapsulates operands into an integrated compound record bounded by unified relational type constraints.</p>
       <p class="in-file" data-in-file="ascension"><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>1</span></span></a></p>
@@ -1555,7 +1584,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">vibration <code>#</code></p>
       <p class="op-meta"><span class="op-valence">harmonic address</span><span>Resonance ↔ Ground</span><a class="op-partner" href="#op-ground" title="Jump to dimensional symmetry partner">↔ . ground</a></p>
       <p class="reads">Calls a structure by resonant name (#&gt;, #:, #!) so tools and readers can address or echo it across files; balances . ground.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="#&gt;scene_beat[audio]{room_tone, dialogue}"></code><button type="button" class="copy-expr" data-copy-line="#&gt;scene_beat[audio]{room_tone, dialogue}" aria-label="Copy vibration example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="#&gt;scene_beat[audio]{room_tone, dialogue}"><span data-t="frame">#&gt;scene_beat</span><span data-t="b-mode">[</span>audio<span data-t="b-mode">]</span><span data-t="b-direction">{</span>room_tone, dialogue<span data-t="b-direction">}</span></code><button type="button" class="copy-expr" data-copy-line="#&gt;scene_beat[audio]{room_tone, dialogue}" aria-label="Copy vibration example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="vibration" aria-pressed="false">Find on page</button><a href="/build?script=%23%3Escene_beat%5Baudio%5D%7Broom_tone%2C%20dialogue%7D#build">Edit</a> · <a href="https://factshift.center/?spw=%23%3Escene_beat%5Baudio%5D%7Broom_tone%2C%20dialogue%7D" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Reduces the structural payload into an addressable register entry registered within the global symbol table.</p>
       <p class="edges-in"><a href="/learn#name"><span class="n">4</span> name</a></p>
@@ -1566,7 +1595,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">perspective <code>@</code></p>
       <p class="op-meta"><span class="op-valence">observer origin</span><span>Field ↔ Vantage</span><a class="op-partner" href="#op-potential" title="Jump to dimensional symmetry partner">↔ ~ potential</a></p>
       <p class="reads">Situates the coordinate origin — who or what is looking (Persona@subject, @alias) — giving ~ potential a vantage point to aim from.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="editor@timeline[rough]{pacing, breath}(late_night)&lt;cut&gt;"></code><button type="button" class="copy-expr" data-copy-line="editor@timeline[rough]{pacing, breath}(late_night)&lt;cut&gt;" aria-label="Copy perspective example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="editor@timeline[rough]{pacing, breath}(late_night)&lt;cut&gt;"><span data-t="perspective">editor</span><span data-t="perspective">@</span>timeline<span data-t="b-mode">[</span>rough<span data-t="b-mode">]</span><span data-t="b-direction">{</span>pacing, breath<span data-t="b-direction">}</span><span data-t="b-scene">(</span>late_night<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>cut<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="editor@timeline[rough]{pacing, breath}(late_night)&lt;cut&gt;" aria-label="Copy perspective example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="perspective" aria-pressed="false">Find on page</button><a href="/build?script=editor%40timeline%5Brough%5D%7Bpacing%2C%20breath%7D(late_night)%3Ccut%3E#build">Edit</a> · <a href="https://factshift.center/?spw=editor%40timeline%5Brough%5D%7Bpacing%2C%20breath%7D(late_night)%3Ccut%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Projects the operand through a situated observer lens, evaluating expressions relative to that vantage frame.</p>
       <p class="edges-in"><a href="/learn#point"><span class="n">5</span> point</a></p>
@@ -1577,7 +1606,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">subject <code>&amp;</code></p>
       <p class="op-meta"><span class="op-valence">covalent bond</span><span>Lift ↔ Confluence</span><a class="op-partner" href="#op-ascension" title="Jump to dimensional symmetry partner">↔ ^ ascension</a></p>
       <p class="reads">Binds multiple streams or constraints onto one shared focus without flattening them; pairs laterally with ^ ascension's vertical lift.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="&amp;production{sound, lighting, schedule}&lt;shoot&gt;"></code><button type="button" class="copy-expr" data-copy-line="&amp;production{sound, lighting, schedule}&lt;shoot&gt;" aria-label="Copy subject example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="&amp;production{sound, lighting, schedule}&lt;shoot&gt;"><span data-t="subject">&amp;</span>production<span data-t="b-direction">{</span>sound, lighting, schedule<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>shoot<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="&amp;production{sound, lighting, schedule}&lt;shoot&gt;" aria-label="Copy subject example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="subject" aria-pressed="false">Find on page</button><a href="/build?script=%26production%7Bsound%2C%20lighting%2C%20schedule%7D%3Cshoot%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%26production%7Bsound%2C%20lighting%2C%20schedule%7D%3Cshoot%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Performs associative unification across arguments, merging congruent predicates into the primary subject register.</p>
       <p class="in-file" data-in-file="subject" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
@@ -1587,7 +1616,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">configuration <code>=</code></p>
       <p class="op-meta"><span class="op-valence">fixed coordinate</span><span>Pin ↔ Scale</span><a class="op-partner" href="#op-measure" title="Jump to dimensional symmetry partner">↔ % measure</a></p>
       <p class="reads">Pins a local parameter or invariant that downstream structure depends on; establishes the fixed reference point that % measure scales against.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="=clock(local)[24fps]{timecode, frame_rate}&lt;spec&gt;"></code><button type="button" class="copy-expr" data-copy-line="=clock(local)[24fps]{timecode, frame_rate}&lt;spec&gt;" aria-label="Copy configuration example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="=clock(local)[24fps]{timecode, frame_rate}&lt;spec&gt;"><span data-t="binding">=</span>clock<span data-t="b-scene">(</span>local<span data-t="b-scene">)</span><span data-t="b-mode">[</span>24fps<span data-t="b-mode">]</span><span data-t="b-direction">{</span>timecode, frame_rate<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>spec<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="=clock(local)[24fps]{timecode, frame_rate}&lt;spec&gt;" aria-label="Copy configuration example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="binding" aria-pressed="false">Find on page</button><a href="/build?script=%3Dclock(local)%5B24fps%5D%7Btimecode%2C%20frame_rate%7D%3Cspec%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%3Dclock(local)%5B24fps%5D%7Btimecode%2C%20frame_rate%7D%3Cspec%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Binds an identifier to an evaluated value within the active register bank, governing downstream parameterization.</p>
       <p class="edges-in"><a href="/learn#name"><span class="n">4</span> name</a></p>
@@ -1598,7 +1627,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">measure <code>%</code></p>
       <p class="op-meta"><span class="op-valence">scalar gradient</span><span>Pin ↔ Scale</span><a class="op-partner" href="#op-configuration" title="Jump to dimensional symmetry partner">↔ = configuration</a></p>
       <p class="reads">Compares, weights, or normalizes before and after across a coordinate axis; reads the tension relative to = configuration.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="%contrast(phone)[low_light]{before ~&gt; after}&lt;check&gt;"></code><button type="button" class="copy-expr" data-copy-line="%contrast(phone)[low_light]{before ~&gt; after}&lt;check&gt;" aria-label="Copy measure example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="%contrast(phone)[low_light]{before ~&gt; after}&lt;check&gt;"><span data-t="normalize">%</span>contrast<span data-t="b-scene">(</span>phone<span data-t="b-scene">)</span><span data-t="b-mode">[</span>low_light<span data-t="b-mode">]</span><span data-t="b-direction">{</span>before ~&gt; after<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>check<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="%contrast(phone)[low_light]{before ~&gt; after}&lt;check&gt;" aria-label="Copy measure example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="normalize" aria-pressed="false">Find on page</button><a href="/build?script=%25contrast(phone)%5Blow_light%5D%7Bbefore%20~%3E%20after%7D%3Ccheck%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%25contrast(phone)%5Blow_light%5D%7Bbefore%20~%3E%20after%7D%3Ccheck%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Applies a metric evaluation function across focused registers, computing scalar distance, ratio, or cardinality.</p>
       <p class="in-file" data-in-file="measure" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>
@@ -1608,7 +1637,7 @@ you<span data-t="perspective">@</span>guide
       <p class="name">substrate <code>$</code></p>
       <p class="op-meta"><span class="op-valence">carrier medium</span><span>Worth ↔ Carrier</span><a class="op-partner" href="#op-value" title="Jump to dimensional symmetry partner">↔ * value</a></p>
       <p class="reads">Exposes the physical, temporal, or computational medium carrying the work — time, budget, memory, storage, attention; underpins * value.</p>
-      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="$budget(sprint)[3_days]{render_time, storage, crew}&lt;runway&gt;"></code><button type="button" class="copy-expr" data-copy-line="$budget(sprint)[3_days]{render_time, storage, crew}&lt;runway&gt;" aria-label="Copy substrate example">Copy</button></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="$budget(sprint)[3_days]{render_time, storage, crew}&lt;runway&gt;"><span data-t="substrate">$</span>budget<span data-t="b-scene">(</span>sprint<span data-t="b-scene">)</span><span data-t="b-mode">[</span>3_days<span data-t="b-mode">]</span><span data-t="b-direction">{</span>render_time, storage, crew<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>runway<span data-t="b-concept">&gt;</span></code><button type="button" class="copy-expr" data-copy-line="$budget(sprint)[3_days]{render_time, storage, crew}&lt;runway&gt;" aria-label="Copy substrate example">Copy</button></p>
       <p class="op-actions"><button type="button" class="op-find" data-highlight-token="substrate" aria-pressed="false">Find on page</button><a href="/build?script=%24budget(sprint)%5B3_days%5D%7Brender_time%2C%20storage%2C%20crew%7D%3Crunway%3E#build">Edit</a> · <a href="https://factshift.center/?spw=%24budget(sprint)%5B3_days%5D%7Brender_time%2C%20storage%2C%20crew%7D%3Crunway%3E" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: Materializes underlying runtime metadata, exposing memory layout, latency bounds, and platform resource footprints.</p>
       <p class="in-file" data-in-file="substrate" hidden><a href="#try">in <span data-in-file-name>lab-notebook.spw</span> <span class="count">×<span data-in-file-count>0</span></span></a></p>

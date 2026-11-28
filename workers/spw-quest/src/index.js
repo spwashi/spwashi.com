@@ -50,7 +50,8 @@ const BRACE_TYPES = new Map(PEER_BRACES.map(({ open, type }) => [open, type]));
 const OP_BY_NAME = new Map(OPERATORS.map((op) => [op.name, op]));
 const PAINTED_CACHE = new Map();
 const paintOneLine = (line) => {
-  if (!PAINTED_CACHE.has(line)) PAINTED_CACHE.set(line, paintFile(line, readFile(line).tokens));
+  // paintFile takes a reading ({ text, tokens }) since the syntax was unified (d060ab15); called with a bare line it painted nothing.
+  if (!PAINTED_CACHE.has(line)) PAINTED_CACHE.set(line, paintFile({ text: line, tokens: readFile(line).tokens }));
   return PAINTED_CACHE.get(line);
 };
 
@@ -456,6 +457,8 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     .sigils .sigil { grid-row: span 4; display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: calc(var(--radius) - 2px); background: color-mix(in srgb, currentColor 8%, var(--surface)); border: 1px solid color-mix(in srgb, currentColor 24%, var(--line)); font: 700 1.65rem/1 var(--mono); text-shadow: 0 0 10px color-mix(in srgb, currentColor 25%, transparent); transition: transform .22s cubic-bezier(.34, 1.56, .64, 1), filter .2s ease, border-color .2s ease, background-color .2s ease; }
     .sigils li:hover .sigil, .sigils li:focus-within .sigil, .sigils li:target .sigil { transform: scale(1.08); filter: drop-shadow(0 2px 8px color-mix(in srgb, currentColor 35%, transparent)); border-color: currentColor; background: color-mix(in srgb, currentColor 14%, var(--surface)); }
     .sigils p { margin: 0; }
+    /* Everything but the sigil sits in the second column: the sigil spans four rows, and a fifth child (Find on page) used to fall into its 2.5rem column and over the note. */
+    .sigils li > :not(.sigil) { grid-column: 2; min-width: 0; }
     .sigils .name { display: flex; align-items: baseline; gap: .35rem; font-weight: 700; font-size: .95rem; letter-spacing: -.01em; color: var(--fg); }
     .sigils .name code { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .sigils .reads { margin-top: .1rem; font-size: .88rem; line-height: 1.48; color: var(--fg); }
@@ -477,6 +480,25 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     .op-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .55rem; margin-top: .35rem; font-size: .8rem; }
     .title-spw-wrap { position: relative; width: min(100%, 42rem); }
     .title-spw-wrap .copy-expr { position: absolute; top: .5rem; right: .55rem; }
+    /* The Copy button sits over the box's corner, so the lines keep clear of it. */
+    .title-spw-wrap .title-spw { padding-right: 4.6rem; }
+    /* The quest's path: the page's four steps in order, a map for a long guide. */
+    .quest-path { margin: 1.3rem 0 0; }
+    .quest-path ol { display: flex; flex-wrap: wrap; gap: .4rem .5rem; margin: 0; padding: 0; list-style: none; }
+    .quest-path a { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.25rem; padding: .2rem .8rem .2rem .3rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--surface); color: var(--fg); font-size: .88rem; text-decoration: none; }
+    .quest-path a:hover, .quest-path a:focus-visible { border-color: var(--accent); color: var(--accent); }
+    .quest-path .step { display: inline-grid; place-items: center; width: 1.65rem; height: 1.65rem; border-radius: 50%; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); color: var(--accent); font: 700 .78rem/1 var(--mono); }
+    @media (max-width: 40rem) {
+      /* On a phone the opening lines wrap, so the whole expression is read without scrolling sideways under the Copy button. */
+      .title-spw-wrap .title-spw { white-space: pre-wrap; overflow-wrap: anywhere; }
+      .quest-path ol { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: .2rem; }
+      .quest-path ol::-webkit-scrollbar { display: none; }
+      .quest-path li { flex: none; }
+      /* Eight starters are one row that snaps a card at a time, not eight screens of scrolling. */
+      #start .doors { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: .7rem; padding: 0 1.2rem .4rem 0; margin-right: -1rem; scrollbar-width: none; }
+      #start .doors::-webkit-scrollbar { display: none; }
+      #start .door { flex: 0 0 min(84%, 20rem); scroll-snap-align: start; }
+    }
     .starter p { font-size: .9rem; }
     .starter strong { margin-right: .3rem; color: var(--fg); }
     .starter .starter-ways { margin-top: .35rem; font-size: .85rem; }
@@ -629,6 +651,14 @@ ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="o
     <article class="door"><h3><a href="/build">Engineer or editor</a></h3><p>Take a line apart, compare <a href="/forms/">forms side by side</a>, or mount <a href="/install#repository">.spw/_workbench</a>.</p></article>
     <article class="door"><h3><a href="/llms.txt">How to answer in Spw</a></h3><p>For language models and agents: the plain-text grammar, worked answers, <a href="/llms-full.txt">full corpus</a>, and <a href="/init">repo setup</a>.</p></article>
   </div>
+  <nav class="quest-path" aria-label="On this page">
+    <ol>
+      <li><a href="#start"><span class="step">1</span> Start from a line</a></li>
+      <li><a href="#try"><span class="step">2</span> Open a file</a></li>
+      <li><a href="#operators"><span class="step">3</span> Learn the marks</a></li>
+      <li><a href="#ways"><span class="step">4</span> Take it home</a></li>
+    </ol>
+  </nav>
 </section>
 ${lensBarHtml(lens)}
 ${startersSection(escapeHtml, {

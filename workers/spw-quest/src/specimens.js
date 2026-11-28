@@ -415,7 +415,9 @@ export const SPECIMENS_CSS = `.opening { margin: 0 0 1.2rem; }
     .examples a { display: inline-flex; align-items: center; min-height: 32px; }
     .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); gap: .6rem; margin: .8rem 0 0; padding: 0; list-style: none; }
     .shelf.files { grid-template-columns: repeat(auto-fill, minmax(min(100%, 28rem), 1fr)); }
-    .specimen { display: grid; align-content: start; gap: .35rem; min-width: 0; margin: 0; padding: .75rem .85rem .8rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    /* One column that may shrink: a long name wraps instead of widening the card past a phone's edge. */
+    .specimen > * { min-width: 0; overflow-wrap: anywhere; }
+    .specimen { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: .35rem; min-width: 0; margin: 0; padding: .75rem .85rem .8rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
     .specimen:target { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
     .specimen p { margin: 0; }
     .specimen .name { color: var(--muted); font: .78rem/1.3 var(--mono); overflow-wrap: anywhere; }

@@ -1,16 +1,16 @@
 // Written by workers/spw-quest/carry-arcs.mjs from the site's history; do not edit by hand.
 // Refresh it by running the carry; the page in assets/arcs/ is rendered from it (src/arcs.js).
 export const ARCS = Object.freeze({
-  "asOf": "2026-11-19",
+  "asOf": "2026-11-27",
   "windows": [
     7,
     30,
     90
   ],
   "total": [
-    71,
-    112,
-    725
+    16,
+    128,
+    670
   ],
   "lenses": [
     {
@@ -22,6 +22,50 @@ export const ARCS = Object.freeze({
       ],
       "example": "panel[october]{face.stack}<shelf>",
       "route": "/design/folios/october-2026/",
+      "rising": false
+    },
+    {
+      "key": "reading",
+      "counts": [
+        3,
+        4,
+        9
+      ],
+      "example": "kitchen[reading]{reduction.ratio}<recipes>",
+      "route": "/_partials/cms/home-issue.html",
+      "rising": true
+    },
+    {
+      "key": "cook",
+      "counts": [
+        4,
+        4,
+        4
+      ],
+      "example": "ferment[cook]{salinity.succession}<jar>",
+      "route": "/_partials/cms/recipes-ledger.html",
+      "rising": true
+    },
+    {
+      "key": "syntax",
+      "counts": [
+        4,
+        4,
+        4
+      ],
+      "example": "shot[syntax]{camera.light.lens}<attention>",
+      "route": "/_partials/cms/spw-experiments.html",
+      "rising": true
+    },
+    {
+      "key": "play",
+      "counts": [
+        1,
+        2,
+        4
+      ],
+      "example": "aperture[play]{open.quiet.close}<spw>",
+      "route": "/_partials/cms/home-issue.html",
       "rising": false
     },
     {
@@ -38,13 +82,13 @@ export const ARCS = Object.freeze({
     {
       "key": "direction",
       "counts": [
-        2,
+        0,
         2,
         3
       ],
       "example": "workbench[direction]{kernel.policy.slots}<align>",
       "route": "/projects/spw-workbench/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "instrument",
@@ -78,57 +122,13 @@ export const ARCS = Object.freeze({
       "example": "specimen[preview]{source,crop,caption,frame}",
       "route": "/design/cards/render/",
       "rising": false
-    },
-    {
-      "key": "hook",
-      "counts": [
-        1,
-        1,
-        19
-      ],
-      "example": "tiktok[hook]{fan.subscriber}(live)<team>",
-      "route": "/tiktok/",
-      "rising": false
-    },
-    {
-      "key": "live",
-      "counts": [
-        1,
-        1,
-        9
-      ],
-      "example": "tiktok[live]{heart.subscribe}(team)<entry>",
-      "route": "/tiktok/",
-      "rising": false
-    },
-    {
-      "key": "atlas",
-      "counts": [
-        0,
-        1,
-        7
-      ],
-      "example": "operator[atlas]{prime;traverse;precipitate}(brace)<anchor>",
-      "route": "/topics/software/spw/",
-      "rising": false
-    },
-    {
-      "key": "reading",
-      "counts": [
-        0,
-        1,
-        6
-      ],
-      "example": "math[reading]{picture.then.formalism}(turn)<paragraph>",
-      "route": "/topics/math/",
-      "rising": false
     }
   ],
   "projections": [
     {
       "key": "shelf",
       "counts": [
-        1,
+        0,
         6,
         7
       ],
@@ -139,7 +139,7 @@ export const ARCS = Object.freeze({
     {
       "key": "workbench",
       "counts": [
-        3,
+        0,
         4,
         4
       ],
@@ -150,51 +150,73 @@ export const ARCS = Object.freeze({
     {
       "key": "align",
       "counts": [
-        3,
+        0,
         3,
         3
       ],
       "example": "kernel[separation]{seed.policy.tokens}<align>",
       "route": "/projects/spw-workbench/",
-      "rising": true
+      "rising": false
+    },
+    {
+      "key": "atlas",
+      "counts": [
+        1,
+        3,
+        3
+      ],
+      "example": "spw[syntax]{curiosity.cms.theater}<atlas>",
+      "route": "/_partials/cms/spw-experiments.html",
+      "rising": false
     },
     {
       "key": "now",
       "counts": [
-        2,
+        0,
         2,
         7
       ],
       "example": "!dispatch(nov_19){ arrival; lenses; parser }<now>",
       "route": "/now/",
-      "rising": true
+      "rising": false
     },
     {
-      "key": "tradition",
-      "counts": [
-        2,
-        2,
-        5
-      ],
-      "example": "(production)season{ oct; nov; close }<tradition>",
-      "route": "/now/",
-      "rising": true
-    },
-    {
-      "key": "handoff",
+      "key": "attention",
       "counts": [
         2,
         2,
         4
       ],
+      "example": "shot[syntax]{camera.light.lens}<attention>",
+      "route": "/_partials/cms/spw-experiments.html",
+      "rising": true
+    },
+    {
+      "key": "handoff",
+      "counts": [
+        0,
+        2,
+        4
+      ],
       "example": "workbench[backlog]{seed.cli.lsp.contracts}<handoff>",
       "route": "/projects/spw-workbench/",
-      "rising": true
+      "rising": false
+    },
+    {
+      "key": "live",
+      "counts": [
+        1,
+        2,
+        4
+      ],
+      "example": "^receipt(nov_27){ before ~> after }<live>",
+      "route": "/now/",
+      "rising": false
     },
     {
       "key": "studio",
       "counts": [
-        1,
+        0,
         2,
         3
       ],
@@ -203,129 +225,107 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
-      "key": "atlas",
+      "key": "tradition",
       "counts": [
+        0,
         2,
-        2,
-        2
+        3
       ],
-      "example": "?topics{ film, software, craft, math }<atlas>",
-      "route": "/topics/",
-      "rising": true
-    },
-    {
-      "key": "audit",
-      "counts": [
-        2,
-        2,
-        2
-      ],
-      "example": "corpus[parse]{clean.error.degrade}<audit>",
-      "route": "/projects/spw-workbench/",
-      "rising": true
-    },
-    {
-      "key": "lore",
-      "counts": [
-        1,
-        2,
-        2
-      ],
-      "example": "book(november){ chapters ~> 50000_moments }<lore>",
+      "example": "(production)season{ oct; nov; close }<tradition>",
       "route": "/now/",
       "rising": false
     }
   ],
   "marks": [
     {
+      "key": "^",
+      "counts": [
+        1,
+        8,
+        8
+      ],
+      "example": "^receipt(nov_27){ before ~> after }<live>",
+      "route": "/now/",
+      "rising": false
+    },
+    {
       "key": "~",
       "counts": [
-        6,
+        0,
         7,
         8
       ],
       "example": "~play(wednesday){ table; canon }<stage>",
       "route": "/play/",
-      "rising": true
-    },
-    {
-      "key": "^",
-      "counts": [
-        7,
-        7,
-        7
-      ],
-      "example": "^parser(browser){ source ~> tokens ~> ast }<exact>",
-      "route": "/tools/spw-parser/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "@",
       "counts": [
-        5,
+        0,
         5,
         5
       ],
       "example": "@services{ scope, creator, systems, ecosystem }<lane>",
       "route": "/services/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "!",
       "counts": [
-        3,
+        0,
         3,
         3
       ],
       "example": "!parse{ source; tokens; ast; reconstruction }",
       "route": "/tools/spw-parser/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "?",
       "counts": [
-        2,
+        0,
         2,
         6
       ],
       "example": "?topics{ film, software, craft, math }<atlas>",
       "route": "/topics/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "*",
       "counts": [
-        2,
+        0,
         2,
         2
       ],
       "example": "*memory(campaign){ logs; pressure; canon }<recap>",
       "route": "/play/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "#>",
       "counts": [
-        2,
+        0,
         2,
         2
       ],
       "example": "#>home_frame{ software, art, spw }<atlas>",
       "route": "/",
-      "rising": true
+      "rising": false
     }
   ],
   "subjects": [
     {
       "key": "workbench",
       "counts": [
+        0,
         10,
-        10,
-        25
+        24
       ],
       "example": "workbench[backlog]{seed.cli.lsp.contracts}<handoff>",
       "route": "/projects/spw-workbench/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "folio",
@@ -352,29 +352,18 @@ export const ARCS = Object.freeze({
     {
       "key": "tiktok",
       "counts": [
-        4,
+        0,
         4,
         4
       ],
       "example": "tiktok[subscriber]{recurring.back}(studio)<cycle>",
       "route": "/tiktok/",
-      "rising": true
-    },
-    {
-      "key": "practice",
-      "counts": [
-        2,
-        3,
-        31
-      ],
-      "example": "practice{ math, art, language } ~> <trace>",
-      "route": "/now/",
       "rising": false
     },
     {
       "key": "card",
       "counts": [
-        2,
+        0,
         3,
         11
       ],
@@ -383,9 +372,20 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
+      "key": "practice",
+      "counts": [
+        0,
+        3,
+        11
+      ],
+      "example": "practice{ math, art, language } ~> <trace>",
+      "route": "/now/",
+      "rising": false
+    },
+    {
       "key": "prompt",
       "counts": [
-        1,
+        0,
         3,
         3
       ],
@@ -396,7 +396,7 @@ export const ARCS = Object.freeze({
     {
       "key": "studio",
       "counts": [
-        2,
+        0,
         3,
         3
       ],
@@ -405,26 +405,26 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
+      "key": "cauldron",
+      "counts": [
+        1,
+        2,
+        14
+      ],
+      "example": "cauldron[lens]{terms}<projection>",
+      "route": "/topics/software/spw/",
+      "rising": false
+    },
+    {
       "key": "play",
       "counts": [
+        0,
         2,
-        2,
-        8
+        7
       ],
       "example": "~play(wednesday){ table; canon }<stage>",
       "route": "/play/",
-      "rising": true
-    },
-    {
-      "key": "season",
-      "counts": [
-        2,
-        2,
-        6
-      ],
-      "example": "(production)season{ oct; nov; close }<tradition>",
-      "route": "/now/",
-      "rising": true
+      "rising": false
     }
   ],
   "shapes": [
@@ -432,30 +432,30 @@ export const ARCS = Object.freeze({
       "key": "word[lens]{body}<point>",
       "counts": [
         14,
-        26,
-        259
+        40,
+        267
       ],
-      "example": "workbench[backlog]{seed.cli.lsp.contracts}<handoff>",
-      "route": "/projects/spw-workbench/",
-      "rising": false
+      "example": "shot[syntax]{camera.light.lens}<attention>",
+      "route": "/_partials/cms/spw-experiments.html",
+      "rising": true
     },
     {
       "key": "word[lens]{body}",
       "counts": [
         1,
-        22,
-        297
+        23,
+        234
       ],
-      "example": "runtime[inoculant]{portable;reversible;transparent}",
-      "route": "/design/runtime/",
+      "example": "spw[reading]{open.sit}",
+      "route": "/topics/software/spw/",
       "rising": false
     },
     {
       "key": "word[lens]{body}<point>(scene)",
       "counts": [
-        6,
+        0,
         13,
-        83
+        82
       ],
       "example": "(live)stream[tiktok]{ fan, subscriber }<door>",
       "route": "/now/",
@@ -464,79 +464,79 @@ export const ARCS = Object.freeze({
     {
       "key": "word{body}<point>",
       "counts": [
-        8,
+        0,
         8,
         8
       ],
       "example": "reader@topics{ question ~> neighbor }<shelf>",
       "route": "/topics/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "word{body}",
       "counts": [
-        6,
+        0,
         6,
         6
       ],
       "example": "bundle{ art, web, software } ~> <deliverable>",
       "route": "/services/",
-      "rising": true
+      "rising": false
+    },
+    {
+      "key": "^word{body}<point>(scene)",
+      "counts": [
+        1,
+        5,
+        5
+      ],
+      "example": "^receipt(nov_27){ before ~> after }<live>",
+      "route": "/now/",
+      "rising": false
     },
     {
       "key": "word{body}<point>(scene)",
       "counts": [
-        5,
+        0,
         5,
         5
       ],
       "example": "(table)session{ joke ~> evidence }<canon>",
       "route": "/play/",
-      "rising": true
-    },
-    {
-      "key": "^word{body}<point>(scene)",
-      "counts": [
-        4,
-        4,
-        4
-      ],
-      "example": "^parser(browser){ source ~> tokens ~> ast }<exact>",
-      "route": "/tools/spw-parser/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "~word{body}<point>",
       "counts": [
-        3,
+        0,
         3,
         3
       ],
       "example": "~prompt{ inspect; prime; rehearse }<workbench>",
       "route": "/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "?word{body}<point>",
       "counts": [
-        2,
+        0,
         2,
         5
       ],
       "example": "?topics{ film, software, craft, math }<atlas>",
       "route": "/topics/",
-      "rising": true
+      "rising": false
     },
     {
       "key": "@word{body}",
       "counts": [
-        2,
+        0,
         2,
         2
       ],
       "example": "@studio{ briefs, prints, editions }",
       "route": "/",
-      "rising": true
+      "rising": false
     }
   ]
 });
