@@ -52,9 +52,15 @@ test("the maskable mark keeps its band inside the middle circle and its weave to
   // Every band row crosses the safe circle (radius 40% of the side) at the centre column.
   for (const y of bandRows) assert.ok(Math.abs(y - size / 2) < size * 0.4, `band row ${y} is inside the safe zone`);
   // No dark frame: a mask never cuts a border into arcs.
-  for (const [x, y] of [[0, 0], [size - 1, 0], [0, size - 1], [5, size / 2]]) assert.notDeepEqual(at(x, y), [0x1d, 0x1d, 0x1b], `${x},${y}`);
-  // The plain marks are as they were.
+  for (const [x, y] of [[0, 0], [size - 1, 0], [0, size - 1], [5, size / 3]]) assert.notDeepEqual(at(x, y), [0x1d, 0x1d, 0x1b], `${x},${y}`);
+  // Both plain sizes carry the same proportional weave and band.
   assert.ok(iconPng(192).equals(readFileSync(path.join(assets, "icon-192.png"))));
+  assert.ok(iconPng(512).equals(readFileSync(path.join(assets, "icon-512.png"))));
+  for (const dimension of [192, 512]) {
+    const mark = pixels(iconPng(dimension));
+    assert.notDeepEqual(mark.at(dimension / 8, dimension / 8), mark.at(dimension / 8, dimension * 3 / 8));
+    assert.deepEqual(mark.at(dimension / 8, dimension * 7 / 8), red);
+  }
 });
 
 test("the service worker keeps pictures by their hashes, keeps only a page as the shell, and fills the catalog on request", () => {

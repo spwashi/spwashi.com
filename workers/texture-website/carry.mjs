@@ -300,7 +300,7 @@ function pngChunk(type, data) {
 }
 
 /**
- * A 192px weave, the mark on the home screen. Same bytes every run. Maskable,
+ * An interlaced textile and red band, scaled for the home screen. Same bytes every run. Maskable,
  * the weave runs to every edge and the red band sits inside the circle a
  * launcher may cut to (the middle 80%), so no mask clips the mark.
  */
@@ -310,13 +310,18 @@ export function iconPng(size = 192, { maskable = false } = {}) {
     const row = y * (size * 4 + 1);
     raw[row] = 0;
     for (let x = 0; x < size; x += 1) {
-      const edge = !maskable && (x < 10 || y < 10 || x >= size - 10 || y >= size - 10);
-      const band = maskable ? y >= Math.round(size * 0.6) && y < Math.round(size * 0.72) : y >= size - 36;
-      const weave = (Math.floor(x / 12) + Math.floor(y / 12)) % 2 === 0;
+      const band = maskable ? y >= Math.round(size * 0.6) && y < Math.round(size * 0.72) : y >= Math.round(size * 26 / 32);
+      const u = (x + 0.5) / size, v = (y + 0.5) / size;
+      const warp = Math.abs((u * 4 % 1) - 0.5), weft = Math.abs((v * 4 % 1) - 0.5);
+      const vertical = warp < 0.27, horizontal = weft < 0.27;
+      const over = (Math.floor(u * 4) + Math.floor(v * 4)) % 2 === 0;
+      const thread = vertical && (!horizontal || over) ? warp : horizontal ? weft : null;
+      const shade = thread === null ? 0 : Math.round(15 * (1 - thread / 0.27));
+      const color = thread === null ? [0xd9, 0xd2, 0xc3] : vertical && (!horizontal || over) ? [0x46 + shade, 0x50 + shade, 0x48 + shade] : [0xb0 + shade, 0x9a + shade, 0x7f + shade];
       const o = row + 1 + x * 4;
-      raw[o] = edge ? 0x1d : band ? 0xc8 : weave ? 0xe7 : 0xf2;
-      raw[o + 1] = edge ? 0x1d : band ? 0x40 : weave ? 0xe2 : 0xf0;
-      raw[o + 2] = edge ? 0x1b : band ? 0x2a : weave ? 0xd8 : 0xeb;
+      raw[o] = band ? 0xc8 : color[0];
+      raw[o + 1] = band ? 0x40 : color[1];
+      raw[o + 2] = band ? 0x2a : color[2];
       raw[o + 3] = 255;
     }
   }
