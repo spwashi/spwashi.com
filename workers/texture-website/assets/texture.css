@@ -42,6 +42,8 @@ body.composed .ladders:not([hidden]) { display: grid; }
 
 .caption { margin: 0.7rem 0 0; max-width: 46rem; font-size: 0.95rem; color: var(--muted); }
 .caption::before { content: "Caption — "; font: 0.72rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); }
+.read-note { margin: 0.35rem 0 0; max-width: 46rem; font: 0.72rem/1.5 var(--mono); color: var(--muted); }
+.read-note a { color: var(--accent); }
 
 /* The ladders, in three bands: look, make, use. Each ladder a row of words, the
    chosen word inverted, the phrase it adds beside it, a lock and a roll at the end. */
@@ -240,6 +242,7 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
 :root[data-still] .views,
 :root[data-still] .tile-toggle,
 :root[data-still] .caption,
+:root[data-still] .read-note,
 :root[data-still] .layer-bar,
 :root[data-still] .ladders,
 :root[data-still] .pivots,

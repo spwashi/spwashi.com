@@ -61,7 +61,7 @@ A domain in focus gets: a files-only unit (`cluster.json` tier files), a materia
 3. **Shaders and frames as files**, with one drop.
 4. **The component bench and the first HTML tour slides**, each linked to trope.wiki.
 5. **Packs carried on a Spw card** to one other site that themes itself by it.
-6. **Guesses and near misses**, then their count through the inbox.
+6. **Guesses and near misses**, then their count through the inbox. *Near misses landed 2026-11-27:* a path word a slip from a listed material keeps the reader's word and offers the listed one; a neighbour's ladder word (attention.productions' close-up, golden hour, scope) is read as its nearest rung and the address rewritten in this site's words (`workers/lib/near-word.js`, `NEAR` in `src/vocabulary.js`). The count waits on the inbox.
 
 ### The technique curriculum — 2026-11-12
 

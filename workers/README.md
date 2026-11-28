@@ -88,6 +88,7 @@ Each unit keeps its own typography, layout, and domain medium, while `workers/li
   - `text-scale`: pre-paint text size ladder (`70%`–`120%`) bound to `pinch-text-scale`.
   - `clean-still`: three-stage screenshot capture (`studio` → `plate` → `pure`) with idle chrome fade.
   - `slot-scrub`: 28px horizontal bracket/slot scrubbing with a 6px dead zone, one swallowed ghost click after a drag (`swallowsTap`), arrow-key parity, and the host's commit declared on its root as `data-scrub-commit` (`live`, `on-lift`, `prime-then-keep`). The window hears pointer moves only while a press is live.
+  - `near-word` (carried at `/lib/near-word.js`): reads a neighbour's word as a host's nearest rung (alias, focal length or aspect, shared word, prefix, slip) and says what had none, so links between attention.productions, texture.website and spwashi.com land where they mean. Each host keeps its neighbours' words in its own vocabulary (`NEAR`).
 
 ## Local secrets
 

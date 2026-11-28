@@ -91,6 +91,33 @@ export const LADDERS = Object.freeze({
   tone: ["paper", "ink", "signal"],
 });
 
+/**
+ * The neighbours' words for a ladder, read by workers/lib/near-word.js, so a
+ * link from attention.productions lands on the rung it means. Scale is the
+ * focal radius: attention's shot ladder runs the same distance, extreme
+ * close-up as macro out to establishing as far. A word with no rung here
+ * (overhead, a low angle) leaves the ladder as it stood, and the page says so.
+ */
+export const NEAR = Object.freeze({
+  scale: {
+    aliases: {
+      "extreme-close-up": "macro", ecu: "macro", detail: "macro", "close-up": "close", cu: "close", near: "close",
+      medium: "arm's length", mid: "arm's length", wide: "room", establishing: "far", distant: "far",
+    },
+  },
+  light: {
+    aliases: {
+      "golden-hour": "raking dawn", "raking-sun": "raking dawn", dawn: "raking dawn", sunrise: "raking dawn", sunset: "raking dawn", dusk: "raking dawn",
+      "window-light": "overcast", cloudy: "overcast", diffuse: "overcast", soft: "overcast", midday: "noon", daylight: "noon", harsh: "noon",
+      candlelight: "lamplight", candle: "lamplight", tungsten: "lamplight", lamp: "lamplight", neon: "sodium night", streetlight: "sodium night",
+    },
+  },
+  format: {
+    aliases: { square: "tile", widescreen: "plate", scope: "plate", photo: "plate", landscape: "plate", portrait: "sheet", vertical: "sheet", story: "sheet" },
+    measures: { tile: 1, plate: 16 / 9, sheet: 0.8 },
+  },
+});
+
 /** What each ladder word adds to the sentence. */
 export const PHRASES = Object.freeze({
   scale: { macro: "macro detail", close: "close view", "arm's length": "at arm's length", room: "across a room", far: "seen from afar" },

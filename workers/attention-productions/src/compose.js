@@ -3,13 +3,13 @@
 // the viewfinder draws. Pure, with no DOM: the carry renders the page's first
 // frame with it, the page (assets/attention.js) redraws with it, and the tests
 // read it. Copied byte for byte into assets/ by carry.mjs.
-import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
+import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, NEAR, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
 import { MATERIALS } from "./materials.js";
+import { nearWord } from "../../lib/near-word.js";
 
 /** A word as a path segment: lower case, hyphens for spaces. */
 export const slug = (word) => String(word ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-const WORD_BY_SLUG = Object.fromEntries(Object.entries(LADDERS).map(([key, words]) => [key, new Map(words.map((word) => [slug(word), word]))]));
 const MATERIAL_BY_SLUG = new Map(MATERIALS.map((m) => [m.slug, m]));
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -39,8 +39,11 @@ export function tempoOf(value) {
 
 /**
  * Read an address as a shot. The path is the subject (a hyphen is a space);
- * each ladder is a query key whose value is one of its words; material= is one
- * of texture.website's listed words. What the address leaves out, the day picks.
+ * each ladder is a query key whose value is one of its words, or a neighbour's
+ * word read as its nearest rung (NEAR, workers/lib/near-word.js); material= is
+ * one of texture.website's listed words. What the address leaves out, or says
+ * with nothing near, the day picks. `read` lists each word taken as another,
+ * so the page can say how it read the link.
  */
 export function readShot(pathname, search, today) {
   const params = new URLSearchParams(search);
@@ -48,12 +51,13 @@ export function readShot(pathname, search, today) {
   const words = String(pathname ?? "").split("/").map(decode).map(slug).filter(Boolean);
   const subject = words.join(" ").replace(/-/g, " ").slice(0, 80).trim();
   const picked = dayShot(day);
-  const shot = { subject: subject || DEFAULT_SUBJECT, material: MATERIAL_BY_SLUG.get(slug(params.get("material"))) ?? null, tempo: tempoOf(params.get("tempo")), named: Boolean(subject), day };
+  const shot = { subject: subject || DEFAULT_SUBJECT, material: MATERIAL_BY_SLUG.get(slug(params.get("material"))) ?? null, tempo: tempoOf(params.get("tempo")), named: Boolean(subject), day, read: [] };
   if (params.has("tempo")) shot.named = true;
   for (const key of Object.keys(LADDERS)) {
-    const word = WORD_BY_SLUG[key].get(slug(params.get(key)));
-    if (word) shot.named = true;
-    shot[key] = word ?? picked[key];
+    const near = nearWord(params.get(key), LADDERS[key], NEAR[key]);
+    if (near?.word) shot.named = true;
+    if (near && near.how !== "exact") shot.read.push({ key, ...near, word: near.word ?? picked[key] });
+    shot[key] = near?.word ?? picked[key];
   }
   return shot;
 }
@@ -203,6 +207,16 @@ export function beatScriptOf(shot) {
 }
 
 /** The three-shot beat opened on factshift.center as a multi-line storyboard script. */
+/**
+ * The same surface on texture.website, carrying this shot's distance, light and
+ * frame in attention's own words; texture.website reads each as its nearest rung
+ * (close-up as close, golden hour as raking dawn, widescreen as plate).
+ */
+export function textureHrefOf(shot) {
+  const query = `scale=${slug(shot.shot)}&light=${slug(shot.light)}&format=${slug(shot.ratio)}`;
+  return `https://texture.website/${shot.material ? shot.material.slug : ""}?${query}`;
+}
+
 export const beatHrefOf = (shot) => `https://factshift.center/#spw64=${base64url(beatScriptOf(shot))}`;
 
 /** The viewfinder's canvas, in its own units. */

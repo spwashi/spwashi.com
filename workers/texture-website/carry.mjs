@@ -11,7 +11,7 @@ import { deflateSync } from "node:zlib";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { securityHeaders, escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
-import { CLASSES, FORMATS, LADDERS, MATERIALS, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS } from "./src/vocabulary.js";
+import { CLASSES, FORMATS, LADDERS, MATERIALS, NEAR, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS } from "./src/vocabulary.js";
 import { TILE, materialPng } from "./src/raster.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -116,6 +116,7 @@ const PAGE = `<!doctype html>
       <div class="stage" aria-label="A sketch of the prompt"><div class="layers"></div><div class="seam-grid" aria-hidden="true"></div><p class="bubble" hidden></p></div>
       <div class="still-context" aria-label="Active composition context"></div>
       <figcaption class="caption">A studio for building material prompts. Each word in the address is a material; each ladder is a word in the sentence.</figcaption>
+      <p class="read-note" role="status" hidden></p>
       <div class="layer-bar" aria-label="Material layers" hidden></div>
       <p class="day-prompt" hidden></p>
       <div class="panel-line" aria-label="The line" hidden></div>
@@ -177,7 +178,7 @@ const MANIFEST = `${JSON.stringify({
 }, null, 2)}\n`;
 
 /** The shell the service worker keeps. Pictures are cached when a reader opens them, not all at once. */
-const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/clean-still.js", "/clean-still.css", "/slot-scrub.js", "/slot-scrub.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
+const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/lib/near-word.js", "/clean-still.js", "/clean-still.css", "/slot-scrub.js", "/slot-scrub.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
 
 function serviceWorker(version) {
   return `// Written by workers/texture-website/carry.mjs. The day's picture is chosen in the page, so this shell opens it with no network.
@@ -258,8 +259,8 @@ export function iconPng(size = 192) {
 }
 
 export async function carried() {
-  const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
-  const shared = await Promise.all(["clean-still.js", "clean-still.css", "slot-scrub.js", "slot-scrub.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
+  const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, near: NEAR, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
+  const shared = await Promise.all(["clean-still.js", "clean-still.css", "slot-scrub.js", "slot-scrub.css", "near-word.js"].map(async (file) => [file === "near-word.js" ? `lib/${file}` : file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
     ...MATERIALS.flatMap((m) => [[`${m.slug}.txt`, starter(m)], [`${m.slug}.spw`, line(m)]]),
     ...shared,

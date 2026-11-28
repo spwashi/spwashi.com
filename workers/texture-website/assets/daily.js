@@ -7,7 +7,12 @@
 // every item once, and tomorrow is never today's material or today's word.
 //
 // This file is served at /daily.js and imported by texture.js. Node tests import
-// it too, so it stays free of the document.
+// it too, so it stays free of the document. A neighbour's word for a ladder
+// (attention.productions' close-up, golden hour, widescreen) is read as its
+// nearest rung by workers/lib/near-word.js, which the browser loads at
+// /lib/near-word.js.
+
+import { nearWord } from "../../lib/near-word.js";
 
 export const DAY_KEYS = ["scale", "light", "wear", "process", "scene", "format"];
 /** The four mode words, in the order the line is read: distance, then light, wear, process. */
@@ -68,15 +73,19 @@ export function lineOf(state) {
 }
 
 /**
- * Ladder words for a picture. A query value wins, then a roll, then the day's
- * word when the path is empty. A path of the reader's own keeps the standing
- * defaults until a word is written into the query.
+ * Ladder words for a picture. A query value wins (its own word, or a
+ * neighbour's read as the nearest rung), then a roll, then the day's word when
+ * the path is empty. A path of the reader's own keeps the standing defaults
+ * until a word is written into the query. Each word taken as another, or left
+ * unread, goes into `reads` when one is given, so the page can say so.
  */
-export function laddersFor(vocab, { day, roll, query, byDay }) {
+export function laddersFor(vocab, { day, roll, query, byDay, reads = null }) {
   const dayN = dayNumber(day);
   const ladders = {};
   Object.entries(vocab.ladders).forEach(([key, words], i) => {
-    const asked = words.find((word) => slug(word) === slug(query.get(key) ?? ""));
+    const near = nearWord(query.get(key), words, vocab.near?.[key]);
+    if (near && near.how !== "exact") reads?.push({ key, ...near });
+    const asked = near?.word ?? undefined;
     const rolled = Number.isFinite(roll) ? words[mix(roll + i * 97) % words.length] : null;
     const fromDay = byDay && DAY_KEYS.includes(key) ? pickAt(words, dayN, 100 + i) : null;
     ladders[key] = asked ?? rolled ?? fromDay ?? DEFAULTS[key];

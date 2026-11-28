@@ -28,7 +28,7 @@ fixity = "tending"
   technical = .{
     claim = `Deterministic, zero-dependency bidirectional compiler between URLs (/subject?shot=...&lens=...&return=...), Spw notation (!shot[framing]{subject}(light)<lens> + ^frame{...}), 4-band quantized SVG depth-of-field geometry (b0..b3), and model-ready prompts (plain + Midjourney --ar / --sref).`
     worker_ethos = `Served as pre-rendered static edge assets (files tier) with network-first service-worker freshness, shared workers/lib/slot-scrub.{js,css} (28px step, 6px dead zone, commit: on-lift), and zero server database.`
-    roundtrip = `Proposed, not built: a media surface on spwashi.com opens attention.productions with ?return=<route>&surface=<key>&modality=<kind>, and the shot comes back as ?spw-shot=...&spw-lens=... into browser-local spw-image-prompt-memory. Today the leg runs one way: spwashi.com's theater links carry a subject and ladder words, and attention.productions reads each word or its nearest rung.`
+    roundtrip = `Proposed, not built: a media surface on spwashi.com opens attention.productions with ?return=<route>&surface=<key>&modality=<kind>, and the shot comes back as ?spw-shot=...&spw-lens=... into browser-local spw-image-prompt-memory. Today spwashi.com's theater links carry a subject and ladder words, and attention.productions reads each word or its nearest rung (workers/lib/near-word.js); attention.productions and texture.website link to each other in their own words and each reads the other's.`
   }[reg=facet]
   theoretical = .{
     claim = `Unifies optical focal range with cognitive and attentional focal range.`

@@ -2,6 +2,7 @@
 import { mountCleanStill } from "/clean-still.js";
 import { bindSlotScrub } from "/slot-scrub.js";
 import { DAY_KEYS, MODE_KEYS, daily, dayNumber, isoOf, laddersFor, lineOf, mix, slug } from "/daily.js";
+import { nearWord, readNote } from "/lib/near-word.js";
 // prompt. Each word in the path is a material, bottom first; a mark before a word
 // is how it meets the one before (~ drifting through, * heavy with). Each ladder
 // (scale, light, wear, process, scene, format) is a row of words written into the
@@ -49,13 +50,24 @@ function viewOf(vocab, pathname, q) {
   return named in vocab.views ? named : "";
 }
 
+/**
+ * Each path word as a material. Any word is one: a word the list does not hold
+ * stays the reader's own, drawn without a class. When it is a slip or the start
+ * of a listed word (moqette, terraz), `near` names that word, so the page can
+ * offer it without taking the reader's word away.
+ */
 function readPath(vocab, pathname) {
   const bySlug = new Map(vocab.materials.map((m) => [m.slug, m]));
+  const listed = vocab.materials.map((m) => m.slug);
   return pathname.split("/").filter(Boolean).filter((raw) => !decodeURIComponent(raw).endsWith("@")).map((raw) => {
     const part = decodeURIComponent(raw);
     const mark = MARKS.includes(part[0]) ? part[0] : "";
     const key = slug(mark ? part.slice(1) : part);
-    return { mark, material: bySlug.get(key) ?? { word: key.replace(/-/g, " "), slug: key, cls: null } };
+    const known = bySlug.get(key);
+    if (known || !key) return { mark, material: known ?? { slug: "" } };
+    const near = nearWord(key, listed);
+    const offer = near && (near.how === "slip" || near.how === "prefix") ? bySlug.get(near.word) : null;
+    return { mark, material: { word: key.replace(/-/g, " "), slug: key, cls: null }, near: offer ?? null };
   }).filter(({ material }) => material.slug);
 }
 
@@ -68,7 +80,8 @@ function stateOf(url, vocab) {
   const view = viewOf(vocab, url.pathname, q);
   const read = readPath(vocab, url.pathname);
   const byDay = read.length === 0;
-  const ladders = laddersFor(vocab, { day, roll, query: q, byDay });
+  const reads = [];
+  const ladders = laddersFor(vocab, { day, roll, query: q, byDay, reads });
   if (view === "story-designer" && !q.get("format")) ladders.format = "plate";
   const num = (key, lo, hi) => { const n = Number.parseInt(q.get(key) ?? "", 10); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : null; };
   return {
@@ -78,7 +91,7 @@ function stateOf(url, vocab) {
     weigh: q.has("weigh"),
     exclude: (q.get("exclude") ?? "").replace(/[^a-z0-9 -]+/gi, "").trim().slice(0, 40),
     layers: read.length ? read : daily(vocab, dayNumber(day)),
-    byDay,
+    byDay, reads,
     say: (q.get("say") ?? "").slice(0, 140), as: q.get("as") ?? ".",
     gatheredFor: (q.get("for") ?? "").slice(0, 80),
   };
@@ -230,6 +243,14 @@ function spwLineNode(vocab, state, onStep, onCycleView) {
 /* ── the sketch ──────────────────────────────────────────────── */
 
 const PERIOD = { macro: 96, close: 48, "arm's length": 28, room: 16, far: 9 };
+/**
+ * The focal radius, drawn. The ground (the first word) is the subject and holds
+ * focus; each material layered over it sits a step nearer the lens and softens
+ * by this many px a step, the closer the camera stands. At far everything is
+ * in focus. attention.productions' lens law: the subject sheet sharp, the
+ * sheets around it falling away. The tiled view stays sharp to show its seams.
+ */
+const DEPTH_BLUR = { macro: 2.4, close: 1.2, "arm's length": 0.5, room: 0.2, far: 0 };
 const ASPECT = { tile: "1 / 1", plate: "16 / 9", sheet: "4 / 5" };
 
 const ORIGIN = "https://texture.website";
@@ -298,6 +319,12 @@ function drawStage(vocab, state) {
     layer.style.backgroundImage = pairs.map(([image]) => image).join(", ");
     layer.style.backgroundSize = pairs.map(([, size]) => size).join(", ");
     if (i > 0) { layer.style.mixBlendMode = vocab.relations[mark]?.blend ?? "normal"; layer.style.opacity = String(vocab.relations[mark]?.opacity ?? 0.6); }
+    const soft = tiled ? 0 : (DEPTH_BLUR[state.ladders.scale] ?? 0) * i;
+    if (soft) {
+      layer.style.filter = `blur(${soft.toFixed(1)}px)`;
+      // Past the stage's clip, so the softened edge does not show as a halo.
+      layer.style.inset = `-${Math.ceil(soft * 3)}px`;
+    }
     return layer;
   }));
   $("#material").innerHTML = filterMarkup(state);
@@ -714,9 +741,11 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
   const cssSnippet = primaryListed
     ? `background-image: url("${imageOf(primaryListed)}");\nbackground-size: ${PERIOD[state.ladders.scale] * 8}px ${PERIOD[state.ladders.scale] * 8}px;\nbackground-repeat: repeat;`
     : "";
+  // attention.productions reads these in texture's words (scale as its shot, format as its frame) as its nearest rungs.
+  const shotQuery = `shot=${slug(state.ladders.scale)}&light=${slug(state.ladders.light)}&ratio=${slug(state.ladders.format)}`;
   const shotHref = primaryListed
-    ? `https://attention.productions/${primaryListed.slug}?material=${primaryListed.slug}&light=${slug(state.ladders.light)}`
-    : `https://attention.productions/?light=${slug(state.ladders.light)}`;
+    ? `https://attention.productions/${primaryListed.slug}?material=${primaryListed.slug}&${shotQuery}`
+    : `https://attention.productions/?${shotQuery}`;
   const canvasHref = `https://factshift.center/?spw=${encodeURIComponent(line)}`;
   const questHref = `https://spw.quest/build?script=${encodeURIComponent(line)}`;
   const thumb = node("div", { class: "thumb", "aria-hidden": "true" }, [$(".layers").cloneNode(true)]);
@@ -756,11 +785,38 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
   );
 }
 
+/**
+ * How the address was read, said once on arrival. A neighbour's ladder word
+ * (attention.productions' close-up) is taken as its nearest rung, and the
+ * address is rewritten in this site's words, so what is shared from here reads
+ * the same. A path word that is a slip from a listed material keeps the
+ * reader's word and offers the listed one.
+ */
+function sayArrival(vocab, url) {
+  const note = $(".read-note");
+  if (!note) return;
+  const state = stateOf(url, vocab);
+  for (const r of state.reads) {
+    if (r.word) url.searchParams.set(r.key, slug(r.word));
+    else url.searchParams.delete(r.key);
+  }
+  if (state.reads.length) history.replaceState(null, "", url);
+  const view = state.view ? `/${state.view}@` : "";
+  const pathWith = (swap) => `${view}/${state.layers.map((l) => `${l.mark === "?" ? "%3F" : l.mark}${l === swap ? swap.near.slug : l.material.slug}`).join("/")}`;
+  const offers = state.layers.filter((layer) => layer.near).map((layer) =>
+    [`${layer.material.word}: near `, node("a", { href: `${pathWith(layer)}${url.search}` }, [layer.near.word]), " "]);
+  const line = readNote(state.reads);
+  if (!line && !offers.length) return;
+  note.replaceChildren(...(line ? [line, offers.length ? " · " : ""] : []), ...offers.flat());
+  note.hidden = false;
+}
+
 async function main() {
   const vocab = await (await fetch("/vocabulary.json")).json();
   document.body.classList.add("composed");
   const url = new URL(location.href);
   if (url.pathname === "/catalog" || url.pathname === "/catalog/") { $(".slide").hidden = true; $(".card").hidden = true; return; }
+  sayArrival(vocab, url);
   const render = (focusKey) => {
     const state = stateOf(url, vocab);
     const locks = new Set((url.searchParams.get("lock") ?? "").split(",").filter((key) => key in vocab.ladders));

@@ -32,6 +32,7 @@ const SHARED_ASSET_FILES = [
   ['slot-scrub.js', 'slot-scrub.js'],
   ['slot-scrub.css', 'slot-scrub.css'],
   ['hold.js', 'lib/hold.js'],
+  ['near-word.js', 'lib/near-word.js'],
 ];
 
 /** Shared exports in workers/lib/ that no worker unit may duplicate locally. */

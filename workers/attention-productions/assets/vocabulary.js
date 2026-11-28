@@ -16,6 +16,59 @@ export const LADDERS = Object.freeze({
   focus: ["center", "left third", "right third", "upper third", "lower third"],
 });
 
+/**
+ * The neighbours' words for each ladder, read by workers/lib/near-word.js, so a
+ * link from texture.website, spwashi.com or a hand lands on the rung it means.
+ * Shot holds texture.website's scale (its focal radius, macro to far). Focus
+ * holds depth: what is near sits low in a frame, what is far sits high, so
+ * foreground reads as the lower third and background as the upper. A word with
+ * no rung here (orbit, drift, a practical) is left for the day to pick, and
+ * the page says so.
+ */
+export const NEAR = Object.freeze({
+  shot: {
+    aliases: {
+      macro: "extreme close-up", ecu: "extreme close-up", detail: "extreme close-up", insert: "extreme close-up",
+      cu: "close-up", close: "close-up", "arm-s-length": "medium", mid: "medium", ms: "medium", room: "wide",
+      ws: "wide", full: "wide", far: "establishing", ls: "establishing", master: "establishing",
+      "top-down": "overhead", "flat-lay": "overhead", "birds-eye": "overhead", low: "low angle", "worms-eye": "low angle", hero: "low angle",
+    },
+  },
+  lens: {
+    aliases: { "90mm": "macro", "100mm": "macro", "105mm": "macro", "macro-lens": "macro", scope: "anamorphic", cinemascope: "anamorphic" },
+    measures: { "24mm": 24, "35mm": 35, "50mm": 50, "85mm": 85 },
+  },
+  light: {
+    aliases: {
+      "raking-dawn": "golden hour", "raking-sun": "golden hour", dawn: "golden hour", dusk: "golden hour", sunset: "golden hour", sunrise: "golden hour", "magic-hour": "golden hour",
+      cloudy: "overcast", diffuse: "overcast", soft: "overcast", tungsten: "lamplight", lamp: "lamplight", incandescent: "lamplight",
+      daylight: "window light", window: "window light", streetlight: "sodium night", sodium: "sodium night", candle: "candlelight",
+    },
+  },
+  from: {
+    aliases: { top: "above", overhead: "above", bottom: "below", under: "below", uplight: "below", back: "behind", backlight: "behind", backlit: "behind", rim: "behind" },
+  },
+  move: {
+    aliases: {
+      static: "still", locked: "still", "locked-off": "still", push: "dolly-in", "push-in": "dolly-in", dolly: "dolly-in", "track-in": "dolly-in",
+      shaky: "handheld", documentary: "handheld", rack: "rack focus", "pull-focus": "rack focus", exposure: "long exposure", "drag-shutter": "long exposure",
+    },
+  },
+  ratio: {
+    aliases: {
+      tile: "square", sheet: "portrait", instagram: "portrait", plate: "widescreen", academy: "photo", imax: "photo", flat: "widescreen",
+      cinemascope: "scope", anamorphic: "scope", story: "vertical", reel: "vertical",
+    },
+    measures: { square: 1, portrait: 0.8, photo: 1.5, widescreen: 16 / 9, scope: 2.39, vertical: 9 / 16 },
+  },
+  focus: {
+    aliases: {
+      near: "lower third", foreground: "lower third", fg: "lower third", far: "upper third", deep: "upper third", background: "upper third",
+      bg: "upper third", horizon: "upper third", mid: "center", middle: "center", midground: "center", centre: "center",
+    },
+  },
+});
+
 /** What each word adds to the prompt. An empty phrase leaves the prompt as it was. */
 export const PHRASES = Object.freeze({
   shot: { "extreme close-up": "extreme close-up", "close-up": "close-up shot", medium: "medium shot", wide: "wide shot", establishing: "establishing shot", overhead: "overhead shot looking straight down", "low angle": "low-angle shot looking up" },

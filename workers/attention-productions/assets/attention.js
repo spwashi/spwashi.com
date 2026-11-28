@@ -2,7 +2,8 @@
 // by hand; the composer it imports (compose.js, vocabulary.js, materials.js) is
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf } from "/compose.js";
+import { readNote } from "/lib/near-word.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf, textureHrefOf } from "/compose.js";
 import { DEFAULT_SUBJECT, LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
 import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
@@ -127,7 +128,7 @@ function render() {
   for (const link of document.querySelectorAll('a[href^="https://factshift.center/"]:not(#beat-canvas)')) link.setAttribute("href", canvasHrefOf(shot));
   $("beat-canvas")?.setAttribute("href", beatHrefOf(shot));
   const textureLink = $("texture-link");
-  if (textureLink) textureLink.setAttribute("href", shot.material ? `https://texture.website/${shot.material.slug}` : "https://texture.website/");
+  if (textureLink) textureLink.setAttribute("href", textureHrefOf(shot));
   const subjectInput = $("subject-input");
   if (subjectInput && document.activeElement !== subjectInput && subjectInput.value !== shot.subject) subjectInput.value = shot.subject;
   const materialSelect = $("material-select");
@@ -453,6 +454,10 @@ function wire() {
 
 if (svg) {
   shot = readShot(window.location.pathname, window.location.search, today());
+  // A link from a neighbour may speak its own words: say once how they were read.
+  const readLine = readNote(shot.read);
+  const readEl = $("read-note");
+  if (readEl && readLine) { readEl.textContent = readLine; readEl.hidden = false; }
   rememberTake(shot);
   wire();
   render();
@@ -464,7 +469,9 @@ if (svg) {
       "factshift.center": { href: canvasHrefOf(shot), says: "this shot's lines and its prompt, held on the canvas" },
       "mutex.buzz": { href: "https://mutex.buzz/", says: "what holds the frame this cycle" },
       "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(spwOf(shot))}`, says: "this shot's Spw, to take apart a slot at a time" },
-      ...(shot.material ? { "texture.website": { href: `https://texture.website/${shot.material.slug}`, says: `its surface, ${shot.material.word}` } } : {}),
+      "texture.website": shot.material
+        ? { href: textureHrefOf(shot), says: `its surface, ${shot.material.word}, at this distance and light` }
+        : { href: textureHrefOf(shot), says: "a surface for this distance and light" },
     };
   });
   // The set's pinch: in is a tighter shot, out a wider one, and out past establishing is the set.

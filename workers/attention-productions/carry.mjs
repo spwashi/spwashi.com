@@ -151,6 +151,7 @@ async function page(c, v) {
       <figure class="finder">
       ${viewfinder(c, shot)}
         <figcaption class="note">Drag the focus ring, lamp, or tempo bar — or scrub any bracket horizontally.</figcaption>
+        <p class="note read-note" id="read-note" role="status" hidden></p>
       </figure>
       <div class="take">
         <div class="subject-bar">
@@ -232,6 +233,8 @@ export async function carried() {
   const shared = await Promise.all(SHARED.map(async (file) => [file, await readFile(path.join(HERE, "src", file), "utf8")]));
   // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
   for (const file of ["set-ring.js", "set-ring.css", "pinch.js", "pinch.css", "text-scale.js", "text-scale.css", "text-scale-head.js", "clean-still.js", "clean-still.css", "slot-scrub.js", "slot-scrub.css"]) shared.push([file, await readFile(path.join(HERE, "../lib", file), "utf8")]);
+  // The composer reads a neighbour's words through ../../lib/near-word.js, which the browser asks for at /lib/near-word.js.
+  shared.push(["lib/near-word.js", await readFile(path.join(HERE, "../lib/near-word.js"), "utf8")]);
   const files = [
     ...shared,
     ["index.html", await page(helpers, v)],

@@ -856,6 +856,63 @@
       "signal"
     ]
   },
+  "near": {
+    "scale": {
+      "aliases": {
+        "extreme-close-up": "macro",
+        "ecu": "macro",
+        "detail": "macro",
+        "close-up": "close",
+        "cu": "close",
+        "near": "close",
+        "medium": "arm's length",
+        "mid": "arm's length",
+        "wide": "room",
+        "establishing": "far",
+        "distant": "far"
+      }
+    },
+    "light": {
+      "aliases": {
+        "golden-hour": "raking dawn",
+        "raking-sun": "raking dawn",
+        "dawn": "raking dawn",
+        "sunrise": "raking dawn",
+        "sunset": "raking dawn",
+        "dusk": "raking dawn",
+        "window-light": "overcast",
+        "cloudy": "overcast",
+        "diffuse": "overcast",
+        "soft": "overcast",
+        "midday": "noon",
+        "daylight": "noon",
+        "harsh": "noon",
+        "candlelight": "lamplight",
+        "candle": "lamplight",
+        "tungsten": "lamplight",
+        "lamp": "lamplight",
+        "neon": "sodium night",
+        "streetlight": "sodium night"
+      }
+    },
+    "format": {
+      "aliases": {
+        "square": "tile",
+        "widescreen": "plate",
+        "scope": "plate",
+        "photo": "plate",
+        "landscape": "plate",
+        "portrait": "sheet",
+        "vertical": "sheet",
+        "story": "sheet"
+      },
+      "measures": {
+        "tile": 1,
+        "plate": 1.7777777777777777,
+        "sheet": 0.8
+      }
+    }
+  },
   "phrases": {
     "scale": {
       "macro": "macro detail",
