@@ -46,11 +46,16 @@ test("the maskable mark keeps its band inside the middle circle and its weave to
   assert.ok(icon.equals(readFileSync(path.join(assets, "icon-maskable-512.png"))));
   const { size, at } = pixels(icon);
   const red = [0xc8, 0x40, 0x2a];
-  const bandRows = [];
-  for (let y = 0; y < size; y += 1) if (String(at(size / 2, y)) === String(red)) bandRows.push(y);
-  assert.ok(bandRows.length > 0, "the band is drawn");
-  // Every band row crosses the safe circle (radius 40% of the side) at the centre column.
-  for (const y of bandRows) assert.ok(Math.abs(y - size / 2) < size * 0.4, `band row ${y} is inside the safe zone`);
+  let painted = 0;
+  for (let y = 0; y < size; y += 1) {
+    for (let x = 0; x < size; x += 1) {
+      const [r, g, b] = at(x, y);
+      if (r !== red[0] || g !== red[1] || b !== red[2]) continue;
+      painted += 1;
+      assert.ok(Math.hypot(x + 0.5 - size / 2, y + 0.5 - size / 2) < size * 0.4, `band pixel ${x},${y} is inside the safe zone`);
+    }
+  }
+  assert.ok(painted > 0, "the band is drawn");
   // No dark frame: a mask never cuts a border into arcs.
   for (const [x, y] of [[0, 0], [size - 1, 0], [0, size - 1], [5, size / 3]]) assert.notDeepEqual(at(x, y), [0x1d, 0x1d, 0x1b], `${x},${y}`);
   // Both plain sizes carry the same proportional weave and band.

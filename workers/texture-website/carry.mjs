@@ -328,8 +328,11 @@ export function iconPng(size = 192, { maskable = false } = {}) {
     const row = y * (size * 4 + 1);
     raw[row] = 0;
     for (let x = 0; x < size; x += 1) {
-      const band = maskable ? y >= Math.round(size * 0.6) && y < Math.round(size * 0.72) : y >= Math.round(size * 26 / 32);
       const u = (x + 0.5) / size, v = (y + 0.5) / size;
+      // Round the ends of the maskable band so the whole accent fits the safe circle.
+      const band = maskable
+        ? Math.hypot(Math.max(Math.abs(u - 0.5) - 0.22, 0), v - 0.66) < 0.06
+        : v >= 26 / 32;
       const warp = (u * 4 % 1) - 0.5, weft = (v * 4 % 1) - 0.5;
       const vertical = Math.abs(warp) < 0.27, horizontal = Math.abs(weft) < 0.27;
       const over = (Math.floor(u * 4) + Math.floor(v * 4)) % 2 === 0;

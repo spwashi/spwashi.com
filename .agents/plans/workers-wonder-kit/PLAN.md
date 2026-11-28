@@ -150,3 +150,5 @@ From [ecosystem-planes-pivots-ontologies](../../../.spw/audits/ecosystem-planes-
 ## Worker app icon lighting
 
 The seven install marks use upper-left light with material-specific shading. Keep each site's silhouette, icon sizes and launcher safe area. The existing carries or SVG sources own the renders. Review regular and maskable icons at launcher size and run the worker contracts.
+
+At smaller launcher sizes, give the Attention reticle and Factshift plus more weight. Texture's maskable red band sits entirely within the safe circle, which the pixel check verifies across its full width.

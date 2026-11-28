@@ -106,7 +106,7 @@ export const NAVIGATION_WAIT_MS = 3500;
  * 6: a pasted tealstripes or texture address keeps a readable line, a mood colour,
  *    and the physics of the site the reader came from, 2026-11-24.
  */
-export const SITE_REVISION = 8;
+export const SITE_REVISION = 9;
 export const SHELL_VERSION = `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site${SITE_REVISION}`;
 
 /** The script at /sw.js, for a snapshot and the files it keeps; carry-shell.mjs writes it into assets/. */

@@ -19,9 +19,10 @@
   </defs>
   <rect width="512" height="512" fill="url(#body)"/>
   <rect x="96" y="142" width="320" height="221" rx="32" fill="#140e18"/>
-  <rect x="106" y="132" width="300" height="218" rx="23" fill="url(#glass)" stroke="url(#metal)" stroke-width="8"/>
-  <path d="M206 144v194m100-194v194M118 205h276m-276 73h276" stroke="#c5a8d2" opacity=".28" stroke-width="3"/>
-  <circle cx="303" cy="223" r="32" fill="none" stroke="#d9ff61" stroke-width="8"/>
-  <path d="M179 390h154" stroke="#b5a2c3" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="256" cy="390" r="10" fill="#d9ff61"/>
+  <rect x="106" y="132" width="300" height="218" rx="23" fill="url(#glass)" stroke="url(#metal)" stroke-width="12"/>
+  <path d="M206 144v194m100-194v194M120 205h272m-272 73h272" stroke="#c5a8d2" opacity=".22" stroke-width="4"/>
+  <circle cx="303" cy="223" r="36" fill="#302438" stroke="#d9ff61" stroke-width="12"/>
+  <circle cx="303" cy="223" r="8" fill="#d9ff61"/>
+  <path d="M189 390h134" stroke="#b5a2c3" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="256" cy="390" r="12" fill="#d9ff61"/>
 </svg>
