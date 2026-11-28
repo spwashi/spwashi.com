@@ -788,6 +788,50 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
 }
 
 /**
+ * Words shared from another app (the manifest's share_target sends /share). A
+ * texture.website address opens as itself; otherwise each phrase, split at a
+ * comma or a line, is a material, up to three, in the order they were shared.
+ */
+function readShare(url) {
+  const said = ["url", "text", "title"].map((key) => url.searchParams.get(key) ?? "").join("\n");
+  const own = said.match(/https:\/\/texture\.website(\/[^\s]*)?/);
+  if (own) {
+    const there = new URL(own[0]);
+    url.pathname = there.pathname;
+    url.search = there.search;
+  } else {
+    const phrases = said.replace(/https?:\/\/\S+/g, "").split(/[,;\n]+/).map((phrase) => slug(phrase).slice(0, 40).replace(/-$/, "")).filter(Boolean).slice(0, 3);
+    url.pathname = `/${phrases.join("/")}`;
+    url.search = "";
+  }
+  history.replaceState(null, "", url);
+}
+
+/**
+ * Register the service worker, then, once the page is idle, ask it to keep
+ * every material's picture (about a megabyte) so the catalog opens offline.
+ * Not on a connection saving data, and not offline; the catalog says how many
+ * are kept.
+ */
+function keepOffline() {
+  if (!("serviceWorker" in navigator) || window.top !== window) return;
+  navigator.serviceWorker.register("/sw.js").catch(() => {});
+  const connection = navigator.connection;
+  if (!navigator.onLine || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType ?? "")) return;
+  navigator.serviceWorker.addEventListener("message", (event) => {
+    if (event.data?.type !== "pictures-kept") return;
+    const note = $(".catalog-kept");
+    if (!note) return;
+    const { kept, of } = event.data;
+    note.textContent = kept >= of ? `All ${of} materials are kept on this device; the catalog opens offline.` : `${kept} of ${of} materials kept on this device so far.`;
+    note.hidden = false;
+  });
+  const ask = () => navigator.serviceWorker.ready.then((registration) => registration.active?.postMessage({ type: "keep-pictures" }));
+  if ("requestIdleCallback" in window) requestIdleCallback(ask, { timeout: 8000 });
+  else setTimeout(ask, 2500);
+}
+
+/**
  * How the address was read, said once on arrival. A neighbour's ladder word
  * (attention.productions' close-up) is taken as its nearest rung, and the
  * address is rewritten in this site's words, so what is shared from here reads
@@ -817,7 +861,8 @@ async function main() {
   const vocab = await (await fetch("/vocabulary.json")).json();
   document.body.classList.add("composed");
   const url = new URL(location.href);
-  if (url.pathname === "/catalog" || url.pathname === "/catalog/") { $(".slide").hidden = true; $(".card").hidden = true; return; }
+  if (url.pathname === "/share") readShare(url);
+  if (url.pathname === "/catalog" || url.pathname === "/catalog/") { $(".slide").hidden = true; $(".card").hidden = true; keepOffline(); return; }
   sayArrival(vocab, url);
   const render = (focusKey) => {
     const state = stateOf(url, vocab);
@@ -921,7 +966,7 @@ async function main() {
   });
   render();
   mountCleanStill({ key: "p", idleMs: 4500 });
-  if ("serviceWorker" in navigator && window.top === window) navigator.serviceWorker.register("/sw.js").catch(() => {});
+  keepOffline();
 }
 
 main().catch(() => document.body.classList.remove("composed"));

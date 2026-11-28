@@ -132,6 +132,7 @@ const PAGE = `<!doctype html>
     <article class="card" aria-label="The composition, to share and take"></article>
     <section class="catalog" aria-labelledby="catalog-head">
       <h2 id="catalog-head">Materials by class</h2>
+      <p class="catalog-kept" role="status" hidden></p>
       <nav class="catalog-filters" aria-label="Filter materials by class"><button type="button" data-class="all" aria-pressed="true">all (${MATERIALS.length})</button>${Object.entries(CLASSES).map(([cls, c]) => `<button type="button" data-class="${escapeHtml(cls)}" aria-pressed="false">${escapeHtml(cls)} (${c.materials.length})</button>`).join("")}</nav>
 ${Object.entries(CLASSES).map(([cls, c]) => `      <article class="class" data-class="${escapeHtml(cls)}"><h3>${escapeHtml(cls)}</h3><p>${escapeHtml(c.science)}</p><div class="swatches">${c.materials.map((word) => { const m = MATERIALS.find((each) => each.word === word); return `<span class="swatch-item"><a class="swatch" href="/${m.slug}"><img src="/${m.slug}.png" alt="" width="36" height="36" loading="lazy"><span>${escapeHtml(word)}</span></a> <a class="png" href="/${m.slug}.png" title="the image of ${escapeHtml(word)}, for Midjourney">png</a></span>`; }).join("")}</div></article>`).join("\n")}
     </section>
@@ -170,28 +171,48 @@ const MANIFEST = `${JSON.stringify({
   display: "standalone",
   background_color: "#f2f0eb",
   theme_color: "#1d1d1b",
+  categories: ["design", "productivity"],
   icons: [
     { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
     { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
     { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+    { src: "/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
   ],
+  // Long-press the home-screen mark: the day's picture, the catalog, or a view.
+  shortcuts: [
+    { name: "Today's picture", short_name: "Today", url: "/", description: "The day's two materials and their look." },
+    { name: "Materials by class", short_name: "Catalog", url: "/catalog", description: "Every material, kept for offline once opened." },
+    ...Object.entries(VIEWS).map(([key, view]) => ({ name: view.name, short_name: view.name.replace(/@$/, ""), url: `/${key}@/`, description: view.says })),
+  ].map((shortcut) => ({ ...shortcut, icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }] })),
+  // Words shared from another app open as materials (texture.js reads /share).
+  share_target: { action: "/share", method: "GET", enctype: "application/x-www-form-urlencoded", params: { title: "title", text: "text", url: "url" } },
 }, null, 2)}\n`;
 
-/** The shell the service worker keeps. Pictures are cached when a reader opens them, not all at once. */
-const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/lib/near-word.js", "/clean-still.js", "/clean-still.css", "/slot-scrub.js", "/slot-scrub.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
+/**
+ * The shell the service worker keeps at install. Pictures are kept apart, in a
+ * cache named for their own hashes, so a deploy that leaves the images alone
+ * leaves the kept copies alone; the page asks for all of them once it is idle.
+ */
+const SHELL = ["/", "/texture.css", "/texture.js", "/daily.js", "/lib/near-word.js", "/clean-still.js", "/clean-still.css", "/slot-scrub.js", "/slot-scrub.css", "/vocabulary.json", "/favicon.svg", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/icon-maskable-512.png"];
 
-function serviceWorker(version) {
+function serviceWorker(version, picturesVersion) {
   return `// Written by workers/texture-website/carry.mjs. The day's picture is chosen in the page, so this shell opens it with no network.
 const CACHE = "texture-${version}";
+// The materials' pictures, named for their hashes (images.json): a deploy that leaves them alone keeps them.
+const PICTURES = "texture-pictures-${picturesVersion}";
 const SHELL = ${JSON.stringify(SHELL)};
 const CODE = /\\.(?:js|css|json)$/;
+const PICTURE = /^\\/[a-z0-9-]+\\.png$/;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL.map((path) => new Request(path, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("texture-") && key !== CACHE).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
+  event.waitUntil(Promise.all([
+    caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("texture-") && key !== CACHE && key !== PICTURES).map((key) => caches.delete(key)))),
+    self.registration.navigationPreload?.enable(),
+  ]).then(() => self.clients.claim()));
 });
 
 self.addEventListener("fetch", (event) => {
@@ -199,11 +220,19 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
   if (request.mode === "navigate") {
-    event.respondWith(fetch(request).then((response) => {
-      const copy = response.clone();
-      if (response.ok) caches.open(CACHE).then((cache) => cache.put("/", copy));
-      return response;
-    }).catch(() => caches.match("/")));
+    event.respondWith((async () => {
+      try {
+        const response = (await event.preloadResponse) ?? (await fetch(request));
+        // Only a page is the shell: a picture or a reading opened in its own tab is not kept as "/".
+        if (response.ok && (response.headers.get("content-type") ?? "").includes("text/html")) {
+          const copy = response.clone();
+          event.waitUntil(caches.open(CACHE).then((cache) => cache.put("/", copy)));
+        }
+        return response;
+      } catch {
+        return (await caches.match(request)) ?? (await caches.match("/")) ?? Response.error();
+      }
+    })());
     return;
   }
   if (CODE.test(url.pathname)) {
@@ -213,6 +242,16 @@ self.addEventListener("fetch", (event) => {
     }).catch(() => caches.match(request)));
     return;
   }
+  if (PICTURE.test(url.pathname) && !url.pathname.startsWith("/icon-")) {
+    event.respondWith(caches.open(PICTURES).then(async (cache) => {
+      const hit = await cache.match(request);
+      if (hit) return hit;
+      const response = await fetch(request);
+      if (response.ok) event.waitUntil(cache.put(request, response.clone()));
+      return response;
+    }));
+    return;
+  }
   event.respondWith(caches.match(request).then((hit) => {
     const fresh = fetch(request).then((response) => {
       if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy)); }
@@ -220,6 +259,30 @@ self.addEventListener("fetch", (event) => {
     }).catch(() => hit);
     return hit ?? fresh;
   }));
+});
+
+/** Keep every material's picture, six at a time, and say how many are kept. The page asks once it is idle. */
+async function keepPictures(client) {
+  const cache = await caches.open(PICTURES);
+  const vocabulary = await ((await caches.match("/vocabulary.json")) ?? (await fetch("/vocabulary.json"))).json();
+  const wanted = vocabulary.materials.map((material) => material.image);
+  let kept = 0;
+  for (let i = 0; i < wanted.length; i += 6) {
+    await Promise.all(wanted.slice(i, i + 6).map(async (src) => {
+      if (await cache.match(src)) { kept += 1; return; }
+      try {
+        const response = await fetch(src);
+        if (response.ok) { await cache.put(src, response); kept += 1; }
+      } catch {
+        // Offline partway: what is kept stays kept, and the next visit finishes.
+      }
+    }));
+  }
+  client?.postMessage({ type: "pictures-kept", kept, of: wanted.length });
+}
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "keep-pictures") event.waitUntil(keepPictures(event.source));
 });
 `;
 }
@@ -235,15 +298,19 @@ function pngChunk(type, data) {
   return out;
 }
 
-/** A 192px weave, the mark on the home screen. Same bytes every run. */
-export function iconPng(size = 192) {
+/**
+ * A 192px weave, the mark on the home screen. Same bytes every run. Maskable,
+ * the weave runs to every edge and the red band sits inside the circle a
+ * launcher may cut to (the middle 80%), so no mask clips the mark.
+ */
+export function iconPng(size = 192, { maskable = false } = {}) {
   const raw = Buffer.alloc((size * 4 + 1) * size);
   for (let y = 0; y < size; y += 1) {
     const row = y * (size * 4 + 1);
     raw[row] = 0;
     for (let x = 0; x < size; x += 1) {
-      const edge = x < 10 || y < 10 || x >= size - 10 || y >= size - 10;
-      const band = y >= size - 36;
+      const edge = !maskable && (x < 10 || y < 10 || x >= size - 10 || y >= size - 10);
+      const band = maskable ? y >= Math.round(size * 0.6) && y < Math.round(size * 0.72) : y >= size - 36;
       const weave = (Math.floor(x / 12) + Math.floor(y / 12)) % 2 === 0;
       const o = row + 1 + x * 4;
       raw[o] = edge ? 0x1d : band ? 0xc8 : weave ? 0xe7 : 0xf2;
@@ -277,11 +344,13 @@ export async function carried() {
 /** The carried text plus the service worker named for it and for the hand-written page. */
 export async function carriedShell() {
   const files = await carried();
+  const pictures = createHash("sha256").update(await readFile(path.join(ASSETS, "images.json"))).digest("hex").slice(0, 12);
   const hash = createHash("sha256");
   for (const [name, body] of files) hash.update(name).update(typeof body === "string" ? body : body);
   for (const size of [192, 512]) hash.update(iconPng(size));
   for (const name of ["texture.css", "texture.js", "daily.js"]) hash.update(await readFile(path.join(ASSETS, name)));
-  return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12))]];
+  hash.update(iconPng(512, { maskable: true }));
+  return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12), pictures)]];
 }
 
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
@@ -320,8 +389,10 @@ async function images(check) {
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const icons = [192, 512].map((size) => [size, iconPng(size)]);
-  let drift = await writeOrCheck(ASSETS, await carriedShell(), { check, label: "texture-carry", hint: "run node workers/texture-website/carry.mjs" });
+  const icons = [["192", iconPng(192)], ["512", iconPng(512)], ["maskable-512", iconPng(512, { maskable: true })]];
+  // The images first: the service worker names its picture cache for images.json.
+  let drift = await images(check);
+  drift += await writeOrCheck(ASSETS, await carriedShell(), { check, label: "texture-carry", hint: "run node workers/texture-website/carry.mjs" });
   for (const [size, icon] of icons) {
     const iconFile = path.join(ASSETS, `icon-${size}.png`);
     if (check) {
@@ -332,7 +403,6 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
       await writeFile(iconFile, icon);
     }
   }
-  drift += await images(check);
   if (check && drift) process.exit(1);
   if (!check) console.log(`[texture-carry] wrote ${MATERIALS.length} materials in ${Object.keys(CLASSES).length} classes into workers/texture-website/assets`);
 }

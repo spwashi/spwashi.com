@@ -8,6 +8,10 @@
   "display": "standalone",
   "background_color": "#f2f0eb",
   "theme_color": "#1d1d1b",
+  "categories": [
+    "design",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "/favicon.svg",
@@ -26,6 +30,89 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "Today's picture",
+      "short_name": "Today",
+      "url": "/",
+      "description": "The day's two materials and their look.",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Materials by class",
+      "short_name": "Catalog",
+      "url": "/catalog",
+      "description": "Every material, kept for offline once opened.",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Minimalist@",
+      "short_name": "Minimalist",
+      "url": "/minimalist@/",
+      "description": "the stage and one short prompt",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "PromptEngineer@",
+      "short_name": "PromptEngineer",
+      "url": "/prompt-engineer@/",
+      "description": "every part of the prompt named, every pivot and technique",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "StoryDesigner@",
+      "short_name": "StoryDesigner",
+      "url": "/story-designer@/",
+      "description": "a scene with a moment and a trace",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
