@@ -805,6 +805,15 @@
       "posterized",
       "cyanotype"
     ],
+    "palette": [
+      "as drawn",
+      "paper and ink",
+      "lamplight",
+      "sodium night",
+      "teal stripes",
+      "lantern",
+      "verdigris"
+    ],
     "scene": [
       "wall",
       "floor",
@@ -913,6 +922,60 @@
       }
     }
   },
+  "palettes": {
+    "paper and ink": [
+      "#1d1d1b",
+      "#f2f0eb"
+    ],
+    "lamplight": [
+      "#20151a",
+      "#ffb36b",
+      "#fff4e3"
+    ],
+    "sodium night": [
+      "#120c10",
+      "#ff9930",
+      "#ffe6c4"
+    ],
+    "teal stripes": [
+      "#0b3b3a",
+      "#14b8a6",
+      "#e6fffb"
+    ],
+    "lantern": [
+      "#11302c",
+      "#f5b041",
+      "#5eead4"
+    ],
+    "verdigris": [
+      "#14302b",
+      "#3f7f70",
+      "#e8f3ee"
+    ]
+  },
+  "lightFrom": {
+    "above": {
+      "az": 270,
+      "says": "from above"
+    },
+    "left": {
+      "az": 180,
+      "says": "from the left"
+    },
+    "right": {
+      "az": 0,
+      "says": "from the right"
+    },
+    "below": {
+      "az": 90,
+      "says": "from below"
+    },
+    "behind": {
+      "az": 270,
+      "el": 5,
+      "says": "from behind, grazing the surface"
+    }
+  },
   "phrases": {
     "scale": {
       "macro": "macro detail",
@@ -942,6 +1005,15 @@
       "relief": "in low relief",
       "posterized": "posterized into flat tones",
       "cyanotype": "as a cyanotype print"
+    },
+    "palette": {
+      "as drawn": "",
+      "paper and ink": "in black ink on warm paper",
+      "lamplight": "in warm lamplit ambers",
+      "sodium night": "in sodium orange on night black",
+      "teal stripes": "in deep harbor teals up to sea foam",
+      "lantern": "in amber lamplight through teal glass",
+      "verdigris": "in verdigris copper greens"
     },
     "scene": {
       "wall": "for a wall",

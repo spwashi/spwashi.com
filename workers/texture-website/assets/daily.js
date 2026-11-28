@@ -19,7 +19,7 @@ export const DAY_KEYS = ["scale", "light", "wear", "process", "scene", "format"]
 export const MODE_KEYS = ["scale", "light", "wear", "process"];
 /** Marks that read as a meeting of two materials. `?` has to be escaped in a path. */
 export const DAY_MARKS = ["~", "*", "^", "@", "="];
-export const DEFAULTS = { scale: "close", light: "overcast", wear: "handled", process: "as found", scene: "wall", format: "tile", lens: "none", beat: "none", trace: "none", face: "title", tone: "paper" };
+export const DEFAULTS = { scale: "close", light: "overcast", wear: "handled", process: "as found", palette: "as drawn", scene: "wall", format: "tile", lens: "none", beat: "none", trace: "none", face: "title", tone: "paper" };
 
 export const slug = (word) => word.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 export const dayNumber = (iso) => Math.floor(Date.parse(`${iso}T00:00:00Z`) / 86400000);

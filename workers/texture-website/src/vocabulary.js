@@ -79,6 +79,8 @@ export const LADDERS = Object.freeze({
   light: ["raking dawn", "overcast", "noon", "lamplight", "sodium night"],
   wear: ["pristine", "handled", "worn", "weathered", "ruined"],
   process: ["as found", "riso", "engraving", "relief", "posterized", "cyanotype"],
+  // The inks the picture is printed in, dark to light; as drawn keeps each material's own colour.
+  palette: ["as drawn", "paper and ink", "lamplight", "sodium night", "teal stripes", "lantern", "verdigris"],
   scene: ["wall", "floor", "table", "costume", "sky", "page"],
   format: ["tile", "plate", "sheet"],
   // A lens is a genre in the making, said as an aesthetic; none leaves the sentence plain.
@@ -119,11 +121,44 @@ export const NEAR = Object.freeze({
 });
 
 /** What each ladder word adds to the sentence. */
+/**
+ * Where the light falls from, set with attention.productions' lamp (its from=
+ * ladder, the same five words). The light word keeps its colour and its
+ * height; the lamp turns it (an SVG azimuth: 0 from the right, 90 from below,
+ * 180 from the left, 270 from above). Behind grazes from the far edge.
+ */
+export const LIGHT_FROM = Object.freeze({
+  above: { az: 270, says: "from above" },
+  left: { az: 180, says: "from the left" },
+  right: { az: 0, says: "from the right" },
+  below: { az: 90, says: "from below" },
+  behind: { az: 270, el: 5, says: "from behind, grazing the surface" },
+});
+
+/**
+ * Each palette as stops from shadow to highlight: the stage maps the picture's
+ * luminance across them (a gradient map), and the prompt names them. Teal
+ * stripes and lantern are Teal Stripes Vibes' ground and lantern seeds
+ * (workers/tealstripesvibes/src/vibe.js); lamplight and sodium night are
+ * attention.productions' lights, fill to key (src/vocabulary.js SHAPES), each
+ * with a paper highlight; paper and ink are this site's own ground and ink.
+ * test/palette.test.mjs holds the borrowed ones to their sources.
+ */
+export const PALETTES = Object.freeze({
+  "paper and ink": ["#1d1d1b", "#f2f0eb"],
+  lamplight: ["#20151a", "#ffb36b", "#fff4e3"],
+  "sodium night": ["#120c10", "#ff9930", "#ffe6c4"],
+  "teal stripes": ["#0b3b3a", "#14b8a6", "#e6fffb"],
+  lantern: ["#11302c", "#f5b041", "#5eead4"],
+  verdigris: ["#14302b", "#3f7f70", "#e8f3ee"],
+});
+
 export const PHRASES = Object.freeze({
   scale: { macro: "macro detail", close: "close view", "arm's length": "at arm's length", room: "across a room", far: "seen from afar" },
   light: { "raking dawn": "raking dawn light", overcast: "soft overcast light", noon: "flat noon light", lamplight: "warm lamplight", "sodium night": "sodium streetlight at night" },
   wear: { pristine: "pristine", handled: "lightly handled", worn: "worn", weathered: "weathered", ruined: "ruined and broken" },
   process: { "as found": "", riso: "printed as a two-colour risograph", engraving: "rendered as a fine line engraving", relief: "in low relief", posterized: "posterized into flat tones", cyanotype: "as a cyanotype print" },
+  palette: { "as drawn": "", "paper and ink": "in black ink on warm paper", lamplight: "in warm lamplit ambers", "sodium night": "in sodium orange on night black", "teal stripes": "in deep harbor teals up to sea foam", lantern: "in amber lamplight through teal glass", verdigris: "in verdigris copper greens" },
   scene: { wall: "for a wall", floor: "underfoot, as a floor", table: "as a tabletop", costume: "as a costume fabric", sky: "as a sky backdrop", page: "as a printed page" },
   lens: Object.fromEntries(["none", "risograph botanica", "civic brutalism", "lunar laundromat", "folk-tech embroidery", "deep-sea archive", "tidepool baroque", "midnight municipal"].map((w) => [w, w === "none" ? "" : `${w} aesthetic`])),
   beat: { none: "", arrival: "the moment someone arrives", discovery: "just before something is found", waiting: "while someone waits", aftermath: "after everyone has left", return: "as someone returns" },

@@ -6,7 +6,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { editDistance, measureOf, nearWord, readNote } from "../../lib/near-word.js";
 import { LADDERS, NEAR } from "../src/vocabulary.js";
-import { SURFACE, promptOf, readShot, spwOf, textureHrefOf } from "../src/compose.js";
+import { SURFACE, promptOf, readShot, spwOf, textureHrefOf, textureReturnOf } from "../src/compose.js";
 import { LADDERS as TEXTURE_LADDERS, NEAR as TEXTURE_NEAR } from "../../texture-website/src/vocabulary.js";
 import { laddersFor } from "../../texture-website/assets/daily.js";
 
@@ -114,4 +114,29 @@ test("texture.website's surface (wear and process) arrives whole, writes the pro
   // A neighbour's word for a surface reads as texture's own.
   assert.equal(readShot("/x", "?wear=distressed&process=risograph", "2026-11-27").wear, "weathered");
   assert.equal(readShot("/x", "?process=risograph", "2026-11-27").process, "riso");
+});
+
+test("the lamp crosses: attention.productions' from= words are texture.website's light directions, and the way back carries them", async () => {
+  const { LIGHT_FROM } = await import("../../texture-website/src/vocabulary.js");
+  assert.deepEqual(Object.keys(LIGHT_FROM).sort(), [...LADDERS.from].sort(), "the same five words on both sites");
+  for (const [word, lamp] of Object.entries(LIGHT_FROM)) assert.ok(Number.isFinite(lamp.az) && lamp.says, word);
+  const shot = { ...readShot("/vellum", "?material=vellum&light=raking-dawn&from=left&via=texture.website", "2026-11-27"), material: { slug: "vellum" } };
+  assert.equal(shot.read.length, 0, "via= is not a word to read");
+  const back = new URL(textureHrefOf(shot));
+  assert.equal(back.searchParams.get("from"), "left");
+  assert.equal(back.searchParams.get("light"), "raking-dawn");
+});
+
+test("the way back to texture.website keeps what attention.productions does not hold", () => {
+  const shot = { ...readShot("/vellum", "?material=vellum&light=noon&from=left&shot=wide", "2026-11-27"), material: { slug: "vellum", word: "vellum" } };
+  const back = new URL(textureReturnOf(shot, "/vellum/~moss?palette=lamplight&lens=lunar-laundromat&light=overcast"));
+  assert.equal(back.pathname, "/vellum/~moss", "the reader's layers stand");
+  assert.equal(back.searchParams.get("palette"), "lamplight");
+  assert.equal(back.searchParams.get("lens"), "lunar-laundromat");
+  assert.equal(back.searchParams.get("light"), "noon", "what was tuned here is written over");
+  assert.equal(back.searchParams.get("from"), "left");
+  // A surface chosen here leads; a back= that is not a path is ignored.
+  assert.equal(new URL(textureReturnOf({ ...shot, material: { slug: "moss" } }, "/vellum/~moss")).pathname, "/moss");
+  assert.equal(textureReturnOf(shot, "https://elsewhere.example/x"), textureHrefOf(shot));
+  assert.equal(textureReturnOf(shot, "//elsewhere.example/x"), textureHrefOf(shot));
 });

@@ -3,7 +3,7 @@
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
 import { readNote } from "/lib/near-word.js";
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf, textureHrefOf, SURFACE_KEYS } from "/compose.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf, textureHrefOf, textureReturnOf, SURFACE_KEYS } from "/compose.js";
 import { DEFAULT_SUBJECT, LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
 import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
@@ -27,6 +27,10 @@ let dragging = "";
 let dragged = false;
 /** A scrub across a bracket in the expression: the ladder it holds, where the hand started, and how many words it has crossed. */
 let scrub = null;
+/** The site that sent the reader here to tune something (via=), so the page can offer the way back. */
+let cameVia = "";
+/** The texture.website address the reader left (back=), kept so the way back changes only what was tuned here. */
+let cameBack = "";
 /** Up to six recent takes kept in memory for one-tap A/B comparison. */
 const MAX_TAKES = 6;
 let takes = [];
@@ -128,7 +132,13 @@ function render() {
   for (const link of document.querySelectorAll('a[href^="https://factshift.center/"]:not(#beat-canvas)')) link.setAttribute("href", canvasHrefOf(shot));
   $("beat-canvas")?.setAttribute("href", beatHrefOf(shot));
   const textureLink = $("texture-link");
-  if (textureLink) textureLink.setAttribute("href", textureHrefOf(shot));
+  if (textureLink) textureLink.setAttribute("href", textureReturnOf(shot, cameBack));
+  // Arrived from texture.website to turn its light: the way back says, as the lamp moves, what light it carries.
+  const returnLink = $("return-link");
+  if (returnLink && cameVia === "texture.website") {
+    returnLink.setAttribute("href", textureReturnOf(shot, cameBack));
+    returnLink.textContent = `← back to texture.website: ${shot.light}, from ${shot.from === "behind" ? "behind" : shot.from === "above" || shot.from === "below" ? shot.from : `the ${shot.from}`}`;
+  }
   const subjectInput = $("subject-input");
   if (subjectInput && document.activeElement !== subjectInput && subjectInput.value !== shot.subject) subjectInput.value = shot.subject;
   const materialSelect = $("material-select");
@@ -455,6 +465,9 @@ function wire() {
 }
 
 if (svg) {
+  cameVia = new URLSearchParams(window.location.search).get("via") ?? "";
+  cameBack = cameVia === "texture.website" ? new URLSearchParams(window.location.search).get("back") ?? "" : "";
+  if (cameVia === "texture.website" && $("return-note")) $("return-note").hidden = false;
   shot = readShot(window.location.pathname, window.location.search, today());
   // A link from a neighbour may speak its own words: say once how they were read.
   const readLine = readNote(shot.read);
@@ -472,8 +485,8 @@ if (svg) {
       "mutex.buzz": { href: "https://mutex.buzz/", says: "what holds the frame this cycle" },
       "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(spwOf(shot))}`, says: "this shot's Spw, to take apart a slot at a time" },
       "texture.website": shot.material
-        ? { href: textureHrefOf(shot), says: `its surface, ${shot.material.word}, at this distance and light` }
-        : { href: textureHrefOf(shot), says: "a surface for this distance and light" },
+        ? { href: textureReturnOf(shot, cameBack), says: `its surface, ${shot.material.word}, at this distance and light` }
+        : { href: textureReturnOf(shot, cameBack), says: "a surface for this distance and light" },
     };
   });
   // The set's pinch: in is a tighter shot, out a wider one, and out past establishing is the set.

@@ -247,14 +247,34 @@ export function beatScriptOf(shot) {
 }
 
 /**
- * The same surface on texture.website, carrying this shot's distance, light and
- * frame in attention's own words and its wear and process in texture's;
+ * The same surface on texture.website, carrying this shot's distance, light,
+ * lamp and frame in attention's own words and its wear and process in texture's;
  * texture.website reads each as its nearest rung (close-up as close, golden
  * hour as raking dawn, widescreen as plate).
  */
 export function textureHrefOf(shot) {
-  const query = [`scale=${slug(shot.shot)}`, `light=${slug(shot.light)}`, `format=${slug(shot.ratio)}`, ...SURFACE_KEYS.filter((key) => shot[key]).map((key) => `${key}=${slug(shot[key])}`)].join("&");
+  // from= is the lamp: texture.website turns its light to fall from the same side.
+  const query = [`scale=${slug(shot.shot)}`, `light=${slug(shot.light)}`, `from=${shot.from}`, `format=${slug(shot.ratio)}`, ...SURFACE_KEYS.filter((key) => shot[key]).map((key) => `${key}=${slug(shot[key])}`)].join("&");
   return `https://texture.website/${shot.material ? shot.material.slug : ""}?${query}`;
+}
+
+/**
+ * The way back to texture.website for a reader who came here to tune it. back=
+ * is the address they left (a path on texture.website); it keeps everything
+ * attention.productions does not hold (the layers, the palette, the lens), and
+ * this shot's distance, light, lamp, frame and surface are written over it. A
+ * back= that is not a path is ignored.
+ */
+export function textureReturnOf(shot, back = "") {
+  const fresh = new URL(textureHrefOf(shot));
+  if (!back || !back.startsWith("/") || back.startsWith("//")) return fresh.href;
+  const there = new URL(back, "https://texture.website");
+  if (there.origin !== "https://texture.website") return fresh.href;
+  // A surface chosen here leads the layers; otherwise the reader's own layers stand.
+  const first = decodeURIComponent(there.pathname.split("/").filter(Boolean)[0] ?? "").replace(/^[.^*~=@?!%]/, "");
+  if (shot.material && slug(first) !== shot.material.slug) there.pathname = `/${shot.material.slug}`;
+  for (const [key, value] of fresh.searchParams) there.searchParams.set(key, value);
+  return there.href;
 }
 
 /** The three-shot beat opened on factshift.center as a multi-line storyboard script. */

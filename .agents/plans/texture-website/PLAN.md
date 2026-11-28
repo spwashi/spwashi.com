@@ -61,7 +61,7 @@ A domain in focus gets: a files-only unit (`cluster.json` tier files), a materia
 3. **Shaders and frames as files**, with one drop.
 4. **The component bench and the first HTML tour slides**, each linked to trope.wiki.
 5. **Packs carried on a Spw card** to one other site that themes itself by it.
-6. **Guesses and near misses**, then their count through the inbox. *Near misses landed 2026-11-27:* a path word a slip from a listed material keeps the reader's word and offers the listed one; a neighbour's ladder word (attention.productions' close-up, golden hour, scope) is read as its nearest rung and the address rewritten in this site's words (`workers/lib/near-word.js`, `NEAR` in `src/vocabulary.js`). The count waits on the inbox.
+6. **Guesses and near misses**, then their count through the inbox. *Near misses landed 2026-11-27:* a path word a slip from a listed material keeps the reader's word and offers the listed one; a neighbour's ladder word (attention.productions' close-up, golden hour, scope) is read as its nearest rung and the address rewritten in this site's words (`workers/lib/near-word.js`, `NEAR` in `src/vocabulary.js`). The count waits on the inbox. *Tuning, 2026-11-28:* a palette ladder (a gradient map, inks borrowed from the set), a split view against the drawn materials, keep and roll beside each ladder's name, and the light's direction set with attention.productions' lamp (from=, a round trip that keeps the reader's address).
 
 ### The technique curriculum — 2026-11-12
 

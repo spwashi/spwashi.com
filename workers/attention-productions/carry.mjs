@@ -157,6 +157,7 @@ async function page(c, v) {
       ${viewfinder(c, shot)}
         <figcaption class="note">Drag the focus ring, lamp, or tempo bar — or scrub any bracket horizontally.</figcaption>
         <p class="note read-note" id="read-note" role="status" hidden></p>
+        <p class="note return-note" id="return-note" hidden><a id="return-link" href="https://texture.website/">← texture.website</a></p>
       </figure>
       <div class="take">
         <div class="subject-bar">

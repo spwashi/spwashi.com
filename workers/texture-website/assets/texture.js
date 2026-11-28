@@ -95,6 +95,8 @@ function stateOf(url, vocab) {
     layers: read.length ? read : daily(vocab, dayNumber(day)),
     byDay, reads,
     say: (q.get("say") ?? "").slice(0, 140), as: q.get("as") ?? ".",
+    // Where the light falls from, set with attention.productions' lamp; none keeps the light word's own direction.
+    from: nearWord(q.get("from"), Object.keys(vocab.lightFrom ?? {}), { aliases: { top: "above", back: "behind", bottom: "below" } })?.word ?? null,
     gatheredFor: (q.get("for") ?? "").slice(0, 80),
   };
 }
@@ -117,7 +119,7 @@ function sentence(vocab, layers) {
 
 /** The prompt's parts in order, each named, so PromptEngineer@ can show its anatomy. */
 function anatomy(vocab, state) {
-  const { scale, light, wear, process, scene, format, lens, beat, trace } = state.ladders;
+  const { scale, light, wear, process, palette, scene, format, lens, beat, trace } = state.ladders;
   const p = vocab.phrases;
   const phrase = (key, word) => {
     if (state.perm !== key) return p[key][word];
@@ -125,18 +127,20 @@ function anatomy(vocab, state) {
     const start = Math.max(0, words.indexOf(word));
     return `{${[0, 1, 2, 3].map((i) => p[key][words[(start + i) % words.length]]).join(", ")}}`;
   };
+  const lit = (word) => [phrase("light", word), vocab.lightFrom?.[state.from]?.says].filter(Boolean).join(" ");
   const subject = state.weigh && state.layers.length > 1
     ? state.layers.map(({ material }, i) => `${material.word}::${i ? 1 : 2}`).join(" ")
     : sentence(vocab, state.layers);
-  if (state.view === "minimalist") return [["subject", `${vocab.formats[format].lead} ${subject}`], ["light", phrase("light", light)]];
+  // The palette is a look, so every view names it when it is set.
+  if (state.view === "minimalist") return [["subject", `${vocab.formats[format].lead} ${subject}`], ["light", lit(light)], ["palette", p.palette?.[palette] ?? ""]];
   if (state.view === "story-designer") {
     // A story opens on its setting, then what it is made of: "a floor of rain on glass heavy with moquette".
     const SETTING = { wall: "a wall", floor: "a floor", table: "a tabletop", costume: "a costume", sky: "a sky", page: "a page" };
-    return [["setting", `${SETTING[scene]} of ${subject}`], ["light", phrase("light", light)],
-      ["wear", p.wear[wear]], ["trace", p.trace[trace]], ["moment", p.beat[beat]], ["lens", p.lens[lens]]];
+    return [["setting", `${SETTING[scene]} of ${subject}`], ["light", lit(light)],
+      ["wear", p.wear[wear]], ["palette", p.palette?.[palette] ?? ""], ["trace", p.trace[trace]], ["moment", p.beat[beat]], ["lens", p.lens[lens]]];
   }
-  return [["subject", `${vocab.formats[format].lead} ${subject}`], ["scale", phrase("scale", scale)], ["light", phrase("light", light)],
-    ["wear", [p.wear[wear], ...qualities(vocab, state.layers)].join(", ")], ["process", phrase("process", process)],
+  return [["subject", `${vocab.formats[format].lead} ${subject}`], ["scale", phrase("scale", scale)], ["light", lit(light)],
+    ["wear", [p.wear[wear], ...qualities(vocab, state.layers)].join(", ")], ["process", phrase("process", process)], ["palette", phrase("palette", palette)],
     ["scene", phrase("scene", scene)], ["lens", phrase("lens", lens)]];
 }
 
@@ -299,14 +303,29 @@ const PROCESS = {
   cyanotype: `${GREY}${STRETCH}${duotone("#163a6b", "#eef3f7")}`,
 };
 
-/** The SVG filter for these ladders: wear warps and roughens, light rakes across, process prints. */
-function filterMarkup(state) {
-  const L = LIGHT[state.ladders.light], W = WEAR[state.ladders.wear];
+/**
+ * A palette as a gradient map: the picture to luminance, stretched so its
+ * shadows and highlights reach the ends, then each channel read off the
+ * palette's stops from dark to light. Applied last, the palette is the inks.
+ */
+function paletteMarkup(stops) {
+  if (!stops?.length) return "";
+  const luma = "0.2126 0.7152 0.0722 0 0";
+  const channel = (i) => stops.map((hex) => (parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16) / 255).toFixed(3)).join(" ");
+  return `<feColorMatrix type="matrix" values="${luma} ${luma} ${luma} 0 0 0 1 0"/>`
+    + `<feComponentTransfer>${["R", "G", "B"].map((c) => `<feFunc${c} type="linear" slope="1.45" intercept="-0.2"/>`).join("")}</feComponentTransfer>`
+    + `<feComponentTransfer>${["R", "G", "B"].map((c, i) => `<feFunc${c} type="table" tableValues="${channel(i)}"/>`).join("")}</feComponentTransfer>`;
+}
+
+/** The SVG filter for these ladders: wear warps and roughens, light rakes across, process prints, palette inks. */
+function filterMarkup(state, palettes = {}, lightFrom = {}) {
+  const lamp = lightFrom[state.from];
+  const L = { ...LIGHT[state.ladders.light], ...(lamp ? { az: lamp.az, ...(lamp.el ? { el: lamp.el } : {}) } : {}) }, W = WEAR[state.ladders.wear];
   return `<feTurbulence type="fractalNoise" baseFrequency="${W.freq}" numOctaves="3" seed="${hash(state.layers.map((l) => l.material.slug).join()) % 97}" result="noise"/>
 <feDisplacementMap in="SourceGraphic" in2="noise" scale="${W.warp}" xChannelSelector="R" yChannelSelector="G" result="worn"/>
 <feDiffuseLighting in="noise" surfaceScale="${W.relief}" lighting-color="${L.color}" result="light"><feDistantLight azimuth="${L.az}" elevation="${L.el}"/></feDiffuseLighting>
 <feComposite in="worn" in2="light" operator="arithmetic" k1="0.6" k2="0.62" k3="0" k4="0" result="lit"/>
-${PROCESS[state.ladders.process]}`;
+${PROCESS[state.ladders.process]}${paletteMarkup(palettes[state.ladders.palette])}`;
 }
 
 function drawStage(vocab, state) {
@@ -329,8 +348,11 @@ function drawStage(vocab, state) {
     }
     return layer;
   }));
-  $("#material").innerHTML = filterMarkup(state);
+  $("#material").innerHTML = filterMarkup(state, vocab.palettes, vocab.lightFrom);
   $(".layers").style.filter = "url(#material)";
+  // Split: the same layers with no filter, clipped to the left of the line, so the tuning reads as a before and after.
+  const drawn = $(".layers-drawn");
+  if (drawn) drawn.replaceChildren(...(stage.classList.contains("split") ? [...$(".layers").children].map((layer) => layer.cloneNode(true)) : []));
   const bubble = $(".bubble");
   bubble.hidden = !state.say;
   bubble.textContent = state.say;
@@ -451,9 +473,12 @@ function drawLayerBar(vocab, state, url, onUpdate) {
 
 /* ── configuration: ladders in three bands ────────────────────── */
 
-const BANDS = [["look", ["scale", "light", "wear"]], ["make", ["process", "format", "lens"]], ["use", ["scene"]], ["story", ["beat", "trace"]], ["card", ["face", "tone"]]];
+const BANDS = [["look", ["scale", "light", "wear"]], ["make", ["process", "palette", "format", "lens"]], ["use", ["scene"]], ["story", ["beat", "trace"]], ["card", ["face", "tone"]]];
 
-/** Six steppers, one per look. Tap the word to step forward, the mark to step back. */
+/** The phone's steppers: the day's six looks and the palette. */
+const TUNE_KEYS = [...DAY_KEYS, "palette"];
+
+/** One stepper per look. Tap the word to step forward, the mark beside it to step back. */
 function drawTune(vocab, state, set) {
   const tune = $(".tune");
   if (!tune) return;
@@ -468,7 +493,7 @@ function drawTune(vocab, state, set) {
       node("button", { type: "button", class: "step-word", "data-step-word": key, "aria-label": `${key}, ${state.ladders[key]}`, onclick: () => go(1) }, [state.ladders[key]]),
     ]);
   };
-  tune.replaceChildren(...DAY_KEYS.map(stepper));
+  tune.replaceChildren(...TUNE_KEYS.filter((key) => vocab.ladders[key]).map(stepper));
 }
 
 /**
@@ -518,6 +543,8 @@ function drawPanel(vocab, state, onStep, onCycleView) {
       const open = document.body.classList.toggle("studio-open");
       if (!open) window.scrollTo(0, 0);
       drawStage(vocab, state);
+      // The ladders were drawn while hidden, with no width to centre in; now they have one.
+      if (open) centreRungs($(".ladders"));
       studio.setAttribute("aria-pressed", String(open));
       studio.textContent = open ? "picture" : "studio";
     },
@@ -539,6 +566,15 @@ function phraseOf(vocab, key, word) {
  * adds stands beside it; a lock keeps it through "roll all". Every choice is
  * written into the address, so a configuration is a link.
  */
+/** On a phone each ladder is one row that scrolls sideways; bring its word to the middle without moving the page. */
+function centreRungs(section) {
+  for (const rungs of section.querySelectorAll(".rungs[role=radiogroup]")) {
+    if (rungs.scrollWidth <= rungs.clientWidth) continue;
+    const on = rungs.querySelector('[aria-checked="true"]');
+    if (on) rungs.scrollLeft = on.offsetLeft - (rungs.clientWidth - on.offsetWidth) / 2;
+  }
+}
+
 function drawLadders(vocab, state, locks, set) {
   const section = $(".ladders");
   section.hidden = false;
@@ -557,13 +593,21 @@ function drawLadders(vocab, state, locks, set) {
       set({ [key]: slug(next) }, key);
     });
     const locked = locks.has(key);
-    return node("div", { class: `ladder${locked ? " locked" : ""}` }, [
-      node("span", { class: "key" }, [key]),
-      node("div", { class: "rung-column" }, [group, node("span", { class: "phrase" }, [`→ ${phraseOf(vocab, key, state.ladders[key])}`])]),
-      node("span", { class: "tools" }, [
-        node("button", { type: "button", class: "lock", "aria-pressed": String(locked), "aria-label": `${locked ? "unlock" : "lock"} ${key}`, onclick: () => set({ lock: key }) }, [locked ? "■" : "□"]),
-        node("button", { type: "button", class: "roll", "aria-label": `roll ${key}`, disabled: locked, onclick: () => { const others = words.filter((w) => w !== state.ladders[key]); set({ [key]: slug(others[Math.floor(Math.random() * others.length)]) }); } }, ["↻"]),
+    // The name and its two tools sit together, so "keep" and "roll" are read with the ladder they act on.
+    return node("div", { class: `ladder${locked ? " locked" : ""}`, "data-key": key }, [
+      node("div", { class: "ladder-head" }, [
+        node("span", { class: "key" }, [key]),
+        node("span", { class: "tools" }, [
+          node("button", { type: "button", class: "lock", "aria-pressed": String(locked), title: locked ? `${key} is kept through roll all` : `keep ${key} through roll all`, onclick: () => set({ lock: key }) }, [locked ? "kept" : "keep"]),
+          node("button", { type: "button", class: "roll", title: `a different ${key}`, disabled: locked, onclick: () => { const others = words.filter((w) => w !== state.ladders[key]); set({ [key]: slug(others[Math.floor(Math.random() * others.length)]) }); } }, ["roll"]),
+          // The light's direction is turned on attention.productions with its lamp; its link back carries from=.
+          ...(key === "light" ? [
+            node("a", { class: "lamp", href: shotHrefOf(state), title: "Turn this light with attention.productions' lamp; its link back brings the direction here" }, ["lamp ↗"]),
+            ...(state.from ? [node("button", { type: "button", class: "lamp-clear", title: `clear the lamp: the light falls ${vocab.lightFrom[state.from].says}`, onclick: () => set({ from: null }) }, [`${state.from} ✕`])] : []),
+          ] : []),
+        ]),
       ]),
+      node("div", { class: "rung-column" }, [group, node("span", { class: "phrase" }, [`→ ${phraseOf(vocab, key, state.ladders[key])}${key === "light" && state.from ? ` ${vocab.lightFrom[state.from].says}` : ""}`])]),
     ]);
   };
   section.replaceChildren(
@@ -571,12 +615,15 @@ function drawLadders(vocab, state, locks, set) {
     node("div", { class: "band" }, [
       node("h2", { class: "band-name" }, ["swap"]),
       node("div", { class: "ladder neighbours" }, [
-        node("span", { class: "key" }, ["kin"]),
+        node("div", { class: "ladder-head" }, [
+          node("span", { class: "key" }, ["kin"]),
+          node("span", { class: "tools" }, [node("button", { type: "button", class: "roll all", title: "roll every ladder not kept", onclick: () => set(null) }, ["roll all"])]),
+        ]),
         node("div", { class: "rungs" }, state.layers.flatMap(({ material }, i) => neighbours(vocab, material).map((other) => node("a", { href: swapHref(state, i, other) }, [`${material.word} → ${other.word}`])))),
-        node("span", { class: "tools" }, [node("button", { type: "button", class: "roll all", "aria-label": "roll every unlocked ladder", onclick: () => set(null) }, ["↻ all"])]),
       ]),
     ]),
   );
+  centreRungs(section);
 }
 
 /* ── pivots: moves that teach a technique ────────────────────── */
@@ -684,7 +731,7 @@ const TONES = { paper: { band: "#f2f0eb", ink: "#1d1d1b", mark: "#c8402a" }, ink
 function faceText(vocab, state) {
   const { plain } = prompts(vocab, state);
   return { title: state.layers.map(({ material }) => material.word).join(" · "), prompt: plain, spw: spwLine(state),
-    facets: Object.keys(vocab.ladders).filter((k) => !["face", "tone"].includes(k)).map((k) => state.ladders[k]).filter((w) => w !== "none").join(" · ") }[state.ladders.face];
+    facets: Object.keys(vocab.ladders).filter((k) => !["face", "tone"].includes(k)).map((k) => state.ladders[k]).filter((w) => w !== "none" && w !== "as drawn").join(" · ") }[state.ladders.face];
 }
 
 /** Words broken into lines of about n characters, for SVG text. */
@@ -702,7 +749,7 @@ function styleCardSvg(vocab, state, address) {
   const size = big ? 64 : 34, lead = big ? 72 : 44;
   const bandTop = 1080 - 120 - body.length * lead;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
-<defs><filter id="material" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">${filterMarkup(state)}</filter></defs>
+<defs><filter id="material" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">${filterMarkup(state, vocab.palettes, vocab.lightFrom)}</filter></defs>
 <foreignObject x="0" y="0" width="1080" height="1080"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:1080px;height:1080px;filter:url(#material)">${layers}</div></foreignObject>
 <rect x="0" y="0" width="1080" height="96" fill="${tone.band}"/>
 <text x="48" y="62" font-family="ui-monospace, Menlo, monospace" font-size="30" letter-spacing="3" fill="${tone.mark}">FIG. ${figureOf(state.day)}</text>
@@ -736,8 +783,10 @@ function drawStyleCard(vocab, state) {
  */
 function shotHrefOf(state) {
   const primary = state.layers.find(({ material }) => material.cls)?.material ?? null;
-  const query = [["shot", "scale"], ["light", "light"], ["ratio", "format"], ["wear", "wear"], ["process", "process"]]
-    .map(([theirs, ours]) => `${theirs}=${slug(state.ladders[ours])}`).join("&");
+  const query = [...[["shot", "scale"], ["light", "light"], ["ratio", "format"], ["wear", "wear"], ["process", "process"]]
+    .map(([theirs, ours]) => `${theirs}=${slug(state.ladders[ours])}`), ...(state.from ? [`from=${state.from}`] : []), "via=texture.website",
+    // The address left behind, so attention.productions' way back changes only what was tuned there.
+    `back=${encodeURIComponent(location.pathname + location.search)}`].join("&");
   return primary ? `https://attention.productions/${primary.slug}?material=${primary.slug}&${query}` : `https://attention.productions/?${query}`;
 }
 
@@ -773,7 +822,7 @@ function drawCard(vocab, state, address, onStep, onCycleView) {
   const name = state.layers.map(({ material, mark }) => `${mark === "?" ? "q" : mark === "." ? "" : mark}${material.slug}`).join("").replace(/[^a-z0-9~*^=@!%-]/g, "") || "texture";
   // The facets that shape the prompt, leaving out the card's own and any left at none.
   const images = state.layers.filter(({ material }) => material.cls).map(({ material }) => imageOf(material));
-  const facets = Object.keys(vocab.ladders).filter((key) => !["face", "tone"].includes(key)).map((key) => state.ladders[key]).filter((word) => word !== "none");
+  const facets = Object.keys(vocab.ladders).filter((key) => !["face", "tone"].includes(key)).map((key) => state.ladders[key]).filter((word) => word !== "none" && word !== "as drawn");
   const json = JSON.stringify({ address, layers: state.layers.map(({ material, mark }) => ({ word: material.word, class: material.cls, mark })), ladders: state.ladders, prompts: { midjourney, plain }, spw: line }, null, 2);
   const md = `## ${state.layers.map(({ material }) => material.word).join(" · ")}\n\n${plain}\n\n\`\`\`\n${midjourney}\n\`\`\`\n\n\`${line}\`\n\n${address}\n`;
   const spwFile = `#>texture_card\n#:texture #!${state.ladders.format}\n\n${line}\n\nprompt: "${plain.replaceAll('"', "'")}"\naddress: "${address}"\n`;
@@ -966,7 +1015,7 @@ async function main() {
         if (locks.has(change.lock)) locks.delete(change.lock); else { locks.add(change.lock); url.searchParams.set(change.lock, slug(state.ladders[change.lock])); }
         if (locks.size) url.searchParams.set("lock", [...locks].join(",")); else url.searchParams.delete("lock");
       } else {
-        for (const [k, value] of Object.entries(change)) url.searchParams.set(k, value);
+        for (const [k, value] of Object.entries(change)) { if (value == null) url.searchParams.delete(k); else url.searchParams.set(k, value); }
       }
       history.replaceState(null, "", url);
       render(key);
@@ -983,6 +1032,37 @@ async function main() {
       document.querySelector(`.rungs[aria-label="${focusKey}"] [aria-checked="true"]`)?.focus();
     }
   };
+  // Split view: the drawn materials left of a line, the tuned picture right of it. Drag across the picture, or use the arrows on the line.
+  const stageEl = $(".stage");
+  const splitToggle = $(".split-toggle");
+  const splitHandle = $(".split-handle");
+  const setSplit = (pct) => {
+    const at = Math.max(4, Math.min(96, Math.round(pct)));
+    stageEl.style.setProperty("--split", `${at}%`);
+    splitHandle?.setAttribute("aria-valuenow", String(at));
+  };
+  splitToggle?.addEventListener("click", () => {
+    const on = stageEl.classList.toggle("split");
+    splitToggle.setAttribute("aria-pressed", String(on));
+    if (splitHandle) splitHandle.hidden = !on;
+    render();
+  });
+  let splitting = null;
+  const splitTo = (event) => { const box = stageEl.getBoundingClientRect(); setSplit(((event.clientX - box.left) / box.width) * 100); };
+  stageEl?.addEventListener("pointerdown", (event) => {
+    if (!stageEl.classList.contains("split") || (event.button && event.button !== 0)) return;
+    splitting = event.pointerId;
+    try { stageEl.setPointerCapture(event.pointerId); } catch { /* a pointer the stage cannot hold still moves the line once */ }
+    splitTo(event);
+  });
+  stageEl?.addEventListener("pointermove", (event) => { if (splitting === event.pointerId) splitTo(event); });
+  for (const type of ["pointerup", "pointercancel"]) stageEl?.addEventListener(type, () => { splitting = null; });
+  splitHandle?.addEventListener("keydown", (event) => {
+    const by = { ArrowLeft: -5, ArrowDown: -5, ArrowRight: 5, ArrowUp: 5, Home: -100, End: 100 }[event.key];
+    if (!by) return;
+    event.preventDefault();
+    setSplit(Number(splitHandle.getAttribute("aria-valuenow")) + by);
+  });
   const tileToggle = $(".tile-toggle");
   tileToggle?.addEventListener("click", () => {
     const next = !$(".stage").classList.toggle("tiled");

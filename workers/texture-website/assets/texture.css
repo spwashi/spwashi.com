@@ -51,8 +51,9 @@ body.composed .ladders:not([hidden]) { display: grid; }
 .ladders { margin: 1.2rem 0 0; gap: 0.2rem; }
 .band { border-top: 1px solid var(--rule); padding-top: 0.2rem; }
 .band-name { margin: 0.4rem 0 0.1rem; font: 0.7rem var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
-.ladder { display: grid; grid-template-columns: 5.5rem 1fr auto; align-items: start; gap: 0.6rem; border-bottom: 1px solid var(--faint); padding: 0.3rem 0; }
-.ladder .key { padding-top: 0.55rem; }
+.ladder { display: grid; grid-template-columns: 7.25rem 1fr; align-items: start; gap: 0.6rem; border-bottom: 1px solid var(--faint); padding: 0.3rem 0; }
+/* A ladder's name with its two tools beneath it: keep and roll are read with the ladder they act on. */
+.ladder-head { display: grid; gap: 0.3rem; align-content: start; justify-items: start; padding-top: 0.45rem; }
 .rung-column { display: grid; gap: 0.1rem; }
 .rungs { display: flex; flex-wrap: wrap; gap: 0.2rem; }
 .rungs button, .rungs a { font: 0.84rem var(--sans); text-transform: none; letter-spacing: 0; border: 1px solid transparent; padding: 0.3em 0.6em; min-height: 32px; display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); background: transparent; }
@@ -60,9 +61,13 @@ body.composed .ladders:not([hidden]) { display: grid; }
 .rungs button[aria-checked="true"] { background: var(--ink); color: var(--ground); }
 .rungs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .phrase { font: italic 0.8rem Georgia, serif; color: var(--muted); padding-left: 0.6em; }
-.tools { display: flex; gap: 0.25rem; padding-top: 0.15rem; }
-.tools button { min-width: 32px; border-color: var(--faint); }
-.tools .lock[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.tools { display: flex; gap: 0.25rem; }
+.tools button { min-height: 26px; padding: 0 0.5em; font-size: 0.62rem; letter-spacing: 0.06em; text-transform: lowercase; border-color: var(--faint); color: var(--muted); }
+.tools button:hover:not(:disabled) { border-color: var(--rule); color: var(--ink); }
+.tools a { display: inline-flex; align-items: center; min-height: 26px; padding: 0 0.5em; border: 1px solid var(--faint); font: 0.62rem var(--mono); letter-spacing: 0.06em; color: var(--muted); text-decoration: none; }
+.tools a:hover { border-color: var(--rule); color: var(--ink); }
+.tools .lamp-clear { border-color: var(--accent); color: var(--accent); }
+.tools .lock[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .tools button:disabled { opacity: 0.35; cursor: default; }
 .ladder.locked .rungs button[aria-checked="true"] { background: var(--accent); }
 .neighbours .rungs a { color: var(--muted); }
@@ -189,29 +194,56 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
 }
 .spw-sep { color: var(--muted); }
 .spw-persona-btn {
-  font: inherit; background: transparent; border: 0; border-bottom: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--rule));
+  font: inherit; background: transparent; border: 0;
+  text-decoration: underline dashed color-mix(in srgb, var(--accent) 40%, var(--rule)) 1px; text-underline-offset: 0.24em;
   padding: 0.05em 0.2em; min-height: 28px; border-radius: 0.2rem; text-transform: none; letter-spacing: 0; cursor: pointer;
 }
 .spw-persona-btn:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
 .spw-persona-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .spw-slot {
   font: inherit; color: var(--ink); background: transparent;
-  border: 0; border-bottom: 1.5px dashed color-mix(in srgb, var(--accent) 55%, var(--rule));
+  border: 0;
+  /* The dash is the word's own underline, so it stays under the word however tall the touch target is. */
+  text-decoration: underline dashed color-mix(in srgb, var(--accent) 55%, var(--rule)) 1.5px; text-underline-offset: 0.24em;
   padding: 0.1em 0.25em; margin: 0 0.05em; border-radius: 0.2rem;
   cursor: ew-resize; touch-action: pan-y; min-height: 28px;
 }
 .spw-slot:hover, .spw-slot.scrubbing {
   background: color-mix(in srgb, var(--accent) 12%, transparent);
-  border-bottom-style: solid; border-bottom-color: var(--accent);
+  text-decoration-style: solid; text-decoration-color: var(--accent);
 }
 .spw-slot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 @media (max-width: 38rem) {
   .card-head { flex-wrap: wrap; gap: 0.35rem 0.7rem; }
-  .ladder { grid-template-columns: 1fr auto; gap: 0.35rem 0.6rem; }
-  .ladder .key { grid-column: 1 / -1; padding-top: 0.25rem; }
-  .tools { flex-wrap: wrap; }
+  .ladder { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+  .ladder-head { display: flex; align-items: center; justify-content: space-between; padding-top: 0.2rem; }
+  /* One row per ladder that scrolls sideways (texture.js centres its word), so a long ladder is one line, not four. */
+  .rungs[role="radiogroup"] {
+    flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; padding: 0 1.2rem 0 0;
+    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 1.6rem), transparent);
+  }
+  .rungs[role="radiogroup"]::-webkit-scrollbar { display: none; }
+  .rungs[role="radiogroup"] > * { flex: 0 0 auto; scroll-snap-align: center; white-space: nowrap; }
 }
+
+/* How the picture is shown: the tile repeat and the split, side by side. */
+.view-tools { display: inline-flex; gap: 0.25rem; flex: 0 0 auto; }
+.split-toggle[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+.layers-drawn { position: absolute; inset: 0; pointer-events: none; clip-path: inset(0 calc(100% - var(--split, 50%)) 0 0); }
+.layers-drawn:empty { display: none; }
+.stage.split { cursor: ew-resize; touch-action: pan-y; }
+.split-handle {
+  position: absolute; top: 0; bottom: 0; left: var(--split, 50%); width: 2px; min-height: 0; margin-left: -1px; padding: 0;
+  border: 0; background: var(--ground); box-shadow: 0 0 0 1px var(--ink); cursor: ew-resize;
+}
+.split-handle::before, .split-handle::after {
+  position: absolute; top: 0.5rem; padding: 0.15rem 0.4rem; background: var(--ink); color: var(--ground);
+  font: 0.62rem var(--mono); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap;
+}
+.split-handle::before { content: "drawn"; right: 0.5rem; }
+.split-handle::after { content: "tuned"; left: 0.5rem; }
+.split-handle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .stage.tiled .seam-grid {
   position: absolute; inset: 0; pointer-events: none;
   background-image:
@@ -242,6 +274,8 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
 /* Clean still capture (clean-still.js): show only the active texture stage and chosen context, hiding all unselected options. */
 :root[data-still] .views,
 :root[data-still] .tile-toggle,
+:root[data-still] .split-toggle,
+:root[data-still] .split-handle,
 :root[data-still] .caption,
 :root[data-still] .read-note,
 :root[data-still] .layer-bar,
@@ -258,7 +292,7 @@ body.composed[data-view="minimalist"] .style-card { display: none; }
 :root[data-still="pure"] .still-context { display: none; }
 :root[data-still="pure"] .slide { border-top: 0; }
 @media (pointer: coarse) {
-  .rungs button, .rungs a, .views a, .ext, .pivot button, .pivot-link, .tools button, .spw-persona-btn, .spw-slot, .tile-toggle, .layer-input, .layer-add, .layer-reset, .rel-select, .catalog-filters button, .day-step, .stepper button, .studio-toggle, .panel-actions .action { min-height: 44px; }
+  .rungs button, .rungs a, .views a, .ext, .pivot button, .pivot-link, .tools button, .tools a, .spw-persona-btn, .spw-slot, .tile-toggle, .layer-input, .layer-add, .layer-reset, .rel-select, .catalog-filters button, .day-step, .stepper button, .studio-toggle, .panel-actions .action { min-height: 44px; }
 }
 
 /* The phone is one panel: the picture, the day's sentence, and six steppers.
@@ -306,6 +340,7 @@ body.composed .panel-line:not([hidden]) { display: block; margin: 0.35rem 0 0; f
     flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.95rem;
   }
   body.composed:not(.studio-open) .slide-head .when { flex: 0 0 auto; display: inline-flex; align-items: center; white-space: nowrap; }
+  body.composed:not(.studio-open) .view-tools,
   body.composed:not(.studio-open) .tile-toggle,
   body.composed:not(.studio-open) .still-bar { display: none; }
   body.composed:not(.studio-open) .day-step { min-width: 1.75rem; min-height: 1.75rem; padding: 0; }
@@ -327,26 +362,32 @@ body.composed .panel-line:not([hidden]) { display: block; margin: 0.35rem 0 0; f
   body.composed:not(.studio-open) .tune:not([hidden]) {
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.1rem 0.35rem; margin-top: 0.2rem;
   }
-  /* The word is the wide control. The key and the step-back sit on the line above it,
-     so "arm's length" and "sodium night" stay readable in half a phone. */
+  /* The word is the wide control, its key on the line above; the step-back sits beside the word at the word's
+     height, so it is a whole target rather than a corner mark, and "arm's length" still reads in half a phone. */
   body.composed:not(.studio-open) .stepper {
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas: "key prev" "word word";
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "key key" "prev word";
     gap: 0 0.15rem; min-width: 0;
   }
+  /* Seven steppers in two columns: the last (the palette) takes the whole row. */
+  body.composed:not(.studio-open) .stepper:last-child:nth-child(odd) { grid-column: 1 / -1; }
   body.composed:not(.studio-open) .stepper .key {
     grid-area: key; align-self: end; font-size: 0.62rem; letter-spacing: 0.04em;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   body.composed:not(.studio-open) .stepper button { min-width: 0; padding: 0.1rem 0.35rem; }
   body.composed:not(.studio-open) .stepper button:not(.step-word) {
-    grid-area: prev; width: 1.75rem; min-height: 1.6rem; padding: 0;
+    grid-area: prev; width: 2.1rem; min-height: 2.35rem; padding: 0;
   }
   body.composed:not(.studio-open) .stepper .step-word {
     grid-area: word; min-height: 2.35rem; overflow: hidden; text-overflow: ellipsis;
     white-space: nowrap; font-size: 0.9rem; text-align: left;
   }
-  body.composed:not(.studio-open) .panel-actions:not([hidden]) { display: flex; margin-top: 0.2rem; }
+  body.composed:not(.studio-open) .panel-actions:not([hidden]) { display: flex; margin-top: 0.2rem; padding-left: calc(44px + 0.35rem); }
+  /* The set's ring joins the action row on the one-screen panel: no label, the row's height and inset, the actions beside it. */
+  body.composed:not(.studio-open) .set-ring.bottom { left: 0.5rem; bottom: calc(0.25rem + env(safe-area-inset-bottom)); }
+  body.composed:not(.studio-open) .set-ring-label { display: none; }
+  body.composed:not(.studio-open) .set-ring-button { padding-right: 0; }
   body.composed:not(.studio-open) .panel-actions .action,
   body.composed:not(.studio-open) .panel-actions .studio-toggle { min-width: 0; min-height: 2.5rem; white-space: nowrap; }
   body.composed.studio-open .slide-head { flex-wrap: wrap; row-gap: 0.15rem; }

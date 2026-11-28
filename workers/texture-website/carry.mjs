@@ -12,7 +12,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { securityHeaders, escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { peerScriptPath } from "../lib/peer-kit.js";
-import { CLASSES, FORMATS, LADDERS, MATERIALS, NEAR, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS } from "./src/vocabulary.js";
+import { CLASSES, FORMATS, LADDERS, LIGHT_FROM, MATERIALS, NEAR, PALETTES, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS } from "./src/vocabulary.js";
 import { TILE, materialPng } from "./src/raster.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -122,8 +122,8 @@ const PAGE = `<!doctype html>
   <main id="texture">
     <figure class="slide">
       <nav class="views" aria-label="Views"><a href="/">texture.website</a>${Object.entries(VIEWS).map(([key, v]) => `<a href="/${key}@/">${escapeHtml(v.name)}</a>`).join("")}</nav>
-      <header class="slide-head"><span class="fig">Fig.</span> <span class="title">texture.website</span> <span class="when"></span> <button type="button" class="tile-toggle" aria-pressed="false" title="Inspect 2×2 tile repeat and seam lines">2×2 tile</button></header>
-      <div class="stage" aria-label="A sketch of the prompt"><div class="layers"></div><div class="seam-grid" aria-hidden="true"></div><p class="bubble" hidden></p></div>
+      <header class="slide-head"><span class="fig">Fig.</span> <span class="title">texture.website</span> <span class="when"></span> <span class="view-tools" role="group" aria-label="How the picture is shown"><button type="button" class="tile-toggle" aria-pressed="false" title="Inspect 2×2 tile repeat and seam lines">2×2 tile</button><button type="button" class="split-toggle" aria-pressed="false" title="Compare the drawn materials with the tuned picture; drag across the picture to move the line">split</button></span></header>
+      <div class="stage" aria-label="A sketch of the prompt"><div class="layers"></div><div class="layers-drawn" aria-hidden="true"></div><div class="seam-grid" aria-hidden="true"></div><button type="button" class="split-handle" role="slider" aria-label="Where the drawn materials meet the tuned picture" aria-valuemin="4" aria-valuemax="96" aria-valuenow="50" hidden></button><p class="bubble" hidden></p></div>
       <div class="still-context" aria-label="Active composition context"></div>
       <figcaption class="caption">A studio for building material prompts. Each word in the address is a material; each ladder is a word in the sentence.</figcaption>
       <p class="read-note" role="status" hidden></p>
@@ -342,7 +342,7 @@ export function iconPng(size = 192, { maskable = false } = {}) {
 }
 
 export async function carried() {
-  const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, near: NEAR, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
+  const vocabulary = { site: "texture.website", note: "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check", classes: CLASSES, materials: MATERIALS.map((m) => ({ ...m, image: `/${m.slug}.png` })), tile: TILE, ladders: LADDERS, near: NEAR, palettes: PALETTES, lightFrom: LIGHT_FROM, phrases: PHRASES, formats: FORMATS, relations: RELATIONS, techniques: TECHNIQUES, pivots: PIVOTS, views: VIEWS };
   const shared = await Promise.all([...SET_FILES, "near-word.js"].map(async (file) => [file === "near-word.js" ? `lib/${file}` : file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
     ...MATERIALS.flatMap((m) => [[`${m.slug}.txt`, starter(m)], [`${m.slug}.spw`, line(m)]]),

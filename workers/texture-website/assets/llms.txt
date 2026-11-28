@@ -7,6 +7,7 @@ Ladders, as query keys whose values are words (hyphens for spaces):
 - light: raking dawn, overcast, noon, lamplight, sodium night
 - wear: pristine, handled, worn, weathered, ruined
 - process: as found, riso, engraving, relief, posterized, cyanotype
+- palette: as drawn, paper and ink, lamplight, sodium night, teal stripes, lantern, verdigris
 - scene: wall, floor, table, costume, sky, page
 - format: tile, plate, sheet
 - lens: none, risograph botanica, civic brutalism, lunar laundromat, folk-tech embroidery, deep-sea archive, tidepool baroque, midnight municipal
